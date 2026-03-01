@@ -10,7 +10,7 @@ Requirements for initial release. Each maps to roadmap phases.
 ### Communication
 
 - [ ] **COMM-01**: Agent can highlight a phone number anywhere on screen and open it in the phone dialler (pre-filled, not auto-calling) with one click via tel: URI
-- [ ] **COMM-02**: Agent can highlight a phone number anywhere on screen and open a WhatsApp chat with one click via wa.me deep link
+- [ ] **COMM-02**: Agent can highlight a phone number anywhere on screen and open a WhatsApp chat with one click, with the option to open on desktop (WhatsApp Web/Desktop) or on their phone
 - [ ] **COMM-03**: Agent can create, edit, and use reusable message templates with automatic contact name substitution for WhatsApp and email
 
 ### Contact Notes
@@ -33,6 +33,7 @@ Requirements for initial release. Each maps to roadmap phases.
 - [ ] **APP-03**: App detects incoming call notifications via phone-link integration and offers to open the caller's OneNote page
 - [ ] **APP-04**: All phone numbers are normalized to UAE E.164 format (+971XXXXXXXXX) before any action
 - [ ] **APP-05**: App installs via clean installer (.exe for Windows, .dmg for macOS), requires no admin rights, starts on login, and auto-updates silently
+- [ ] **APP-06**: During setup or in settings, agent can enable/disable individual features so they only see what they want to use
 
 ### News & Info
 
@@ -97,6 +98,7 @@ Deferred to future releases. Significant complexity or external dependencies.
 | APP-02 | Phase 1 | Pending |
 | APP-04 | Phase 1 | Pending |
 | APP-05 | Phase 1 | Pending |
+| APP-06 | Phase 1 | Pending |
 | COMM-01 | Phase 1 | Pending |
 | COMM-02 | Phase 1 | Pending |
 | COMM-03 | Phase 1 | Pending |
@@ -112,8 +114,8 @@ Deferred to future releases. Significant complexity or external dependencies.
 | WEB-01 | Phase 3 | Pending |
 
 **Coverage:**
-- v1 requirements: 17 total
-- Mapped to phases: 17
+- v1 requirements: 18 total
+- Mapped to phases: 18
 - Unmapped: 0
 
 ---

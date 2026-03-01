@@ -21,7 +21,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 ### Phase 1: Core App + Communication
 **Goal**: Agents install the app and immediately have a usable tool — they can open any phone number in their dialler or WhatsApp with one click, and send templated messages with auto-filled names. Works on Windows and macOS. This is the demo-able product.
 **Depends on**: Nothing (first phase)
-**Requirements**: APP-01, APP-02, APP-04, APP-05, COMM-01, COMM-02, COMM-03
+**Requirements**: APP-01, APP-02, APP-04, APP-05, APP-06, COMM-01, COMM-02, COMM-03
 **Success Criteria** (what must be TRUE):
   1. Agent installs the app via clean installer (.exe on Windows, .dmg on macOS) with no admin rights required and no security warnings
   2. App appears in the system tray (Windows) or menu bar (macOS) on login without the agent having to start it manually
@@ -29,10 +29,11 @@ Decimal phases appear between their surrounding integers in numeric order.
   4. All phone numbers processed by the app are normalized to +971 E.164 format before any action is taken
   5. App silently downloads and applies an update without the agent doing anything
   6. Agent highlights a phone number anywhere on screen and it opens in the phone dialler (pre-filled, not auto-calling) with one click
-  7. Agent highlights a phone number anywhere on screen and opens a WhatsApp chat with that contact in one click via wa.me
+  7. Agent highlights a phone number anywhere on screen and opens a WhatsApp chat — with the option to open on desktop (WhatsApp Web/Desktop) or on their phone
   8. Agent copies a phone number and immediately sees a popup offering dial and WhatsApp actions without pressing any hotkey
   9. Agent selects a message template, types or selects a contact name, and the template fills in automatically before sending
   10. The React UI panel opens from the tray and shows current contact card, communication actions, and template picker in a single view
+  11. Agent can enable/disable individual features during setup or in settings, so they only see what they want to use
 **Plans**: TBD
 
 ### Phase 2: Notes and Calendar Integration
