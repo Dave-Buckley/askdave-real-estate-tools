@@ -34,7 +34,13 @@ Decimal phases appear between their surrounding integers in numeric order.
   9. Agent selects a message template, types or selects a contact name, and the template fills in automatically before sending
   10. The React UI panel opens from the tray and shows current contact card, communication actions, and template picker in a single view
   11. Agent can enable/disable individual features during setup or in settings, so they only see what they want to use
-**Plans**: TBD
+**Plans**: 5 plans
+Plans:
+- [ ] 01-01-PLAN.md -- Project scaffold, shared types, electron-store with default templates
+- [ ] 01-02-PLAN.md -- Main process services: tray, clipboard, phone normalization, hotkeys, actions, IPC, auto-update
+- [ ] 01-03-PLAN.md -- Tray panel UI: phone input, contact card, template list, preview, CRUD
+- [ ] 01-04-PLAN.md -- Clipboard popup floating action bar + settings window (toggles, hotkey recorder, WhatsApp mode)
+- [ ] 01-05-PLAN.md -- Build config: electron-builder NSIS/DMG, entitlements, notarize script
 
 ### Phase 2: Notes and Calendar Integration
 **Goal**: Agents can document every call in a structured OneNote page and set follow-up reminders and viewing bookings in Google Calendar — the full communicate-document-follow-up loop is complete
@@ -67,6 +73,6 @@ Phases execute in numeric order: 1 → 2 → 3
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Core App + Communication | 0/TBD | Not started | - |
+| 1. Core App + Communication | 0/5 | Planned | - |
 | 2. Notes and Calendar Integration | 0/TBD | Not started | - |
 | 3. Secondary Features and Website | 0/TBD | Not started | - |
