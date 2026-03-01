@@ -93,29 +93,29 @@ Deferred to future releases. Significant complexity or external dependencies.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| COMM-01 | TBD | Pending |
-| COMM-02 | TBD | Pending |
-| COMM-03 | TBD | Pending |
-| NOTE-01 | TBD | Pending |
-| NOTE-02 | TBD | Pending |
-| NOTE-03 | TBD | Pending |
-| NOTE-04 | TBD | Pending |
-| ORG-01 | TBD | Pending |
-| ORG-02 | TBD | Pending |
-| ORG-03 | TBD | Pending |
-| APP-01 | TBD | Pending |
-| APP-02 | TBD | Pending |
-| APP-03 | TBD | Pending |
-| APP-04 | TBD | Pending |
-| APP-05 | TBD | Pending |
-| NEWS-01 | TBD | Pending |
-| WEB-01 | TBD | Pending |
+| APP-01 | Phase 1 | Pending |
+| APP-04 | Phase 1 | Pending |
+| APP-05 | Phase 1 | Pending |
+| COMM-01 | Phase 2 | Pending |
+| COMM-02 | Phase 2 | Pending |
+| COMM-03 | Phase 2 | Pending |
+| APP-02 | Phase 2 | Pending |
+| NOTE-01 | Phase 3 | Pending |
+| NOTE-02 | Phase 3 | Pending |
+| NOTE-03 | Phase 3 | Pending |
+| NOTE-04 | Phase 3 | Pending |
+| ORG-01 | Phase 3 | Pending |
+| ORG-02 | Phase 3 | Pending |
+| APP-03 | Phase 3 | Pending |
+| ORG-03 | Phase 4 | Pending |
+| NEWS-01 | Phase 4 | Pending |
+| WEB-01 | Phase 4 | Pending |
 
 **Coverage:**
 - v1 requirements: 17 total
-- Mapped to phases: 0
-- Unmapped: 17 (pending roadmap creation)
+- Mapped to phases: 17
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-03-01*
-*Last updated: 2026-03-01 after initial definition*
+*Last updated: 2026-03-02 after roadmap creation — all 17 requirements mapped*
