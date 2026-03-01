@@ -60,7 +60,7 @@ Make every agent faster at the tasks they repeat hundreds of times a week — ca
 - **Security:** Must not embed in or scrape from CRM systems. No data extraction from property portals
 - **Simplicity:** Must be usable by non-technical agents. No command-line tools, no debugging, no complex setup
 - **Portability:** Agent's personal contact notes should be portable if they change firms (personal OneNote)
-- **Platform:** Windows desktop primary (matches agency standard). Simple website for instructions/download
+- **Platform:** Cross-platform desktop (Windows + macOS) via Electron. Simple website for instructions/download. Mobile covered by existing apps (OneNote, Google Calendar) in v1
 - **No hidden costs:** All APIs used must have free tiers sufficient for v1. No surprise billing
 
 ## Key Decisions

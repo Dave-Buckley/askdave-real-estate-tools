@@ -9,7 +9,7 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Communication
 
-- [ ] **COMM-01**: Agent can highlight a phone number anywhere on screen and dial it with one click via Phone Link / tel: URI
+- [ ] **COMM-01**: Agent can highlight a phone number anywhere on screen and open it in the phone dialler (pre-filled, not auto-calling) with one click via tel: URI
 - [ ] **COMM-02**: Agent can highlight a phone number anywhere on screen and open a WhatsApp chat with one click via wa.me deep link
 - [ ] **COMM-03**: Agent can create, edit, and use reusable message templates with automatic contact name substitution for WhatsApp and email
 
@@ -28,11 +28,11 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Desktop App Core
 
-- [ ] **APP-01**: App runs in the system tray with configurable global hotkeys for key actions
+- [ ] **APP-01**: App runs in the system tray (Windows) or menu bar (macOS) with configurable global hotkeys for key actions
 - [ ] **APP-02**: App detects phone numbers on the clipboard and offers click-to-dial and click-to-WhatsApp actions
-- [ ] **APP-03**: App detects incoming call notifications via Windows Phone Link and offers to open the caller's OneNote page
+- [ ] **APP-03**: App detects incoming call notifications via phone-link integration and offers to open the caller's OneNote page
 - [ ] **APP-04**: All phone numbers are normalized to UAE E.164 format (+971XXXXXXXXX) before any action
-- [ ] **APP-05**: App installs via a clean .exe installer requiring no admin rights, starts on Windows login, and auto-updates silently
+- [ ] **APP-05**: App installs via clean installer (.exe for Windows, .dmg for macOS), requires no admin rights, starts on login, and auto-updates silently
 
 ### News & Info
 
@@ -94,22 +94,22 @@ Deferred to future releases. Significant complexity or external dependencies.
 | Requirement | Phase | Status |
 |-------------|-------|--------|
 | APP-01 | Phase 1 | Pending |
+| APP-02 | Phase 1 | Pending |
 | APP-04 | Phase 1 | Pending |
 | APP-05 | Phase 1 | Pending |
-| COMM-01 | Phase 2 | Pending |
-| COMM-02 | Phase 2 | Pending |
-| COMM-03 | Phase 2 | Pending |
-| APP-02 | Phase 2 | Pending |
-| NOTE-01 | Phase 3 | Pending |
-| NOTE-02 | Phase 3 | Pending |
-| NOTE-03 | Phase 3 | Pending |
-| NOTE-04 | Phase 3 | Pending |
-| ORG-01 | Phase 3 | Pending |
-| ORG-02 | Phase 3 | Pending |
-| APP-03 | Phase 3 | Pending |
-| ORG-03 | Phase 4 | Pending |
-| NEWS-01 | Phase 4 | Pending |
-| WEB-01 | Phase 4 | Pending |
+| COMM-01 | Phase 1 | Pending |
+| COMM-02 | Phase 1 | Pending |
+| COMM-03 | Phase 1 | Pending |
+| NOTE-01 | Phase 2 | Pending |
+| NOTE-02 | Phase 2 | Pending |
+| NOTE-03 | Phase 2 | Pending |
+| NOTE-04 | Phase 2 | Pending |
+| ORG-01 | Phase 2 | Pending |
+| ORG-02 | Phase 2 | Pending |
+| APP-03 | Phase 2 | Pending |
+| ORG-03 | Phase 3 | Pending |
+| NEWS-01 | Phase 3 | Pending |
+| WEB-01 | Phase 3 | Pending |
 
 **Coverage:**
 - v1 requirements: 17 total
@@ -118,4 +118,4 @@ Deferred to future releases. Significant complexity or external dependencies.
 
 ---
 *Requirements defined: 2026-03-01*
-*Last updated: 2026-03-02 after roadmap creation — all 17 requirements mapped*
+*Last updated: 2026-03-02 after roadmap revision — 3 phases, cross-platform, all 17 requirements mapped*
