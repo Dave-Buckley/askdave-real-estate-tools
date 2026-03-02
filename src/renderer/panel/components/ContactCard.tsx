@@ -20,6 +20,7 @@ interface ContactCardProps {
   whatsappMode: AppSettings['whatsappMode']
   oneNoteEnabled: boolean
   calendarEnabled: boolean
+  followUpPromptEnabled: boolean
   roles: ContactRole[]
   onRolesChange: (roles: ContactRole[]) => void
 }
@@ -33,14 +34,25 @@ export default function ContactCard({
   whatsappMode,
   oneNoteEnabled,
   calendarEnabled,
+  followUpPromptEnabled,
   roles,
   onRolesChange
 }: ContactCardProps) {
   const [showNameInput, setShowNameInput] = useState(!!contactName)
   const [showWhatsAppMenu, setShowWhatsAppMenu] = useState(false)
   const [oneNoteError, setOneNoteError] = useState<string | null>(null)
+  const [followUpStatus, setFollowUpStatus] = useState<{ type: 'success' | 'error'; message: string } | null>(null)
 
-  const handleDial = () => window.electronAPI.dial(e164)
+  const handleDial = () => {
+    window.electronAPI.dial(e164)
+    // Auto-open OneNote alongside dial if enabled (per CONTEXT.md decision)
+    if (oneNoteEnabled) {
+      window.electronAPI.openInOneNote(sessionData).catch(() => {
+        // Silently fail — dial is the primary action, OneNote is secondary
+      })
+    }
+  }
+
   const handleWhatsApp = (mode?: 'web' | 'desktop') => {
     window.electronAPI.openWhatsApp(e164, mode || whatsappMode)
     setShowWhatsAppMenu(false)
@@ -54,6 +66,7 @@ export default function ContactCard({
   }
 
   const sessionData = { name: contactName, displayNumber, roles, e164 }
+
   const handleOneNote = async () => {
     setOneNoteError(null)
     const result = await window.electronAPI.openInOneNote(sessionData)
@@ -62,8 +75,20 @@ export default function ContactCard({
       setTimeout(() => setOneNoteError(null), 5000)
     }
   }
+
   const handleBookViewing = () => window.electronAPI.bookCalendar(sessionData, 'viewing')
   const handleBookConsult = () => window.electronAPI.bookCalendar(sessionData, 'consultation')
+
+  const handleFollowUp = async (days: number) => {
+    setFollowUpStatus(null)
+    const result = await window.electronAPI.createFollowUp(sessionData, days)
+    if (result.success) {
+      setFollowUpStatus({ type: 'success', message: `Follow-up set for ${result.eventDate}` })
+    } else {
+      setFollowUpStatus({ type: 'error', message: result.error || 'Failed to create follow-up' })
+    }
+    setTimeout(() => setFollowUpStatus(null), 4000)
+  }
 
   return (
     <div className="bg-white border border-gray-200 rounded-lg p-3 space-y-2">
@@ -219,6 +244,38 @@ export default function ContactCard({
                 <span>Consult</span>
               </button>
             </>
+          )}
+        </div>
+      )}
+
+      {/* Follow-up reminder buttons */}
+      {calendarEnabled && followUpPromptEnabled && (
+        <div className="space-y-1.5 pt-1">
+          <p className="text-[11px] text-gray-400 font-medium">Follow-up reminder</p>
+          <div className="flex items-center gap-1.5">
+            <button
+              onClick={() => handleFollowUp(7)}
+              className="flex-1 px-2 py-1 text-[11px] font-medium text-orange-700 bg-orange-50 border border-orange-200 rounded hover:bg-orange-100 transition-colors"
+            >
+              7 days
+            </button>
+            <button
+              onClick={() => handleFollowUp(15)}
+              className="flex-1 px-2 py-1 text-[11px] font-medium text-orange-700 bg-orange-50 border border-orange-200 rounded hover:bg-orange-100 transition-colors"
+            >
+              15 days
+            </button>
+            <button
+              onClick={() => handleFollowUp(30)}
+              className="flex-1 px-2 py-1 text-[11px] font-medium text-orange-700 bg-orange-50 border border-orange-200 rounded hover:bg-orange-100 transition-colors"
+            >
+              30 days
+            </button>
+          </div>
+          {followUpStatus && (
+            <p className={`text-xs ${followUpStatus.type === 'success' ? 'text-green-600' : 'text-red-500'}`}>
+              {followUpStatus.message}
+            </p>
           )}
         </div>
       )}
