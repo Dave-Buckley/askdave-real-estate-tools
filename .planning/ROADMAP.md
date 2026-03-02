@@ -54,7 +54,11 @@ Plans:
   5. Agent clicks a follow-up button (3, 15, or 30 days) and a Google Calendar event is created for that contact without leaving the app
   6. Agent creates a viewing event from a contact card and a Google Calendar invite is sent to the client
   7. When an incoming call notification appears via phone-link integration, the app detects it and offers to open the caller's OneNote page
-**Plans**: TBD
+**Plans**: 3 plans
+Plans:
+- [ ] 02-01-PLAN.md -- OneNote Graph API: rewrite onenote.ts, page find-or-create, role templates, multi-role append, IPC + UI wiring
+- [ ] 02-02-PLAN.md -- Google Calendar follow-up API, follow-up UI (7/15/30 day buttons), dial-triggers-OneNote, settings toggle
+- [ ] 02-03-PLAN.md -- Phone Link detection (PowerShell WinRT polling), incoming call bar, post-call follow-up prompt
 
 ### Phase 3: Secondary Features and Website
 **Goal**: The toolkit is feature-complete for v1 and distributable — agents have document checklists, a UAE property news feed, and a public website they can share with management or colleagues to download the tool
@@ -74,5 +78,5 @@ Phases execute in numeric order: 1 → 2 → 3
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Core App + Communication | 0/5 | Planned | - |
-| 2. Notes and Calendar Integration | 0/TBD | Not started | - |
+| 2. Notes and Calendar Integration | 0/3 | Planned | - |
 | 3. Secondary Features and Website | 0/TBD | Not started | - |
