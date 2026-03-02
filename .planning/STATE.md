@@ -10,28 +10,28 @@ See: .planning/PROJECT.md (updated 2026-03-02)
 ## Current Position
 
 Phase: 1 of 3 (Core App + Communication)
-Plan: 1 of 5 in current phase
+Plan: 3 of 5 in current phase
 Status: Executing
-Last activity: 2026-03-02 — Plan 01-01 complete (project scaffold, shared types, electron-store)
+Last activity: 2026-03-02 — Wave 2 complete (plans 01-02, 01-05). Executing wave 3.
 
-Progress: [██░░░░░░░░] 20%
+Progress: [██████░░░░] 60%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 1
+- Total plans completed: 3
 - Average duration: 4 min
-- Total execution time: 0.07 hours
+- Total execution time: 0.18 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 1 | 1 | 4 min | 4 min |
+| 1 | 3 | 11 min | 4 min |
 
 **Recent Trend:**
-- Last 5 plans: 01-01 (4m)
-- Trend: N/A (too few data points)
+- Last 5 plans: 01-01 (4m), 01-02 (5m), 01-05 (2m)
+- Trend: Stable ~4min/plan
 
 *Updated after each plan completion*
 
@@ -42,6 +42,8 @@ Progress: [██░░░░░░░░] 20%
 Decisions are logged in PROJECT.md Key Decisions table.
 Recent decisions affecting current work:
 
+- Plan 01-02: Popup auto-dismisses after dial/whatsapp action; active number tracked in main process
+- Plan 01-05: GitHub Releases as auto-update publish provider; notarize script skips when no credentials
 - Plan 01-01: Used electron-store@9 (CJS) instead of v10+ ESM-only per research guidance
 - Plan 01-01: Created project manually (electron-vite scaffold CLI requires interactive prompts)
 - Project start: Cross-platform desktop (Windows + macOS) via Electron. Mobile covered by OneNote/Google Calendar apps in v1.
@@ -65,5 +67,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-03-02
-Stopped at: Completed 01-01-PLAN.md. Executing wave 2 (plans 01-02 and 01-05).
+Stopped at: Wave 2 complete. Executing wave 3 (plans 01-03 and 01-04).
 Resume file: None
