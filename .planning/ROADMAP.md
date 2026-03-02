@@ -58,7 +58,7 @@ Plans:
 Plans:
 - [x] 02-01-PLAN.md -- OneNote Graph API: rewrite onenote.ts, page find-or-create, role templates, multi-role append, IPC + UI wiring
 - [x] 02-02-PLAN.md -- Google Calendar follow-up API, follow-up UI (7/15/30 day buttons), dial-triggers-OneNote, settings toggle
-- [ ] 02-03-PLAN.md -- Phone Link detection (PowerShell WinRT polling), incoming call bar, post-call follow-up prompt
+- [x] 02-03-PLAN.md -- Phone Link detection (PowerShell WinRT polling), incoming call bar, post-call follow-up prompt
 
 ### Phase 3: Secondary Features and Website
 **Goal**: The toolkit is feature-complete for v1 and distributable — agents have document checklists, a UAE property news feed, and a public website they can share with management or colleagues to download the tool
