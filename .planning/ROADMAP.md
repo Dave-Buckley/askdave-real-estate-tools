@@ -57,7 +57,7 @@ Plans:
 **Plans**: 3 plans
 Plans:
 - [x] 02-01-PLAN.md -- OneNote Graph API: rewrite onenote.ts, page find-or-create, role templates, multi-role append, IPC + UI wiring
-- [ ] 02-02-PLAN.md -- Google Calendar follow-up API, follow-up UI (7/15/30 day buttons), dial-triggers-OneNote, settings toggle
+- [x] 02-02-PLAN.md -- Google Calendar follow-up API, follow-up UI (7/15/30 day buttons), dial-triggers-OneNote, settings toggle
 - [ ] 02-03-PLAN.md -- Phone Link detection (PowerShell WinRT polling), incoming call bar, post-call follow-up prompt
 
 ### Phase 3: Secondary Features and Website
@@ -78,5 +78,5 @@ Phases execute in numeric order: 1 → 2 → 3
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Core App + Communication | 5/5 | Complete | 2026-03-02 |
-| 2. Notes and Calendar Integration | 1/3 | In progress | - |
+| 2. Notes and Calendar Integration | 2/3 | In progress | - |
 | 3. Secondary Features and Website | 0/TBD | Not started | - |

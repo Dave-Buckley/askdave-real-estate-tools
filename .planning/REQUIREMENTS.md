@@ -22,7 +22,7 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Organization
 
-- [ ] **ORG-01**: Agent can set a follow-up reminder (3, 15, or 30 days) that auto-creates a Google Calendar event for that contact
+- [x] **ORG-01**: Agent can set a follow-up reminder (3, 15, or 30 days) that auto-creates a Google Calendar event for that contact
 - [ ] **ORG-02**: Agent can create a viewing event from a contact and send a Google Calendar invite to the client
 - [ ] **ORG-03**: Agent can view and tick off a document checklist per client, configured by transaction type (tenancy, sale, renewal)
 
@@ -106,7 +106,7 @@ Deferred to future releases. Significant complexity or external dependencies.
 | NOTE-02 | Phase 2 | Complete |
 | NOTE-03 | Phase 2 | Complete |
 | NOTE-04 | Phase 2 | Pending |
-| ORG-01 | Phase 2 | Pending |
+| ORG-01 | Phase 2 | Complete |
 | ORG-02 | Phase 2 | Pending |
 | APP-03 | Phase 2 | Pending |
 | ORG-03 | Phase 3 | Pending |

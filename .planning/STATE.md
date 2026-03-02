@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: in_progress
-last_updated: "2026-03-02T18:33:00.000Z"
+last_updated: "2026-03-02T18:39:00.000Z"
 progress:
   total_phases: 3
   completed_phases: 1
   total_plans: 8
-  completed_plans: 6
+  completed_plans: 7
 ---
 
 # Project State
@@ -23,11 +23,11 @@ See: .planning/PROJECT.md (updated 2026-03-02)
 ## Current Position
 
 Phase: 2 of 3 (Notes and Calendar Integration)
-Plan: 1 of 3 in current phase
-Status: Plan 02-01 complete — OneNote Graph API wired
-Last activity: 2026-03-02 — Plan 02-01 complete. OneNote Graph API replaces PowerShell COM.
+Plan: 2 of 3 in current phase
+Status: Plan 02-02 complete — Google Calendar follow-up API and dial-triggers-OneNote wired
+Last activity: 2026-03-02 — Plan 02-02 complete. Follow-up event creation via googleapis, ContactCard follow-up buttons (7/15/30d), dial auto-opens OneNote.
 
-Progress: [████░░░░░░] 40% (6/8 plans estimated across phase 1+2)
+Progress: [█████░░░░░] 50% (7/8 plans estimated across phase 1+2)
 
 ## Performance Metrics
 
@@ -41,10 +41,10 @@ Progress: [████░░░░░░] 40% (6/8 plans estimated across phase
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 1 | 5 | 18 min | 4 min |
-| 2 | 1 | 2 min | 2 min |
+| 2 | 2 | 5 min | 2.5 min |
 
 **Recent Trend:**
-- Last 6 plans: 01-01 (4m), 01-02 (5m), 01-05 (2m), 01-03 (4m), 01-04 (3m), 02-01 (2m)
+- Last 7 plans: 01-01 (4m), 01-02 (5m), 01-05 (2m), 01-03 (4m), 01-04 (3m), 02-01 (2m), 02-02 (3m)
 - Trend: Stable ~3min/plan
 
 *Updated after each plan completion*
@@ -56,6 +56,9 @@ Progress: [████░░░░░░] 40% (6/8 plans estimated across phase
 Decisions are logged in PROJECT.md Key Decisions table.
 Recent decisions affecting current work:
 
+- Plan 02-02: Follow-up presets are 7, 15, 30 days (CONTEXT.md locked decision, overrides REQUIREMENTS.md 3, 15, 30)
+- Plan 02-02: Dial-triggers-OneNote is non-blocking — openInOneNote called with .catch(() => {}) silent failure
+- Plan 02-02: googleapis events.insert uses requestBody (not deprecated resource) and Asia/Dubai timezone
 - Plan 02-01: Graph API replaces PowerShell COM — cross-platform OneNote, no process.platform guard
 - Plan 02-01: One page per contact keyed by E.164; all role templates appended on same page via PATCH
 - Plan 02-01: Notebook/section IDs cached in electron-store after first lookup to avoid throttling
@@ -85,5 +88,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-03-02
-Stopped at: Completed 02-01-PLAN.md — OneNote Graph API wired. Phase 2 Plan 1 of 3 complete.
+Stopped at: Completed 02-02-PLAN.md — Google Calendar follow-up API wired, dial-triggers-OneNote added. Phase 2 Plan 2 of 3 complete.
 Resume file: None
