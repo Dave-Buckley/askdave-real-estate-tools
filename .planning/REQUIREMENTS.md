@@ -15,9 +15,9 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Contact Notes
 
-- [ ] **NOTE-01**: Tool auto-creates a new OneNote page per contact (keyed on normalized phone number) or navigates to an existing one
-- [ ] **NOTE-02**: OneNote pages are pre-filled with role-specific qualifying templates (tenant, landlord, buyer, seller, portfolio)
-- [ ] **NOTE-03**: A single contact can have multiple roles; templates adapt when a new role is added to an existing contact
+- [x] **NOTE-01**: Tool auto-creates a new OneNote page per contact (keyed on normalized phone number) or navigates to an existing one
+- [x] **NOTE-02**: OneNote pages are pre-filled with role-specific qualifying templates (tenant, landlord, buyer, seller, portfolio)
+- [x] **NOTE-03**: A single contact can have multiple roles; templates adapt when a new role is added to an existing contact
 - [ ] **NOTE-04**: Agent can jot property details into a quick notepad mid-call and push them to the contact's OneNote page with one button
 
 ### Organization
@@ -102,9 +102,9 @@ Deferred to future releases. Significant complexity or external dependencies.
 | COMM-01 | Phase 1 | Complete |
 | COMM-02 | Phase 1 | Complete |
 | COMM-03 | Phase 1 | Complete |
-| NOTE-01 | Phase 2 | Pending |
-| NOTE-02 | Phase 2 | Pending |
-| NOTE-03 | Phase 2 | Pending |
+| NOTE-01 | Phase 2 | Complete |
+| NOTE-02 | Phase 2 | Complete |
+| NOTE-03 | Phase 2 | Complete |
 | NOTE-04 | Phase 2 | Pending |
 | ORG-01 | Phase 2 | Pending |
 | ORG-02 | Phase 2 | Pending |
