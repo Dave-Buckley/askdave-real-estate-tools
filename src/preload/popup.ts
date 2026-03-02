@@ -30,6 +30,8 @@ contextBridge.exposeInMainWorld('popupAPI', {
     ipcRenderer.invoke('onenote:open', data) as Promise<{ success: boolean; error?: string; pageId?: string }>,
   bookCalendar: (data: { name: string; displayNumber: string; roles: string[]; e164: string }, type: 'viewing' | 'consultation') =>
     ipcRenderer.invoke('calendar:book', data, type),
+  createFollowUp: (data: { name: string; displayNumber: string; roles: string[]; e164: string }, days: number) =>
+    ipcRenderer.invoke('calendar:follow-up', data, days) as Promise<{ success: boolean; error?: string; eventDate?: string }>,
 
   // Contacts
   getContact: (e164: string) => ipcRenderer.invoke('contacts:get', e164),

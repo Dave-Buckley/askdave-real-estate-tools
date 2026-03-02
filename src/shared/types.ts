@@ -18,6 +18,7 @@ export interface AppSettings {
   phoneLinkEnabled: boolean    // Phone Link incoming call detection (Windows only)
   oneNoteNotebookId?: string   // Cached "Real Estate" notebook ID (Graph API)
   oneNoteSectionId?: string    // Cached "Contacts" section ID (Graph API)
+  followUpPromptEnabled: boolean  // Show follow-up reminder buttons on ContactCard
   templates: Template[]
   contacts: Record<string, Contact>  // Keyed by E.164 phone number
 }

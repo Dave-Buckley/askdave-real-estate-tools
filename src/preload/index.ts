@@ -44,6 +44,8 @@ contextBridge.exposeInMainWorld('electronAPI', {
   // Calendar
   bookCalendar: (data: { name: string; displayNumber: string; roles: string[]; e164: string }, type: 'viewing' | 'consultation') =>
     ipcRenderer.invoke('calendar:book', data, type),
+  createFollowUp: (data: { name: string; displayNumber: string; roles: string[]; e164: string }, days: number) =>
+    ipcRenderer.invoke('calendar:follow-up', data, days) as Promise<{ success: boolean; error?: string; eventDate?: string }>,
 
   // Name sync
   setName: (e164: string, name: string) => ipcRenderer.send('name:changed', e164, name),

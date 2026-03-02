@@ -1,5 +1,5 @@
 import Store from 'electron-store'
-import { AppSettings, Template } from '../shared/types'
+import { AppSettings, Template, Contact } from '../shared/types'
 
 export const DEFAULT_TEMPLATES: Template[] = [
   {
@@ -44,9 +44,16 @@ export const store = new Store<AppSettings>({
   defaults: {
     clipboardEnabled: true,
     hotkeysEnabled: true,
+    selectionHotkey: 'CommandOrControl+Shift+Space',
     dialHotkey: 'CommandOrControl+Shift+D',
     whatsappHotkey: 'CommandOrControl+Shift+W',
     whatsappMode: 'web',
-    templates: DEFAULT_TEMPLATES
+    popupAutoShow: true,
+    oneNoteEnabled: true,
+    calendarEnabled: true,
+    phoneLinkEnabled: process.platform === 'win32',
+    followUpPromptEnabled: true,
+    templates: DEFAULT_TEMPLATES,
+    contacts: {}
   }
 })

@@ -5,7 +5,7 @@ import { setSkipNextClipboardChange } from './clipboard'
 import { hidePopup, getPanelWindow, getPopupWindow, showSettings, showPanel } from './tray'
 import { Template, ContactRole, AuthState } from '../shared/types'
 import { openContactPage } from './onenote'
-import { openCalendarBooking } from './calendar'
+import { openCalendarBooking, createFollowUp } from './calendar'
 import { microsoftSignIn, microsoftSignOut, microsoftGetAccount } from './auth/microsoft'
 import { googleSignIn, googleSignOut, isGoogleConnected, googleGetEmail } from './auth/google'
 import { getContact, upsertContact, addRole, removeRole, listContacts, deleteContact } from './contacts'
@@ -174,6 +174,10 @@ export function registerIPCHandlers(): void {
 
   ipcMain.handle('calendar:book', async (_event, data: { name: string; displayNumber: string; roles: ContactRole[]; e164: string }, type: 'viewing' | 'consultation') => {
     await openCalendarBooking(data, type)
+  })
+
+  ipcMain.handle('calendar:follow-up', async (_event, data: { name: string; displayNumber: string; roles: string[]; e164: string }, days: number) => {
+    return await createFollowUp(data, days)
   })
 
   // --- Auth ---
