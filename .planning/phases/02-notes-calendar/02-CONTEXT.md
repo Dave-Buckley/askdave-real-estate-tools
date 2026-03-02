@@ -6,76 +6,62 @@
 <domain>
 ## Phase Boundary
 
-Complete the communicate-document-follow-up loop: agents document every call in a structured OneNote page and set follow-up reminders and viewing bookings in Google Calendar, all from within the app. Includes incoming call detection via Windows Phone Link that auto-loads the caller's context.
+Wire up OneNote contact profiles via Microsoft Graph API and add a call workflow loop: outbound dial auto-opens OneNote, incoming call via Phone Link shows a button to pull up the caller's profile, and post-call hang-up prompts for a follow-up reminder in Google Calendar. Viewing bookings (ORG-02) are already built — this phase does NOT rebuild them.
 
 </domain>
 
 <decisions>
 ## Implementation Decisions
 
-### Quick notepad experience
-- Floating mini-window (separate always-on-top window), NOT inside the panel or popup
-- Auto-opens when the agent triggers Dial or WhatsApp from the contact card
-- One-click "Push to OneNote" button at bottom of the notepad
-- Pushed notes prefixed with timestamp only (no agent name)
-- Notepad clears after successful push
-- Can be dismissed manually if not needed
-
-### Follow-up reminders
-- Three preset buttons visible on the contact card: "3 days", "15 days", "30 days"
-- Plus a "+ Custom" option that opens a mini date/time picker for any date
-- Events created directly via Google Calendar API (in-app, no browser redirect)
-- Agent gets a confirmation toast after event creation
-- Requires Google sign-in (auth flow already built)
-
-### Viewing & event booking
-- Add an optional email field to the Contact model for calendar invites
-- When booking a viewing: mini form with date picker, time slot, and property address field
-- Calendar event title auto-fills as "Viewing - [Name] - [Address]"
-- If client email exists on contact, Google Calendar invite is sent automatically
-- No email = event created without invite (agent can forward manually)
-- Events created via Google Calendar API (same as follow-ups)
-
-### Incoming call detection
-- Monitor Windows Phone Link toast notifications for incoming call events
-- Extract phone number from notification content
-- Show a notification-style popup with caller info (number + name if in contacts)
-- Popup buttons: "Open OneNote", "Open Panel"; if unknown caller, offer "Add Contact"
-- Floating notepad auto-opens alongside the popup (ready for note-taking)
-- Windows only for v1 — feature disabled in settings on macOS
-- Uses `phoneLinkEnabled` setting toggle (already exists in AppSettings)
-
-### OneNote page structure
+### OneNote profile management
+- Switch from PowerShell COM automation to Microsoft Graph API (cross-platform)
 - ONE page per contact, keyed by normalized phone number
 - All role templates appear as sections on the same page (not separate sections per role)
-- Page layout: Contact header (name, phone, roles) > Role template tables > "Call Notes" section
-- Dedicated "Call Notes" section at bottom of page for pushed notes (timestamped entries)
+- Page layout: Contact header (name, phone, roles) > Role-specific qualifying template tables
 - When a second role is added: new role's qualifying template is appended as a new section (no page rebuild, no data loss)
-
-### OneNote API approach
-- Switch from PowerShell COM automation to Microsoft Graph API
-- Cross-platform: works on both Windows and macOS
-- Requires internet connection (Graph API is cloud-based)
 - Auth flow (MSAL with Notes.ReadWrite, Notes.Create scopes) already built
 - Create a "Real Estate" notebook with contacts as individual pages
 
+### Auto-open OneNote on dial
+- When agent clicks "Dial" from the contact card, OneNote page auto-opens alongside
+- Creates the page if it doesn't exist, navigates to it if it does
+- Same behavior whether triggered from panel or popup
+
+### Incoming call detection
+- Monitor Windows Phone Link for incoming call notifications
+- When a call comes in: show a button to pull up the caller's number in OneNote
+- If caller is in contacts, show their name; if unknown, show the number
+- Windows only for v1 — feature disabled in settings on macOS
+- Uses `phoneLinkEnabled` setting toggle (already exists in AppSettings)
+
+### Post-call follow-up prompt
+- Detect hang-up via Phone Link (call-ended notification)
+- Prompt: "Set a follow-up?" with three presets: 7 days, 15 days, 30 days
+- One tap creates a Google Calendar event with contact details via Calendar API
+- Toggleable in settings (agent can turn off the post-call prompt)
+- Requires Google sign-in (auth flow already built)
+
+### What's NOT in this phase
+- Quick notepad / mid-call note-taking (NOTE-04) — not needed, agents update OneNote directly
+- Viewing bookings (ORG-02) — already built in Phase 1 (opens Google Calendar in browser)
+- Rebuilding calendar to use API — current browser-redirect approach stays for viewings
+
 ### Claude's Discretion
-- Floating notepad window size and positioning
-- Exact toast notification style for calendar confirmations
 - Phone Link notification monitoring implementation details
 - How to handle Graph API failures gracefully (retry, offline message, etc.)
-- Contact email field placement and validation in the UI
-- Custom date picker component choice
+- Incoming call button UI design and positioning
+- Follow-up prompt UI (toast, popup, inline)
+- Toast confirmation style after follow-up creation
 
 </decisions>
 
 <specifics>
 ## Specific Ideas
 
-- Notepad should feel instant and lightweight — agents use it mid-call, so speed matters
-- Follow-up presets (3/15/30 days) are the most common intervals UAE real estate agents use
-- OneNote page should read like a contact dossier — everything about a person in one place
-- Incoming call detection creates a "who's calling?" moment — the popup should load fast with whatever context exists
+- OneNote page should read like a contact profile — everything about a person in one place
+- Incoming call flow is simple: call comes in, button appears, one click opens their OneNote profile
+- Post-call follow-up prompt should be unobtrusive — easy to dismiss if not needed
+- The whole point is speed: agents are on the phone all day, every extra click costs them
 
 </specifics>
 
@@ -83,14 +69,14 @@ Complete the communicate-document-follow-up loop: agents document every call in 
 ## Existing Code Insights
 
 ### Reusable Assets
-- `src/main/onenote.ts`: Role templates (ROLE_TEMPLATES), page XML builder, PowerShell executor — templates reusable, execution needs rewrite for Graph API
-- `src/main/calendar.ts`: Calendar booking function — needs rewrite from browser-redirect to API call
+- `src/main/onenote.ts`: Role templates (ROLE_TEMPLATES), page XML builder — templates reusable, execution needs rewrite for Graph API
+- `src/main/calendar.ts`: Calendar booking function (browser-redirect) — stays as-is for viewings; new Calendar API code needed for follow-ups only
 - `src/main/auth/microsoft.ts`: MSAL auth with `Notes.ReadWrite`, `Notes.Create` scopes — ready for Graph API calls
 - `src/main/auth/google.ts`: OAuth2 with Calendar scope, token refresh — ready for Calendar API calls
-- `src/main/contacts.ts`: Full CRUD, `upsertContact`, `addRole` — needs email field added
-- `src/shared/types.ts`: Contact type with `oneNotePageId`, `roles`, `notes` fields — needs email field
+- `src/main/contacts.ts`: Full CRUD, `upsertContact`, `addRole` — ready to use
+- `src/shared/types.ts`: Contact type with `oneNotePageId`, `roles`, `notes` fields
 - `src/main/ipc.ts`: IPC handlers for onenote:open, calendar:book, auth:* — extend for new operations
-- `src/renderer/panel/components/ContactCard.tsx`: OneNote/Viewing/Consult buttons already wired — extend with follow-up presets and email field
+- `src/renderer/panel/components/ContactCard.tsx`: OneNote/Viewing/Consult buttons already wired
 
 ### Established Patterns
 - IPC: one-way (`ipcMain.on`) for fire-and-forget actions, two-way (`ipcMain.handle`) for data operations
@@ -99,12 +85,11 @@ Complete the communicate-document-follow-up loop: agents document every call in 
 - UI: Tailwind CSS, small component files in renderer/{window}/components/
 
 ### Integration Points
-- ContactCard needs: follow-up preset buttons, email field, updated OneNote button behavior
-- Panel App.tsx needs: floating notepad window management
-- Main index.ts needs: Phone Link notification listener startup
-- IPC needs: new handlers for Graph API operations, notepad push, follow-up creation
-- Types needs: email field on Contact, calendar event types
-- Tray.ts needs: floating notepad window creation (similar to popup window)
+- ContactCard: update Dial button to also trigger OneNote open
+- Main index.ts: Phone Link notification listener startup
+- IPC: new handlers for Graph API OneNote operations, follow-up creation via Calendar API
+- Tray.ts: incoming call popup/button creation
+- Settings: add follow-up prompt toggle to AppSettings and FeatureToggles UI
 
 </code_context>
 
