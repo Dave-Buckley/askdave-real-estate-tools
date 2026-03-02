@@ -57,5 +57,13 @@ contextBridge.exposeInMainWorld('popupAPI', {
   onMinimized: (cb: () => void) =>
     ipcRenderer.on('popup:minimized', () => cb()),
   onRestored: (cb: () => void) =>
-    ipcRenderer.on('popup:restored', () => cb())
+    ipcRenderer.on('popup:restored', () => cb()),
+
+  // Phone Link events
+  onIncomingCall: (cb: (data: { e164: string; displayNumber: string; contactName: string | null }) => void) =>
+    ipcRenderer.on('phone-link:incoming-call', (_e, data) => cb(data)),
+  onCallEnded: (cb: (data: { e164: string; displayNumber: string; contactName: string | null }) => void) =>
+    ipcRenderer.on('phone-link:call-ended', (_e, data) => cb(data)),
+  onPhoneLinkAccessDenied: (cb: () => void) =>
+    ipcRenderer.on('phone-link:access-denied', () => cb())
 })

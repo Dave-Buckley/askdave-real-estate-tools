@@ -42,6 +42,10 @@ export interface ElectronAPI {
   onPhoneDetected: (cb: (e164: string, displayNumber: string) => void) => void
   onTemplatesUpdated: (cb: (templates: Template[]) => void) => void
   removePhoneDetectedListener: () => void
+
+  // Phone Link events
+  onIncomingCall: (cb: (data: { e164: string; displayNumber: string; contactName: string | null }) => void) => void
+  onCallEnded: (cb: (data: { e164: string; displayNumber: string; contactName: string | null }) => void) => void
 }
 
 export interface PopupAPI {
@@ -74,6 +78,11 @@ export interface PopupAPI {
   onSettingsUpdated: (cb: (settings: AppSettings) => void) => void
   onMinimized: (cb: () => void) => void
   onRestored: (cb: () => void) => void
+
+  // Phone Link events
+  onIncomingCall: (cb: (data: { e164: string; displayNumber: string; contactName: string | null }) => void) => void
+  onCallEnded: (cb: (data: { e164: string; displayNumber: string; contactName: string | null }) => void) => void
+  onPhoneLinkAccessDenied: (cb: () => void) => void
 }
 
 export interface SettingsAPI {

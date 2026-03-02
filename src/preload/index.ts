@@ -60,5 +60,11 @@ contextBridge.exposeInMainWorld('electronAPI', {
   onTemplatesUpdated: (cb: (templates: unknown[]) => void) =>
     ipcRenderer.on('templates:updated', (_e, templates) => cb(templates)),
   removePhoneDetectedListener: () =>
-    ipcRenderer.removeAllListeners('phone:detected')
+    ipcRenderer.removeAllListeners('phone:detected'),
+
+  // Phone Link events
+  onIncomingCall: (cb: (data: { e164: string; displayNumber: string; contactName: string | null }) => void) =>
+    ipcRenderer.on('phone-link:incoming-call', (_e, data) => cb(data)),
+  onCallEnded: (cb: (data: { e164: string; displayNumber: string; contactName: string | null }) => void) =>
+    ipcRenderer.on('phone-link:call-ended', (_e, data) => cb(data))
 })
