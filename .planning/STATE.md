@@ -79,7 +79,7 @@ Recent decisions affecting current work:
 
 ### Pending Todos
 
-None yet.
+- **Add silent TickTick reminder integration** (area: api) — config-gated, no UI surface, personal feature
 
 ### Blockers/Concerns
 
