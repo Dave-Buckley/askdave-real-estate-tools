@@ -23,11 +23,11 @@ See: .planning/PROJECT.md (updated 2026-03-02)
 ## Current Position
 
 Phase: 3 of 3 (Secondary Features and Website)
-Plan: 2 of 3 in current phase (COMPLETE)
-Status: Plan 03-02 complete — UAE real estate news feed (rss-parser, 3 feeds, 30-min background refresh, NewsFeed panel view, settings toggle).
-Last activity: 2026-03-03 — news.ts RSS module, IPC news:get handler, background timer, NewsFeed component, panel header news button, newsEnabled toggle.
+Plan: 3 of 3 in current phase (COMPLETE)
+Status: Plan 03-03 complete — electron-builder GitHub Releases publish config, landing page download buttons updated to /releases/latest/download/ URLs, macOS button activated.
+Last activity: 2026-03-03 — electron-builder.config.js publish block, NSIS artifactName, landing/index.html download href updates (3 buttons).
 
-Progress: [█████████░] 88% (Phase 3 in progress — 2/3 plans done)
+Progress: [██████████] 100% (Phase 3 complete — 3/3 plans done)
 
 ## Performance Metrics
 
@@ -42,7 +42,7 @@ Progress: [█████████░] 88% (Phase 3 in progress — 2/3 plan
 |-------|-------|-------|----------|
 | 1 | 5 | 18 min | 4 min |
 | 2 | 2 | 5 min | 2.5 min |
-| 3 | 2 | 8 min | 4 min |
+| 3 | 3 | 11 min | 3.7 min |
 
 **Recent Trend:**
 - Last 7 plans: 01-05 (2m), 01-03 (4m), 01-04 (3m), 02-01 (2m), 02-02 (3m), 03-01 (4m), 03-02 (4m)
@@ -83,6 +83,9 @@ Recent decisions affecting current work:
 - [Phase 03]: RSS fetching in main process via rss-parser; partial failures per-feed isolated with try/catch
 - [Phase 03]: News view replaces main panel view (same pattern as hotkeys) to avoid layout overflow
 - [Phase 03]: newsEnabled defaults true; news feature on by default, togglable in settings
+- [Phase 03-03]: GitHub Releases as download host — /releases/latest/download/ URLs are version-independent
+- [Phase 03-03]: NSIS artifactName: 'AgentKit-Setup.${ext}' ensures stable installer filename across version bumps
+- [Phase 03-03]: releaseType: 'draft' for safe development workflow; OWNER/REPO are placeholders for user to fill in
 
 ### Pending Todos
 
@@ -97,5 +100,5 @@ Recent decisions affecting current work:
 ## Session Continuity
 
 Last session: 2026-03-03
-Stopped at: Completed 03-02-PLAN.md. UAE news feed feature done. Phase 3 plan 2 of 3 complete.
+Stopped at: Completed 03-03-PLAN.md. GitHub Releases publish config + landing page download URLs done. Phase 3 plan 3 of 3 complete. Task 2 (checkpoint:human-verify) awaiting user review of download buttons.
 Resume file: None

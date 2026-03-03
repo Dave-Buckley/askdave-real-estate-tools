@@ -41,7 +41,7 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Website
 
-- [ ] **WEB-01**: A simple instruction/marketing website explains the tool's features, shows how to install it, and provides download links
+- [x] **WEB-01**: A simple instruction/marketing website explains the tool's features, shows how to install it, and provides download links
 
 ## v2 Requirements
 
@@ -111,7 +111,7 @@ Deferred to future releases. Significant complexity or external dependencies.
 | APP-03 | Phase 2 | Complete |
 | ORG-03 | Phase 3 | Complete |
 | NEWS-01 | Phase 3 | Complete |
-| WEB-01 | Phase 3 | Pending |
+| WEB-01 | Phase 3 | Complete |
 
 **Coverage:**
 - v1 requirements: 18 total
