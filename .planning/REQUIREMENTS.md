@@ -24,13 +24,13 @@ Requirements for initial release. Each maps to roadmap phases.
 
 - [x] **ORG-01**: Agent can set a follow-up reminder (3, 15, or 30 days) that auto-creates a Google Calendar event for that contact
 - [ ] **ORG-02**: Agent can create a viewing event from a contact and send a Google Calendar invite to the client
-- [ ] **ORG-03**: Agent can view and tick off a document checklist per client, configured by transaction type (tenancy, sale, renewal)
+- [x] **ORG-03**: Agent can view and tick off a document checklist per client, configured by transaction type (tenancy, sale, renewal)
 
 ### Desktop App Core
 
 - [x] **APP-01**: App runs in the system tray (Windows) or menu bar (macOS) with configurable global hotkeys for key actions
 - [x] **APP-02**: App detects phone numbers on the clipboard and offers click-to-dial and click-to-WhatsApp actions
-- [ ] **APP-03**: App detects incoming call notifications via phone-link integration and offers to open the caller's OneNote page
+- [x] **APP-03**: App detects incoming call notifications via phone-link integration and offers to open the caller's OneNote page
 - [x] **APP-04**: All phone numbers are normalized to UAE E.164 format (+971XXXXXXXXX) before any action
 - [x] **APP-05**: App installs via clean installer (.exe for Windows, .dmg for macOS), requires no admin rights, starts on login, and auto-updates silently
 - [x] **APP-06**: During setup or in settings, agent can enable/disable individual features so they only see what they want to use
@@ -108,8 +108,8 @@ Deferred to future releases. Significant complexity or external dependencies.
 | NOTE-04 | Phase 2 | Pending |
 | ORG-01 | Phase 2 | Complete |
 | ORG-02 | Phase 2 | Pending |
-| APP-03 | Phase 2 | Pending |
-| ORG-03 | Phase 3 | Pending |
+| APP-03 | Phase 2 | Complete |
+| ORG-03 | Phase 3 | Complete |
 | NEWS-01 | Phase 3 | Pending |
 | WEB-01 | Phase 3 | Pending |
 
