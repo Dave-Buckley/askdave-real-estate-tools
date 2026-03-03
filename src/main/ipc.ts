@@ -3,7 +3,7 @@ import { store } from './store'
 import { openDialler, openWhatsApp, buildWhatsAppURL } from './actions'
 import { setSkipNextClipboardChange } from './clipboard'
 import { hidePopup, getPanelWindow, getPopupWindow, showSettings, showPanel } from './tray'
-import { Template, ContactRole, AuthState } from '../shared/types'
+import { Template, ContactRole, AuthState, ContactChecklist } from '../shared/types'
 import { openContactPage } from './onenote'
 import { openCalendarBooking, createFollowUp } from './calendar'
 import { microsoftSignIn, microsoftSignOut, microsoftGetAccount } from './auth/microsoft'
@@ -238,5 +238,16 @@ export function registerIPCHandlers(): void {
 
   ipcMain.handle('contacts:delete', (_event, e164: string) => {
     deleteContact(e164)
+  })
+
+  // --- Checklists ---
+
+  ipcMain.handle('checklist:save', (_event, e164: string, checklist: ContactChecklist) => {
+    upsertContact(e164, { checklist })
+  })
+
+  ipcMain.handle('checklist:get', (_event, e164: string) => {
+    const contact = getContact(e164)
+    return contact?.checklist ?? null
   })
 }

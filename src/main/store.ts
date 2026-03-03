@@ -53,6 +53,7 @@ export const store = new Store<AppSettings>({
     calendarEnabled: true,
     phoneLinkEnabled: process.platform === 'win32',
     followUpPromptEnabled: true,
+    checklistEnabled: true,
     templates: DEFAULT_TEMPLATES,
     contacts: {}
   }

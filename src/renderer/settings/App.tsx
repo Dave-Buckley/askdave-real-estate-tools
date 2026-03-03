@@ -189,6 +189,7 @@ function App(): React.JSX.Element {
             calendarEnabled={settings.calendarEnabled}
             phoneLinkEnabled={settings.phoneLinkEnabled}
             followUpPromptEnabled={settings.followUpPromptEnabled}
+            checklistEnabled={settings.checklistEnabled}
             onToggle={handleToggle}
           />
         </div>

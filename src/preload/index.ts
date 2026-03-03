@@ -37,6 +37,11 @@ contextBridge.exposeInMainWorld('electronAPI', {
   listContacts: () => ipcRenderer.invoke('contacts:list'),
   deleteContact: (e164: string) => ipcRenderer.invoke('contacts:delete', e164),
 
+  // Checklists
+  saveChecklist: (e164: string, checklist: Record<string, unknown>) =>
+    ipcRenderer.invoke('checklist:save', e164, checklist),
+  getChecklist: (e164: string) => ipcRenderer.invoke('checklist:get', e164),
+
   // OneNote
   openInOneNote: (data: { name: string; displayNumber: string; roles: string[]; e164: string }) =>
     ipcRenderer.invoke('onenote:open', data) as Promise<{ success: boolean; error?: string; pageId?: string }>,

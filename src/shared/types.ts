@@ -5,6 +5,20 @@ export interface Template {
   category: string    // e.g., "introduction", "follow-up", "viewing"
 }
 
+export type TransactionType = 'tenancy' | 'sale' | 'renewal' | 'off-plan'
+
+export interface ChecklistItem {
+  id: string           // e.g., 'tenant-emirates-id'
+  label: string        // e.g., 'Emirates ID (tenant)'
+  receivedAt?: string  // ISO timestamp when ticked; undefined = not yet received
+}
+
+export interface ContactChecklist {
+  transactionType: TransactionType
+  items: ChecklistItem[]
+  updatedAt: string
+}
+
 export interface AppSettings {
   clipboardEnabled: boolean
   hotkeysEnabled: boolean
@@ -19,6 +33,7 @@ export interface AppSettings {
   oneNoteNotebookId?: string   // Cached "Real Estate" notebook ID (Graph API)
   oneNoteSectionId?: string    // Cached "Contacts" section ID (Graph API)
   followUpPromptEnabled: boolean  // Show follow-up reminder buttons on ContactCard
+  checklistEnabled: boolean    // Document checklist per client by transaction type
   templates: Template[]
   contacts: Record<string, Contact>  // Keyed by E.164 phone number
 }
@@ -52,6 +67,7 @@ export interface Contact {
   roles: ContactRole[]      // Assigned roles (multi-role support)
   notes: string             // Quick notes
   oneNotePageId?: string    // OneNote page ID if linked
+  checklist?: ContactChecklist  // Document checklist for this contact's transaction
   createdAt: string         // ISO timestamp
   updatedAt: string         // ISO timestamp
 }

@@ -5,6 +5,7 @@ interface FeatureTogglesProps {
   calendarEnabled: boolean
   phoneLinkEnabled: boolean
   followUpPromptEnabled: boolean
+  checklistEnabled: boolean
   onToggle: (key: string, value: boolean) => void
 }
 
@@ -39,6 +40,11 @@ const FEATURES = [
     key: 'followUpPromptEnabled',
     label: 'Follow-up Reminders',
     description: 'Show follow-up reminder buttons (7, 15, 30 days) on contact cards'
+  },
+  {
+    key: 'checklistEnabled',
+    label: 'Document Checklists',
+    description: 'Track required documents per client by transaction type'
   }
 ]
 
@@ -49,6 +55,7 @@ export default function FeatureToggles({
   calendarEnabled,
   phoneLinkEnabled,
   followUpPromptEnabled,
+  checklistEnabled,
   onToggle
 }: FeatureTogglesProps) {
   const values: Record<string, boolean> = {
@@ -57,7 +64,8 @@ export default function FeatureToggles({
     oneNoteEnabled,
     calendarEnabled,
     phoneLinkEnabled,
-    followUpPromptEnabled
+    followUpPromptEnabled,
+    checklistEnabled
   }
 
   const isWindows = navigator.userAgent.includes('Windows')
