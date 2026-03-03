@@ -1,21 +1,52 @@
 import { parsePhoneNumber } from 'libphonenumber-js'
 
 /**
- * Normalize a raw phone number string to UAE E.164 format (+971XXXXXXXXX).
- * Handles national (05x), international (+971), and double-zero (00971) formats.
- * Returns null if the number is not a valid UAE phone number.
+ * Normalize a raw phone number string to E.164 format.
+ * Tries UAE (AE) as default country for local numbers (05x, 04x, etc.)
+ * but accepts any valid international number.
+ * Returns null if the number is not a valid phone number.
  */
-export function normalizeToUAE(raw: string): string | null {
+export function normalizePhone(raw: string): string | null {
+  // Strip common non-digit noise but keep + at the start
+  const cleaned = raw.trim()
+
   try {
-    const phone = parsePhoneNumber(raw.trim(), 'AE')
+    // Try parsing with AE as default country (handles local UAE formats)
+    const phone = parsePhoneNumber(cleaned, 'AE')
     if (phone && phone.isValid()) {
-      return phone.number as string // E.164: '+971XXXXXXXXX'
+      return phone.number as string
     }
-    return null
   } catch {
-    return null
+    // fall through
   }
+
+  try {
+    // Try parsing without a default country (handles full international numbers)
+    const phone = parsePhoneNumber(cleaned)
+    if (phone && phone.isValid()) {
+      return phone.number as string
+    }
+  } catch {
+    // fall through
+  }
+
+  // Try prepending + if the string starts with digits that look like a country code
+  if (/^\d{10,15}$/.test(cleaned.replace(/[\s\-()]/g, ''))) {
+    try {
+      const phone = parsePhoneNumber('+' + cleaned.replace(/[\s\-()]/g, ''))
+      if (phone && phone.isValid()) {
+        return phone.number as string
+      }
+    } catch {
+      // fall through
+    }
+  }
+
+  return null
 }
+
+/** @deprecated Use normalizePhone instead */
+export const normalizeToUAE = normalizePhone
 
 /**
  * Format an E.164 phone number for human-readable display.

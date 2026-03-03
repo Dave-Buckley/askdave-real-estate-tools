@@ -1,16 +1,21 @@
 /** @type {import('electron-builder').Configuration} */
 module.exports = {
-  appId: 'ae.agentkit.app',
-  productName: 'Agent Kit',
+  appId: 'ae.askdave.realestate',
+  productName: 'Ask Dave Real Estate Tools',
   directories: {
-    output: 'release',
+    output: '../RealEstate-Release',
     buildResources: 'build',
   },
-  files: ['out/**'],
+  files: [
+    '!**/*',
+    'out/**'
+  ],
   extraResources: [
     { from: 'build/icons/icon.ico', to: 'icons/icon.ico' },
     { from: 'build/icons/icon_16.png', to: 'icons/icon_16.png' },
     { from: 'build/icons/icon_32.png', to: 'icons/icon_32.png' },
+    { from: 'build/icons/icon_256.png', to: 'icons/icon_256.png' },
+    { from: 'build/forms', to: 'forms' },
   ],
 
   // Windows — NSIS per-user installer
@@ -29,9 +34,10 @@ module.exports = {
     allowElevation: false,    // Do NOT prompt for admin
     createDesktopShortcut: 'always',
     createStartMenuShortcut: true,
-    shortcutName: 'Agent Kit',
+    shortcutName: 'Ask Dave Real Estate Tools',
     runAfterFinish: true,     // Option to launch after install
-    artifactName: 'AgentKit-Setup.${ext}', // Consistent filename across versions for stable download URLs
+    artifactName: 'AskDave-RealEstateTools-Setup.${ext}',
+    uninstallerIcon: 'build/icons/icon.ico', // White A on black in Add/Remove Programs
   },
 
   // macOS — DMG with hardened runtime

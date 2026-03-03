@@ -1,115 +1,264 @@
-import { useState, useEffect } from 'react'
-import type { AppSettings, ContactRole, ContactChecklist, TransactionType } from '../../../shared/types'
-import { TRANSACTION_CHECKLISTS } from '../../../shared/checklists'
+import { useState, useEffect, useRef } from 'react'
+import { X, Phone, ChevronDown, ChevronRight, FileText, Calendar, Copy, Pencil, Plus, Newspaper, Mail, MessageCircle, ClipboardList, Download, ShieldCheck } from 'lucide-react'
+import type { AppSettings, ContactRole, Template, FormTemplateOverride } from '../../../shared/types'
+import { getFormsByCategory, type FormCategory, type FormEntry } from '../../../shared/forms'
+import NewsFeed from './NewsFeed'
+
+// News source favicons
+import iconGulfNews from '../assets/news/gulfnews.png'
+import iconNational from '../assets/news/national.png'
+import iconKhaleej from '../assets/news/khaleej.png'
+import iconArabianBiz from '../assets/news/arabianbiz.png'
+import iconZawya from '../assets/news/zawya.png'
+import iconPropNews from '../assets/news/propnews.png'
+import iconPropTime from '../assets/news/proptime.png'
+import iconGulfProp from '../assets/news/gulfprop.png'
+import iconREMTimes from '../assets/news/remtimes.png'
+import iconProp24 from '../assets/news/prop24.png'
+import iconAGBI from '../assets/news/agbi.png'
+import iconEconomyME from '../assets/news/economyme.png'
 
 const ALL_ROLES: ContactRole[] = ['Tenant', 'Landlord', 'Buyer', 'Seller', 'Investor']
 
-const ROLE_COLORS: Record<ContactRole, { bg: string; border: string; text: string; activeBg: string; activeBorder: string; activeText: string }> = {
-  Tenant: { bg: 'bg-gray-50', border: 'border-gray-200', text: 'text-gray-500', activeBg: 'bg-blue-50', activeBorder: 'border-blue-300', activeText: 'text-blue-700' },
-  Landlord: { bg: 'bg-gray-50', border: 'border-gray-200', text: 'text-gray-500', activeBg: 'bg-amber-50', activeBorder: 'border-amber-300', activeText: 'text-amber-700' },
-  Buyer: { bg: 'bg-gray-50', border: 'border-gray-200', text: 'text-gray-500', activeBg: 'bg-green-50', activeBorder: 'border-green-300', activeText: 'text-green-700' },
-  Seller: { bg: 'bg-gray-50', border: 'border-gray-200', text: 'text-gray-500', activeBg: 'bg-red-50', activeBorder: 'border-red-300', activeText: 'text-red-700' },
-  Investor: { bg: 'bg-gray-50', border: 'border-gray-200', text: 'text-gray-500', activeBg: 'bg-purple-50', activeBorder: 'border-purple-300', activeText: 'text-purple-700' }
+const ROLE_COLORS: Record<ContactRole, string> = {
+  Tenant: 'text-[#818cf8]',
+  Landlord: 'text-[#fbbf24]',
+  Buyer: 'text-[#4ade80]',
+  Seller: 'text-[#f87171]',
+  Investor: 'text-[#c084fc]'
 }
 
-const TRANSACTION_LABELS: Record<TransactionType, string> = {
-  tenancy: 'Tenancy',
-  renewal: 'Renewal',
-  sale: 'Sale',
-  'off-plan': 'Off-Plan'
-}
-
-/** Format an ISO timestamp as a short date like "Mar 3" */
-function formatShortDate(iso: string): string {
-  try {
-    return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
-  } catch {
-    return ''
+const FORM_TAB_STYLES: Record<FormCategory, { active: string; inactive: string }> = {
+  sales: {
+    active: 'bg-[rgba(99,102,241,0.22)] text-[#818cf8] border-[rgba(99,102,241,0.4)]',
+    inactive: 'bg-white/[0.03] text-[#71717a] border-white/[0.07] hover:bg-white/[0.06]'
+  },
+  rentals: {
+    active: 'bg-[rgba(34,197,94,0.18)] text-[#4ade80] border-[rgba(34,197,94,0.35)]',
+    inactive: 'bg-white/[0.03] text-[#71717a] border-white/[0.07] hover:bg-white/[0.06]'
+  },
+  offplan: {
+    active: 'bg-[rgba(245,158,11,0.15)] text-[#fbbf24] border-[rgba(245,158,11,0.3)]',
+    inactive: 'bg-white/[0.03] text-[#71717a] border-white/[0.07] hover:bg-white/[0.06]'
   }
 }
+
+const NEWS_SOURCES = [
+  { label: 'Gulf News', title: 'Gulf News Property', url: 'https://gulfnews.com/business/property', icon: iconGulfNews },
+  { label: 'National', title: 'The National — Property', url: 'https://www.thenationalnews.com/business/property/', icon: iconNational },
+  { label: 'Khaleej', title: 'Khaleej Times Property', url: 'https://www.khaleejtimes.com/business/property', icon: iconKhaleej },
+  { label: 'Arabian Biz', title: 'Arabian Business Real Estate', url: 'https://www.arabianbusiness.com/industries/real-estate', icon: iconArabianBiz },
+  { label: 'Zawya', title: 'Zawya UAE Real Estate', url: 'https://www.zawya.com/en/business/real-estate', icon: iconZawya },
+  { label: 'PropNews', title: 'PropertyNews.ae', url: 'https://propertynews.ae/', icon: iconPropNews },
+  { label: 'Prop Time', title: 'Property Time', url: 'https://www.propertytime.ae/', icon: iconPropTime },
+  { label: 'Gulf Prop', title: 'Gulf Property', url: 'https://gulfproperty.media/', icon: iconGulfProp },
+  { label: 'REMTimes', title: 'REMTimes', url: 'https://www.remtimes.com/', icon: iconREMTimes },
+  { label: 'Prop24', title: 'Property24.ae', url: 'https://property24.ae/', icon: iconProp24 },
+  { label: 'AGBI', title: 'Arabian Gulf Business Insight — Real Estate', url: 'https://www.agbi.com/sectors/real-estate/', icon: iconAGBI },
+  { label: 'Economy ME', title: 'Economy Middle East — Real Estate', url: 'https://economymiddleeast.com/newscategories/real-estate/', icon: iconEconomyME }
+]
 
 interface ContactCardProps {
   e164: string
   displayNumber: string
   contactName: string
+  contactEmail: string
+  contactUnit: string
+  onNumberChange: (number: string) => void
   onNameChange: (name: string) => void
+  onEmailChange: (email: string) => void
+  onUnitChange: (unit: string) => void
   onClear: () => void
   whatsappMode: AppSettings['whatsappMode']
   oneNoteEnabled: boolean
   calendarEnabled: boolean
   followUpPromptEnabled: boolean
-  checklistEnabled: boolean
-  roles: ContactRole[]
-  onRolesChange: (roles: ContactRole[]) => void
+  templates: Template[]
+  onSelectTemplate: (template: Template) => void
+  onEditTemplate: (template: Template) => void
+  onDeleteTemplate: (id: string) => void
+  onCreateTemplate: () => void
+  onEnsureTemplate: (templateId: string, defaults: Template) => void
+  onEditRoleTemplate: (role: ContactRole) => void
+  viewingTemplateId?: string
+  consultationTemplateId?: string
+  newsEnabled: boolean
+  formOverrides: Record<string, FormTemplateOverride>
+  onEditForm: (form: FormEntry) => void
 }
 
 export default function ContactCard({
   e164,
   displayNumber,
   contactName,
+  contactEmail,
+  contactUnit,
+  onNumberChange,
   onNameChange,
+  onEmailChange,
+  onUnitChange,
   onClear,
   whatsappMode,
   oneNoteEnabled,
   calendarEnabled,
   followUpPromptEnabled,
-  checklistEnabled,
-  roles,
-  onRolesChange
+  templates,
+  onSelectTemplate,
+  onEditTemplate,
+  onDeleteTemplate,
+  onCreateTemplate,
+  onEnsureTemplate,
+  onEditRoleTemplate,
+  viewingTemplateId,
+  consultationTemplateId,
+  newsEnabled,
+  formOverrides,
+  onEditForm
 }: ContactCardProps) {
-  const [showNameInput, setShowNameInput] = useState(!!contactName)
   const [showWhatsAppMenu, setShowWhatsAppMenu] = useState(false)
+  const [showViewingMenu, setShowViewingMenu] = useState(false)
+  const [showConsultMenu, setShowConsultMenu] = useState(false)
   const [oneNoteError, setOneNoteError] = useState<string | null>(null)
   const [followUpStatus, setFollowUpStatus] = useState<{ type: 'success' | 'error'; message: string } | null>(null)
+  const [templatesExpanded, setTemplatesExpanded] = useState(false)
+  const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null)
+  const [formsDir, setFormsDir] = useState<string>('')
 
-  // Checklist state
-  const [checklistExpanded, setChecklistExpanded] = useState(false)
-  const [checklist, setChecklist] = useState<ContactChecklist | null>(null)
-  const [confirmChangeType, setConfirmChangeType] = useState(false)
+  const waDropdownRef = useRef<HTMLDivElement>(null)
+  const viewingDropdownRef = useRef<HTMLDivElement>(null)
+  const consultDropdownRef = useRef<HTMLDivElement>(null)
 
-  // Load checklist from store whenever e164 changes
   useEffect(() => {
-    if (!checklistEnabled) return
-    window.electronAPI.getChecklist(e164).then((saved: ContactChecklist | null) => {
-      setChecklist(saved)
-    })
-  }, [e164, checklistEnabled])
+    const handleClick = (e: MouseEvent) => {
+      if (showWhatsAppMenu && waDropdownRef.current && !waDropdownRef.current.contains(e.target as Node)) {
+        setShowWhatsAppMenu(false)
+      }
+      if (showViewingMenu && viewingDropdownRef.current && !viewingDropdownRef.current.contains(e.target as Node)) {
+        setShowViewingMenu(false)
+      }
+      if (showConsultMenu && consultDropdownRef.current && !consultDropdownRef.current.contains(e.target as Node)) {
+        setShowConsultMenu(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClick)
+    return () => document.removeEventListener('mousedown', handleClick)
+  }, [showWhatsAppMenu, showViewingMenu, showConsultMenu])
+
+  const [oneNoteTemplatesExpanded, setOneNoteTemplatesExpanded] = useState(false)
+  const [gmailTemplatesExpanded, setGmailTemplatesExpanded] = useState(false)
+  const [formsExpanded, setFormsExpanded] = useState(false)
+  const [formsTab, setFormsTab] = useState<FormCategory>('sales')
+  const [newsExpanded, setNewsExpanded] = useState(false)
+  const [kycExpanded, setKycExpanded] = useState(false)
+
+  useEffect(() => {
+    window.electronAPI.getFormsDir().then(setFormsDir)
+  }, [])
+
+  const sessionData = { name: contactName, displayNumber, roles: [] as ContactRole[], e164, unit: contactUnit, email: contactEmail }
+
+  // ── Handlers ──────────────────────────────────────────────────────────
+
+  const fillPlaceholders = (text: string): string => {
+    const name = contactName || displayNumber
+    return text
+      .replace(/\{name\}/gi, name)
+      .replace(/\{number\}/gi, displayNumber)
+      .replace(/\{email\}/gi, contactEmail)
+      .replace(/\{unit\}/gi, contactUnit)
+  }
+
+  const handleGmailCompose = (subject?: string, body?: string) => {
+    const filledSubject = fillPlaceholders(subject || '')
+    const filledBody = fillPlaceholders(body || '')
+    const params = new URLSearchParams()
+    if (contactEmail) params.set('to', contactEmail)
+    if (filledSubject) params.set('su', filledSubject)
+    if (filledBody) params.set('body', filledBody)
+    params.set('view', 'cm')
+    window.electronAPI.openExternal(`https://mail.google.com/mail/?${params.toString()}`)
+    window.electronAPI.actionDone()
+  }
+
+  const openFormFile = (form: FormEntry) => {
+    if (!formsDir) return
+    const filePath = `${formsDir}/${form.subFolder}/${form.fileName}`
+    window.electronAPI.showItemInFolder(filePath)
+  }
+
+  const handleFormWhatsApp = (form: FormEntry) => {
+    const override = formOverrides[form.id]
+    const message = fillPlaceholders(override?.whatsappMessage ?? form.whatsappMessage)
+    window.electronAPI.sendWhatsAppMessage(e164, message, whatsappMode)
+    openFormFile(form)
+    window.electronAPI.actionDone()
+  }
+
+  const handleFormGmail = (form: FormEntry) => {
+    const override = formOverrides[form.id]
+    handleGmailCompose(override?.emailSubject ?? form.emailSubject, override?.emailBody ?? form.emailBody)
+    openFormFile(form)
+  }
+
 
   const handleDial = () => {
     window.electronAPI.dial(e164)
-    // Auto-open OneNote alongside dial if enabled (per CONTEXT.md decision)
-    if (oneNoteEnabled) {
-      window.electronAPI.openInOneNote(sessionData).catch(() => {
-        // Silently fail — dial is the primary action, OneNote is secondary
-      })
+    window.electronAPI.actionDone()
+  }
+
+  const handleWhatsApp = () => {
+    window.electronAPI.openWhatsApp(e164, whatsappMode)
+    setShowWhatsAppMenu(false)
+    window.electronAPI.actionDone()
+  }
+
+  const handleOneNoteOpen = async () => {
+    setOneNoteError(null)
+    const result = await window.electronAPI.openOneNoteSection()
+    if (!result.success) {
+      setOneNoteError(result.error || 'Failed to open OneNote')
+      setTimeout(() => setOneNoteError(null), 5000)
+    } else {
+      window.electronAPI.actionDone()
     }
   }
 
-  const handleWhatsApp = (mode?: 'web' | 'desktop') => {
-    window.electronAPI.openWhatsApp(e164, mode || whatsappMode)
-    setShowWhatsAppMenu(false)
-  }
-
-  const toggleRole = (role: ContactRole) => {
-    const next = roles.includes(role)
-      ? roles.filter((r) => r !== role)
-      : [...roles, role]
-    onRolesChange(next)
-  }
-
-  const sessionData = { name: contactName, displayNumber, roles, e164 }
-
-  const handleOneNote = async () => {
+  const handleOneNoteRole = async (role: ContactRole) => {
     setOneNoteError(null)
-    const result = await window.electronAPI.openInOneNote(sessionData)
-    if (!result.success) {
+    const result = await window.electronAPI.openInOneNote({
+      name: contactName, displayNumber, roles: [role], e164, unit: contactUnit, email: contactEmail
+    })
+    if (result.success) {
+      window.electronAPI.actionDone()
+    } else {
       setOneNoteError(result.error || 'Failed to open OneNote')
       setTimeout(() => setOneNoteError(null), 5000)
     }
   }
 
-  const handleBookViewing = () => window.electronAPI.bookCalendar(sessionData, 'viewing')
-  const handleBookConsult = () => window.electronAPI.bookCalendar(sessionData, 'consultation')
+  const VIEWING_DEFAULTS: Template = {
+    id: 'tpl-viewing', name: 'Viewing Invitation',
+    body: 'Hi {name}, I\'d like to arrange a property viewing for {unit}. Could you let me know your preferred date and time? I\'ll confirm the details shortly.',
+    category: 'viewing'
+  }
+  const CONSULTATION_DEFAULTS: Template = {
+    id: 'tpl-consultation', name: 'Consultation Invitation',
+    body: 'Hi {name}, I\'d like to schedule a consultation to discuss your property requirements. When would be a convenient time for you?',
+    category: 'other'
+  }
+
+  const handleViewingClick = () => {
+    const tpl = viewingTemplateId ? templates.find((t) => t.id === viewingTemplateId) : null
+    window.electronAPI.bookCalendar(sessionData, 'viewing', tpl?.body)
+    window.electronAPI.actionDone()
+  }
+  const handleConsultClick = () => {
+    const tpl = consultationTemplateId ? templates.find((t) => t.id === consultationTemplateId) : null
+    window.electronAPI.bookCalendar(sessionData, 'consultation', tpl?.body)
+    window.electronAPI.actionDone()
+  }
+  const handleEditViewingTemplate = () => { onEnsureTemplate(viewingTemplateId || 'tpl-viewing', VIEWING_DEFAULTS); setShowViewingMenu(false) }
+  const handleEditConsultTemplate = () => { onEnsureTemplate(consultationTemplateId || 'tpl-consultation', CONSULTATION_DEFAULTS); setShowConsultMenu(false) }
 
   const handleFollowUp = async (days: number) => {
     setFollowUpStatus(null)
@@ -122,375 +271,423 @@ export default function ContactCard({
     setTimeout(() => setFollowUpStatus(null), 4000)
   }
 
-  // --- Checklist handlers ---
-
-  const selectTransactionType = (type: TransactionType) => {
-    const now = new Date().toISOString()
-    const newChecklist: ContactChecklist = {
-      transactionType: type,
-      items: TRANSACTION_CHECKLISTS[type].map((item) => ({ ...item, receivedAt: undefined })),
-      updatedAt: now
-    }
-    setChecklist(newChecklist)
-    setConfirmChangeType(false)
-    window.electronAPI.saveChecklist(e164, newChecklist as unknown as Record<string, unknown>)
+  const handleDeleteTemplate = (id: string) => {
+    if (confirmDeleteId === id) { onDeleteTemplate(id); setConfirmDeleteId(null) }
+    else { setConfirmDeleteId(id); setTimeout(() => setConfirmDeleteId(null), 3000) }
   }
 
-  const handleTickItem = (itemId: string) => {
-    if (!checklist) return
-    const now = new Date().toISOString()
-    // Merge static list with saved state — use static as source of truth for labels
-    const staticItems = TRANSACTION_CHECKLISTS[checklist.transactionType]
-    const savedMap = new Map(checklist.items.map((i) => [i.id, i.receivedAt]))
-
-    const updatedItems = staticItems.map((staticItem) => {
-      const currentlyTicked = !!savedMap.get(staticItem.id)
-      return {
-        id: staticItem.id,
-        label: staticItem.label,
-        receivedAt: staticItem.id === itemId
-          ? (currentlyTicked ? undefined : now)
-          : savedMap.get(staticItem.id)
-      }
-    })
-
-    const updatedChecklist: ContactChecklist = {
-      transactionType: checklist.transactionType,
-      items: updatedItems,
-      updatedAt: now
-    }
-    setChecklist(updatedChecklist)
-    window.electronAPI.saveChecklist(e164, updatedChecklist as unknown as Record<string, unknown>)
+  const categoryColors: Record<string, string> = {
+    introduction: 'bg-[rgba(99,102,241,0.14)] text-[#818cf8]',
+    'follow-up': 'bg-[rgba(245,158,11,0.12)] text-[#fbbf24]',
+    viewing: 'bg-[rgba(34,197,94,0.12)] text-[#4ade80]',
+    reminder: 'bg-[rgba(168,85,247,0.12)] text-[#c084fc]',
+    alert: 'bg-[rgba(239,68,68,0.12)] text-[#f87171]',
+    'thank-you': 'bg-[rgba(236,72,153,0.12)] text-[#f472b6]',
+    documents: 'bg-[rgba(245,158,11,0.12)] text-[#fbbf24]',
+    other: 'bg-white/5 text-[#d4d4d8]'
   }
 
-  // Derive rendered items by merging static list with saved timestamps
-  const getRenderedItems = () => {
-    if (!checklist) return []
-    const staticItems = TRANSACTION_CHECKLISTS[checklist.transactionType]
-    const savedMap = new Map(checklist.items.map((i) => [i.id, i.receivedAt]))
-    return staticItems.map((staticItem) => ({
-      id: staticItem.id,
-      label: staticItem.label,
-      receivedAt: savedMap.get(staticItem.id)
-    }))
-  }
+  const currentForms = getFormsByCategory(formsTab)
 
-  const renderedItems = getRenderedItems()
-  const tickedCount = renderedItems.filter((i) => !!i.receivedAt).length
-  const totalCount = renderedItems.length
+  // ── Render ────────────────────────────────────────────────────────────
 
   return (
-    <div className="bg-white border border-gray-200 rounded-lg p-3 space-y-2">
-      {/* Phone number and clear button */}
-      <div className="flex items-center justify-between">
-        <span className="text-base font-medium text-gray-900 tracking-wide">
-          {displayNumber}
-        </span>
-        <button
-          onClick={onClear}
-          className="text-gray-400 hover:text-gray-600 text-xs px-1"
-          title="Clear"
-        >
-          &#10005;
-        </button>
-      </div>
+    <div className="bg-[#161617] border border-white/[0.07] rounded-lg p-3 space-y-2">
 
-      {/* Contact name (if entered) */}
-      {contactName && (
-        <p className="text-xs text-gray-500">{contactName}</p>
-      )}
-
-      {/* Action buttons - Dial + WhatsApp */}
-      <div className="flex items-center gap-2">
-        <button
-          onClick={handleDial}
-          className="flex-1 flex items-center justify-center gap-1.5 px-3 py-1.5 text-sm bg-blue-50 text-blue-600 border border-blue-200 rounded-md hover:bg-blue-100 transition-colors"
-        >
-          <span>&#128222;</span>
-          <span>Dial</span>
-        </button>
-
-        <div className="relative flex-1">
-          <div className="flex">
-            <button
-              onClick={() => handleWhatsApp()}
-              className="flex-1 flex items-center justify-center gap-1.5 px-3 py-1.5 text-sm text-white rounded-l-md hover:opacity-90 transition-colors"
-              style={{ backgroundColor: '#25D366' }}
-            >
-              <span>WhatsApp</span>
+      {/* 1. Phone number (editable) + copy + clear */}
+      {e164 ? (
+        <div className="flex items-center justify-between gap-1">
+          <input
+            type="text"
+            value={displayNumber}
+            onChange={(e) => onNumberChange(e.target.value)}
+            className="flex-1 min-w-0 text-base font-medium text-[#ededee] tracking-wider tabular-nums bg-transparent border-none outline-none focus:ring-0 p-0"
+          />
+          <div className="flex items-center gap-1 flex-shrink-0">
+            <button onClick={() => window.electronAPI.copyNumber(e164)} className="text-[#a1a1aa] hover:text-[#ededee] px-1 transition-colors" title="Copy number">
+              <Copy size={14} strokeWidth={1.5} />
             </button>
-            <button
-              onClick={() => setShowWhatsAppMenu(!showWhatsAppMenu)}
-              className="px-1.5 py-1.5 text-sm text-white rounded-r-md border-l border-white/30 hover:opacity-90 transition-colors"
-              style={{ backgroundColor: '#25D366' }}
-            >
-              <span className="text-xs">&#9660;</span>
+            <button onClick={onClear} className="text-[#a1a1aa] hover:text-[#ededee] px-1 transition-colors" title="Clear">
+              <X size={16} strokeWidth={1.5} />
             </button>
           </div>
+        </div>
+      ) : (
+        <div className="flex items-center justify-between gap-1">
+          <span className="text-sm text-[#a1a1aa]">Email contact</span>
+          <button onClick={onClear} className="text-[#a1a1aa] hover:text-[#ededee] px-1 transition-colors" title="Clear">
+            <X size={16} strokeWidth={1.5} />
+          </button>
+        </div>
+      )}
 
-          {showWhatsAppMenu && (
-            <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-md shadow-lg z-10">
+      {/* 2. Name + Email + Unit inputs — right below phone number */}
+      <input
+        type="text" value={contactName} onChange={(e) => onNameChange(e.target.value)}
+        placeholder="Name"
+        className="w-full px-3 py-1.5 text-sm bg-white text-[#1a1a1a] placeholder-[#9ca3af] rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
+      />
+      <input
+        type="email" value={contactEmail} onChange={(e) => onEmailChange(e.target.value)}
+        placeholder="Email"
+        className="w-full px-3 py-1.5 text-sm bg-white text-[#1a1a1a] placeholder-[#9ca3af] rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
+      />
+      <input
+        type="text" value={contactUnit} onChange={(e) => onUnitChange(e.target.value)}
+        placeholder="Unit (e.g. 507 Burj Vista)"
+        className="w-full px-3 py-1.5 text-sm bg-white text-[#1a1a1a] placeholder-[#9ca3af] rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
+      />
+
+      {/* 3. Action buttons — two rows, equal width via grid */}
+      <div className="space-y-1.5">
+        <div className="grid grid-cols-2 gap-1.5">
+          <button
+            onClick={handleDial}
+            disabled={!e164}
+            className={`flex items-center justify-center gap-1.5 px-2 py-1.5 text-sm rounded-md transition-colors ${e164 ? 'bg-[rgba(99,102,241,0.14)] text-[#818cf8] border border-[rgba(99,102,241,0.25)] hover:bg-[rgba(99,102,241,0.22)]' : 'bg-white/[0.03] text-[#3f3f46] border border-white/[0.04] cursor-not-allowed'}`}
+          >
+            <Phone size={14} strokeWidth={1.5} />
+            <span>Dial</span>
+          </button>
+
+          {/* WhatsApp split button */}
+          <div className="relative" ref={waDropdownRef}>
+            <div className="flex">
               <button
-                onClick={() => handleWhatsApp('web')}
-                className="block w-full text-left px-3 py-1.5 text-xs text-gray-700 hover:bg-gray-50"
+                onClick={handleWhatsApp}
+                disabled={!e164}
+                className={`flex-1 flex items-center justify-center gap-1 px-2 py-1.5 text-sm rounded-l-md transition-colors ${e164 ? 'text-white hover:opacity-90' : 'text-[#3f3f46] cursor-not-allowed'}`}
+                style={{ backgroundColor: e164 ? '#25D366' : 'rgba(255,255,255,0.03)' }}
               >
-                Open in Browser
+                <span>WhatsApp</span>
               </button>
               <button
-                onClick={() => handleWhatsApp('desktop')}
-                className="block w-full text-left px-3 py-1.5 text-xs text-gray-700 hover:bg-gray-50"
+                onClick={() => e164 && setShowWhatsAppMenu(!showWhatsAppMenu)}
+                disabled={!e164}
+                className={`px-1.5 py-1.5 text-sm rounded-r-md border-l transition-colors ${e164 ? 'text-white border-white/20 hover:opacity-90' : 'text-[#3f3f46] border-white/[0.04] cursor-not-allowed'}`}
+                style={{ backgroundColor: e164 ? '#25D366' : 'rgba(255,255,255,0.03)' }}
               >
-                Open Desktop App
+                <ChevronDown size={12} strokeWidth={1.5} />
               </button>
             </div>
+            {showWhatsAppMenu && e164 && (
+              <div className="absolute top-full left-0 mt-1 w-44 bg-[#1f1f21] border border-white/[0.07] rounded-md shadow-2xl z-10">
+                <button onClick={() => { window.electronAPI.openWhatsApp(e164, 'desktop'); setShowWhatsAppMenu(false); window.electronAPI.actionDone() }} className="block w-full text-left px-3 py-1.5 text-xs text-[#d4d4d8] hover:bg-white/[0.04] hover:text-[#ededee]">WhatsApp Desktop</button>
+                <button onClick={() => { window.electronAPI.openWhatsApp(e164, 'web'); setShowWhatsAppMenu(false); window.electronAPI.actionDone() }} className="block w-full text-left px-3 py-1.5 text-xs text-[#d4d4d8] hover:bg-white/[0.04] hover:text-[#ededee]">WhatsApp Web</button>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 gap-1.5">
+          {oneNoteEnabled && (
+            <button
+              onClick={handleOneNoteOpen}
+              className="flex items-center justify-center gap-1 px-2 py-1.5 text-sm text-[#c084fc] bg-[rgba(168,85,247,0.12)] border border-[rgba(168,85,247,0.25)] rounded-md hover:bg-[rgba(168,85,247,0.2)] transition-colors"
+              title="Open notes folder"
+            >
+              <FileText size={14} strokeWidth={1.5} />
+              <span>Notes</span>
+            </button>
           )}
+          <button
+            onClick={() => handleGmailCompose()}
+            className={`flex items-center justify-center gap-1 px-2 py-1.5 text-sm text-[#f87171] bg-[rgba(239,68,68,0.12)] border border-[rgba(239,68,68,0.25)] rounded-md hover:bg-[rgba(239,68,68,0.2)] transition-colors ${!oneNoteEnabled ? 'col-span-2' : ''}`}
+            title="Compose email in Gmail"
+          >
+            <Mail size={14} strokeWidth={1.5} />
+            <span>Gmail</span>
+          </button>
         </div>
       </div>
 
-      {/* Add name link / name input */}
-      {!showNameInput ? (
-        <button
-          onClick={() => setShowNameInput(true)}
-          className="text-xs text-blue-500 hover:text-blue-600"
-        >
-          + Add name
-        </button>
-      ) : (
-        <input
-          type="text"
-          value={contactName}
-          onChange={(e) => onNameChange(e.target.value)}
-          placeholder="Contact name (for templates)"
-          className="w-full px-2 py-1 text-xs border border-gray-200 rounded focus:outline-none focus:ring-1 focus:ring-blue-300"
-          autoFocus
-        />
-      )}
+      {/* OneNote error */}
+      {oneNoteError && <p className="text-xs text-red-400">{oneNoteError}</p>}
 
-      {/* Role pills */}
-      <div className="flex flex-wrap gap-1">
-        {ALL_ROLES.map((role) => {
-          const active = roles.includes(role)
-          const colors = ROLE_COLORS[role]
-          return (
-            <button
-              key={role}
-              onClick={() => toggleRole(role)}
-              className={`px-2 py-0.5 text-[11px] font-medium rounded-full border transition-colors ${
-                active
-                  ? `${colors.activeBg} ${colors.activeBorder} ${colors.activeText}`
-                  : `${colors.bg} ${colors.border} ${colors.text} hover:bg-gray-100`
-              }`}
-            >
-              {role}
-            </button>
-          )
-        })}
-      </div>
-
-      {/* Integration buttons */}
-      {(oneNoteEnabled || calendarEnabled) && (
-        <div className="flex items-center gap-2 pt-1">
-          {oneNoteEnabled && (
-            <div className="flex-1">
-              <button
-                onClick={handleOneNote}
-                className="w-full flex items-center justify-center gap-1 px-2 py-1.5 text-xs font-medium text-purple-700 bg-purple-50 border border-purple-200 rounded-md hover:bg-purple-100 transition-colors"
-                title="Open contact profile in OneNote"
-              >
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M2 1.5h8a.5.5 0 01.5.5v8a.5.5 0 01-.5.5H2a.5.5 0 01-.5-.5V2a.5.5 0 01.5-.5z" />
-                  <path d="M4 4v4M4 4l2.5 4M6.5 4v4" />
-                </svg>
-                <span>OneNote</span>
-              </button>
-              {oneNoteError && (
-                <p className="text-xs text-red-500 mt-1">{oneNoteError}</p>
+      {/* 4. Schedule — right after action buttons */}
+      {calendarEnabled && (
+        <div className="space-y-1.5 pt-1">
+          <p className="text-[13px] text-[#a1a1aa] font-medium">Schedule</p>
+          <div className="grid grid-cols-2 gap-1.5">
+            {/* Viewing split button */}
+            <div className="relative" ref={viewingDropdownRef}>
+              <div className="flex">
+                <button onClick={handleViewingClick} className="flex-1 flex items-center justify-center gap-1 px-2 py-1.5 text-xs font-medium text-[#818cf8] bg-[rgba(99,102,241,0.14)] border border-[rgba(99,102,241,0.25)] rounded-l-md hover:bg-[rgba(99,102,241,0.22)] transition-colors" title="Send viewing invitation">
+                  <Calendar size={16} strokeWidth={1.5} /><span>Viewing</span>
+                </button>
+                <button onClick={() => { setShowViewingMenu(!showViewingMenu); setShowConsultMenu(false) }} className="px-1.5 py-1.5 text-xs text-[#818cf8] bg-[rgba(99,102,241,0.14)] border border-[rgba(99,102,241,0.25)] border-l-0 rounded-r-md hover:bg-[rgba(99,102,241,0.22)] transition-colors">
+                  <ChevronDown size={10} strokeWidth={1.5} />
+                </button>
+              </div>
+              {showViewingMenu && (
+                <div className="absolute top-full left-0 right-0 mt-1 bg-[#1f1f21] border border-white/[0.07] rounded-md shadow-2xl z-10">
+                  <button onClick={handleEditViewingTemplate} className="block w-full text-left px-3 py-1.5 text-xs text-[#d4d4d8] hover:bg-white/[0.04] hover:text-[#ededee]">Edit Template</button>
+                </div>
               )}
             </div>
-          )}
-          {calendarEnabled && (
-            <>
-              <button
-                onClick={handleBookViewing}
-                className="flex-1 flex items-center justify-center gap-1 px-2 py-1.5 text-xs font-medium text-blue-700 bg-blue-50 border border-blue-200 rounded-md hover:bg-blue-100 transition-colors"
-                title="Book a property viewing in Google Calendar"
-              >
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                  <rect x="1" y="2" width="10" height="9" rx="1" />
-                  <path d="M1 5h10M4 0.5v2.5M8 0.5v2.5" />
-                </svg>
-                <span>Viewing</span>
-              </button>
-              <button
-                onClick={handleBookConsult}
-                className="flex-1 flex items-center justify-center gap-1 px-2 py-1.5 text-xs font-medium text-green-700 bg-green-50 border border-green-200 rounded-md hover:bg-green-100 transition-colors"
-                title="Book a consultation in Google Calendar"
-              >
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                  <rect x="1" y="2" width="10" height="9" rx="1" />
-                  <path d="M1 5h10M4 0.5v2.5M8 0.5v2.5" />
-                </svg>
-                <span>Consult</span>
-              </button>
-            </>
-          )}
+
+            {/* Consultation split button */}
+            <div className="relative" ref={consultDropdownRef}>
+              <div className="flex">
+                <button onClick={handleConsultClick} className="flex-1 flex items-center justify-center gap-1 px-2 py-1.5 text-xs font-medium text-[#4ade80] bg-[rgba(34,197,94,0.12)] border border-[rgba(34,197,94,0.25)] rounded-l-md hover:bg-[rgba(34,197,94,0.2)] transition-colors" title="Send consultation invitation">
+                  <Calendar size={16} strokeWidth={1.5} /><span>Consultation</span>
+                </button>
+                <button onClick={() => { setShowConsultMenu(!showConsultMenu); setShowViewingMenu(false) }} className="px-1.5 py-1.5 text-xs text-[#4ade80] bg-[rgba(34,197,94,0.12)] border border-[rgba(34,197,94,0.25)] border-l-0 rounded-r-md hover:bg-[rgba(34,197,94,0.2)] transition-colors">
+                  <ChevronDown size={10} strokeWidth={1.5} />
+                </button>
+              </div>
+              {showConsultMenu && (
+                <div className="absolute top-full left-0 right-0 mt-1 bg-[#1f1f21] border border-white/[0.07] rounded-md shadow-2xl z-10">
+                  <button onClick={handleEditConsultTemplate} className="block w-full text-left px-3 py-1.5 text-xs text-[#d4d4d8] hover:bg-white/[0.04] hover:text-[#ededee]">Edit Template</button>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       )}
 
-      {/* Follow-up reminder buttons */}
+      {/* 5. Follow-up reminder — right after schedule */}
       {calendarEnabled && followUpPromptEnabled && (
         <div className="space-y-1.5 pt-1">
-          <p className="text-[11px] text-gray-400 font-medium">Follow-up reminder</p>
+          <p className="text-[13px] text-[#a1a1aa] font-medium">Follow-up reminder</p>
           <div className="flex items-center gap-1.5">
-            <button
-              onClick={() => handleFollowUp(7)}
-              className="flex-1 px-2 py-1 text-[11px] font-medium text-orange-700 bg-orange-50 border border-orange-200 rounded hover:bg-orange-100 transition-colors"
-            >
-              7 days
-            </button>
-            <button
-              onClick={() => handleFollowUp(15)}
-              className="flex-1 px-2 py-1 text-[11px] font-medium text-orange-700 bg-orange-50 border border-orange-200 rounded hover:bg-orange-100 transition-colors"
-            >
-              15 days
-            </button>
-            <button
-              onClick={() => handleFollowUp(30)}
-              className="flex-1 px-2 py-1 text-[11px] font-medium text-orange-700 bg-orange-50 border border-orange-200 rounded hover:bg-orange-100 transition-colors"
-            >
-              30 days
-            </button>
+            <button onClick={() => handleFollowUp(7)} className="flex-1 px-2 py-1 text-[13px] font-medium text-[#fbbf24] bg-[rgba(245,158,11,0.08)] border border-[rgba(245,158,11,0.2)] rounded hover:bg-[rgba(245,158,11,0.16)] transition-colors">7 days</button>
+            <button onClick={() => handleFollowUp(15)} className="flex-1 px-2 py-1 text-[13px] font-medium text-[#fbbf24] bg-[rgba(245,158,11,0.08)] border border-[rgba(245,158,11,0.2)] rounded hover:bg-[rgba(245,158,11,0.16)] transition-colors">15 days</button>
+            <button onClick={() => handleFollowUp(30)} className="flex-1 px-2 py-1 text-[13px] font-medium text-[#fbbf24] bg-[rgba(245,158,11,0.08)] border border-[rgba(245,158,11,0.2)] rounded hover:bg-[rgba(245,158,11,0.16)] transition-colors">30 days</button>
           </div>
           {followUpStatus && (
-            <p className={`text-xs ${followUpStatus.type === 'success' ? 'text-green-600' : 'text-red-500'}`}>
-              {followUpStatus.message}
-            </p>
+            <p className={`text-xs ${followUpStatus.type === 'success' ? 'text-[#4ade80]' : 'text-red-400'}`}>{followUpStatus.message}</p>
           )}
         </div>
       )}
 
-      {/* Document checklist section */}
-      {checklistEnabled && (
-        <div className="border-t border-gray-100 pt-2">
-          {!checklist ? (
-            /* No checklist yet — show transaction type selector */
-            <div className="space-y-1.5">
-              <p className="text-[11px] text-gray-400 font-medium">Documents</p>
-              <p className="text-[11px] text-gray-400">Select transaction type to start checklist:</p>
-              <div className="flex flex-wrap gap-1">
-                {(Object.keys(TRANSACTION_LABELS) as TransactionType[]).map((type) => (
-                  <button
-                    key={type}
-                    onClick={() => selectTransactionType(type)}
-                    className="px-2 py-0.5 text-[11px] font-medium text-gray-600 bg-gray-50 border border-gray-200 rounded hover:bg-gray-100 transition-colors"
-                  >
-                    {TRANSACTION_LABELS[type]}
-                  </button>
-                ))}
-              </div>
-            </div>
+      {/* 6. WhatsApp Templates */}
+      <div className="bg-[#1f1f21] border border-white/[0.07] rounded-lg p-3">
+        <div className="flex items-center justify-between">
+          <button onClick={() => setTemplatesExpanded(!templatesExpanded)} className="flex items-center gap-1.5">
+            {templatesExpanded ? <ChevronDown size={14} strokeWidth={1.5} className="text-[#a1a1aa]" /> : <ChevronRight size={14} strokeWidth={1.5} className="text-[#a1a1aa]" />}
+            <MessageCircle size={14} strokeWidth={1.5} className="text-[#a1a1aa]" />
+            <h3 className="text-sm font-semibold text-[#ededee]">WhatsApp Templates</h3>
+          </button>
+          {templatesExpanded && (
+            <button onClick={onCreateTemplate} className="flex items-center gap-0.5 text-xs text-indigo-400 hover:text-indigo-300">
+              <Plus size={14} strokeWidth={1.5} />New
+            </button>
+          )}
+        </div>
+        {templatesExpanded && (
+          templates.length === 0 ? (
+            <p className="text-xs text-[#5a5a60] text-center py-2 mt-2">No templates yet. Create one to get started.</p>
           ) : (
-            /* Checklist exists — show header with progress + collapsible list */
-            <div className="space-y-1">
-              {/* Section header */}
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-1.5">
-                  <button
-                    onClick={() => setChecklistExpanded(!checklistExpanded)}
-                    className="flex items-center gap-1.5 text-[11px] font-medium text-gray-600 hover:text-gray-800 transition-colors"
-                  >
-                    <span className="text-[10px] text-gray-400">
-                      {checklistExpanded ? '▾' : '▸'}
-                    </span>
-                    <span>Documents</span>
-                    <span className="text-[10px] text-gray-400">
-                      ({TRANSACTION_LABELS[checklist.transactionType]})
-                    </span>
-                  </button>
-                  <span className={`text-[10px] font-medium px-1.5 py-0.5 rounded-full ${
-                    tickedCount === totalCount && totalCount > 0
-                      ? 'bg-green-100 text-green-700'
-                      : 'bg-gray-100 text-gray-500'
-                  }`}>
-                    {tickedCount}/{totalCount}
-                  </span>
-                </div>
-
-                {/* Change type link */}
-                {!confirmChangeType ? (
-                  <button
-                    onClick={() => setConfirmChangeType(true)}
-                    className="text-[10px] text-gray-400 hover:text-gray-600 transition-colors"
-                  >
-                    Change type
-                  </button>
-                ) : (
-                  <div className="flex items-center gap-1">
-                    <span className="text-[10px] text-gray-400">Switch to:</span>
-                    {(Object.keys(TRANSACTION_LABELS) as TransactionType[])
-                      .filter((t) => t !== checklist.transactionType)
-                      .map((type) => (
-                        <button
-                          key={type}
-                          onClick={() => selectTransactionType(type)}
-                          className="text-[10px] text-blue-500 hover:text-blue-700"
-                        >
-                          {TRANSACTION_LABELS[type]}
-                        </button>
-                      ))
-                    }
-                    <button
-                      onClick={() => setConfirmChangeType(false)}
-                      className="text-[10px] text-gray-400 hover:text-gray-600"
-                    >
-                      &#10005;
-                    </button>
+            <div className="space-y-0.5 max-h-44 overflow-y-auto mt-2">
+              {templates.map((template) => (
+                <div key={template.id} className="group flex items-center gap-1.5 px-2 py-1.5 rounded-md hover:bg-white/[0.04] cursor-pointer transition-colors" onClick={() => onSelectTemplate(template)}>
+                  <span className="text-xs text-[#ededee] truncate flex-1">{template.name}</span>
+                  <span className={`text-[10px] px-1.5 py-0.5 rounded-full flex-shrink-0 ${categoryColors[template.category] || categoryColors.other}`}>{template.category}</span>
+                  <div className="flex items-center gap-0.5 flex-shrink-0">
+                    <button onClick={(e) => { e.stopPropagation(); onEditTemplate(template) }} className="p-0.5 text-[#d4d4d8] hover:text-indigo-400 transition-colors" title="Edit"><Pencil size={12} strokeWidth={1.5} /></button>
+                    <button onClick={(e) => { e.stopPropagation(); handleDeleteTemplate(template.id) }} className={`p-0.5 ${confirmDeleteId === template.id ? 'text-red-400' : 'text-[#d4d4d8] hover:text-red-400'} transition-colors`} title={confirmDeleteId === template.id ? 'Click again to confirm' : 'Delete'}><X size={12} strokeWidth={1.5} /></button>
                   </div>
-                )}
-              </div>
-
-              {/* Collapsible document list */}
-              {checklistExpanded && (
-                <div className="space-y-1 max-h-40 overflow-y-auto pl-1">
-                  {renderedItems.map((item) => {
-                    const ticked = !!item.receivedAt
-                    return (
-                      <div
-                        key={item.id}
-                        className="flex items-center gap-2 cursor-pointer group"
-                        onClick={() => handleTickItem(item.id)}
-                      >
-                        {/* Checkbox */}
-                        <div className={`flex-shrink-0 w-3.5 h-3.5 rounded border flex items-center justify-center transition-colors ${
-                          ticked
-                            ? 'bg-green-500 border-green-500'
-                            : 'border-gray-300 group-hover:border-gray-400'
-                        }`}>
-                          {ticked && (
-                            <svg width="8" height="8" viewBox="0 0 8 8" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                              <polyline points="1,4 3,6 7,2" />
-                            </svg>
-                          )}
-                        </div>
-                        {/* Label */}
-                        <span className={`text-[11px] flex-1 ${ticked ? 'text-gray-400 line-through' : 'text-gray-700'}`}>
-                          {item.label}
-                        </span>
-                        {/* Timestamp */}
-                        {ticked && item.receivedAt && (
-                          <span className="text-[10px] text-green-600 flex-shrink-0">
-                            {formatShortDate(item.receivedAt)}
-                          </span>
-                        )}
-                      </div>
-                    )
-                  })}
                 </div>
-              )}
+              ))}
+            </div>
+          )
+        )}
+      </div>
+
+      {/* 7. Gmail Templates */}
+      <div className="bg-[#1f1f21] border border-white/[0.07] rounded-lg p-3">
+        <div className="flex items-center justify-between">
+          <button onClick={() => setGmailTemplatesExpanded(!gmailTemplatesExpanded)} className="flex items-center gap-1.5">
+            {gmailTemplatesExpanded ? <ChevronDown size={14} strokeWidth={1.5} className="text-[#a1a1aa]" /> : <ChevronRight size={14} strokeWidth={1.5} className="text-[#a1a1aa]" />}
+            <Mail size={14} strokeWidth={1.5} className="text-[#a1a1aa]" />
+            <h3 className="text-sm font-semibold text-[#ededee]">Gmail Templates</h3>
+          </button>
+          {gmailTemplatesExpanded && (
+            <button onClick={onCreateTemplate} className="flex items-center gap-0.5 text-xs text-indigo-400 hover:text-indigo-300">
+              <Plus size={14} strokeWidth={1.5} />New
+            </button>
+          )}
+        </div>
+        {gmailTemplatesExpanded && (
+          templates.length === 0 ? (
+            <p className="text-xs text-[#5a5a60] text-center py-2 mt-2">No templates yet. Create one to get started.</p>
+          ) : (
+            <div className="space-y-0.5 max-h-44 overflow-y-auto mt-2">
+              {templates.map((template) => (
+                <div key={template.id} className="group flex items-center gap-1.5 px-2 py-1.5 rounded-md hover:bg-white/[0.04] cursor-pointer transition-colors" onClick={() => handleGmailCompose(template.name, template.body)}>
+                  <span className="text-xs text-[#ededee] truncate flex-1">{template.name}</span>
+                  <span className={`text-[10px] px-1.5 py-0.5 rounded-full flex-shrink-0 ${categoryColors[template.category] || categoryColors.other}`}>{template.category}</span>
+                  <button onClick={(e) => { e.stopPropagation(); onEditTemplate(template) }} className="p-0.5 text-[#d4d4d8] hover:text-indigo-400 transition-colors" title="Edit"><Pencil size={12} strokeWidth={1.5} /></button>
+                </div>
+              ))}
+            </div>
+          )
+        )}
+      </div>
+
+      {/* 8. OneNote Templates */}
+      {oneNoteEnabled && (
+        <div className="bg-[#1f1f21] border border-white/[0.07] rounded-lg p-3">
+          <button onClick={() => setOneNoteTemplatesExpanded(!oneNoteTemplatesExpanded)} className="flex items-center gap-1.5">
+            {oneNoteTemplatesExpanded ? <ChevronDown size={14} strokeWidth={1.5} className="text-[#a1a1aa]" /> : <ChevronRight size={14} strokeWidth={1.5} className="text-[#a1a1aa]" />}
+            <FileText size={14} strokeWidth={1.5} className="text-[#a1a1aa]" />
+            <h3 className="text-sm font-semibold text-[#ededee]">OneNote Templates</h3>
+          </button>
+          {oneNoteTemplatesExpanded && (
+            <div className="space-y-0.5 mt-2">
+              {ALL_ROLES.map((role) => (
+                <div key={role} className="group flex items-center gap-1.5 px-2 py-1.5 rounded-md hover:bg-white/[0.04] cursor-pointer transition-colors" onClick={() => handleOneNoteRole(role)}>
+                  <span className={`text-xs font-medium flex-1 ${ROLE_COLORS[role]}`}>{role}</span>
+                  <button onClick={(e) => { e.stopPropagation(); onEditRoleTemplate(role) }} className="p-0.5 text-[#d4d4d8] hover:text-indigo-400 transition-colors" title={`Edit ${role} template`}><Pencil size={12} strokeWidth={1.5} /></button>
+                </div>
+              ))}
             </div>
           )}
         </div>
       )}
+
+      {/* 9. Forms — Sales / Rentals / Off-plan tabs */}
+      <div className="bg-[#1f1f21] border border-white/[0.07] rounded-lg p-3">
+        <button onClick={() => setFormsExpanded(!formsExpanded)} className="flex items-center gap-1.5">
+          {formsExpanded ? <ChevronDown size={14} strokeWidth={1.5} className="text-[#a1a1aa]" /> : <ChevronRight size={14} strokeWidth={1.5} className="text-[#a1a1aa]" />}
+          <ClipboardList size={14} strokeWidth={1.5} className="text-[#a1a1aa]" />
+          <h3 className="text-sm font-semibold text-[#ededee]">Forms</h3>
+        </button>
+
+        {formsExpanded && (
+          <div className="mt-2 space-y-2">
+            {/* Category tabs */}
+            <div className="grid grid-cols-3 gap-1">
+              {(['sales', 'rentals', 'offplan'] as FormCategory[]).map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => setFormsTab(cat)}
+                  className={`px-2 py-1 text-[11px] font-semibold rounded border transition-colors ${formsTab === cat ? FORM_TAB_STYLES[cat].active : FORM_TAB_STYLES[cat].inactive}`}
+                >
+                  {cat === 'offplan' ? 'Off-plan' : cat.charAt(0).toUpperCase() + cat.slice(1)}
+                </button>
+              ))}
+            </div>
+
+            {/* Form list */}
+            <div className="space-y-0.5 max-h-56 overflow-y-auto">
+              {currentForms.map((form) => (
+                <div key={form.id} className="group px-2 py-1.5 rounded-md hover:bg-white/[0.04] transition-colors">
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-xs text-[#ededee] truncate flex-1">
+                      {form.name}
+                      {formOverrides[form.id] && <span className="ml-1 text-[9px] text-[#fbbf24]" title="Custom template">*</span>}
+                    </span>
+                    <div className="flex items-center gap-0.5 flex-shrink-0">
+                      {/* Edit template */}
+                      <button
+                        onClick={() => onEditForm(form)}
+                        className="p-1 text-[#d4d4d8] hover:text-indigo-400 rounded transition-colors"
+                        title="Edit template"
+                      >
+                        <Pencil size={12} strokeWidth={1.5} />
+                      </button>
+                      {/* WhatsApp send */}
+                      {e164 && (
+                        <button
+                          onClick={() => handleFormWhatsApp(form)}
+                          className="p-1 rounded transition-colors hover:opacity-80"
+                          style={{ color: '#25D366' }}
+                          title="Send via WhatsApp"
+                        >
+                          <MessageCircle size={13} strokeWidth={1.5} />
+                        </button>
+                      )}
+                      {/* Gmail send */}
+                      <button
+                        onClick={() => handleFormGmail(form)}
+                        className="p-1 text-[#f87171] rounded transition-colors hover:opacity-80"
+                        title="Send via Gmail"
+                      >
+                        <Mail size={13} strokeWidth={1.5} />
+                      </button>
+                    </div>
+                  </div>
+                  <p className="text-[10px] text-[#d4d4d8] mt-0.5 leading-tight">{form.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* 9b. KYC Forms — internal, open-only (no send) */}
+      <div className="bg-[#1f1f21] border border-white/[0.07] rounded-lg p-3">
+        <button onClick={() => setKycExpanded(!kycExpanded)} className="flex items-center gap-1.5">
+          {kycExpanded ? <ChevronDown size={14} strokeWidth={1.5} className="text-[#a1a1aa]" /> : <ChevronRight size={14} strokeWidth={1.5} className="text-[#a1a1aa]" />}
+          <ShieldCheck size={14} strokeWidth={1.5} className="text-[#a1a1aa]" />
+          <h3 className="text-sm font-semibold text-[#ededee]">KYC Forms</h3>
+          <span className="text-[10px] text-[#71717a] ml-1">(internal)</span>
+        </button>
+
+        {kycExpanded && (
+          <div className="mt-2 space-y-0.5">
+            {[
+              { name: 'KYC — Individual (Editable)', fileName: 'PRAGON PROPERTIES_KYC NEW 2025_Individual_Editable.pdf', description: 'Know Your Customer form for individual clients' },
+              { name: 'KYC — Company (Editable)', fileName: 'PRAGON PROPERTIES_KYC NEW 2025_Company_Editable.pdf', description: 'Know Your Customer form for corporate clients' },
+              { name: 'KYC with Notes', fileName: 'New KYC with Notes (1).pdf', description: 'KYC reference form with explanatory notes' },
+            ].map((kyc) => (
+              <div key={kyc.fileName} className="group flex items-center gap-1.5 px-2 py-1.5 rounded-md hover:bg-white/[0.04] transition-colors">
+                <div className="flex-1 min-w-0">
+                  <span className="text-xs text-[#ededee] truncate block">{kyc.name}</span>
+                  <p className="text-[10px] text-[#d4d4d8] mt-0.5 leading-tight">{kyc.description}</p>
+                </div>
+                <button
+                  onClick={() => window.electronAPI.saveFormAs('KYC', kyc.fileName)}
+                  className="p-1 text-[#a1a1aa] hover:text-indigo-400 rounded transition-colors flex-shrink-0"
+                  title="Save to..."
+                >
+                  <Download size={13} strokeWidth={1.5} />
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* 10. News feed */}
+      {newsEnabled && (
+        <div className="bg-[#1f1f21] border border-white/[0.07] rounded-lg p-3">
+          <button onClick={() => setNewsExpanded(!newsExpanded)} className="flex items-center gap-1.5">
+            {newsExpanded ? <ChevronDown size={14} strokeWidth={1.5} className="text-[#a1a1aa]" /> : <ChevronRight size={14} strokeWidth={1.5} className="text-[#a1a1aa]" />}
+            <Newspaper size={14} strokeWidth={1.5} className="text-[#a1a1aa]" />
+            <h3 className="text-sm font-semibold text-[#ededee]">UAE Real Estate News</h3>
+          </button>
+          {newsExpanded && (
+            <div className="mt-2 space-y-3">
+              {/* News source quick-links */}
+              <div>
+                <p className="text-[11px] text-[#a1a1aa] font-medium mb-1.5">News</p>
+                <div className="grid grid-cols-4 gap-1">
+                  {NEWS_SOURCES.map((src) => (
+                    <button
+                      key={src.label}
+                      onClick={() => { window.electronAPI.openExternal(src.url); window.electronAPI.actionDone() }}
+                      className="flex flex-col items-center gap-0.5 px-1 py-1.5 bg-white/[0.04] border border-white/[0.07] rounded hover:bg-white/[0.1] hover:border-white/[0.15] transition-colors group"
+                      title={src.title}
+                    >
+                      <img src={src.icon} alt={src.label} className="w-4 h-4 rounded-sm" />
+                      <span className="text-[8px] font-medium leading-none text-[#a1a1aa] group-hover:text-[#ededee] transition-colors truncate w-full text-center">{src.label}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* RSS feed */}
+              <div className="max-h-64 overflow-y-auto">
+                <NewsFeed onBack={() => setNewsExpanded(false)} />
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
     </div>
   )
 }

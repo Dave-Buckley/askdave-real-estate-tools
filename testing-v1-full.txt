@@ -1,0 +1,150 @@
+AgentKit v1.0 — Full Testing Checklist
+========================================
+Date: 2026-03-03
+Installer: dist/agent-kit Setup 1.0.0.exe
+
+INSTALL & STARTUP
+-----------------
+[ ] Install from fresh .exe — no errors, no admin prompt
+[ ] App appears in system tray
+[ ] Tray icon looks correct
+[ ] Right-click tray shows menu (Settings, Quit, etc.)
+
+CLIPBOARD DETECTION (copy a phone number)
+------------------------------------------
+[ ] Copy a UAE number (e.g. 050 123 4567) from anywhere
+[ ] Popup appears automatically
+[ ] Number shows correctly formatted (+971 XX XXX XXXX)
+[ ] WhatsApp button works (opens WhatsApp with correct number)
+[ ] Copy Number button works (copies E.164 to clipboard)
+Notes:
+_____________________________________________
+
+SELECTION HOTKEY (Ctrl+Shift+Space)
+------------------------------------
+[ ] Highlight a phone number in any app
+[ ] Press Ctrl+Shift+Space
+[ ] Popup appears with the selected number
+Notes:
+_____________________________________________
+
+PANEL (click tray icon)
+------------------------
+[ ] Panel opens from tray
+[ ] Phone input field works — type a number, get contact card
+[ ] Contact name field — type a name, it saves
+[ ] Role selector — can toggle roles (Tenant, Landlord, etc.)
+[ ] WhatsApp button on contact card works
+[ ] Dial/tel: button works
+Notes:
+_____________________________________________
+
+DOCUMENT CHECKLISTS (NEW - Phase 3)
+-------------------------------------
+[ ] Open a contact card
+[ ] "Documents" section visible (or checklist toggle)
+[ ] Can select transaction type (Tenancy, Sale, Renewal, Off-Plan)
+[ ] Correct documents listed for each type
+[ ] Can tick a document — checkmark appears
+[ ] Ticked documents show received date
+[ ] Can untick a document
+[ ] Progress badge shows (e.g., 3/9)
+[ ] Close and reopen — ticks persist
+Notes:
+_____________________________________________
+
+NEWS FEED (NEW - Phase 3)
+--------------------------
+[ ] News icon/button visible in panel header
+[ ] Click it — news feed view opens
+[ ] Articles load (titles, source badges, dates)
+[ ] Click an article — opens in browser
+[ ] Back button returns to main panel view
+[ ] Can disable in Settings (toggle off)
+Notes:
+_____________________________________________
+
+MESSAGE TEMPLATES
+------------------
+[ ] Template list shows default templates
+[ ] Can select a template
+[ ] Template preview shows with {name} replaced
+[ ] Can create new template
+[ ] Can edit existing template
+[ ] Can delete a template
+Notes:
+_____________________________________________
+
+SETTINGS
+---------
+[ ] Settings window opens from tray menu
+[ ] Feature toggles all work (clipboard, hotkeys, etc.)
+[ ] Hotkey recorder works — can change hotkeys
+[ ] WhatsApp mode toggle (Web vs Desktop)
+[ ] Checklist toggle (NEW)
+[ ] News feed toggle (NEW)
+Notes:
+_____________________________________________
+
+MICROSOFT SIGN-IN + ONENOTE
+-----------------------------
+[ ] Settings > Accounts > Sign in to Microsoft
+[ ] Auth flow completes
+[ ] Green dot shows "Connected"
+[ ] Open a contact > click OneNote button
+[ ] OneNote page created with contact info + role template
+[ ] OneNote desktop opens at the page
+Notes:
+_____________________________________________
+
+GOOGLE SIGN-IN + CALENDAR
+---------------------------
+[ ] Settings > Accounts > Sign in to Google
+[ ] Auth flow completes
+[ ] Green dot shows "Connected"
+[ ] Open a contact > click 7-day follow-up
+[ ] "Follow-up set" confirmation appears
+[ ] Check Google Calendar — event exists
+Notes:
+_____________________________________________
+
+PHONE LINK DETECTION (Windows + Phone Link required)
+-----------------------------------------------------
+[ ] Phone Link connected to Android phone
+[ ] Phone Link detection enabled in Settings
+[ ] Someone calls your phone
+[ ] App detects incoming call — popup appears
+[ ] Caller info displayed
+[ ] "Open in OneNote" button visible
+[ ] Call ends — follow-up prompt appears (7/15/30 days)
+Notes:
+_____________________________________________
+
+UI / VISUAL QUALITY
+--------------------
+Rate each screen 1-5 (1=ugly, 5=professional):
+
+[ ] Popup bar:        ___/5
+[ ] Panel:            ___/5
+[ ] Contact card:     ___/5
+[ ] Checklist section:___/5
+[ ] News feed:        ___/5
+[ ] Settings:         ___/5
+[ ] Template editor:  ___/5
+
+What looks amateur / needs work:
+_____________________________________________
+_____________________________________________
+_____________________________________________
+
+BUGS / CRASHES
+---------------
+_____________________________________________
+_____________________________________________
+_____________________________________________
+
+FEATURE IDEAS
+--------------
+_____________________________________________
+_____________________________________________
+_____________________________________________

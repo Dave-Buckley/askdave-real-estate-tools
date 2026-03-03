@@ -4,14 +4,13 @@ interface HotkeyRecorderProps {
   label: string
   currentKey: string
   onKeyChange: (newKey: string) => void
+  onClear?: () => void
 }
 
 /**
  * Convert a KeyboardEvent to Electron accelerator format.
- * e.g., Ctrl+Shift+D or CommandOrControl+Shift+W
  */
 function keyEventToAccelerator(e: KeyboardEvent): string | null {
-  // Ignore modifier-only presses
   if (['Control', 'Shift', 'Alt', 'Meta'].includes(e.key)) {
     return null
   }
@@ -22,15 +21,12 @@ function keyEventToAccelerator(e: KeyboardEvent): string | null {
   if (e.shiftKey) parts.push('Shift')
   if (e.altKey) parts.push('Alt')
 
-  // Require at least one modifier
   if (parts.length === 0) return null
 
-  // Get the key name
   let key = e.key
   if (key.length === 1) {
     key = key.toUpperCase()
   } else {
-    // Map special keys to Electron names
     const keyMap: Record<string, string> = {
       ArrowUp: 'Up', ArrowDown: 'Down', ArrowLeft: 'Left', ArrowRight: 'Right',
       ' ': 'Space', Escape: 'Escape', Enter: 'Return', Backspace: 'Backspace',
@@ -48,9 +44,9 @@ function keyEventToAccelerator(e: KeyboardEvent): string | null {
 
 /**
  * Convert Electron accelerator to human-readable display.
- * e.g., "CommandOrControl+Shift+D" -> "Ctrl+Shift+D" (Windows) or "Cmd+Shift+D" (macOS)
  */
-function displayAccelerator(accelerator: string): string {
+export function displayAccelerator(accelerator: string): string {
+  if (!accelerator) return 'Not set'
   const isMac = navigator.platform.toLowerCase().includes('mac')
   return accelerator
     .replace('CommandOrControl', isMac ? 'Cmd' : 'Ctrl')
@@ -59,13 +55,13 @@ function displayAccelerator(accelerator: string): string {
 }
 
 /**
- * Keyboard shortcut recorder component.
- * Allows user to press a new key combination to customize hotkeys.
+ * Keyboard shortcut recorder with change and clear buttons.
  */
 export default function HotkeyRecorder({
   label,
   currentKey,
-  onKeyChange
+  onKeyChange,
+  onClear
 }: HotkeyRecorderProps) {
   const [recording, setRecording] = useState(false)
   const [pendingKey, setPendingKey] = useState<string | null>(null)
@@ -110,8 +106,8 @@ export default function HotkeyRecorder({
   return (
     <div ref={recorderRef} className="flex items-center justify-between py-1">
       <div>
-        <p className="text-sm font-medium text-gray-800">{label}</p>
-        <p className="text-xs text-gray-500 font-mono">
+        <p className="text-sm font-medium text-[#ededee]">{label}</p>
+        <p className="text-xs text-[#a1a1aa] font-mono">
           {recording
             ? (pendingKey ? displayAccelerator(pendingKey) : 'Press new shortcut...')
             : displayAccelerator(currentKey)
@@ -124,24 +120,34 @@ export default function HotkeyRecorder({
             <button
               onClick={handleSave}
               disabled={!pendingKey}
-              className="px-2 py-0.5 text-xs text-white bg-blue-500 rounded hover:bg-blue-600 disabled:opacity-40 transition-colors"
+              className="px-2 py-0.5 text-xs text-white bg-indigo-600 rounded hover:bg-indigo-500 disabled:opacity-40 transition-colors"
             >
               Save
             </button>
             <button
               onClick={handleCancel}
-              className="px-2 py-0.5 text-xs text-gray-600 bg-gray-100 rounded hover:bg-gray-200 transition-colors"
+              className="px-2 py-0.5 text-xs text-[#d4d4d8] bg-white/5 rounded hover:bg-white/10 transition-colors"
             >
               Cancel
             </button>
           </>
         ) : (
-          <button
-            onClick={() => setRecording(true)}
-            className="px-2 py-0.5 text-xs text-blue-500 border border-blue-200 rounded hover:bg-blue-50 transition-colors"
-          >
-            Change
-          </button>
+          <>
+            <button
+              onClick={() => setRecording(true)}
+              className="px-2 py-0.5 text-xs text-indigo-400 border border-indigo-400/30 rounded hover:bg-indigo-400/10 transition-colors"
+            >
+              Change
+            </button>
+            {onClear && currentKey && (
+              <button
+                onClick={onClear}
+                className="px-2 py-0.5 text-xs text-red-400 border border-red-400/30 rounded hover:bg-red-400/10 transition-colors"
+              >
+                Clear
+              </button>
+            )}
+          </>
         )}
       </div>
     </div>

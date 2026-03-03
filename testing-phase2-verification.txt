@@ -1,0 +1,118 @@
+Phase 2 Human Verification Testing
+====================================
+Date: 2026-03-03
+Build: Fresh install
+
+PREREQUISITES
+- [ ] Windows Phone Link connected to Android phone
+- [ ] Microsoft account with OneNote
+- [ ] Google account with Calendar access
+- [ ] Fresh installer installed and running
+
+
+TEST 1: Phone Link Incoming Call Detection
+-------------------------------------------
+Steps:
+  1. Open Settings > ensure "Phone Link Detection" is enabled
+  2. Have someone call your Android phone (connected via Phone Link)
+  3. Watch for Agent Kit popup within 2-3 seconds
+
+Expected:
+  - Popup appears automatically with "Incoming call" banner
+  - Caller number/name is displayed
+  - "Open in OneNote" button visible (if OneNote enabled)
+
+Result: [ PASS / FAIL / PARTIAL ]
+Notes:
+_____________________________________________
+_____________________________________________
+_____________________________________________
+
+
+TEST 2: Post-Call Follow-Up Prompt
+-------------------------------------------
+Steps:
+  1. After TEST 1's call ends (hang up), watch the popup
+  2. Popup should transition to orange "Call ended" state
+  3. Click one of the follow-up buttons (7 / 15 / 30 days)
+
+Expected:
+  - Orange "Call ended" bar with "Set a follow-up?" text
+  - 7/15/30 day buttons visible
+  - Clicking a button creates a Google Calendar event
+  - Event at 9:00 AM Dubai time, X days from now
+  - Prompt auto-dismisses after ~2 seconds
+
+Result: [ PASS / FAIL / PARTIAL ]
+Notes:
+_____________________________________________
+_____________________________________________
+_____________________________________________
+
+
+TEST 3: Microsoft Sign-In + OneNote Page Creation
+-------------------------------------------
+Steps:
+  1. Open Settings > Accounts > click "Sign in to Microsoft"
+  2. Complete the Microsoft login flow
+  3. Verify connection status shows green dot
+  4. Open/create a contact with a role (e.g. Tenant)
+  5. Click the OneNote button on the contact card
+
+Expected:
+  - Microsoft auth popup opens and completes
+  - Settings shows "Connected" with green dot
+  - "Real Estate" notebook created (or found) in OneNote
+  - "Contacts" section created (or found)
+  - Page created with E.164 number as title
+  - Page contains contact header + Tenant qualifying table
+  - OneNote desktop opens at that page
+
+Result: [ PASS / FAIL / PARTIAL ]
+Notes:
+_____________________________________________
+_____________________________________________
+_____________________________________________
+
+
+TEST 4: Google Sign-In + Calendar Follow-Up
+-------------------------------------------
+Steps:
+  1. Open Settings > Accounts > click "Sign in to Google"
+  2. Complete the Google login flow
+  3. Verify connection status shows green dot
+  4. Open a contact card
+  5. Click "7 days" follow-up button
+
+Expected:
+  - Google auth popup opens and completes
+  - Settings shows "Connected" with green dot
+  - "Follow-up set for [date]" confirmation in UI
+  - Google Calendar shows event 7 days from today
+  - Event at 9:00 AM Asia/Dubai with 30-min popup reminder
+
+Result: [ PASS / FAIL / PARTIAL ]
+Notes:
+_____________________________________________
+_____________________________________________
+_____________________________________________
+
+
+GENERAL OBSERVATIONS
+-------------------------------------------
+App startup:
+_____________________________________________
+
+Tray icon:
+_____________________________________________
+
+Clipboard detection:
+_____________________________________________
+
+Selection hotkey (Ctrl+Shift+Space):
+_____________________________________________
+
+Other issues:
+_____________________________________________
+_____________________________________________
+_____________________________________________

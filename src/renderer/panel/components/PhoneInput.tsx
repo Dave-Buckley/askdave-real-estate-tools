@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react'
+import { Check, X as XIcon } from 'lucide-react'
 
 interface PhoneInputProps {
   onSubmit: (rawNumber: string) => void
@@ -64,14 +65,14 @@ export default function PhoneInput({ onSubmit }: PhoneInputProps) {
           onKeyDown={handleKeyDown}
           onPaste={handlePaste}
           placeholder="Enter or paste a phone number"
-          className="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-400 focus:border-blue-400 pr-7"
+          className="w-full px-3 py-1.5 text-sm bg-white/5 border border-white/[0.07] rounded-md text-[#ededee] placeholder-[#a1a1aa] focus:outline-none focus:ring-1 focus:ring-indigo-500/50 focus:border-indigo-500/50 pr-7 tabular-nums"
         />
         {isValid !== null && (
-          <span className="absolute right-2 top-1/2 -translate-y-1/2 text-xs">
+          <span className="absolute right-2 top-1/2 -translate-y-1/2">
             {isValid ? (
-              <span className="text-green-500">&#10003;</span>
+              <Check size={16} strokeWidth={1.5} className="text-[#4ade80]" />
             ) : (
-              <span className="text-red-400">&#10007;</span>
+              <XIcon size={16} strokeWidth={1.5} className="text-red-400" />
             )}
           </span>
         )}
@@ -79,7 +80,7 @@ export default function PhoneInput({ onSubmit }: PhoneInputProps) {
       <button
         onClick={handleSubmit}
         disabled={!value.trim()}
-        className="px-2.5 py-1.5 text-sm bg-blue-500 text-white rounded-md hover:bg-blue-600 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+        className="px-2.5 py-1.5 text-sm bg-indigo-600 text-white rounded-md hover:bg-indigo-500 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
       >
         Go
       </button>

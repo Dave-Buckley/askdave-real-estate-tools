@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ask Dave Real Estate Tools - How It Works</title>
+  <style>
+    @media print {
+      body { font-size: 11pt; }
+      .page-break { page-break-before: always; }
+      .no-print { display: none; }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: #334155; line-height: 1.7; max-width: 800px;
+      margin: 0 auto; padding: 2rem;
+    }
+    h1 { font-size: 1.8rem; color: #0C1B2A; margin-bottom: 0.25rem; }
+    h2 { font-size: 1.3rem; color: #0C1B2A; margin: 2rem 0 0.75rem; padding-bottom: 0.4rem; border-bottom: 2px solid #2DD4A8; }
+    h3 { font-size: 1.05rem; color: #0C1B2A; margin: 1.5rem 0 0.5rem; }
+    p { margin-bottom: 0.75rem; font-size: 0.92rem; }
+    .subtitle { color: #64748B; font-size: 1rem; margin-bottom: 0.25rem; }
+    .version { color: #94A3B8; font-size: 0.82rem; margin-bottom: 2rem; }
+    ol, ul { padding-left: 1.5rem; margin-bottom: 1rem; }
+    ol li, ul li { margin-bottom: 0.5rem; font-size: 0.92rem; }
+    .feature-box {
+      border: 1px solid #E2E8F0; border-radius: 8px; padding: 1.25rem;
+      margin-bottom: 1.5rem; background: #FAFBFC;
+    }
+    .feature-box h3 { margin-top: 0; color: #0C1B2A; }
+    .feature-label {
+      display: inline-block; font-size: 0.72rem; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.05em; padding: 0.2rem 0.5rem; border-radius: 4px; margin-bottom: 0.5rem;
+    }
+    .label-popup { background: #DBEAFE; color: #1E40AF; }
+    .label-panel { background: #D1FAE5; color: #065F46; }
+    .label-tray { background: #FEF3C7; color: #92400E; }
+    .label-auto { background: #EDE9FE; color: #5B21B6; }
+    .step-flow {
+      display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center;
+      margin: 0.75rem 0;
+    }
+    .step-flow .step {
+      background: white; border: 1px solid #E2E8F0; border-radius: 6px;
+      padding: 0.4rem 0.75rem; font-size: 0.85rem; font-weight: 500;
+    }
+    .step-flow .arrow { color: #94A3B8; font-size: 1.1rem; }
+    .tip {
+      background: #F0F9F6; border-left: 3px solid #14B8A6;
+      padding: 0.75rem 1rem; margin: 1rem 0; border-radius: 0 6px 6px 0;
+      font-size: 0.88rem;
+    }
+    .tip strong { color: #0C1B2A; }
+    .hotkey {
+      display: inline-block; background: #F1F5F9; border: 1px solid #CBD5E1;
+      border-radius: 4px; padding: 0.1rem 0.4rem; font-family: 'Consolas', 'Courier New', monospace;
+      font-size: 0.82rem; color: #475569;
+    }
+    .divider { border: none; border-top: 1px solid #E2E8F0; margin: 2rem 0; }
+    .print-btn {
+      background: #0C1B2A; color: white; border: none; padding: 0.6rem 1.5rem;
+      border-radius: 6px; font-size: 0.88rem; font-weight: 600; cursor: pointer;
+      font-family: inherit; margin-bottom: 2rem;
+    }
+    .print-btn:hover { background: #132D46; }
+    table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.88rem; }
+    th { text-align: left; padding: 0.5rem 0.75rem; background: #F1F5F9; border-bottom: 2px solid #E2E8F0; font-weight: 600; }
+    td { padding: 0.5rem 0.75rem; border-bottom: 1px solid #F1F5F9; }
+  </style>
+</head>
+<body>
+
+  <button class="print-btn no-print" onclick="window.print()">Print / Save as PDF</button>
+
+  <h1>Ask Dave Real Estate Tools &ndash; How It Works</h1>
+  <p class="subtitle">A complete guide to every feature</p>
+  <p class="version">Ask Dave Real Estate Tools v1.0.0 &copy; 2026</p>
+
+  <p>Ask Dave Real Estate Tools runs quietly in your system tray and helps you do three things faster: <strong>call people</strong>, <strong>message people on WhatsApp</strong>, and <strong>send scripted messages</strong>. It works on top of whatever you already use &ndash; your CRM, your browser, Excel, emails, PDFs &ndash; anything where you can see a phone number on screen.</p>
+
+  <p>There are two main parts to the tool:</p>
+  <ul>
+    <li><strong>The Popup</strong> &ndash; a small floating bar that appears automatically when you copy a phone number</li>
+    <li><strong>The Panel</strong> &ndash; a larger window you open from the system tray for templates and contact details</li>
+  </ul>
+
+  <!-- ============================================ -->
+  <h2>1. Automatic Phone Number Detection</h2>
+
+  <div class="feature-box">
+    <span class="feature-label label-auto">Automatic</span>
+    <h3>Copy a number, get instant actions</h3>
+    <p>Whenever you copy a phone number to your clipboard (<span class="hotkey">Ctrl+C</span>), Ask Dave Real Estate Tools detects it automatically. A small popup appears next to your cursor with action buttons.</p>
+
+    <div class="step-flow">
+      <span class="step">See a phone number</span>
+      <span class="arrow">&rarr;</span>
+      <span class="step">Select &amp; copy it (Ctrl+C)</span>
+      <span class="arrow">&rarr;</span>
+      <span class="step">Popup appears at cursor</span>
+      <span class="arrow">&rarr;</span>
+      <span class="step">Click Dial or WhatsApp</span>
+    </div>
+
+    <p><strong>Where it works:</strong> Everywhere. Browsers, CRM systems (Bayut, Property Finder, HubSpot, Salesforce), Excel, Word, PDFs, emails, WhatsApp Desktop, Outlook &ndash; if you can copy text, AgentKit will detect the number.</p>
+
+    <p><strong>What it detects:</strong></p>
+    <table>
+      <tr><th>Format</th><th>Example</th><th>Detected?</th></tr>
+      <tr><td>UAE mobile</td><td>0501234567</td><td>Yes</td></tr>
+      <tr><td>UAE mobile with country code</td><td>+971501234567</td><td>Yes</td></tr>
+      <tr><td>UAE mobile with 00 prefix</td><td>00971501234567</td><td>Yes</td></tr>
+      <tr><td>UAE mobile with spaces</td><td>05 012 34567</td><td>Yes</td></tr>
+      <tr><td>UAE landline</td><td>04 123 4567</td><td>Yes</td></tr>
+      <tr><td>International numbers</td><td>+44 7911 123456</td><td>Yes</td></tr>
+      <tr><td>Random text</td><td>"Call me tomorrow"</td><td>No (ignored)</td></tr>
+    </table>
+
+    <div class="tip"><strong>Smart number handling:</strong> Ask Dave Real Estate Tools automatically normalises every number to international format. So whether you copy "0501234567" or "00971501234567" or "+971 50 123 4567", it all becomes the same clean number.</div>
+
+    <div class="tip"><strong>Important:</strong> Ask Dave Real Estate Tools only triggers when it detects <em>new</em> clipboard content. If you copy the same phone number twice in a row, the popup won't appear a second time because the clipboard hasn't changed. To re-detect the same number, copy something else first (any text), then copy the phone number again.</div>
+  </div>
+
+  <!-- ============================================ -->
+  <h2>2. The Popup &ndash; Quick Actions</h2>
+
+  <div class="feature-box">
+    <span class="feature-label label-popup">Popup</span>
+    <h3>Dial, WhatsApp, or send a script in one click</h3>
+    <p>The popup is a compact floating bar that appears near your cursor when a phone number is detected. It has three buttons:</p>
+
+    <table>
+      <tr><th>Button</th><th>What it does</th></tr>
+      <tr><td><strong>Dial</strong></td><td>Opens the number in your phone's dialler via Phone Link. The number is pre-filled &ndash; it does <strong>not</strong> auto-call. You press the call button yourself.</td></tr>
+      <tr><td><strong>WA</strong></td><td>Click to expand the script picker. Choose a script to send via WhatsApp with the message pre-filled, or choose "Open chat (no script)" to start a blank conversation.</td></tr>
+      <tr><td><strong>X</strong></td><td>Dismisses the popup.</td></tr>
+    </table>
+
+    <h3>Sending a script from the popup</h3>
+    <div class="step-flow">
+      <span class="step">Copy a phone number</span>
+      <span class="arrow">&rarr;</span>
+      <span class="step">Popup appears</span>
+      <span class="arrow">&rarr;</span>
+      <span class="step">Click WA button</span>
+      <span class="arrow">&rarr;</span>
+      <span class="step">Pick a script</span>
+      <span class="arrow">&rarr;</span>
+      <span class="step">WhatsApp opens with message ready</span>
+    </div>
+
+    <p>The script is pre-filled in the WhatsApp chat. You can edit it before sending or just hit Send.</p>
+
+    <div class="tip"><strong>Tip:</strong> The popup appears at your cursor, not in a fixed position. So if you're reading a contact list in your CRM, the buttons appear right where you're looking.</div>
+  </div>
+
+  <!-- ============================================ -->
+  <h2>3. Click-to-Dial &amp; Phone Link</h2>
+
+  <div class="feature-box">
+    <span class="feature-label label-popup">Popup</span>
+    <h3>How the Dial button works</h3>
+    <p>When you click <strong>Dial</strong> on the popup or in the panel, Ask Dave Real Estate Tools sends the phone number to your phone's dialler via <strong>Microsoft Phone Link</strong>. The number is pre-filled and ready &ndash; you still press the green call button yourself. It will <strong>not</strong> auto-call anyone.</p>
+
+    <div class="step-flow">
+      <span class="step">Click Dial</span>
+      <span class="arrow">&rarr;</span>
+      <span class="step">Phone Link receives number</span>
+      <span class="arrow">&rarr;</span>
+      <span class="step">Your phone's dialler opens</span>
+      <span class="arrow">&rarr;</span>
+      <span class="step">You press Call</span>
+    </div>
+  </div>
+
+  <div class="feature-box">
+    <span class="feature-label label-tray">Setup</span>
+    <h3>Setting up Phone Link (one-time, Android + Windows)</h3>
+    <p>If you haven't connected your phone yet, follow these steps once:</p>
+    <ol>
+      <li>On your PC, open the <strong>Start menu</strong> and search for <strong>"Phone Link"</strong>. Open it.</li>
+      <li>On your Android phone, install <strong>"Link to Windows"</strong> from the Google Play Store.</li>
+      <li>In Phone Link on your PC, click <strong>Get started</strong>. A QR code appears on screen.</li>
+      <li>Open the Link to Windows app on your phone and <strong>scan the QR code</strong>.</li>
+      <li>Grant <strong>all permissions</strong> when asked &ndash; calls, contacts, messages, and notifications.</li>
+    </ol>
+  </div>
+
+  <div class="feature-box">
+    <span class="feature-label label-tray">Important</span>
+    <h3>Making calls go to your phone (not your PC speakers)</h3>
+    <p>By default, Phone Link may try to ring through your PC speakers instead of your phone. To make calls go straight to your phone's dialler:</p>
+    <ol>
+      <li>Open <strong>Phone Link</strong> on your PC.</li>
+      <li>Click the <strong>Settings gear icon</strong> (top-right corner).</li>
+      <li>Go to <strong>Features</strong>.</li>
+      <li>Under <strong>Calls</strong>, make sure <strong>"Use this PC to make and receive calls"</strong> is turned <strong>ON</strong>.</li>
+      <li>Under the same section, look for the <strong>"Open calls in"</strong> option. Set it to <strong>"Phone"</strong> if available.</li>
+    </ol>
+
+    <div class="warning">
+      <strong>If calls still ring on your PC:</strong> Open <strong>Phone Link &rarr; Settings &rarr; Features &rarr; Calls</strong> and toggle the calls setting <strong>OFF then ON again</strong>. Then make a test call. If it still routes to your PC, try:
+      <ol style="margin-top: 0.5rem;">
+        <li>Open <strong>Windows Settings &rarr; Bluetooth &amp; devices &rarr; Phone Link</strong></li>
+        <li>Make sure your phone is listed and connected</li>
+        <li>Restart both Phone Link on your PC and Link to Windows on your phone</li>
+      </ol>
+    </div>
+
+    <div class="tip"><strong>Test it:</strong> Open Phone Link, go to the <strong>Calls</strong> tab, and dial any number. If the call rings on your actual phone (not your PC speakers), everything is set up correctly and AgentKit's Dial button will work the same way.</div>
+  </div>
+
+  <div class="feature-box">
+    <span class="feature-label label-auto">Alternatives</span>
+    <h3>If you don't want to use Phone Link</h3>
+    <p>Phone Link is optional. Many agents in Dubai use <strong>WhatsApp for everything</strong> and skip phone calls entirely. If that's you:</p>
+    <ul>
+      <li>Ignore the Dial button and use the <strong>WA button</strong> instead</li>
+      <li>You can also use the Dial button as a <strong>"Copy number"</strong> action &ndash; it copies the number to your clipboard so you can paste it into any other app or dial manually on your phone</li>
+    </ul>
+
+    <h3>iPhone + Windows <span style="background:#FEF3C7;color:#92400E;font-size:0.7em;padding:0.1em 0.4em;border-radius:3px;font-weight:600;">BETA</span></h3>
+    <p>Phone Link also works with iPhone via Bluetooth:</p>
+    <ol>
+      <li>Turn on <strong>Bluetooth</strong> on your iPhone.</li>
+      <li>Open <strong>Phone Link</strong> on your PC and choose <strong>"iPhone"</strong>.</li>
+      <li>Scan the QR code with your iPhone camera and tap <strong>Pair</strong>.</li>
+      <li>Grant permissions for calls, contacts, and notifications.</li>
+    </ol>
+    <p>Calls go through your iPhone. Keep it within about 10 metres of your PC.</p>
+
+    <h3>iPhone + Mac <span style="background:#FEF3C7;color:#92400E;font-size:0.7em;padding:0.1em 0.4em;border-radius:3px;font-weight:600;">BETA</span></h3>
+    <p>No extra apps needed &ndash; Apple handles this natively:</p>
+    <ol>
+      <li>Sign into the <strong>same Apple ID</strong> on both devices.</li>
+      <li>Connect both to the <strong>same Wi-Fi network</strong>.</li>
+      <li>On your iPhone: <strong>Settings &rarr; Phone &rarr; Calls on Other Devices &rarr; ON</strong>.</li>
+      <li>Toggle on your Mac in the list below.</li>
+    </ol>
+
+    <h3>Android + Mac <span style="background:#FEF3C7;color:#92400E;font-size:0.7em;padding:0.1em 0.4em;border-radius:3px;font-weight:600;">BETA</span></h3>
+    <p>No built-in call routing for this combination. Use <strong>WhatsApp Desktop</strong> for all calls and messages instead.</p>
+  </div>
+
+  <div class="page-break"></div>
+
+  <!-- ============================================ -->
+  <h2>4. The Panel &ndash; Templates &amp; Contact Details</h2>
+
+  <div class="feature-box">
+    <span class="feature-label label-panel">Panel</span>
+    <h3>Your message template hub</h3>
+    <p>Click the Ask Dave Real Estate Tools icon in your system tray to open the main panel. This is where you manage and customise your message scripts.</p>
+
+    <h3>What's in the panel</h3>
+    <ul>
+      <li><strong>Phone input:</strong> Type or paste a number at the top. AgentKit normalises it automatically.</li>
+      <li><strong>Contact card:</strong> Shows the active number with Dial and WhatsApp buttons, plus an optional name field.</li>
+      <li><strong>Template list:</strong> All your saved message scripts. Click one to preview it.</li>
+      <li><strong>Template preview:</strong> See the full message with the contact name filled in. Edit it if needed, then send via WhatsApp or copy to clipboard.</li>
+    </ul>
+
+    <h3>Using templates with contact names</h3>
+    <div class="step-flow">
+      <span class="step">Open panel</span>
+      <span class="arrow">&rarr;</span>
+      <span class="step">Number auto-fills from clipboard</span>
+      <span class="arrow">&rarr;</span>
+      <span class="step">Click "+ Add name"</span>
+      <span class="arrow">&rarr;</span>
+      <span class="step">Type "Ahmed"</span>
+      <span class="arrow">&rarr;</span>
+      <span class="step">Pick a template</span>
+      <span class="arrow">&rarr;</span>
+      <span class="step">"Hi Ahmed, ..." ready to send</span>
+    </div>
+
+    <p>Every template uses <strong>{name}</strong> as a placeholder. When you add a contact name, it replaces {name} throughout the message automatically.</p>
+  </div>
+
+  <!-- ============================================ -->
+  <h2>5. Message Templates</h2>
+
+  <div class="feature-box">
+    <span class="feature-label label-panel">Panel</span>
+    <h3>Pre-written scripts you can customise</h3>
+    <p>AgentKit comes with 6 built-in templates for common real estate situations:</p>
+
+    <table>
+      <tr><th>Template</th><th>When to use it</th></tr>
+      <tr><td>Listing Introduction</td><td>First contact about a new property</td></tr>
+      <tr><td>Follow-Up</td><td>After a conversation or viewing</td></tr>
+      <tr><td>Viewing Confirmation</td><td>Day before a scheduled viewing</td></tr>
+      <tr><td>Viewing Reminder</td><td>Day of the viewing</td></tr>
+      <tr><td>New Listing Alert</td><td>Notifying a client about a matching property</td></tr>
+      <tr><td>Thank You</td><td>After a viewing or meeting</td></tr>
+    </table>
+
+    <h3>Creating your own templates</h3>
+    <ol>
+      <li>Open the panel (click the tray icon)</li>
+      <li>Scroll to the bottom of the template list</li>
+      <li>Click <strong>"+ New Template"</strong></li>
+      <li>Give it a name, pick a category, and write your message</li>
+      <li>Use <strong>{name}</strong> anywhere you want the contact's name to appear</li>
+      <li>Click <strong>Save</strong></li>
+    </ol>
+
+    <p>You can also <strong>edit</strong> or <strong>delete</strong> any template by hovering over it in the list.</p>
+
+    <div class="tip"><strong>Tip:</strong> Customise the built-in templates with your actual name and agency. Change "[Agent]" to your name and "[Agency]" to your firm. These templates are just starting points.</div>
+  </div>
+
+  <!-- ============================================ -->
+  <h2>6. System Tray &amp; Settings</h2>
+
+  <div class="feature-box">
+    <span class="feature-label label-tray">System Tray</span>
+    <h3>Ask Dave Real Estate Tools lives in your taskbar</h3>
+    <p>Ask Dave Real Estate Tools runs in the background as a system tray icon. It starts automatically when you turn on your computer and stays out of your way until you need it.</p>
+
+    <table>
+      <tr><th>Action</th><th>What happens</th></tr>
+      <tr><td><strong>Left-click</strong> the tray icon</td><td>Opens the main panel</td></tr>
+      <tr><td><strong>Right-click</strong> the tray icon</td><td>Shows menu: Open Panel, Settings, Quit</td></tr>
+    </table>
+
+    <h3>Settings you can change</h3>
+    <p>Right-click the tray icon and choose <strong>Settings</strong>:</p>
+    <ul>
+      <li><strong>Clipboard detection:</strong> Turn on/off automatic phone number detection</li>
+      <li><strong>Global hotkeys:</strong> Turn on/off and customise keyboard shortcuts
+        <br>Default: <span class="hotkey">Ctrl+Shift+D</span> for Dial, <span class="hotkey">Ctrl+Shift+W</span> for WhatsApp</li>
+      <li><strong>WhatsApp mode:</strong> Choose between opening WhatsApp in your browser ("Web") or in the WhatsApp Desktop app ("Desktop")</li>
+    </ul>
+
+    <div class="tip"><strong>Which WhatsApp mode?</strong> If you have WhatsApp Desktop installed, use <strong>"Desktop"</strong> mode &ndash; it's faster and opens directly in the app. If you don't want to install it, <strong>"Web"</strong> mode opens wa.me links in your browser which works with WhatsApp Web.</div>
+  </div>
+
+  <!-- ============================================ -->
+  <h2>7. Global Hotkeys</h2>
+
+  <div class="feature-box">
+    <span class="feature-label label-auto">Works from any app</span>
+    <h3>Keyboard shortcuts that work everywhere</h3>
+    <p>Even without copying a number first, you can use hotkeys to quickly dial or WhatsApp the last detected number:</p>
+
+    <table>
+      <tr><th>Hotkey</th><th>Action</th></tr>
+      <tr><td><span class="hotkey">Ctrl+Shift+D</span></td><td>Dial the last copied number</td></tr>
+      <tr><td><span class="hotkey">Ctrl+Shift+W</span></td><td>WhatsApp the last copied number</td></tr>
+    </table>
+
+    <p>These work from <strong>any application</strong> &ndash; your CRM, browser, Excel, anywhere. You can change the key combinations in Settings.</p>
+  </div>
+
+  <div class="page-break"></div>
+
+  <!-- ============================================ -->
+  <h2>Typical Workflow Examples</h2>
+
+  <h3>Example 1: Quick WhatsApp from CRM</h3>
+  <ol>
+    <li>You're in your CRM looking at a lead's phone number</li>
+    <li>Select the number and press <span class="hotkey">Ctrl+C</span></li>
+    <li>The popup appears next to your cursor</li>
+    <li>Click <strong>WA</strong> &rarr; pick "Listing Introduction"</li>
+    <li>WhatsApp opens with the message ready &ndash; just hit Send</li>
+  </ol>
+
+  <h3>Example 2: Follow-up with a personalised message</h3>
+  <ol>
+    <li>Copy the client's phone number from anywhere</li>
+    <li>Click the <strong>tray icon</strong> to open the panel</li>
+    <li>The number is already there. Click <strong>"+ Add name"</strong> and type their name</li>
+    <li>Pick the "Follow-Up" template</li>
+    <li>The preview shows "Hi Ahmed, ..." with their name filled in</li>
+    <li>Edit the message if needed, then click <strong>"Send via WhatsApp"</strong></li>
+  </ol>
+
+  <h3>Example 3: Rapid calling through a list</h3>
+  <ol>
+    <li>Open your contact list in Excel or your CRM</li>
+    <li>Copy the first number &ndash; popup appears</li>
+    <li>Click <strong>Dial</strong> &ndash; Phone Link opens the number on your phone</li>
+    <li>Make your call, hang up</li>
+    <li>Copy the next number &ndash; popup updates with the new number</li>
+    <li>Click <strong>Dial</strong> again &ndash; repeat</li>
+  </ol>
+
+  <hr class="divider">
+
+  <!-- ============================================ -->
+  <h2>Quick Reference</h2>
+
+  <table>
+    <tr><th>I want to...</th><th>Do this</th></tr>
+    <tr><td>Call someone</td><td>Copy their number &rarr; click <strong>Dial</strong> on the popup</td></tr>
+    <tr><td>WhatsApp someone (no message)</td><td>Copy their number &rarr; click <strong>WA</strong> &rarr; "Open chat (no script)"</td></tr>
+    <tr><td>WhatsApp someone with a script</td><td>Copy their number &rarr; click <strong>WA</strong> &rarr; pick a script</td></tr>
+    <tr><td>Send a personalised template</td><td>Open panel &rarr; add name &rarr; pick template &rarr; Send via WhatsApp</td></tr>
+    <tr><td>Create a new template</td><td>Open panel &rarr; scroll down &rarr; "+ New Template"</td></tr>
+    <tr><td>Change WhatsApp mode</td><td>Right-click tray &rarr; Settings &rarr; WhatsApp Mode</td></tr>
+    <tr><td>Change hotkeys</td><td>Right-click tray &rarr; Settings &rarr; Hotkeys</td></tr>
+    <tr><td>Quit AgentKit</td><td>Right-click tray &rarr; Quit</td></tr>
+  </table>
+
+  <hr class="divider">
+
+  <h2>Privacy &amp; Security</h2>
+  <ul>
+    <li><strong>No data leaves your computer.</strong> AgentKit runs 100% locally. No cloud, no accounts, no tracking.</li>
+    <li><strong>No CRM access.</strong> AgentKit never connects to or reads from your CRM. It only sees what you copy to your clipboard.</li>
+    <li><strong>Your templates are stored locally</strong> in your user profile. They stay on your machine.</li>
+    <li><strong>No hidden costs.</strong> AgentKit is free to use. No subscriptions, no API fees, no trial periods.</li>
+  </ul>
+
+  <hr class="divider">
+  <p style="text-align: center; color: #94A3B8; font-size: 0.82rem;">&copy; 2026 Ask Dave Real Estate Tools. Built for real estate agents in the UAE.</p>
+
+</body>
+</html>

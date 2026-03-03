@@ -5,7 +5,6 @@ interface FeatureTogglesProps {
   calendarEnabled: boolean
   phoneLinkEnabled: boolean
   followUpPromptEnabled: boolean
-  checklistEnabled: boolean
   newsEnabled: boolean
   onToggle: (key: string, value: boolean) => void
 }
@@ -43,11 +42,6 @@ const FEATURES = [
     description: 'Show follow-up reminder buttons (7, 15, 30 days) on contact cards'
   },
   {
-    key: 'checklistEnabled',
-    label: 'Document Checklists',
-    description: 'Track required documents per client by transaction type'
-  },
-  {
     key: 'newsEnabled',
     label: 'News Feed',
     description: 'Show UAE real estate news from industry sources'
@@ -61,7 +55,6 @@ export default function FeatureToggles({
   calendarEnabled,
   phoneLinkEnabled,
   followUpPromptEnabled,
-  checklistEnabled,
   newsEnabled,
   onToggle
 }: FeatureTogglesProps) {
@@ -72,7 +65,6 @@ export default function FeatureToggles({
     calendarEnabled,
     phoneLinkEnabled,
     followUpPromptEnabled,
-    checklistEnabled,
     newsEnabled
   }
 
@@ -85,18 +77,18 @@ export default function FeatureToggles({
         return (
           <div key={feature.key} className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-800">{feature.label}</p>
-              <p className="text-xs text-gray-500">{feature.description}</p>
+              <p className="text-sm font-medium text-[#ededee]">{feature.label}</p>
+              <p className="text-xs text-[#a1a1aa]">{feature.description}</p>
             </div>
             <button
               onClick={() => onToggle(feature.key, !values[feature.key])}
-              className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors ${
-                values[feature.key] ? 'bg-blue-500' : 'bg-gray-300'
+              className={`relative inline-flex h-6 w-10 items-center rounded-full transition-colors ${
+                values[feature.key] ? 'bg-indigo-600' : 'bg-white/10'
               }`}
             >
               <span
-                className={`inline-block h-3.5 w-3.5 rounded-full bg-white shadow transform transition-transform ${
-                  values[feature.key] ? 'translate-x-4.5' : 'translate-x-0.5'
+                className={`inline-block h-4 w-4 rounded-full bg-white shadow transform transition-transform ${
+                  values[feature.key] ? 'translate-x-5' : 'translate-x-0.5'
                 }`}
               />
             </button>

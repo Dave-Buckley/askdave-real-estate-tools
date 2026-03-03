@@ -1,0 +1,52 @@
+PHASE 2 TESTING - Notes & Calendar Integration
+================================================
+
+Test number:  +971 50 123 4567  (or any real number)
+
+
+--- CONTACT ROLES (Panel) ---
+
+[ ] 1. Role pills visible: Tenant, Landlord, Buyer, Seller, Investor
+[ ] 2. Tap to select/deselect - highlights toggle on/off
+[ ] 3. Multiple roles can be active at once
+
+
+--- ONENOTE (Panel > OneNote button) ---
+
+[ ] 4. Click OneNote button (purple) with 1 role selected
+       - OneNote desktop opens
+       - Creates notebook for that role
+       - Page has: contact name, phone, qualifying questions table
+[ ] 5. Click OneNote with multiple roles selected
+       - Creates a notebook per role, each with its own questions
+[ ] 6. Click OneNote with NO roles selected
+       - Should default to Tenant
+[ ] 7. OneNote not installed - should show friendly error dialog
+
+
+--- GOOGLE CALENDAR (Panel > Viewing / Consult buttons) ---
+
+[ ] 8. Click "Viewing" button
+       - Opens Google Calendar in browser
+       - Event title: "Viewing - [name]"
+       - Details show phone + roles
+[ ] 9. Click "Consult" button
+       - Opens Google Calendar in browser
+       - Event title: "Consultation - [name]"
+[ ] 10. Calendar with no name - should use phone number instead
+
+
+--- FEATURE TOGGLES (Settings window) ---
+
+[ ] 11. OneNote toggle visible in Settings
+[ ] 12. Calendar toggle visible in Settings
+[ ] 13. Phone Link toggle visible (Windows only)
+[ ] 14. Toggle OneNote OFF - button disappears from panel
+[ ] 15. Toggle Calendar OFF - Viewing + Consult buttons disappear
+[ ] 16. Toggle both back ON - buttons reappear
+
+
+NOTES:
+------
+
+

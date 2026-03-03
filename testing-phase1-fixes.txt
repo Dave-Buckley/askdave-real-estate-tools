@@ -1,0 +1,52 @@
+Agent Kit - Phase 1 Fixes Testing (Round 2)
+=============================================
+Build: Agent Kit Setup 1.0.0.exe
+Date: ___________
+
+
+FIX 1: DIAL = COPY + OPEN PHONE LINK (no toast)
+-------------------------------------------------
+[ ] Click Dial -> number copied to clipboard
+[ ] Click Dial -> Phone Link dialler opens with number
+[ ] NO toast notification popup from Electron
+[ ] Popup dismisses after clicking Dial
+[ ] Popup does NOT re-trigger after Dial (skip flag)
+
+FIX 2: SINGLE INSTANCE
+------------------------
+[ ] Open Agent Kit from shortcut while already running -> panel shows (no second instance)
+[ ] Only one Agent Kit icon in system tray at all times
+[ ] Second launch focuses the existing panel, doesn't create a new app
+
+FIX 3: CLIPBOARD LENGTH LIMIT
+-------------------------------
+[ ] Copy a phone number by itself (e.g. 0501234567) -> popup appears
+[ ] Copy a formatted number (e.g. +971 50 123 4567) -> popup appears
+[ ] Copy a paragraph containing a phone number -> NO popup
+[ ] Copy a sentence with a number in it -> NO popup
+[ ] Copy just "050 301 9926" -> popup appears (under 25 chars)
+
+FIX 4: POPUP MINIMIZE TO TASKBAR
+----------------------------------
+[ ] Popup appears in Windows taskbar when shown
+[ ] Click minimize on popup -> minimizes to taskbar (no thin bar at bottom)
+[ ] Click popup in taskbar -> restores to normal size
+[ ] Popup behaves like a normal window in taskbar
+
+
+PREVIOUS FIXES (should still work)
+------------------------------------
+[ ] Clipboard monitoring: copy phone -> popup near cursor
+[ ] Copy non-phone text -> no popup
+[ ] WhatsApp button still works
+[ ] No widget circle on screen
+[ ] Settings toggle on/off works
+
+
+BUGS / NOTES
+=============
+1.
+2.
+3.
+4.
+5.

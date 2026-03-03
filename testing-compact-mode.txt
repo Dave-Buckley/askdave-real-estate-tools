@@ -1,0 +1,54 @@
+TESTING CHECKLIST: Compact Mode + Reposition + Brand Icons + Fixes
+===================================================================
+
+CRITICAL FIX: CLIPBOARD DETECTION
+[ ] Copy a phone number (e.g. +971 50 123 4567) to clipboard
+[ ] Compact panel (~320x220) appears near cursor within 1 second
+[ ] Phone number is displayed in the compact panel
+[ ] Copy another number while panel is open -> repositions near cursor
+
+BRAND ICONS
+[ ] Tray icon (bottom-right system tray) = white A on black
+[ ] Taskbar icon (when panel open) = white A on black
+[ ] Window title bar icon = white A on black
+[ ] Desktop shortcut icon = white A on black
+[ ] Add/Remove Programs icon = white A on black
+
+COMPACT MODE LAYOUT
+[ ] Compact shows: "Agent Kit" title + close button
+[ ] Compact shows: phone number + Copy + Clear buttons
+[ ] Compact shows: name input field
+[ ] Compact shows: Dial button
+[ ] Compact shows: WhatsApp button
+[ ] Compact shows: OneNote button (if enabled in settings)
+[ ] Compact shows: Calendar button (if enabled in settings)
+[ ] Compact is NOT resizable (no drag-resize)
+
+COMPACT ACTIONS (each expands + performs action)
+[ ] Click Dial -> dials number AND panel expands to full size
+[ ] Click WhatsApp -> opens WhatsApp AND panel expands to full
+[ ] Click OneNote -> opens OneNote AND panel expands to full
+[ ] Click Calendar -> books viewing AND panel expands to full
+[ ] After expansion, full ContactCard visible with all tools
+
+MAXIMIZE BUTTON
+[ ] Click maximize in compact -> panel expands to full (~380x520)
+[ ] Panel does NOT go full-screen (intercepted)
+[ ] After maximize, all features visible (templates, roles, etc.)
+
+TRAY CLICK (EXPANDED MODE)
+[ ] Click tray icon -> full-size panel near tray area
+[ ] Panel is resizable in expanded mode
+[ ] All features: ContactCard, templates, hotkeys, news
+[ ] Click tray again -> panel hides
+
+NAME PERSISTENCE
+[ ] Type a name in compact mode
+[ ] Expand panel -> name is preserved
+[ ] Name shows in ContactCard header
+
+GENERAL
+[ ] Close button works in compact mode
+[ ] Close button works in expanded mode
+[ ] Settings opens from expanded mode header
+[ ] IncomingCallBar shows in expanded mode (if phone link active)

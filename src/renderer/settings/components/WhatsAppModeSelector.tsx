@@ -27,8 +27,8 @@ export default function WhatsAppModeSelector({ mode, onChange }: WhatsAppModeSel
           key={option.value}
           className={`flex items-start gap-3 p-2.5 rounded-md border cursor-pointer transition-colors ${
             mode === option.value
-              ? 'border-green-300 bg-green-50'
-              : 'border-gray-200 hover:border-gray-300'
+              ? 'border-[rgba(37,211,102,0.3)] bg-[rgba(37,211,102,0.08)]'
+              : 'border-white/[0.07] hover:border-white/[0.14]'
           }`}
         >
           <input
@@ -37,11 +37,11 @@ export default function WhatsAppModeSelector({ mode, onChange }: WhatsAppModeSel
             value={option.value}
             checked={mode === option.value}
             onChange={() => onChange(option.value)}
-            className="mt-0.5 accent-green-500"
+            className="mt-0.5 accent-[#25D366]"
           />
           <div>
-            <p className="text-sm font-medium text-gray-800">{option.label}</p>
-            <p className="text-xs text-gray-500">{option.description}</p>
+            <p className="text-sm font-medium text-[#ededee]">{option.label}</p>
+            <p className="text-xs text-[#a1a1aa]">{option.description}</p>
           </div>
         </label>
       ))}

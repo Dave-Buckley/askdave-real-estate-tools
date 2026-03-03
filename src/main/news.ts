@@ -3,12 +3,11 @@ import { NewsItem } from '../shared/types'
 
 const FEEDS = [
   { url: 'https://propertynews.ae/feed/', source: 'PropertyNews.ae' },
-  { url: 'http://www.arabianbusiness.com/feed', source: 'Arabian Business' },
-  { url: 'https://www.zawya.com/rss/real-estate', source: 'Zawya' }
+  { url: 'https://property24.ae/magazine/feed/', source: 'Property24.ae' }
 ]
 
 // Custom User-Agent to improve feed compatibility and avoid 403 responses
-const parser = new Parser({ headers: { 'User-Agent': 'AgentKit/1.0' } })
+const parser = new Parser({ headers: { 'User-Agent': 'AskDave/1.0' } })
 
 let cachedItems: NewsItem[] = []
 let lastFetched: number = 0

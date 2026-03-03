@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Pencil, X, Plus } from 'lucide-react'
 import type { Template } from '../../../shared/types'
 
 interface TemplateListProps {
@@ -35,24 +36,25 @@ export default function TemplateList({
   }
 
   const categoryColors: Record<string, string> = {
-    introduction: 'bg-blue-100 text-blue-700',
-    'follow-up': 'bg-amber-100 text-amber-700',
-    viewing: 'bg-green-100 text-green-700',
-    reminder: 'bg-purple-100 text-purple-700',
-    alert: 'bg-red-100 text-red-700',
-    'thank-you': 'bg-pink-100 text-pink-700',
-    other: 'bg-gray-100 text-gray-700'
+    introduction: 'bg-[rgba(99,102,241,0.14)] text-[#818cf8]',
+    'follow-up': 'bg-[rgba(245,158,11,0.12)] text-[#fbbf24]',
+    viewing: 'bg-[rgba(34,197,94,0.12)] text-[#4ade80]',
+    reminder: 'bg-[rgba(168,85,247,0.12)] text-[#c084fc]',
+    alert: 'bg-[rgba(239,68,68,0.12)] text-[#f87171]',
+    'thank-you': 'bg-[rgba(236,72,153,0.12)] text-[#f472b6]',
+    other: 'bg-white/5 text-[#d4d4d8]'
   }
 
   if (templates.length === 0) {
     return (
       <div className="text-center py-6">
-        <p className="text-xs text-gray-400 mb-2">No templates. Create one to get started.</p>
+        <p className="text-xs text-[#a1a1aa] mb-2">No templates. Create one to get started.</p>
         <button
           onClick={onCreate}
-          className="text-xs text-blue-500 hover:text-blue-600"
+          className="text-xs text-indigo-400 hover:text-indigo-300 flex items-center gap-1 mx-auto"
         >
-          + New Template
+          <Plus size={16} strokeWidth={1.5} />
+          New Template
         </button>
       </div>
     )
@@ -62,12 +64,13 @@ export default function TemplateList({
     <div className="space-y-1">
       {/* Header */}
       <div className="flex items-center justify-between mb-1">
-        <h2 className="text-xs font-medium text-gray-500 uppercase tracking-wider">Templates</h2>
+        <h2 className="text-xs font-medium text-[#a1a1aa] uppercase tracking-wider">Templates</h2>
         <button
           onClick={onCreate}
-          className="text-xs text-blue-500 hover:text-blue-600"
+          className="text-xs text-indigo-400 hover:text-indigo-300 flex items-center gap-0.5"
         >
-          + New
+          <Plus size={16} strokeWidth={1.5} />
+          New
         </button>
       </div>
 
@@ -75,7 +78,7 @@ export default function TemplateList({
       {templates.map((template) => (
         <div
           key={template.id}
-          className="group flex items-start gap-2 p-2 rounded-md hover:bg-white hover:shadow-sm border border-transparent hover:border-gray-100 cursor-pointer transition-all"
+          className="group flex items-start gap-2 p-2 rounded-md hover:bg-white/[0.04] border border-transparent hover:border-white/[0.07] cursor-pointer transition-all"
           onClick={() => {
             if (hasActiveContact) {
               onSelect(template)
@@ -84,36 +87,36 @@ export default function TemplateList({
         >
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-1.5 mb-0.5">
-              <span className="text-xs font-medium text-gray-800 truncate">{template.name}</span>
-              <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${categoryColors[template.category] || categoryColors.other}`}>
+              <span className="text-xs font-medium text-[#ededee] truncate">{template.name}</span>
+              <span className={`text-[13px] px-1.5 py-0.5 rounded-full ${categoryColors[template.category] || categoryColors.other}`}>
                 {template.category}
               </span>
             </div>
-            <p className="text-[11px] text-gray-400 truncate">{template.body}</p>
+            <p className="text-[13px] text-[#a1a1aa] truncate">{template.body}</p>
           </div>
 
           {/* Action buttons (visible on hover) */}
           <div className="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
             <button
               onClick={(e) => { e.stopPropagation(); onEdit(template) }}
-              className="p-1 text-gray-400 hover:text-gray-600 text-xs"
+              className="p-1 text-[#a1a1aa] hover:text-indigo-400 transition-colors"
               title="Edit"
             >
-              &#9998;
+              <Pencil size={16} strokeWidth={1.5} />
             </button>
             <button
               onClick={(e) => { e.stopPropagation(); handleDelete(template.id) }}
-              className={`p-1 text-xs ${confirmDeleteId === template.id ? 'text-red-500' : 'text-gray-400 hover:text-red-400'}`}
+              className={`p-1 ${confirmDeleteId === template.id ? 'text-red-400' : 'text-[#a1a1aa] hover:text-red-400'} transition-colors`}
               title={confirmDeleteId === template.id ? 'Click again to confirm' : 'Delete'}
             >
-              {confirmDeleteId === template.id ? '?' : '\u2717'}
+              <X size={16} strokeWidth={1.5} />
             </button>
           </div>
         </div>
       ))}
 
       {!hasActiveContact && (
-        <p className="text-[10px] text-gray-400 text-center mt-2">
+        <p className="text-[13px] text-[#a1a1aa] text-center mt-2">
           Enter a phone number to use templates
         </p>
       )}

@@ -1,14 +1,17 @@
-import { shell } from 'electron'
+import { clipboard, shell } from 'electron'
+import { setSkipNextClipboardChange } from './clipboard'
 
 /**
- * Open the OS phone dialler with the number pre-filled (does NOT auto-call).
- * Uses tel: URI scheme supported on both Windows and macOS.
+ * Copy the phone number to clipboard and open Phone Link dialler.
+ * Sets the skip flag so the clipboard watcher doesn't re-trigger.
  */
 export async function openDialler(e164: string): Promise<void> {
   try {
+    setSkipNextClipboardChange()
+    clipboard.writeText(e164)
     await shell.openExternal(`tel:${e164}`)
   } catch (err) {
-    console.error('Failed to open dialler:', err)
+    console.error('Failed to dial:', err)
   }
 }
 
@@ -35,9 +38,13 @@ export async function openWhatsApp(
 
 /**
  * Build a WhatsApp URL with a pre-filled message for template sending.
- * Returns the URL string for use with shell.openExternal.
+ * 'web' mode: wa.me link (opens in browser).
+ * 'desktop' mode: whatsapp:// protocol (opens desktop app).
  */
-export function buildWhatsAppURL(e164: string, message: string): string {
+export function buildWhatsAppURL(e164: string, message: string, mode: 'web' | 'desktop' = 'web'): string {
   const digits = e164.replace('+', '')
+  if (mode === 'desktop') {
+    return `whatsapp://send?phone=${digits}&text=${encodeURIComponent(message)}`
+  }
   return `https://wa.me/${digits}?text=${encodeURIComponent(message)}`
 }

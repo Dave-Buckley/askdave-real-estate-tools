@@ -1,0 +1,139 @@
+AgentKit v1.0 — Dark Theme Testing Checklist
+=============================================
+Date: 2026-03-03
+Installer: dist/agent-kit Setup 1.0.0.exe
+Theme: Dark mode (zinc-950 surfaces, indigo accent, lucide icons)
+
+INSTALL & STARTUP
+-----------------
+[ ] Install from fresh .exe — no errors
+[ ] App appears in system tray
+[ ] Tray icon looks correct on dark/light taskbar
+
+DARK THEME — POPUP
+-------------------
+[ ] Popup background is dark (#161617), not white
+[ ] Rounded corners with subtle border visible
+[ ] Phone number text is light (#ededee) and readable
+[ ] Drag handle icon (grip dots) visible but subtle
+[ ] WhatsApp button stays green (#25D366)
+[ ] Copy button has dark bg with light text
+[ ] Settings gear icon (lucide) renders correctly
+[ ] Minimize icon (—) renders correctly
+[ ] Close icon (X) renders correctly
+[ ] Contact name input has dark bg, light text, visible placeholder
+[ ] Role pills: inactive are subtle dark, active have colored tint
+[ ] OneNote button has purple tint
+[ ] Viewing button has indigo tint
+[ ] Consult button has green tint
+[ ] Script list items have dark bg, light text
+[ ] Edit/delete icons (pencil/trash) appear on hover
+[ ] "Add new script" link is indigo colored
+[ ] Inline edit inputs are dark with light text
+[ ] Save button is indigo, Cancel is dark secondary
+Notes:
+_____________________________________________
+
+DARK THEME — PANEL
+-------------------
+[ ] Panel background is dark (#0d0d0e)
+[ ] "Agent Kit" header text is light
+[ ] Header icons (keyboard, news, settings, close) are lucide icons
+[ ] Icons light up on hover
+[ ] Phone input has dark bg, indigo focus ring
+[ ] "Go" button is indigo
+[ ] Contact card has dark surface bg with subtle border
+[ ] Phone number is light with tracking-wider
+[ ] Dial button has indigo tint
+[ ] WhatsApp split button stays green
+[ ] WhatsApp dropdown menu is dark
+[ ] Role pills match popup styling
+[ ] OneNote/Viewing/Consult buttons have colored rgba tints
+[ ] Follow-up buttons have amber/yellow tint
+[ ] Document checklist: chevron icons render
+[ ] Checkbox: green fill when ticked, subtle border when empty
+[ ] Progress badge: green when complete, gray when partial
+[ ] Template list: category badges have colored rgba tints
+[ ] Template hover shows edit/delete icons
+[ ] Template editor: dark inputs, indigo save button
+[ ] Template preview: dark textarea, "Send via WhatsApp" green
+[ ] News feed: articles readable on dark bg
+[ ] News source badges have colored tints
+[ ] Article titles highlight on hover
+[ ] Back buttons use ArrowLeft icon
+Notes:
+_____________________________________________
+
+DARK THEME — SETTINGS
+----------------------
+[ ] Settings window has dark bg (#0d0d0e)
+[ ] "Settings" title is light
+[ ] "Saved" indicator is green
+[ ] Section headers (Accounts, Features, etc.) are subtle gray
+[ ] Account cards have dark surface bg
+[ ] Connection dots: green when connected, gray when not
+[ ] Sign In/Out buttons: indigo for sign in, red for sign out
+[ ] Feature toggles: indigo when on, dark gray when off
+[ ] Toggle thumb slides smoothly
+[ ] Hotkey recorder: dark inputs, indigo Change button, red Clear
+[ ] WhatsApp mode selector: green tint on selected, dark on unselected
+[ ] Privacy note: green rgba tint with shield icon
+[ ] Version text is subtle gray
+Notes:
+_____________________________________________
+
+DARK THEME — MINIMIZED BAR
+----------------------------
+[ ] Minimized bar has dark bg
+[ ] Phone icon (lucide) renders
+[ ] Phone number is light and readable
+[ ] Expand chevron icon renders and highlights on hover
+Notes:
+_____________________________________________
+
+DARK THEME — INCOMING CALL BAR
+--------------------------------
+[ ] Incoming call: indigo rgba tint background
+[ ] "Incoming call" label in indigo
+[ ] Caller name/number in light text
+[ ] Dismiss X icon renders
+[ ] OneNote button has purple tint
+[ ] Call ended: amber rgba tint background
+[ ] Follow-up buttons have amber tint
+[ ] "Follow-up set" message in green
+Notes:
+_____________________________________________
+
+OVERALL VISUAL QUALITY
+-----------------------
+Rate each screen 1-5 (1=ugly, 5=professional):
+
+[ ] Popup bar:         ___/5
+[ ] Panel main:        ___/5
+[ ] Contact card:      ___/5
+[ ] Checklist section: ___/5
+[ ] News feed:         ___/5
+[ ] Settings:          ___/5
+[ ] Template editor:   ___/5
+[ ] Template preview:  ___/5
+
+Does it look like "a pro made it"?  Y / N
+What still looks amateur:
+_____________________________________________
+_____________________________________________
+
+READABILITY / CONTRAST
+-----------------------
+[ ] All text readable on dark backgrounds
+[ ] No text-on-text contrast issues
+[ ] Placeholder text visible but distinct from input text
+[ ] Disabled state clearly different from active
+[ ] Icons visible at all sizes
+Notes:
+_____________________________________________
+
+BUGS / ISSUES
+--------------
+_____________________________________________
+_____________________________________________
+_____________________________________________

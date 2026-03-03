@@ -1,5 +1,5 @@
 import { store } from './store'
-import { Contact, ContactRole, ContactChecklist } from '../shared/types'
+import { Contact, ContactRole } from '../shared/types'
 
 /**
  * Get a contact by E.164 phone number, or null if not found.
@@ -24,10 +24,10 @@ export function upsertContact(
     e164,
     displayNumber: data.displayNumber ?? existing?.displayNumber ?? e164,
     name: data.name ?? existing?.name ?? '',
+    email: data.email ?? existing?.email ?? '',
     roles: data.roles ?? existing?.roles ?? [],
     notes: data.notes ?? existing?.notes ?? '',
     oneNotePageId: data.oneNotePageId ?? existing?.oneNotePageId,
-    checklist: (data.checklist as ContactChecklist | undefined) ?? existing?.checklist,
     createdAt: existing?.createdAt ?? now,
     updatedAt: now
   }

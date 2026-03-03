@@ -1,0 +1,58 @@
+AGENT KIT - PHASE 2 TESTING CHECKLIST
+=======================================
+Date: _______________
+Build: Agent Kit Setup 1.0.0.exe
+
+
+CONTACT PERSISTENCE
+--------------------
+[ ] Copy number - type a name - persists after app restart   Notes:
+[ ] Select roles (Tenant + Buyer) - persists after restart   Notes:
+[ ] Clear contact - re-copy same number - data reloads       Notes:
+[ ] Type in panel phone input - contact loads if saved       Notes:
+[ ] Role pills toggle on/off correctly                       Notes:
+[ ] Name + roles auto-save (no save button needed)           Notes:
+
+
+ONENOTE INTEGRATION
+--------------------
+[ ] OneNote button visible when oneNoteEnabled = true        Notes:
+[ ] OneNote button hidden when oneNoteEnabled = false         Notes:
+[ ] Click OneNote - OneNote app opens                        Notes:
+[ ] Paste in OneNote - formatted tables with role questions  Notes:
+[ ] Tenant role shows budget, bedrooms, areas, etc.          Notes:
+[ ] Multiple roles show multiple tables                      Notes:
+[ ] Contact name + phone number in pasted header             Notes:
+[ ] If OneNote not installed - dialog prompts to install     Notes:
+[ ] Notes still on clipboard even if OneNote fails           Notes:
+
+
+GOOGLE CALENDAR
+----------------
+[ ] Viewing button visible when calendarEnabled = true       Notes:
+[ ] Consult button visible when calendarEnabled = true       Notes:
+[ ] Both buttons hidden when calendarEnabled = false          Notes:
+[ ] Click Viewing - browser opens Google Calendar             Notes:
+[ ] Event title is "Viewing - {name}"                        Notes:
+[ ] Event details include phone + role                       Notes:
+[ ] Click Consult - browser opens Google Calendar             Notes:
+[ ] Event title is "Consultation - {name}"                   Notes:
+[ ] Works with no name set (uses phone number)               Notes:
+
+
+SETTINGS TOGGLES
+-----------------
+[ ] OneNote toggle hides/shows OneNote button                Notes:
+[ ] Calendar toggle hides/shows Viewing + Consult buttons    Notes:
+[ ] No auth UI anywhere in settings                          Notes:
+
+
+BUGS FOUND
+===========
+#   Description                              Severity    Status
+--- ---------------------------------------- ----------- -------
+1
+2
+3
+4
+5

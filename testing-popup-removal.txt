@@ -1,0 +1,66 @@
+TESTING CHECKLIST — Popup Removed, Panel Consolidated
+=====================================================
+
+INSTALL
+-------
+[ ] Run "agent-kit Setup 1.0.0.exe" from dist/
+[ ] App launches, panel minimized to taskbar
+
+TRAY ICON
+---------
+[ ] Tray icon visible in system tray (bottom-right)
+[ ] Icon shows white "A" on transparent background (NOT blue/dark)
+[ ] Left-click tray icon → panel appears near tray area (bottom-right)
+[ ] Left-click tray icon again → panel hides
+[ ] Right-click tray icon → context menu (Open Panel, Settings, Quit)
+
+CLIPBOARD PHONE DETECTION
+--------------------------
+[ ] Copy a phone number (e.g. +971501234567 from any app)
+[ ] Panel pops up NEAR THE CURSOR (not bottom-right, not center)
+[ ] Phone number displayed correctly in panel
+[ ] Contact card shows with Dial + WhatsApp buttons
+
+COPY NUMBER BUTTON
+------------------
+[ ] With a phone number loaded, see small copy icon next to the number
+[ ] Click copy icon → number copied to clipboard
+[ ] Panel does NOT re-trigger (skip next clipboard change works)
+
+PANEL FEATURES (still work)
+----------------------------
+[ ] Manual phone input → type a number, press Enter → contact card loads
+[ ] Dial button → opens phone dialler
+[ ] WhatsApp button → opens WhatsApp
+[ ] WhatsApp dropdown → "Open in Browser" / "Open Desktop App"
+[ ] Add name → type name → saves
+[ ] Role pills → click to toggle (Tenant, Landlord, etc.)
+[ ] OneNote button (if enabled) → opens OneNote
+[ ] Calendar buttons (if enabled) → Viewing / Consult
+[ ] Follow-up reminders → 7/15/30 days
+[ ] Document checklist → select type, tick items
+[ ] Templates → list, create, edit, preview, delete
+[ ] Hotkeys panel → keyboard icon in header
+[ ] News feed → newspaper icon in header (if enabled)
+[ ] Settings → gear icon → opens settings window
+[ ] Close → X icon → panel hides (not quit)
+
+NO POPUP WINDOW
+---------------
+[ ] Confirm NO separate popup window appears at any point
+[ ] Only one window (panel) + settings window when opened
+[ ] Taskbar shows only "Agent Kit" (one entry, not two)
+
+PHONE LINK (if testable with live call)
+-----------------------------------------
+[ ] Incoming call → IncomingCallBar appears at top of panel
+[ ] Shows "Incoming call" + caller info
+[ ] OneNote button in call bar (if enabled)
+[ ] Call ended → shows follow-up prompt (7/15/30 days)
+[ ] Auto-dismisses after timeout (30s incoming, 15s ended)
+[ ] Manual dismiss with X button
+
+NOTES:
+------
+
+

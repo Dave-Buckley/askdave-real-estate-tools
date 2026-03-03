@@ -12,18 +12,10 @@ export interface NewsItem {
   source: string
 }
 
-export type TransactionType = 'tenancy' | 'sale' | 'renewal' | 'off-plan'
-
-export interface ChecklistItem {
-  id: string           // e.g., 'tenant-emirates-id'
-  label: string        // e.g., 'Emirates ID (tenant)'
-  receivedAt?: string  // ISO timestamp when ticked; undefined = not yet received
-}
-
-export interface ContactChecklist {
-  transactionType: TransactionType
-  items: ChecklistItem[]
-  updatedAt: string
+export interface FormTemplateOverride {
+  whatsappMessage?: string
+  emailSubject?: string
+  emailBody?: string
 }
 
 export interface AppSettings {
@@ -40,20 +32,22 @@ export interface AppSettings {
   oneNoteNotebookId?: string   // Cached "Real Estate" notebook ID (Graph API)
   oneNoteSectionId?: string    // Cached "Contacts" section ID (Graph API)
   followUpPromptEnabled: boolean  // Show follow-up reminder buttons on ContactCard
-  checklistEnabled: boolean    // Document checklist per client by transaction type
   newsEnabled: boolean         // UAE real estate news feed
+  viewingTemplateId: string    // Template ID for viewing invitation
+  consultationTemplateId: string  // Template ID for consultation invitation
   templates: Template[]
   contacts: Record<string, Contact>  // Keyed by E.164 phone number
-}
-
-export interface AuthState {
-  microsoftConnected: boolean
-  microsoftAccount: string | null   // email or display name
-  googleConnected: boolean
-  googleAccount: string | null
+  oneNoteRoleTemplates?: Record<ContactRole, RoleTemplate>
+  formOverrides?: Record<string, FormTemplateOverride>
 }
 
 export type ContactRole = 'Tenant' | 'Landlord' | 'Buyer' | 'Seller' | 'Investor'
+
+export interface RoleTemplate {
+  label: string
+  questions: string[]
+  documents: string[]
+}
 
 export interface HotkeyConfig {
   dialEnabled: boolean
@@ -72,10 +66,10 @@ export interface Contact {
   e164: string              // Primary key — E.164 normalized phone number
   displayNumber: string     // Formatted display number
   name: string              // Contact name
+  email: string             // Contact email address
   roles: ContactRole[]      // Assigned roles (multi-role support)
   notes: string             // Quick notes
   oneNotePageId?: string    // OneNote page ID if linked
-  checklist?: ContactChecklist  // Document checklist for this contact's transaction
   createdAt: string         // ISO timestamp
   updatedAt: string         // ISO timestamp
 }

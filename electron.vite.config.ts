@@ -5,7 +5,7 @@ import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
   main: {
-    plugins: [externalizeDepsPlugin()],
+    plugins: [externalizeDepsPlugin({ exclude: ['electron-store'] })],
     build: {
       rollupOptions: {
         input: {
@@ -20,7 +20,6 @@ export default defineConfig({
       rollupOptions: {
         input: {
           index: resolve(__dirname, 'src/preload/index.ts'),
-          popup: resolve(__dirname, 'src/preload/popup.ts'),
           settings: resolve(__dirname, 'src/preload/settings.ts')
         }
       }
@@ -32,7 +31,6 @@ export default defineConfig({
       rollupOptions: {
         input: {
           panel: resolve(__dirname, 'src/renderer/panel/index.html'),
-          popup: resolve(__dirname, 'src/renderer/popup/index.html'),
           settings: resolve(__dirname, 'src/renderer/settings/index.html')
         }
       }

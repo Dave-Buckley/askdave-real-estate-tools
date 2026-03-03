@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { ArrowLeft, ExternalLink } from 'lucide-react'
 import type { NewsItem } from '../../../shared/types'
 
 interface NewsFeedProps {
@@ -41,15 +42,14 @@ function formatLastFetched(lastFetched: number | null): string {
   return `Updated ${hours}h ago`
 }
 
-/** Source badge colors — cycle through a small set */
+/** Source badge colors — semi-transparent rgba on dark */
 const SOURCE_COLORS: Record<string, string> = {
-  'PropertyNews.ae': 'bg-blue-100 text-blue-700',
-  'Arabian Business': 'bg-orange-100 text-orange-700',
-  'Zawya': 'bg-green-100 text-green-700'
+  'PropertyNews.ae': 'bg-[rgba(99,102,241,0.14)] text-[#818cf8]',
+  'Property24.ae': 'bg-[rgba(34,197,94,0.12)] text-[#4ade80]'
 }
 
 function getSourceColor(source: string): string {
-  return SOURCE_COLORS[source] ?? 'bg-gray-100 text-gray-600'
+  return SOURCE_COLORS[source] ?? 'bg-white/5 text-[#d4d4d8]'
 }
 
 export default function NewsFeed({ onBack }: NewsFeedProps) {
@@ -77,21 +77,9 @@ export default function NewsFeed({ onBack }: NewsFeedProps) {
 
   return (
     <div className="flex flex-col h-full">
-      {/* Header */}
-      <div className="flex items-center justify-between mb-1">
-        <button
-          onClick={onBack}
-          className="text-xs text-gray-500 hover:text-gray-700 flex items-center gap-1"
-        >
-          <span>&larr;</span>
-          <span>Back</span>
-        </button>
-        <span className="text-xs font-semibold text-gray-700">News</span>
-      </div>
-
       {/* Last updated subtitle */}
       {lastFetched ? (
-        <p className="text-[10px] text-gray-400 mb-2 text-right">
+        <p className="text-[13px] text-[#a1a1aa] mb-2 text-right">
           {formatLastFetched(lastFetched)}
         </p>
       ) : null}
@@ -100,14 +88,14 @@ export default function NewsFeed({ onBack }: NewsFeedProps) {
       <div className="flex-1 overflow-y-auto">
         {loading && (
           <div className="flex items-center justify-center py-8">
-            <p className="text-sm text-gray-400">Loading...</p>
+            <p className="text-sm text-[#a1a1aa]">Loading...</p>
           </div>
         )}
 
         {!loading && items.length === 0 && (
           <div className="flex flex-col items-center justify-center py-8 gap-2">
-            <p className="text-sm text-gray-400">No news available</p>
-            <p className="text-[10px] text-gray-300">Check your internet connection</p>
+            <p className="text-sm text-[#a1a1aa]">No news available</p>
+            <p className="text-[13px] text-[#a1a1aa]">Check your internet connection</p>
           </div>
         )}
 
@@ -117,21 +105,22 @@ export default function NewsFeed({ onBack }: NewsFeedProps) {
               <button
                 key={`${item.link}-${index}`}
                 onClick={() => handleArticleClick(item.link)}
-                className="w-full text-left px-0 py-2.5 border-b border-gray-100 last:border-b-0 hover:bg-gray-50 transition-colors rounded"
+                className="w-full text-left px-0 py-2.5 border-b border-white/[0.07] last:border-b-0 hover:bg-white/[0.04] transition-colors rounded group"
               >
                 {/* Title */}
-                <p className="text-sm font-medium text-gray-800 leading-tight line-clamp-2 mb-1">
+                <p className="text-sm font-medium text-[#ededee] leading-tight line-clamp-2 mb-1 group-hover:text-indigo-300 transition-colors">
                   {item.title}
                 </p>
 
                 {/* Source + Date row */}
                 <div className="flex items-center gap-2">
-                  <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-medium ${getSourceColor(item.source)}`}>
+                  <span className={`text-[13px] px-1.5 py-0.5 rounded-full font-medium ${getSourceColor(item.source)}`}>
                     {item.source}
                   </span>
-                  <span className="text-[11px] text-gray-400">
+                  <span className="text-[13px] text-[#a1a1aa]">
                     {formatDate(item.pubDate)}
                   </span>
+                  <ExternalLink size={14} strokeWidth={1.5} className="text-[#a1a1aa] ml-auto opacity-0 group-hover:opacity-100 transition-opacity" />
                 </div>
               </button>
             ))}

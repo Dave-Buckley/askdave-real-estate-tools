@@ -1,0 +1,70 @@
+TESTING: ContactCard Split Buttons + Template Dropdown
+=======================================================
+
+SETUP: Copy a phone number to clipboard so panel appears with a contact.
+
+1. ACTION BUTTON ROW
+--------------------
+[ ] Three buttons visible on one row: [Dial] [WhatsApp|v] [Notes|v]
+[ ] All three fit without overflow
+[ ] Dial button works — opens Phone Link dialer, panel hides
+[ ] WhatsApp main click — opens WhatsApp directly, panel hides
+
+2. WHATSAPP DROPDOWN (click the v arrow)
+-----------------------------------------
+[ ] Dropdown shows template names (not "Open in Browser" / "Open Desktop App")
+[ ] If no templates exist, shows "No templates yet"
+[ ] Click a template name — goes to template preview view
+[ ] Dropdown closes when clicking outside it
+[ ] Opening WhatsApp dropdown closes OneNote dropdown (and vice versa)
+
+3. ONENOTE DROPDOWN (click the v arrow on Notes)
+--------------------------------------------------
+[ ] Notes button only appears if OneNote is enabled in Settings
+[ ] Main "Notes" click — opens the Real Estate > Contacts section in OneNote
+[ ] Dropdown shows 5 roles: Tenant, Landlord, Buyer, Seller, Investor
+[ ] Each role has its own color
+[ ] Click a role — creates OneNote page with that role + contact info, panel hides
+[ ] Dropdown closes when clicking outside it
+
+4. ROLE PILLS REMOVED
+----------------------
+[ ] No standalone role pills between name input and action buttons
+[ ] (Roles are now only in the OneNote dropdown)
+
+5. COLLAPSIBLE TEMPLATES SECTION
+---------------------------------
+[ ] "Templates (N)" header with chevron, below the name input
+[ ] Starts collapsed
+[ ] Click to expand — shows template list with category badges
+[ ] Hover a template — pencil (edit) and X (delete) icons appear
+[ ] Click pencil — goes to template editor view
+[ ] Click X once — turns red (confirm state); click again — deletes
+[ ] Click a template name — goes to template preview view
+[ ] "+ New" link at bottom — goes to new template editor
+[ ] Section scrolls if many templates (max-h-40)
+
+6. NAME INPUT
+-------------
+[ ] "+ Add name" link still works
+[ ] Name input still shows below action buttons
+[ ] Contact name displays above action buttons when entered
+
+7. EXISTING SECTIONS STILL WORK
+---------------------------------
+[ ] Schedule section (Viewing / Consultation) — still present, still works
+[ ] Follow-up reminder (7/15/30 days) — still present, still works
+[ ] Documents checklist — still collapsible, still ticks/unticks
+
+8. COMPACT MODE
+---------------
+[ ] Compact mode still shows Dial / WhatsApp / OneNote / Calendar buttons
+[ ] Compact WhatsApp still expands panel (doesn't open WhatsApp)
+[ ] Expand link still works
+
+9. EDGE CASES
+-------------
+[ ] Clear contact (X) — resets everything
+[ ] Copy number button still works
+[ ] OneNote error message shows below action row if Microsoft not signed in
+[ ] Template preview back button returns to main view

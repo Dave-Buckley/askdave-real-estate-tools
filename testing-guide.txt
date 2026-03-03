@@ -1,0 +1,105 @@
+PHASE 2 TESTING GUIDE - Step by Step
+======================================
+
+
+1. CONTACT PERSISTENCE
+-----------------------
+
+Open the app from the system tray.
+
+a) Copy a UAE phone number (e.g. 0501234567) from anywhere - the popup
+   and panel should show the contact card.
+
+b) In the panel, click "+ Add name" and type "John Smith".
+   Below the name field you'll see 5 role pills:
+   Tenant | Landlord | Buyer | Seller | Investor
+   Click "Tenant" and "Buyer" - they should light up in colour.
+
+c) Close the app completely (right-click tray icon > Quit).
+   Re-open the app. Copy the SAME number again.
+   The name "John Smith" and the Tenant + Buyer pills should
+   already be selected - that means it persisted.
+
+d) Click the X on the contact card to clear it.
+   Copy the same number again - it should reload "John Smith"
+   with Tenant + Buyer still selected.
+
+
+2. ONENOTE
+-----------
+
+First make sure OneNote is toggled ON in Settings:
+  Tray icon > right-click > Settings > OneNote Integration toggle
+
+a) Copy a phone number so the contact card appears in the panel.
+   Type a name and select at least one role (e.g. Tenant + Buyer).
+
+b) You should see a purple "OneNote" button in the contact card.
+   Click it.
+
+c) OneNote desktop app should open. If it's not installed you'll
+   get a dialog saying "OneNote Not Found" - that's expected.
+
+d) In OneNote, create a new page and press Ctrl+V to paste.
+   You should see:
+   - A header with the contact name and phone number
+   - A table for each role you selected (e.g. one for Tenant,
+     one for Buyer) with qualifying questions like:
+       Tenant: Budget, Bedrooms, Areas, Move-in date, Pets, Cheques
+       Buyer: Budget range, Property type, Areas, Timeline, Mortgage/cash
+
+e) To test with OneNote toggled OFF:
+   Go to Settings > toggle OneNote off.
+   The purple OneNote button should disappear from the contact card.
+
+
+3. GOOGLE CALENDAR
+-------------------
+
+First make sure Calendar is toggled ON in Settings:
+  Tray icon > right-click > Settings > Google Calendar toggle
+
+a) Copy a phone number, type a name, select a role.
+
+b) You should see two buttons in the contact card:
+   - "Viewing" (blue)
+   - "Consult" (green)
+
+c) Click "Viewing" - your default browser opens Google Calendar
+   with a new event pre-filled:
+   - Title: "Viewing - John Smith"
+   - Description: Phone number and role
+
+   You do NOT need to be logged into Google for this to work -
+   it will just ask you to sign in on the Google Calendar page.
+   The point is the event details are pre-filled for you.
+
+d) Go back to the app and click "Consult" - same thing but:
+   - Title: "Consultation - John Smith"
+
+e) Clear the contact name and try again - the title should use
+   the phone number instead (e.g. "Viewing - +971501234567").
+
+f) To test with Calendar toggled OFF:
+   Go to Settings > toggle Google Calendar off.
+   Both Viewing and Consult buttons should disappear.
+
+
+4. SETTINGS TOGGLES
+---------------------
+
+Open Settings (tray icon > right-click > Settings, or the gear
+icon in the panel).
+
+a) Find "OneNote Integration" - description should say
+   "Copy contact notes to clipboard and open OneNote"
+
+b) Find "Google Calendar" - description should say
+   "Book viewings and consultations in Google Calendar"
+
+c) Toggle each one off, go back to the panel with a contact
+   showing - the corresponding buttons should be gone.
+   Toggle them back on - buttons reappear.
+
+d) There should be NO sign-in buttons, no Microsoft account,
+   no Google account sections anywhere in Settings.

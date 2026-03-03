@@ -2,7 +2,7 @@ import { execFile } from 'child_process'
 import { store } from './store'
 import { normalizePhone } from './phone'
 import { getContact } from './contacts'
-import { getPopupWindow } from './tray'
+import { getPanelWindow, showPanelNearCursor } from './tray'
 
 // PowerShell script that uses WinRT UserNotificationListener to poll Phone Link notifications
 const PHONE_LINK_POLL_SCRIPT = `
@@ -79,10 +79,6 @@ function pollPhoneLinkNotifications(): void {
       if (result.status === 'denied') {
         console.warn('[phone-link] UserNotificationListener access denied — stopping watcher')
         stopPhoneLinkWatcher()
-        const popup = getPopupWindow()
-        if (popup && !popup.isDestroyed()) {
-          popup.webContents.send('phone-link:access-denied')
-        }
         return
       }
 
@@ -134,10 +130,10 @@ function pollPhoneLinkNotifications(): void {
           lastCallDisplayNumber = displayNumber
           lastCallContactName = contactName
 
-          const popup = getPopupWindow()
-          if (popup && !popup.isDestroyed()) {
-            popup.show()
-            popup.webContents.send('phone-link:incoming-call', { e164, displayNumber, contactName })
+          const panel = getPanelWindow()
+          if (panel && !panel.isDestroyed()) {
+            panel.webContents.send('phone-link:incoming-call', { e164, displayNumber, contactName })
+            showPanelNearCursor()
           }
         } else if (isEnded) {
           callInProgress = false
@@ -150,14 +146,14 @@ function pollPhoneLinkNotifications(): void {
             : lastCallContactName
 
           if (callE164) {
-            const popup = getPopupWindow()
-            if (popup && !popup.isDestroyed()) {
-              popup.show()
-              popup.webContents.send('phone-link:call-ended', {
+            const panel = getPanelWindow()
+            if (panel && !panel.isDestroyed()) {
+              panel.webContents.send('phone-link:call-ended', {
                 e164: callE164,
                 displayNumber: callDisplay,
                 contactName: callContactName
               })
+              showPanelNearCursor()
             }
           }
         }
