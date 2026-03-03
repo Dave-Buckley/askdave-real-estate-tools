@@ -6,8 +6,9 @@ import TemplateList from './components/TemplateList'
 import TemplatePreview from './components/TemplatePreview'
 import TemplateEditor from './components/TemplateEditor'
 import HotkeyPanel from './components/HotkeyPanel'
+import NewsFeed from './components/NewsFeed'
 
-type View = 'main' | 'template-editor' | 'template-preview' | 'hotkeys'
+type View = 'main' | 'template-editor' | 'template-preview' | 'hotkeys' | 'news'
 
 function App(): React.JSX.Element {
   const [activeContact, setActiveContact] = useState<ContactInfo | null>(null)
@@ -173,6 +174,15 @@ function App(): React.JSX.Element {
     )
   }
 
+  // News feed view
+  if (view === 'news') {
+    return (
+      <div className="h-screen bg-gray-50 p-3 overflow-y-auto">
+        <NewsFeed onBack={() => setView('main')} />
+      </div>
+    )
+  }
+
   // Main view
   return (
     <div className="h-screen bg-gray-50 flex flex-col p-3 gap-3 overflow-hidden">
@@ -194,6 +204,21 @@ function App(): React.JSX.Element {
               <line x1="4" y1="9.5" x2="10" y2="9.5" />
             </svg>
           </button>
+          {/* News feed button — gated by newsEnabled setting */}
+          {settings?.newsEnabled && (
+            <button
+              onClick={() => setView('news')}
+              className="p-1 text-gray-400 hover:text-gray-600 transition-colors rounded hover:bg-gray-200"
+              title="News feed"
+            >
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="1" y="2" width="12" height="10" rx="1.5" />
+                <line x1="3.5" y1="5" x2="10.5" y2="5" />
+                <line x1="3.5" y1="7.5" x2="8" y2="7.5" />
+                <line x1="3.5" y1="9.5" x2="7" y2="9.5" />
+              </svg>
+            </button>
+          )}
           {/* Settings button */}
           <button
             onClick={() => window.electronAPI.openSettings()}
