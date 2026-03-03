@@ -37,7 +37,7 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### News & Info
 
-- [ ] **NEWS-01**: App displays a curated feed of UAE real estate news aggregated from key industry RSS sources
+- [x] **NEWS-01**: App displays a curated feed of UAE real estate news aggregated from key industry RSS sources
 
 ### Website
 
@@ -110,7 +110,7 @@ Deferred to future releases. Significant complexity or external dependencies.
 | ORG-02 | Phase 2 | Pending |
 | APP-03 | Phase 2 | Complete |
 | ORG-03 | Phase 3 | Complete |
-| NEWS-01 | Phase 3 | Pending |
+| NEWS-01 | Phase 3 | Complete |
 | WEB-01 | Phase 3 | Pending |
 
 **Coverage:**

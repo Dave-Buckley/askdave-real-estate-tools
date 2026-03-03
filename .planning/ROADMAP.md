@@ -83,4 +83,4 @@ Phases execute in numeric order: 1 → 2 → 3
 |-------|----------------|--------|-----------|
 | 1. Core App + Communication | 5/5 | Complete | 2026-03-02 |
 | 2. Notes and Calendar Integration | 3/3 | Complete   | 2026-03-02 |
-| 3. Secondary Features and Website | 0/3 | Not started | - |
+| 3. Secondary Features and Website | 2/3 | In Progress|  |
