@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AgentKit | Real Estate Productivity Toolkit</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #0C1B2A;
+      --navy-light: #132D46;
+      --navy-mid: #1A3A5C;
+      --slate: #1E293B;
+      --teal: #2DD4A8;
+      --teal-muted: #5EEAD4;
+      --teal-dark: #14B8A6;
+      --teal-glow: rgba(45,212,168,0.12);
+      --ice: #F0F9F6;
+      --cloud: #F7F8FA;
+      --white: #FFFFFF;
+      --text: #334155;
+      --text-light: #64748B;
+      --text-muted: #94A3B8;
+      --heading: #0F172A;
+      --border: #E2E8F0;
+      --border-light: #F1F5F9;
+    }
+
+    body {
+      font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--text);
+      line-height: 1.7;
+      background: var(--white);
+      font-weight: 400;
+      font-size: 15px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3 {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-weight: 400;
+      color: var(--heading);
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--border-light);
+    }
+    .nav-inner {
+      max-width: 1180px; margin: 0 auto; padding: 0 2.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 68px;
+    }
+    .logo {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700; font-size: 1.25rem; color: var(--navy);
+      text-decoration: none; letter-spacing: -0.03em;
+    }
+    .logo span { color: var(--teal-dark); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      text-decoration: none; color: var(--text-light); font-size: 0.85rem;
+      font-weight: 500; transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--navy); }
+    .nav-cta {
+      background: var(--navy); color: var(--white);
+      padding: 0.55rem 1.4rem; border-radius: 6px; font-size: 0.85rem;
+      font-weight: 600; text-decoration: none;
+      transition: all 0.3s; border: none; cursor: pointer;
+    }
+    .nav-cta:hover { background: var(--navy-light); }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 9rem 2.5rem 5rem;
+      background: linear-gradient(170deg, var(--navy) 0%, var(--navy-light) 55%, var(--navy-mid) 100%);
+      color: var(--white); text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; top: -40%; left: 50%; transform: translateX(-50%);
+      width: 800px; height: 800px;
+      background: radial-gradient(circle, rgba(45,212,168,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: 0.82rem; font-weight: 500; color: var(--teal);
+      margin-bottom: 2rem; letter-spacing: 0.02em;
+    }
+    .hero-eyebrow::before, .hero-eyebrow::after {
+      content: ''; width: 24px; height: 1px; background: rgba(45,212,168,0.4);
+    }
+    .hero h1 {
+      font-size: clamp(2.5rem, 5.5vw, 4rem);
+      line-height: 1.15; max-width: 720px; margin: 0 auto 1.5rem;
+      color: var(--white); letter-spacing: -0.02em;
+    }
+    .hero-sub {
+      font-size: 1.05rem; color: rgba(255,255,255,0.55); max-width: 500px;
+      margin: 0 auto 3rem; font-weight: 300; line-height: 1.8;
+    }
+    .hero-buttons { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
+    .btn-hero {
+      padding: 0.85rem 2rem; border-radius: 8px; font-size: 0.88rem;
+      font-weight: 600; text-decoration: none; transition: all 0.3s;
+      cursor: pointer; font-family: 'DM Sans', sans-serif; border: none;
+    }
+    .btn-hero-fill { background: var(--teal); color: var(--navy); }
+    .btn-hero-fill:hover { background: var(--teal-muted); }
+    .btn-hero-ghost {
+      background: rgba(255,255,255,0.08); color: var(--white);
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+    .btn-hero-ghost:hover { background: rgba(255,255,255,0.14); }
+
+    /* ── HERO MOCKUP ── */
+    .hero-visual { max-width: 860px; margin: 4rem auto 0; position: relative; }
+    .app-window {
+      background: var(--white); border-radius: 12px; overflow: hidden;
+      box-shadow: 0 50px 100px rgba(0,0,0,0.35), 0 0 0 1px rgba(255,255,255,0.08);
+    }
+    .window-bar {
+      display: flex; align-items: center; gap: 7px;
+      padding: 13px 16px; background: var(--cloud); border-bottom: 1px solid var(--border);
+    }
+    .window-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .window-dot:nth-child(1) { background: #FF605C; }
+    .window-dot:nth-child(2) { background: #FFBD44; }
+    .window-dot:nth-child(3) { background: #00CA4E; }
+    .window-body {
+      display: grid; grid-template-columns: 5fr 6fr; min-height: 290px;
+    }
+    .window-left { padding: 1.75rem; border-right: 1px solid var(--border-light); }
+    .window-right { padding: 1.75rem; background: var(--cloud); }
+    .window-label {
+      font-size: 0.65rem; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--text-muted); margin-bottom: 1rem;
+    }
+    .mock-contact-card {
+      background: var(--white); border: 1px solid var(--border); border-radius: 8px;
+      padding: 1.15rem;
+    }
+    .mock-contact-row { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1rem; }
+    .mock-avatar {
+      width: 38px; height: 38px; border-radius: 8px; background: var(--ice);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'DM Serif Display', serif; font-size: 0.85rem;
+      color: var(--teal-dark); font-weight: 400;
+    }
+    .mock-name { font-weight: 600; font-size: 0.88rem; color: var(--heading); }
+    .mock-phone { font-size: 0.78rem; color: var(--text-muted); margin-top: 1px; }
+    .mock-actions { display: flex; gap: 0.4rem; }
+    .mock-btn {
+      padding: 0.45rem 0.9rem; border-radius: 6px; font-size: 0.72rem;
+      font-weight: 600; border: none; cursor: default;
+    }
+    .mock-btn-dial { background: var(--cloud); color: var(--heading); border: 1px solid var(--border); }
+    .mock-btn-wa { background: var(--navy); color: var(--white); }
+    .mock-template-card {
+      background: var(--white); border: 1px solid var(--border); border-radius: 8px;
+      padding: 0.9rem 1rem; margin-bottom: 0.5rem;
+    }
+    .mock-template-card.active { border-color: var(--teal-dark); background: var(--ice); }
+    .mock-template-title {
+      font-family: 'DM Serif Display', serif; font-size: 0.82rem;
+      color: var(--heading); margin-bottom: 0.2rem;
+    }
+    .mock-template-body { font-size: 0.72rem; color: var(--text-muted); line-height: 1.5; }
+
+    /* ── SECTIONS ── */
+    .section { padding: 6rem 2.5rem; }
+    .section-center { max-width: 1100px; margin: 0 auto; }
+    .section-eyebrow {
+      font-size: 0.78rem; font-weight: 600; color: var(--teal-dark);
+      margin-bottom: 0.75rem; letter-spacing: 0.02em;
+    }
+    .section-title {
+      font-size: clamp(1.9rem, 3.5vw, 2.6rem);
+      color: var(--heading); margin-bottom: 1rem; letter-spacing: -0.01em;
+    }
+    .section-sub {
+      font-size: 0.95rem; color: var(--text-light); max-width: 520px;
+      margin-bottom: 3.5rem; font-weight: 300; line-height: 1.8;
+    }
+    .section-alt { background: var(--cloud); }
+
+    /* ── FEATURES GRID ── */
+    .features-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem;
+    }
+    .feature-cell {
+      padding: 2rem; border-radius: 10px; border: 1px solid var(--border);
+      background: var(--white); transition: all 0.3s;
+    }
+    .feature-cell:hover { border-color: var(--teal); background: var(--ice); }
+    .feature-icon {
+      width: 44px; height: 44px; border-radius: 10px; background: var(--ice);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem; margin-bottom: 1.15rem;
+    }
+    .feature-cell h3 { font-size: 1.05rem; margin-bottom: 0.45rem; }
+    .feature-cell p { font-size: 0.88rem; color: var(--text-light); font-weight: 300; line-height: 1.7; }
+
+    /* ── GETTING STARTED ── */
+    .guide-steps { counter-reset: guide; }
+    .guide-step {
+      display: grid; grid-template-columns: 60px 1fr; gap: 0;
+      margin-bottom: 0;
+    }
+    .guide-step-marker {
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .guide-step-num {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: var(--navy); color: var(--white);
+      font-weight: 700; font-size: 1rem;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .guide-step-line {
+      width: 2px; flex: 1; background: var(--border); margin: 0.5rem 0;
+    }
+    .guide-step:last-child .guide-step-line { display: none; }
+    .guide-step-content {
+      padding: 0.25rem 0 3rem 1.5rem;
+    }
+    .guide-step-content h3 {
+      font-size: 1.3rem; margin-bottom: 0.5rem;
+    }
+    .guide-step-content > p {
+      font-size: 0.92rem; color: var(--text-light); margin-bottom: 1.5rem;
+      font-weight: 300; line-height: 1.75;
+    }
+    .guide-step:last-child .guide-step-content { padding-bottom: 0; }
+
+    /* ── DOWNLOAD BOX (inside guide) ── */
+    .download-box {
+      display: inline-flex; align-items: center; gap: 1.25rem;
+      background: var(--ice); border: 1px solid var(--teal);
+      border-radius: 10px; padding: 1.25rem 2rem;
+    }
+    .download-box .platform-label {
+      font-weight: 600; font-size: 0.9rem; color: var(--heading);
+    }
+    .download-box .platform-sub {
+      font-size: 0.78rem; color: var(--text-muted); font-weight: 300;
+    }
+    .btn-download-sm {
+      display: inline-block; background: var(--navy); color: var(--white);
+      padding: 0.6rem 1.5rem; border-radius: 6px; font-size: 0.82rem;
+      font-weight: 600; text-decoration: none; transition: background 0.3s;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .btn-download-sm:hover { background: var(--navy-light); }
+    .btn-disabled {
+      opacity: 0.4; pointer-events: none;
+    }
+    .smartscreen-note {
+      margin-top: 1rem; padding: 1rem 1.25rem; border-radius: 8px;
+      background: #FEF3C7; border: 1px solid #F59E0B;
+      font-size: 0.82rem; line-height: 1.6; font-weight: 300; color: #92400E;
+    }
+    .smartscreen-note strong { font-weight: 600; color: #78350F; }
+
+    /* ── PHONE PICKER TABS ── */
+    .phone-tabs {
+      display: flex; gap: 0.5rem; margin-bottom: 1.5rem; flex-wrap: wrap;
+    }
+    .phone-tab {
+      padding: 0.6rem 1.2rem; border-radius: 8px; font-size: 0.82rem;
+      font-weight: 600; border: 1px solid var(--border); cursor: pointer;
+      background: var(--white); color: var(--text); transition: all 0.2s;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .phone-tab:hover { border-color: var(--teal); }
+    .phone-tab.active {
+      background: var(--navy); color: var(--white); border-color: var(--navy);
+    }
+    .phone-panel { display: none; }
+    .phone-panel.active { display: block; }
+
+    .setup-card-inline {
+      background: var(--white); border: 1px solid var(--border); border-radius: 10px;
+      padding: 1.75rem;
+    }
+    .setup-card-inline h4 {
+      font-family: 'DM Sans', sans-serif; font-weight: 600;
+      font-size: 0.92rem; color: var(--heading); margin-bottom: 0.25rem;
+    }
+    .setup-card-inline .combo {
+      font-size: 0.78rem; color: var(--text-muted); font-weight: 300;
+      margin-bottom: 1.25rem;
+    }
+    .setup-steps-list { list-style: none; counter-reset: setup; }
+    .setup-steps-list li {
+      padding: 0.55rem 0; font-size: 0.87rem; color: var(--text);
+      display: flex; gap: 0.7rem; align-items: flex-start; font-weight: 300;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .setup-steps-list li:last-child { border-bottom: none; }
+    .setup-steps-list li::before {
+      counter-increment: setup; content: counter(setup);
+      width: 22px; height: 22px; flex-shrink: 0; border-radius: 6px;
+      font-size: 0.65rem; font-weight: 700; color: var(--teal-dark);
+      display: flex; align-items: center; justify-content: center;
+      background: var(--ice); margin-top: 1px;
+    }
+    .setup-note {
+      margin-top: 1rem; padding: 0.8rem 1rem; border-radius: 6px;
+      background: var(--ice); font-size: 0.82rem;
+      color: var(--text); line-height: 1.6; font-weight: 300;
+    }
+    .setup-note strong { font-weight: 600; color: var(--heading); }
+
+    /* ── HOW TO USE CARDS ── */
+    .use-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+    .use-card {
+      background: var(--white); border: 1px solid var(--border); border-radius: 10px;
+      padding: 1.75rem; transition: border-color 0.3s;
+    }
+    .use-card:hover { border-color: var(--teal); }
+    .use-card h4 {
+      font-family: 'DM Sans', sans-serif; font-weight: 600;
+      font-size: 0.95rem; color: var(--heading); margin-bottom: 0.5rem;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .use-card p {
+      font-size: 0.85rem; color: var(--text-light); font-weight: 300; line-height: 1.7;
+    }
+    .use-card .shortcut {
+      display: inline-block; margin-top: 0.6rem;
+      padding: 0.25rem 0.6rem; border-radius: 4px;
+      background: var(--cloud); border: 1px solid var(--border);
+      font-size: 0.72rem; font-weight: 600; color: var(--text-muted);
+      font-family: 'DM Sans', monospace;
+    }
+
+    /* ── DEMO (DARK) ── */
+    .demo-dark {
+      background: var(--navy); color: var(--white); padding: 6rem 2.5rem;
+    }
+    .demo-dark .section-eyebrow { color: var(--teal); }
+    .demo-dark .section-title { color: var(--white); }
+    .demo-dark .section-sub { color: rgba(255,255,255,0.45); }
+    .demo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    .demo-steps { list-style: none; }
+    .demo-steps li {
+      padding: 1.15rem 0; border-bottom: 1px solid rgba(255,255,255,0.06);
+      display: flex; gap: 1.15rem; align-items: flex-start;
+    }
+    .demo-steps li:last-child { border-bottom: none; }
+    .demo-num {
+      width: 28px; height: 28px; border-radius: 6px; background: rgba(45,212,168,0.12);
+      color: var(--teal); font-weight: 700; font-size: 0.78rem;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .demo-steps strong {
+      color: var(--white); display: block; margin-bottom: 0.2rem;
+      font-size: 0.92rem; font-weight: 500;
+    }
+    .demo-steps span { color: rgba(255,255,255,0.4); font-size: 0.85rem; font-weight: 300; line-height: 1.6; }
+    .demo-visual { text-align: center; }
+    .popup-mock {
+      background: var(--white); border-radius: 10px; padding: 1.5rem;
+      display: inline-block; box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+      text-align: left; min-width: 310px;
+    }
+    .popup-phone {
+      font-family: 'DM Serif Display', serif; font-size: 1.1rem;
+      color: var(--heading); margin-bottom: 0.9rem;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .popup-flag { font-size: 1.15rem; }
+    .popup-buttons { display: flex; gap: 0.4rem; }
+    .popup-btn {
+      flex: 1; padding: 0.65rem; border-radius: 6px; font-size: 0.78rem;
+      font-weight: 600; border: none; cursor: default; text-align: center;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .popup-btn-dial { background: var(--cloud); color: var(--heading); border: 1px solid var(--border); }
+    .popup-btn-wa { background: var(--navy); color: var(--white); }
+    .popup-btn-x { background: var(--cloud); color: var(--text-muted); width: 40px; flex: none; border: 1px solid var(--border); }
+    .popup-caption {
+      color: rgba(255,255,255,0.25); font-size: 0.78rem; margin-top: 1.75rem;
+      text-align: center; font-weight: 300;
+    }
+
+    /* ── TEMPLATES ── */
+    .template-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    .template-info h3 {
+      font-size: 1.55rem; margin-bottom: 1rem; line-height: 1.3;
+    }
+    .template-info > p {
+      font-size: 0.92rem; color: var(--text-light); margin-bottom: 2rem;
+      font-weight: 300; line-height: 1.75;
+    }
+    .template-list { list-style: none; columns: 2; column-gap: 1.5rem; }
+    .template-list li {
+      padding: 0.45rem 0; font-size: 0.84rem; color: var(--text);
+      display: flex; align-items: center; gap: 0.55rem;
+      break-inside: avoid; font-weight: 400;
+    }
+    .template-list li::before {
+      content: ''; width: 5px; height: 5px; border-radius: 50%;
+      background: var(--teal-dark); flex-shrink: 0;
+    }
+    .template-note {
+      margin-top: 1.25rem; font-size: 0.82rem; color: var(--text-muted);
+      font-weight: 300; font-style: italic;
+    }
+    .wa-phone-mock {
+      background: var(--heading); padding: 1rem; max-width: 290px;
+      margin: 0 auto; border-radius: 28px;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.1);
+    }
+    .wa-notch {
+      width: 72px; height: 4px; background: rgba(255,255,255,0.12);
+      border-radius: 3px; margin: 0 auto 0.8rem;
+    }
+    .wa-screen { background: #0B141A; border-radius: 18px; padding: 0.9rem; }
+    .wa-header {
+      display: flex; align-items: center; gap: 0.55rem; padding-bottom: 0.65rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06); margin-bottom: 0.65rem;
+    }
+    .wa-avatar {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--teal-dark), var(--teal));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.6rem; color: var(--white); font-weight: 700;
+    }
+    .wa-name { color: var(--white); font-weight: 500; font-size: 0.8rem; }
+    .wa-bubble {
+      background: #005C4B; color: var(--white); border-radius: 0 8px 8px 8px;
+      padding: 0.7rem; font-size: 0.75rem; line-height: 1.6; max-width: 92%;
+    }
+    .wa-highlight { color: #86EFAC; font-weight: 500; }
+    .wa-time { text-align: right; color: rgba(255,255,255,0.3); font-size: 0.58rem; margin-top: 0.25rem; }
+
+    /* ── DOWNLOAD SECTION ── */
+    .download-section { text-align: center; padding: 6rem 2.5rem; background: var(--cloud); }
+    .platform-cards { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; margin-top: 2.5rem; }
+    .platform-card {
+      background: var(--white); border: 1px solid var(--border); border-radius: 10px;
+      padding: 2.5rem 3rem; text-align: center; transition: all 0.3s;
+    }
+    .platform-card:hover { border-color: var(--teal); box-shadow: 0 8px 30px rgba(0,0,0,0.05); }
+    .platform-icon { font-size: 2.2rem; margin-bottom: 0.75rem; }
+    .platform-card h3 { font-size: 1.05rem; margin-bottom: 0.2rem; }
+    .platform-card p { color: var(--text-muted); font-size: 0.8rem; margin-bottom: 1.5rem; font-weight: 300; }
+    .btn-download {
+      display: inline-block; background: var(--navy); color: var(--white);
+      padding: 0.65rem 1.75rem; border-radius: 6px; font-size: 0.82rem;
+      font-weight: 600; text-decoration: none; transition: background 0.3s;
+      border: none; cursor: pointer; font-family: 'DM Sans', sans-serif;
+    }
+    .btn-download:hover { background: var(--navy-light); }
+
+    /* ── FAQ ── */
+    .faq-section { margin-top: 3rem; }
+    .faq-section > h3 { font-size: 1.25rem; margin-bottom: 1.25rem; }
+    .faq-item { padding: 1.15rem 0; border-bottom: 1px solid var(--border-light); }
+    .faq-item:last-child { border-bottom: none; }
+    .faq-q {
+      font-family: 'DM Serif Display', serif; font-weight: 400;
+      color: var(--heading); font-size: 0.95rem; margin-bottom: 0.35rem;
+    }
+    .faq-a { color: var(--text-light); font-size: 0.87rem; font-weight: 300; line-height: 1.7; }
+
+    /* ── CTA ── */
+    .cta-section {
+      text-align: center; padding: 6rem 2.5rem;
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+      color: var(--white); position: relative; overflow: hidden;
+    }
+    .cta-section::before {
+      content: ''; position: absolute; bottom: -30%; right: -10%;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(45,212,168,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .cta-section h2 {
+      font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+      color: var(--white); margin-bottom: 1rem;
+    }
+    .cta-section p {
+      font-size: 0.95rem; color: rgba(255,255,255,0.45);
+      max-width: 460px; margin: 0 auto 2.5rem; font-weight: 300; line-height: 1.8;
+    }
+    .btn-cta {
+      display: inline-block; background: var(--teal); color: var(--navy);
+      padding: 0.85rem 2.5rem; border-radius: 8px; font-size: 0.88rem;
+      font-weight: 600; text-decoration: none; transition: all 0.3s;
+      border: none; cursor: pointer; font-family: 'DM Sans', sans-serif;
+    }
+    .btn-cta:hover { background: var(--teal-muted); }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center; padding: 2.5rem;
+      border-top: 1px solid var(--border-light);
+    }
+    footer p { color: var(--text-muted); font-size: 0.78rem; font-weight: 300; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .features-grid { grid-template-columns: 1fr; }
+      .demo-grid { grid-template-columns: 1fr; }
+      .template-grid { grid-template-columns: 1fr; }
+      .template-list { columns: 1; }
+      .use-cards { grid-template-columns: 1fr; }
+      .window-body { grid-template-columns: 1fr; }
+      .window-left { border-right: none; border-bottom: 1px solid var(--border-light); }
+      .nav-links { display: none; }
+      .section { padding: 4rem 1.5rem; }
+      .hero { padding: 7rem 1.5rem 3.5rem; }
+      .guide-step { grid-template-columns: 44px 1fr; }
+      .guide-step-content { padding-left: 1rem; }
+      .download-box { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a href="#" class="logo">Agent<span>Kit</span></a>
+      <ul class="nav-links">
+        <li><a href="#features">Features</a></li>
+        <li><a href="#getting-started">Getting Started</a></li>
+        <li><a href="#templates">Templates</a></li>
+        <li><a href="#download">Download</a></li>
+      </ul>
+      <a href="#download" class="nav-cta">Download</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-eyebrow">Built for UAE Real Estate Agents</div>
+    <h1>Highlight any phone number. Dial or WhatsApp instantly.</h1>
+    <p class="hero-sub">AgentKit sits quietly in your taskbar. See a phone number anywhere on screen? Highlight it and press Shift+Space, or click the floating blue button. Dial and WhatsApp buttons appear immediately.</p>
+    <div class="hero-buttons">
+      <a href="#download" class="btn-hero btn-hero-fill">Download for Windows</a>
+      <a href="#getting-started" class="btn-hero btn-hero-ghost">Getting Started Guide</a>
+    </div>
+
+    <div class="hero-visual">
+      <div class="app-window">
+        <div class="window-bar">
+          <div class="window-dot"></div>
+          <div class="window-dot"></div>
+          <div class="window-dot"></div>
+        </div>
+        <div class="window-body">
+          <div class="window-left">
+            <div class="window-label">Contact</div>
+            <div class="mock-contact-card">
+              <div class="mock-contact-row">
+                <div class="mock-avatar">AK</div>
+                <div>
+                  <div class="mock-name">Ahmed Al-Khalidi</div>
+                  <div class="mock-phone">+971 50 123 4567</div>
+                </div>
+              </div>
+              <div class="mock-actions">
+                <div class="mock-btn mock-btn-dial">Dial</div>
+                <div class="mock-btn mock-btn-wa">WhatsApp</div>
+              </div>
+            </div>
+          </div>
+          <div class="window-right">
+            <div class="window-label">Templates</div>
+            <div class="mock-template-card active">
+              <div class="mock-template-title">New Listing Alert</div>
+              <div class="mock-template-body">Hi Ahmed, I have a new property in Dubai Marina that matches what you're looking for...</div>
+            </div>
+            <div class="mock-template-card">
+              <div class="mock-template-title">Viewing Follow-up</div>
+              <div class="mock-template-body">Hi Ahmed, thank you for viewing the property today. I'd love to hear your thoughts...</div>
+            </div>
+            <div class="mock-template-card">
+              <div class="mock-template-title">Price Reduction</div>
+              <div class="mock-template-body">Hi Ahmed, the property you viewed has just had a price reduction...</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="section section-alt" id="features">
+    <div class="section-center">
+      <div class="section-eyebrow">Features</div>
+      <div class="section-title">Everything you need, nothing you don't</div>
+      <div class="section-sub">Every feature can be turned on or off. Use what works for you.</div>
+
+      <div class="features-grid">
+        <div class="feature-cell">
+          <div class="feature-icon">&#128222;</div>
+          <h3>Highlight-to-Dial</h3>
+          <p>Highlight a phone number anywhere on screen and click Dial. It opens in your phone dialler, pre-filled and ready.</p>
+        </div>
+        <div class="feature-cell">
+          <div class="feature-icon">&#128172;</div>
+          <h3>Highlight-to-WhatsApp</h3>
+          <p>Highlight a phone number and click WhatsApp. Choose between desktop or phone, whatever works for you.</p>
+        </div>
+        <div class="feature-cell">
+          <div class="feature-icon">&#127760;</div>
+          <h3>Works Everywhere</h3>
+          <p>Websites, emails, PDFs, CRMs, spreadsheets. Anywhere you see a phone number, just highlight it.</p>
+        </div>
+        <div class="feature-cell">
+          <div class="feature-icon">&#128221;</div>
+          <h3>Message Templates</h3>
+          <p>15+ pre-written messages for common scenarios. Type the client's name and it fills into the message for you.</p>
+        </div>
+        <div class="feature-cell">
+          <div class="feature-icon">&#127462;&#127466;</div>
+          <h3>UAE Number Formatting</h3>
+          <p>Handles all UAE formats automatically. "050 123 4567" or "00971501234567", it always dials the right number.</p>
+        </div>
+        <div class="feature-cell">
+          <div class="feature-icon">&#128260;</div>
+          <h3>Auto-Updates</h3>
+          <p>AgentKit updates itself silently in the background. Always the latest version without doing a thing.</p>
+        </div>
+        <div class="feature-cell">
+          <div class="feature-icon">&#128274;</div>
+          <h3>Private by Design</h3>
+          <p>AgentKit does not record, store, or transmit any calls, messages, or conversations. Your data stays on your device. No accounts, no cloud, no tracking.</p>
+        </div>
+        <div class="feature-cell">
+          <div class="feature-icon">&#9000;</div>
+          <h3>Customisable Shortcuts</h3>
+          <p>Press Shift+Space to detect a phone number from highlighted text, or click the floating blue button. All hotkeys can be customised from within the app using the keyboard icon in the panel.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GETTING STARTED -->
+  <section class="section" id="getting-started">
+    <div class="section-center">
+      <div class="section-eyebrow">Getting Started</div>
+      <div class="section-title">Up and running in 5 minutes</div>
+      <div class="section-sub">Download, connect your phone, and you're done. Follow these four steps.</div>
+
+      <div class="guide-steps">
+
+        <!-- STEP 1: DOWNLOAD & INSTALL -->
+        <div class="guide-step">
+          <div class="guide-step-marker">
+            <div class="guide-step-num">1</div>
+            <div class="guide-step-line"></div>
+          </div>
+          <div class="guide-step-content">
+            <h3>Download and install</h3>
+            <p>Download the installer for your system. Double-click to install. No admin rights needed. AgentKit will start automatically and appear in your system tray (bottom-right of your taskbar on Windows).</p>
+
+            <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem;">
+              <!-- TODO: Replace OWNER/REPO with your GitHub username and repository name -->
+              <div class="download-box">
+                <div>
+                  <div class="platform-label">Windows</div>
+                  <div class="platform-sub">Windows 10 or later</div>
+                </div>
+                <a href="https://github.com/OWNER/REPO/releases/latest/download/AgentKit-Setup.exe" class="btn-download-sm">Download .exe</a>
+              </div>
+              <div class="download-box">
+                <div>
+                  <div class="platform-label">macOS</div>
+                  <div class="platform-sub">macOS 12 or later</div>
+                </div>
+                <a href="https://github.com/OWNER/REPO/releases/latest/download/AgentKit.dmg" class="btn-download-sm">Download .dmg</a>
+              </div>
+            </div>
+
+            <div class="smartscreen-note">
+              <strong>Windows SmartScreen warning:</strong> Because the app isn't code-signed yet, Windows will show a blue "Windows protected your PC" popup. Click <strong>"More info"</strong> then <strong>"Run anyway"</strong>. This is normal for new apps without a paid code signing certificate.
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 2: CONNECT YOUR PHONE -->
+        <div class="guide-step">
+          <div class="guide-step-marker">
+            <div class="guide-step-num">2</div>
+            <div class="guide-step-line"></div>
+          </div>
+          <div class="guide-step-content">
+            <h3>Connect your phone</h3>
+            <p>This lets AgentKit dial numbers through your phone. It's a one-time setup that takes about 5 minutes. Pick your phone and computer combination below.</p>
+
+            <div class="phone-tabs">
+              <button class="phone-tab active" onclick="showPhonePanel('android-win')">Android + Windows</button>
+              <button class="phone-tab" onclick="showPhonePanel('iphone-win')">iPhone + Windows <span style="font-size:0.7em;opacity:0.7;">(Beta)</span></button>
+              <button class="phone-tab" onclick="showPhonePanel('iphone-mac')">iPhone + Mac <span style="font-size:0.7em;opacity:0.7;">(Beta)</span></button>
+              <button class="phone-tab" onclick="showPhonePanel('android-mac')">Android + Mac <span style="font-size:0.7em;opacity:0.7;">(Beta)</span></button>
+            </div>
+
+            <!-- Android + Windows -->
+            <div class="phone-panel active" id="panel-android-win">
+              <div class="setup-card-inline">
+                <h4>Android + Windows</h4>
+                <div class="combo">Uses Microsoft Phone Link (free, pre-installed on Windows 10/11)</div>
+                <ol class="setup-steps-list">
+                  <li>On your PC, search for <strong>"Phone Link"</strong> in the Start menu and open it</li>
+                  <li>On your Android phone, install <strong>"Link to Windows"</strong> from the Google Play Store</li>
+                  <li>In Phone Link on your PC, click <strong>Get started</strong>. It will show a QR code</li>
+                  <li>Open the Link to Windows app on your phone and <strong>scan the QR code</strong></li>
+                  <li>Grant all permissions when asked: calls, contacts, messages, notifications</li>
+                  <li>Once paired, go to Phone Link on your PC: <strong>Settings &rarr; Features &rarr; Calls &rarr; Turn on</strong></li>
+                  <li>Make a test call. In Phone Link, go to <strong>Calls</strong> and dial any number to verify it works</li>
+                </ol>
+                <div class="setup-note"><strong>Done.</strong> When you click "Dial" in AgentKit, the call goes through your Android phone automatically via Phone Link. Your phone rings, you pick up, and you're connected.</div>
+              </div>
+            </div>
+
+            <!-- iPhone + Windows -->
+            <div class="phone-panel" id="panel-iphone-win">
+              <div class="setup-card-inline">
+                <h4>iPhone + Windows <span style="background:#FEF3C7;color:#92400E;font-size:0.7em;padding:0.15em 0.5em;border-radius:4px;font-weight:600;vertical-align:middle;">BETA</span></h4>
+                <div class="combo">Uses Microsoft Phone Link via Bluetooth (free, pre-installed on Windows 10/11)</div>
+                <ol class="setup-steps-list">
+                  <li>On your iPhone, make sure <strong>Bluetooth</strong> is turned on</li>
+                  <li>On your PC, search for <strong>"Phone Link"</strong> in the Start menu and open it</li>
+                  <li>Choose <strong>iPhone</strong> when asked which phone to connect</li>
+                  <li>Phone Link will show a QR code. <strong>Scan it with your iPhone camera</strong></li>
+                  <li>Tap <strong>"Pair"</strong> on both your iPhone and PC when prompted</li>
+                  <li>On your iPhone, grant permission for <strong>calls, contacts, and notifications</strong></li>
+                  <li>Make a test call from Phone Link to verify it works</li>
+                </ol>
+                <div class="setup-note"><strong>Important:</strong> This works over Bluetooth, so keep your iPhone within about 10 metres of your PC. Calls go through your iPhone, and you'll hear them through your PC speakers or headset.</div>
+              </div>
+            </div>
+
+            <!-- iPhone + Mac -->
+            <div class="phone-panel" id="panel-iphone-mac">
+              <div class="setup-card-inline">
+                <h4>iPhone + Mac <span style="background:#FEF3C7;color:#92400E;font-size:0.7em;padding:0.15em 0.5em;border-radius:4px;font-weight:600;vertical-align:middle;">BETA</span></h4>
+                <div class="combo">Built-in to Apple. No extra apps needed</div>
+                <ol class="setup-steps-list">
+                  <li>Make sure your iPhone and Mac are signed into the <strong>same Apple ID</strong></li>
+                  <li>Make sure both devices are on the <strong>same Wi-Fi network</strong></li>
+                  <li>On your iPhone, go to <strong>Settings &rarr; Phone &rarr; Calls on Other Devices</strong></li>
+                  <li>Turn on <strong>"Allow Calls on Other Devices"</strong></li>
+                  <li>In the list below, toggle on <strong>your Mac</strong></li>
+                </ol>
+                <div class="setup-note"><strong>That's it.</strong> When you click "Dial" in AgentKit, your Mac rings and connects through your iPhone automatically. No extra apps, no Bluetooth needed.</div>
+              </div>
+            </div>
+
+            <!-- Android + Mac -->
+            <div class="phone-panel" id="panel-android-mac">
+              <div class="setup-card-inline">
+                <h4>Android + Mac <span style="background:#FEF3C7;color:#92400E;font-size:0.7em;padding:0.15em 0.5em;border-radius:4px;font-weight:600;vertical-align:middle;">BETA</span></h4>
+                <div class="combo">No built-in call handoff, so use WhatsApp instead</div>
+                <ol class="setup-steps-list">
+                  <li>There's no built-in way to make phone calls from a Mac through an Android phone</li>
+                  <li>Install <strong>WhatsApp Desktop</strong> on your Mac from the App Store or whatsapp.com</li>
+                  <li>Open WhatsApp Desktop and <strong>scan the QR code</strong> with your phone's WhatsApp</li>
+                  <li>In AgentKit settings, set <strong>WhatsApp as your default action</strong></li>
+                </ol>
+                <div class="setup-note"><strong>Tip:</strong> Most agents with this setup use WhatsApp for everything. It works great, and you can call and message directly from your Mac through WhatsApp Desktop.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 3: SET UP WHATSAPP -->
+        <div class="guide-step">
+          <div class="guide-step-marker">
+            <div class="guide-step-num">3</div>
+            <div class="guide-step-line"></div>
+          </div>
+          <div class="guide-step-content">
+            <h3>Set up WhatsApp (optional but recommended)</h3>
+            <p>Most agents use WhatsApp more than regular calls. If you want the "WhatsApp" button to open chats on your computer instead of your phone, install WhatsApp Desktop.</p>
+
+            <div class="setup-card-inline">
+              <ol class="setup-steps-list">
+                <li>Download <strong>WhatsApp Desktop</strong> from the Microsoft Store (Windows) or App Store (Mac)</li>
+                <li>Open it and <strong>scan the QR code</strong> with your phone's WhatsApp (Settings &rarr; Linked Devices &rarr; Link a Device)</li>
+                <li>In AgentKit, open <strong>Settings</strong> and set WhatsApp mode to <strong>"Desktop"</strong></li>
+              </ol>
+              <div class="setup-note"><strong>That's it.</strong> Now when you click "WhatsApp" in AgentKit, it opens the chat directly on your computer in the WhatsApp Desktop app. You can type and send without touching your phone.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 4: START USING IT -->
+        <div class="guide-step">
+          <div class="guide-step-marker">
+            <div class="guide-step-num">4</div>
+            <div class="guide-step-line"></div>
+          </div>
+          <div class="guide-step-content">
+            <h3>Start using it</h3>
+            <p>AgentKit runs in your system tray. Here's everything you can do.</p>
+
+            <div class="use-cards">
+              <div class="use-card">
+                <h4>&#128222; Highlight to Dial or WhatsApp</h4>
+                <p>See a phone number anywhere on screen? A website, email, CRM, PDF, or spreadsheet? <strong>Highlight it with your mouse, then press Shift+Space.</strong> A small popup appears with Dial and WhatsApp buttons. Click one.</p>
+                <span class="shortcut">Shift + Space</span>
+              </div>
+              <div class="use-card">
+                <h4>&#128309; Floating Blue Button</h4>
+                <p>Prefer using the mouse? <strong>Click the floating blue circle button</strong> on your screen instead of pressing Shift+Space. It does the same thing: reads the highlighted number and shows the action popup.</p>
+              </div>
+              <div class="use-card">
+                <h4>&#128221; Send a template message</h4>
+                <p>Click the AgentKit icon in your system tray to open the full panel. <strong>Type a contact name</strong>, pick a template from the list, and it auto-fills the name. Click "Send via WhatsApp" or copy the message.</p>
+              </div>
+              <div class="use-card">
+                <h4>&#9881; Customise in Settings</h4>
+                <p>Right-click the tray icon and choose <strong>Settings</strong>. Turn features on or off, switch WhatsApp between phone and desktop mode, and edit your templates. Click the keyboard icon in the panel to customise your hotkeys.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div><!-- /guide-steps -->
+
+      <div class="faq-section">
+        <h3>Common Questions</h3>
+        <div class="faq-item">
+          <div class="faq-q">Is my data private?</div>
+          <div class="faq-a">Yes. AgentKit does not record, store, or transmit any calls, messages, or conversations. Your data stays on your device. There are no accounts, no cloud sync, and no analytics.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Do I need to install anything on my phone?</div>
+          <div class="faq-a">Only if you're on Android + Windows. Install "Link to Windows" from the Play Store. iPhone and WhatsApp users don't need anything extra on their phone.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Can I use WhatsApp without connecting my phone to my computer?</div>
+          <div class="faq-a">Yes. WhatsApp Desktop works independently once you scan the QR code. You don't need Phone Link for WhatsApp. It just works.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">What if I just want WhatsApp for everything and don't need Dial?</div>
+          <div class="faq-a">Open AgentKit Settings, turn off the Dial feature, and set WhatsApp as your default action. Many agents prefer this setup. You can skip Step 2 entirely.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Does it auto-dial when I click?</div>
+          <div class="faq-a">No. It opens the number pre-filled and ready. You still press the call button yourself, so you can't accidentally dial someone.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">What keyboard shortcuts does AgentKit use?</div>
+          <div class="faq-a">The default shortcut is Shift+Space to detect a phone number from highlighted text. You can also click the floating blue button on screen instead. To customise your hotkeys, click the keyboard icon in the AgentKit panel.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Where does AgentKit appear after I install it?</div>
+          <div class="faq-a">In your system tray (bottom-right of your taskbar on Windows, or the menu bar on Mac). Look for the AgentKit icon. Click it to open the panel, right-click for settings.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Does it work with any CRM?</div>
+          <div class="faq-a">Yes. AgentKit doesn't connect to your CRM. It works on top of it. If you can see a phone number on your screen, you can highlight it. Works with Bayut, Property Finder, HubSpot, Salesforce, Excel, and anything else.</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- POPUP DEMO -->
+  <section class="demo-dark" id="demo">
+    <div class="section-center">
+      <div class="section-eyebrow">See It In Action</div>
+      <div class="section-title">Highlight a number, get instant actions</div>
+      <div class="section-sub">Highlight any phone number, press Shift+Space (or click the blue button), and choose your action.</div>
+
+      <div class="demo-grid">
+        <div>
+          <ul class="demo-steps">
+            <li>
+              <div class="demo-num">1</div>
+              <div><strong>You highlight a phone number</strong><span>From anywhere: a website, email, CRM, spreadsheet, or PDF. Just select it with your mouse.</span></div>
+            </li>
+            <li>
+              <div class="demo-num">2</div>
+              <div><strong>Press Shift+Space or click the blue button</strong><span>A popup appears instantly. The number is cleaned up and formatted automatically. UAE numbers are recognized and normalized.</span></div>
+            </li>
+            <li>
+              <div class="demo-num">3</div>
+              <div><strong>Choose Dial or WhatsApp</strong><span>Click Dial to open the number in your phone app, or WhatsApp to start a chat.</span></div>
+            </li>
+            <li>
+              <div class="demo-num">4</div>
+              <div><strong>Pick a template</strong><span>Open the full panel, type the client's name, pick a template, and it's ready to send in seconds.</span></div>
+            </li>
+          </ul>
+        </div>
+        <div class="demo-visual">
+          <div class="popup-mock">
+            <div class="popup-phone"><span class="popup-flag">&#127462;&#127466;</span> +971 50 123 4567</div>
+            <div class="popup-buttons">
+              <div class="popup-btn popup-btn-dial">Dial</div>
+              <div class="popup-btn popup-btn-wa">WhatsApp</div>
+              <div class="popup-btn popup-btn-x">&times;</div>
+            </div>
+          </div>
+          <div class="popup-caption">Appears when you press Shift+Space or click the blue button</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEMPLATES -->
+  <section class="section" id="templates">
+    <div class="section-center">
+      <div class="section-eyebrow">Templates</div>
+      <div class="section-title">Send personalised messages in seconds</div>
+      <div class="section-sub">Pre-loaded with messages real estate agents actually send. Pick one, type the name, and go.</div>
+
+      <div class="template-grid">
+        <div class="template-info">
+          <h3>Ready-to-send templates built for UAE real estate</h3>
+          <p>Each template has a <strong>{name}</strong> placeholder. Type the client's name in the contact card and it fills into every template instantly. Preview the message before sending, then hit "Send via WhatsApp" or copy it.</p>
+          <ul class="template-list">
+            <li>New listing (off-plan)</li>
+            <li>New listing (resale)</li>
+            <li>New listing (rental)</li>
+            <li>Viewing invitation</li>
+            <li>Viewing confirmation</li>
+            <li>Follow-up (interested)</li>
+            <li>Follow-up (undecided)</li>
+            <li>Price reduction</li>
+            <li>Offer submitted update</li>
+            <li>Market update</li>
+            <li>Just sold / just leased</li>
+            <li>Intro (buyer)</li>
+            <li>Intro (seller / landlord)</li>
+            <li>Referral thank you</li>
+            <li>Check-in message</li>
+          </ul>
+          <p class="template-note">You can also create your own templates and edit any of these.</p>
+        </div>
+
+        <div class="wa-phone-mock">
+          <div class="wa-notch"></div>
+          <div class="wa-screen">
+            <div class="wa-header">
+              <div class="wa-avatar">AK</div>
+              <div class="wa-name">Ahmed Al-Khalidi</div>
+            </div>
+            <div class="wa-bubble">
+              Hi <span class="wa-highlight">Ahmed</span>, I have a new listing in Dubai Marina that matches your requirements. It's a 2BR apartment with full marina view, priced at AED 2.1M. Would you like to schedule a viewing this week?
+              <div class="wa-time">2:34 PM</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DOWNLOAD -->
+  <section class="download-section" id="download">
+    <div class="section-eyebrow" style="text-align:center;">Download</div>
+    <div class="section-title" style="text-align:center;">Works on Windows and Mac</div>
+    <p style="color: var(--text-muted); font-weight: 300; text-align: center; margin-top: 0.5rem;">No admin rights needed. Just install and go.</p>
+
+    <div class="platform-cards">
+      <!-- TODO: Replace OWNER/REPO with your GitHub username and repository name -->
+      <div class="platform-card">
+        <div class="platform-icon">&#128187;</div>
+        <h3>Windows</h3>
+        <p>Windows 10 or later</p>
+        <a href="https://github.com/OWNER/REPO/releases/latest/download/AgentKit-Setup.exe" class="btn-download">Download .exe</a>
+      </div>
+      <div class="platform-card">
+        <div class="platform-icon">&#128421;</div>
+        <h3>macOS <span style="background:#FEF3C7;color:#92400E;font-size:0.6em;padding:0.15em 0.5em;border-radius:4px;font-weight:600;vertical-align:middle;">BETA</span></h3>
+        <p>macOS 12 or later</p>
+        <a href="https://github.com/OWNER/REPO/releases/latest/download/AgentKit.dmg" class="btn-download">Download .dmg</a>
+      </div>
+    </div>
+    <p style="color: var(--text-muted); font-size: 0.8rem; text-align: center; margin-top: 1.5rem; font-weight: 300;">After downloading, follow the <a href="#getting-started" style="color: var(--teal-dark); text-decoration: none; font-weight: 500;">Getting Started guide</a> to connect your phone.</p>
+    <p style="text-align: center; margin-top: 1rem;"><a href="AgentKit-Setup-Guide.html" target="_blank" style="color: var(--teal-dark); font-size: 0.85rem; font-weight: 500; text-decoration: none; border-bottom: 1px solid var(--teal-dark);">Download Setup Guide (printable)</a></p>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <h2>Stop wasting time dialling numbers</h2>
+    <p>Join agents across the UAE who save hours every week with AgentKit. Free to download, no sign-up needed.</p>
+    <a href="#download" class="btn-cta">Get AgentKit Free</a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; 2026 AgentKit. Built for real estate agents in the UAE.</p>
+  </footer>
+
+  <script>
+    function showPhonePanel(id) {
+      document.querySelectorAll('.phone-panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.phone-tab').forEach(t => t.classList.remove('active'));
+      document.getElementById('panel-' + id).classList.add('active');
+      event.target.classList.add('active');
+    }
+  </script>
+
+</body>
+</html>
