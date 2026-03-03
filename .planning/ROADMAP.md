@@ -68,7 +68,11 @@ Plans:
   1. Agent opens a client record, selects a transaction type (tenancy, sale, or renewal), and sees a document checklist they can tick off as they collect each item
   2. App displays a live feed of UAE real estate news aggregated from industry RSS sources, updated automatically in the background
   3. A public website exists with a clear feature overview, installation instructions, and working download links for both Windows and macOS installers
-**Plans**: TBD
+**Plans**: 3 plans
+Plans:
+- [ ] 03-01-PLAN.md -- Document checklists: types, static UAE document sets, IPC, ContactCard UI with tick + timestamp
+- [ ] 03-02-PLAN.md -- UAE news feed: rss-parser, main-process fetch/cache, 30-min background refresh, panel view
+- [ ] 03-03-PLAN.md -- Website polish: electron-builder GitHub Releases config, landing page download URLs, GitHub Pages prep
 
 ## Progress
 
@@ -79,4 +83,4 @@ Phases execute in numeric order: 1 → 2 → 3
 |-------|----------------|--------|-----------|
 | 1. Core App + Communication | 5/5 | Complete | 2026-03-02 |
 | 2. Notes and Calendar Integration | 3/3 | Complete   | 2026-03-02 |
-| 3. Secondary Features and Website | 0/TBD | Not started | - |
+| 3. Secondary Features and Website | 0/3 | Not started | - |
