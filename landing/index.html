@@ -553,6 +553,13 @@
       .nav-inner { padding: 0 1.25rem; }
       .hero-visual { gap: 12px !important; }
       .hero-visual > div { width: 160px !important; height: 250px !important; }
+      .section { padding: 4rem 1rem; }
+      .hero { padding: 7rem 1rem 3.5rem; }
+    }
+    @media (max-width: 600px) {
+      .features-grid { grid-template-columns: 1fr; }
+      .hero-visual > div { width: 140px !important; height: 220px !important; }
+      .screenshot-grid { grid-template-columns: 1fr !important; }
     }
   </style>
 </head>
@@ -672,7 +679,7 @@
     <div class="section-center">
       <div class="section-eyebrow">See It In Action</div>
       <div class="section-title">Built for real estate, designed for speed</div>
-      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 40px;">
+      <div class="screenshot-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 40px;">
         <div style="text-align: center;">
           <div style="height: 320px; overflow: hidden; border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); background: #111111;">
             <img src="screenshots/templates.png" alt="WhatsApp and Gmail templates" style="width: 100%; height: 100%; object-fit: contain;" class="screenshot-thumb">
@@ -1090,6 +1097,10 @@
   </div>
 
   <script>
+    // Force scroll to top on page load
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    window.scrollTo(0, 0);
+
     function showPhonePanel(id) {
       document.querySelectorAll('.phone-panel').forEach(p => p.classList.remove('active'));
       document.querySelectorAll('.phone-tab').forEach(t => t.classList.remove('active'));
