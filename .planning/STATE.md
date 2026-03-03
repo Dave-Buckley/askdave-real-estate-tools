@@ -100,5 +100,5 @@ Recent decisions affecting current work:
 ## Session Continuity
 
 Last session: 2026-03-03
-Stopped at: Completed 03-03-PLAN.md. GitHub Releases publish config + landing page download URLs done. Phase 3 plan 3 of 3 complete. Task 2 (checkpoint:human-verify) awaiting user review of download buttons.
+Stopped at: Completed 03-03-PLAN.md. GitHub Releases publish config + landing page download URLs done. Phase 3 plan 3 of 3 complete. Task 2 (checkpoint:human-verify) approved by user — download links and builder config verified. All 3 phases complete. Project v1 feature-complete.
 Resume file: None
