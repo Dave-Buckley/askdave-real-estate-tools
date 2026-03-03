@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ask Dave Real Estate Tools Setup Guide</title>
+  <style>
+    @media print {
+      body { font-size: 11pt; }
+      .page-break { page-break-before: always; }
+      .no-print { display: none; }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: #334155; line-height: 1.7; max-width: 800px;
+      margin: 0 auto; padding: 2rem;
+    }
+    h1 { font-size: 1.8rem; color: #0C1B2A; margin-bottom: 0.25rem; }
+    h2 { font-size: 1.3rem; color: #0C1B2A; margin: 2rem 0 0.75rem; padding-bottom: 0.4rem; border-bottom: 2px solid #2DD4A8; }
+    h3 { font-size: 1.05rem; color: #0C1B2A; margin: 1.5rem 0 0.5rem; }
+    p { margin-bottom: 0.75rem; font-size: 0.92rem; }
+    .subtitle { color: #64748B; font-size: 1rem; margin-bottom: 0.25rem; }
+    .version { color: #94A3B8; font-size: 0.82rem; margin-bottom: 2rem; }
+    ol { padding-left: 1.5rem; margin-bottom: 1rem; }
+    ol li { margin-bottom: 0.5rem; font-size: 0.92rem; }
+    ul { padding-left: 1.5rem; margin-bottom: 1rem; }
+    ul li { margin-bottom: 0.5rem; font-size: 0.92rem; }
+    .tip {
+      background: #F0F9F6; border-left: 3px solid #14B8A6;
+      padding: 0.75rem 1rem; margin: 1rem 0; border-radius: 0 6px 6px 0;
+      font-size: 0.88rem;
+    }
+    .tip strong { color: #0C1B2A; }
+    .warning {
+      background: #FEF3C7; border-left: 3px solid #F59E0B;
+      padding: 0.75rem 1rem; margin: 1rem 0; border-radius: 0 6px 6px 0;
+      font-size: 0.88rem; color: #92400E;
+    }
+    .warning strong { color: #78350F; }
+    .privacy {
+      background: #EFF6FF; border-left: 3px solid #3B82F6;
+      padding: 0.75rem 1rem; margin: 1rem 0; border-radius: 0 6px 6px 0;
+      font-size: 0.88rem; color: #1E40AF;
+    }
+    .privacy strong { color: #1E3A5F; }
+    .combo-header {
+      background: #0C1B2A; color: white; padding: 0.6rem 1rem;
+      border-radius: 6px 6px 0 0; font-weight: 600; font-size: 0.92rem;
+    }
+    .combo-body {
+      border: 1px solid #E2E8F0; border-top: none; padding: 1.25rem;
+      border-radius: 0 0 6px 6px; margin-bottom: 1.5rem;
+    }
+    .combo-body ol { margin-top: 0.5rem; }
+    .divider { border: none; border-top: 1px solid #E2E8F0; margin: 2rem 0; }
+    .print-btn {
+      background: #0C1B2A; color: white; border: none; padding: 0.6rem 1.5rem;
+      border-radius: 6px; font-size: 0.88rem; font-weight: 600; cursor: pointer;
+      font-family: inherit; margin-bottom: 2rem;
+    }
+    .print-btn:hover { background: #132D46; }
+    .dev-note {
+      background: #FEF3C7; border-left: 3px solid #F59E0B;
+      padding: 0.75rem 1rem; margin: 0.75rem 0 1rem; border-radius: 0 6px 6px 0;
+      font-size: 0.85rem; color: #92400E;
+    }
+    .dev-note strong { color: #78350F; }
+    .platform-note {
+      background: #F0F9F6; border-left: 3px solid #14B8A6;
+      padding: 0.75rem 1rem; margin: 2rem 0; border-radius: 0 6px 6px 0;
+      font-size: 0.88rem;
+    }
+    .platform-note strong { color: #0C1B2A; }
+  </style>
+</head>
+<body>
+
+  <button class="print-btn no-print" onclick="window.print()">Print / Save as PDF</button>
+
+  <h1>Ask Dave Real Estate Tools Setup Guide</h1>
+  <p class="subtitle">Real Estate Agent Productivity Toolkit</p>
+  <p class="version">Ask Dave Real Estate Tools v1.0.0 &copy; 2026</p>
+
+  <div class="privacy">
+    <strong>Privacy:</strong> Ask Dave Real Estate Tools does not record, store, or transmit any calls, messages, or conversations. Your data stays on your device.
+  </div>
+
+  <!-- ============================================ -->
+  <h2>Step 1: Download and Install</h2>
+
+  <ol>
+    <li>Download the installer:
+      <br><strong>Windows:</strong> AskDave-RealEstateTools-Setup.exe
+      <br><strong>Mac:</strong> Coming soon &mdash; macOS support is in active development
+    </li>
+    <li>Double-click the installer to run it. <strong>No admin rights needed.</strong> It installs just for your user account.</li>
+    <li>After installation, Ask Dave Real Estate Tools starts automatically and appears as an icon in your <strong>system tray</strong> (bottom-right of your taskbar on Windows, or the menu bar on Mac).</li>
+    <li>Ask Dave Real Estate Tools will also start automatically every time you turn on your computer.</li>
+  </ol>
+
+  <div class="warning">
+    <strong>Windows SmartScreen warning:</strong> Because the app isn't code-signed yet, Windows may show a blue "Windows protected your PC" popup. Click <strong>"More info"</strong>, then click <strong>"Run anyway"</strong>. This is completely normal for new apps that don't have a paid code-signing certificate yet.
+  </div>
+
+  <!-- ============================================ -->
+  <h2>Step 2: Connect Your Phone (for Dial feature)</h2>
+
+  <p>This lets Ask Dave Real Estate Tools make phone calls through your actual phone. Pick the setup that matches your devices. <strong>This is a one-time setup.</strong></p>
+
+  <p><em>If you only plan to use WhatsApp (not phone calls), you can skip this step entirely and go straight to Step 3.</em></p>
+
+  <!-- Android + Windows -->
+  <div class="combo-header">Android + Windows (most common)</div>
+  <div class="combo-body">
+    <p>Uses <strong>Microsoft Phone Link</strong>, which is free and pre-installed on Windows 10/11.</p>
+    <ol>
+      <li>On your PC, search for <strong>"Phone Link"</strong> in the Start menu and open it.</li>
+      <li>On your Android phone, install <strong>"Link to Windows"</strong> from the Google Play Store.</li>
+      <li>In Phone Link on your PC, click <strong>Get started</strong>. It will show a QR code on screen.</li>
+      <li>Open the Link to Windows app on your phone and <strong>scan the QR code</strong>.</li>
+      <li>Grant <strong>all permissions</strong> when asked, including calls, contacts, messages, and notifications.</li>
+      <li>Once paired, in Phone Link on your PC go to: <strong>Settings &rarr; Features &rarr; Calls &rarr; Turn on</strong>.</li>
+      <li><strong>Test it:</strong> In Phone Link, go to the Calls tab and dial any number to make sure it rings your phone.</li>
+    </ol>
+    <div class="tip"><strong>Done.</strong> When you click "Dial" in Ask Dave Real Estate Tools, the call goes through your Android phone automatically. Your phone rings, you pick up, and you're connected.</div>
+  </div>
+
+  <!-- iPhone + Windows -->
+  <div class="combo-header">iPhone + Windows <span style="background:#FEF3C7;color:#92400E;font-size:0.75em;padding:0.1em 0.4em;border-radius:3px;margin-left:0.5em;">IN DEVELOPMENT</span></div>
+  <div class="combo-body">
+    <div class="dev-note"><strong>Note:</strong> This platform combination is in active development. The core features work, but you may encounter issues. If you run into any issues, please let us know via <a href="https://github.com/Dave-Buckley/askdave-real-estate-tools/issues">GitHub</a> or <a href="mailto:dave.john.buckley@gmail.com">email</a> and we'll work to resolve them.</div>
+    <p>Uses <strong>Microsoft Phone Link</strong> via Bluetooth, which is free and pre-installed on Windows 10/11.</p>
+    <ol>
+      <li>On your iPhone, make sure <strong>Bluetooth</strong> is turned on.</li>
+      <li>On your PC, search for <strong>"Phone Link"</strong> in the Start menu and open it.</li>
+      <li>Choose <strong>"iPhone"</strong> when asked which phone to connect.</li>
+      <li>Phone Link will show a QR code. <strong>Scan it with your iPhone camera.</strong></li>
+      <li>Tap <strong>"Pair"</strong> on both your iPhone and PC when prompted.</li>
+      <li>On your iPhone, grant permission for <strong>calls, contacts, and notifications</strong>.</li>
+      <li><strong>Test it:</strong> In Phone Link, go to the Calls tab and dial any number to verify.</li>
+    </ol>
+    <div class="tip"><strong>Important:</strong> This works over Bluetooth, so keep your iPhone within about 10 metres of your PC. Calls go through your iPhone, and you'll hear them through your PC speakers or headset.</div>
+  </div>
+
+  <!-- iPhone + Mac -->
+  <div class="combo-header">iPhone + Mac <span style="background:#FEF3C7;color:#92400E;font-size:0.75em;padding:0.1em 0.4em;border-radius:3px;margin-left:0.5em;">IN DEVELOPMENT</span></div>
+  <div class="combo-body">
+    <div class="dev-note"><strong>Note:</strong> This platform combination is in active development. The core features work, but you may encounter issues. If you run into any issues, please let us know via <a href="https://github.com/Dave-Buckley/askdave-real-estate-tools/issues">GitHub</a> or <a href="mailto:dave.john.buckley@gmail.com">email</a> and we'll work to resolve them.</div>
+    <p>Built into Apple. <strong>No extra apps needed.</strong></p>
+    <ol>
+      <li>Make sure your iPhone and Mac are signed into the <strong>same Apple ID</strong>.</li>
+      <li>Make sure both devices are on the <strong>same Wi-Fi network</strong>.</li>
+      <li>On your iPhone, go to <strong>Settings &rarr; Phone &rarr; Calls on Other Devices</strong>.</li>
+      <li>Turn on <strong>"Allow Calls on Other Devices"</strong>.</li>
+      <li>In the list below, toggle on <strong>your Mac</strong>.</li>
+    </ol>
+    <div class="tip"><strong>That's it.</strong> When you click "Dial" in Ask Dave Real Estate Tools, your Mac rings and connects through your iPhone. No extra apps, no Bluetooth needed.</div>
+  </div>
+
+  <!-- Android + Mac -->
+  <div class="combo-header">Android + Mac <span style="background:#FEF3C7;color:#92400E;font-size:0.75em;padding:0.1em 0.4em;border-radius:3px;margin-left:0.5em;">IN DEVELOPMENT</span></div>
+  <div class="combo-body">
+    <div class="dev-note"><strong>Note:</strong> This platform combination is in active development. The core features work, but you may encounter issues. If you run into any issues, please let us know via <a href="https://github.com/Dave-Buckley/askdave-real-estate-tools/issues">GitHub</a> or <a href="mailto:dave.john.buckley@gmail.com">email</a> and we'll work to resolve them.</div>
+    <p>No built-in call handoff for this combination. <strong>Use WhatsApp instead.</strong></p>
+    <ol>
+      <li>There's no built-in way to route phone calls from a Mac through an Android phone.</li>
+      <li>Install <strong>WhatsApp Desktop</strong> on your Mac from the App Store or whatsapp.com.</li>
+      <li>Open WhatsApp Desktop and scan the QR code with your phone's WhatsApp.</li>
+      <li>In Ask Dave Real Estate Tools Settings, set <strong>WhatsApp as your default action</strong>.</li>
+    </ol>
+    <div class="tip"><strong>Tip:</strong> Most agents with this combo use WhatsApp for everything. You can call and message directly from your Mac through WhatsApp Desktop.</div>
+  </div>
+
+  <!-- ============================================ -->
+  <h2>Step 2b: Set Up Your Headset for Calls (Bluetooth)</h2>
+
+  <p>If you use a Bluetooth headset and want to take calls through Phone Link, here's how it works and how to set it up correctly.</p>
+
+  <h3>How it works</h3>
+  <p>When you make or receive calls through Phone Link, your PC acts as the middleman. You need two Bluetooth connections:</p>
+  <ol>
+    <li><strong>Your phone &rarr; your PC</strong> (via Phone Link)</li>
+    <li><strong>Your headset &rarr; your PC</strong> (standard Bluetooth pairing)</li>
+  </ol>
+  <p>Windows handles the audio routing between Phone Link and your headset. Your headset does <strong>not</strong> need to be connected to your phone.</p>
+
+  <div class="warning">
+    <strong>Common mistake:</strong> If your headset is connected to your phone instead of your PC, you may get no audio or hear audio through both devices. Always connect your headset to your PC when using Phone Link.
+  </div>
+
+  <h3>Pairing your headset to your PC</h3>
+  <ol>
+    <li>Put your Bluetooth headset into <strong>pairing mode</strong> (check your headset's manual for how).</li>
+    <li>On your PC, go to <strong>Settings &rarr; Bluetooth &amp; devices &rarr; Add device</strong>.</li>
+    <li>Select your headset from the list and pair it.</li>
+  </ol>
+
+  <h3>Set your headset as the default audio device</h3>
+  <ol>
+    <li>On your PC, go to <strong>Settings &rarr; System &rarr; Sound</strong>.</li>
+    <li>Under <strong>Output</strong>, select your Bluetooth headset as the default speaker.</li>
+    <li>Under <strong>Input</strong>, select your Bluetooth headset as the default microphone.</li>
+  </ol>
+
+  <h3>Check Phone Link audio settings</h3>
+  <ol>
+    <li>Open <strong>Phone Link</strong> on your PC.</li>
+    <li>Go to <strong>Settings &rarr; Calls</strong>.</li>
+    <li>Make sure your Bluetooth headset is selected as the audio device.</li>
+  </ol>
+
+  <div class="tip"><strong>That's it.</strong> When a call comes in through Phone Link, you'll hear it through your headset and speak through its microphone, just like a normal call. No need to touch your phone.</div>
+
+  <div class="page-break"></div>
+
+  <!-- ============================================ -->
+  <h2>Step 3: Set Up WhatsApp Desktop (recommended)</h2>
+
+  <p>Most agents use WhatsApp more than regular phone calls. This lets the "WhatsApp" button in Ask Dave Real Estate Tools open chats directly on your computer.</p>
+
+  <ol>
+    <li>Download <strong>WhatsApp Desktop</strong>:
+      <br>&bull; Windows: from the Microsoft Store (search "WhatsApp")
+      <br>&bull; Mac: from the App Store
+    </li>
+    <li>Open WhatsApp Desktop. It will show a QR code.</li>
+    <li>On your phone, open WhatsApp &rarr; <strong>Settings &rarr; Linked Devices &rarr; Link a Device</strong>.</li>
+    <li>Scan the QR code on your computer screen with your phone.</li>
+    <li>In Ask Dave Real Estate Tools, open <strong>Settings</strong> (right-click the tray icon) and set WhatsApp mode to <strong>"Desktop"</strong>.</li>
+  </ol>
+
+  <div class="tip"><strong>Done.</strong> Now when you click "WhatsApp" in Ask Dave Real Estate Tools, it opens the chat directly in WhatsApp Desktop on your computer. You can type, send templates, and even make WhatsApp calls, all without touching your phone.</div>
+
+  <!-- ============================================ -->
+  <h2>Step 4: How to Use Ask Dave Real Estate Tools</h2>
+
+  <h3>Highlight and extract contact info</h3>
+  <p>See a phone number, email, or block of text anywhere on screen? <strong>Highlight it with your mouse</strong>, then press <strong>Ctrl+Space</strong>. The compact window appears showing the detected phone number.</p>
+  <p>If you highlighted a block of text (for example, from a CRM or email signature), the app automatically extracts:</p>
+  <ul>
+    <li>Phone number</li>
+    <li>Email address</li>
+    <li>Contact name</li>
+    <li>Property unit</li>
+  </ul>
+  <p>This works with any website, email, CRM, PDF, or spreadsheet &mdash; if you can see it on your screen, you can highlight it.</p>
+
+  <h3>Dial or WhatsApp instantly</h3>
+  <p>From the compact window, click <strong>Dial</strong> to open the number in Phone Link, or <strong>WhatsApp</strong> to start a chat. These are the two primary actions available at a glance.</p>
+  <p>Click <strong>Expand</strong> to open the full panel with all features.</p>
+
+  <h3>Send template messages</h3>
+  <p>In the expanded panel, browse <strong>WhatsApp templates (6)</strong> or <strong>Gmail templates (6)</strong> for common real estate scenarios.</p>
+  <ol>
+    <li>Click any template to preview it with the contact's details auto-filled.</li>
+    <li>Placeholders (<strong>{name}</strong>, <strong>{number}</strong>, <strong>{email}</strong>, <strong>{unit}</strong>) fill automatically from the contact card.</li>
+    <li>Click the <strong>pencil icon</strong> on any template to customize the message text, subject line, or body.</li>
+    <li>Send via WhatsApp or Gmail with one click.</li>
+  </ol>
+
+  <h3>Create OneNote pages</h3>
+  <p>Click the <strong>OneNote</strong> button and choose a role: Tenant, Landlord, Buyer, Seller, or Investor. A structured OneNote page is created in your "Real Estate" notebook with qualifying questions pre-filled and the contact's details included.</p>
+  <div class="tip"><strong>Tip:</strong> There are 5 OneNote templates, one for each client role, each with role-specific qualifying questions to guide your conversation.</div>
+
+  <h3>Send RERA forms</h3>
+  <p>In the <strong>Forms</strong> section, choose from <strong>Sales</strong>, <strong>Rentals</strong>, or <strong>Off-plan</strong> tabs to find the official RERA form you need.</p>
+  <ol>
+    <li>Send the form directly via WhatsApp or Gmail with one click.</li>
+    <li><strong>KYC forms</strong> (internal use) can be downloaded to your computer with the <strong>Save As</strong> button.</li>
+  </ol>
+
+  <h3>Book viewings and set follow-ups</h3>
+  <ol>
+    <li>Click <strong>"Viewing"</strong> or <strong>"Consultation"</strong> to create a Google Calendar event with the contact's details pre-filled.</li>
+    <li>Set <strong>follow-up reminders</strong> at 7, 15, or 30 days to stay on top of your pipeline.</li>
+  </ol>
+
+  <h3>Browse UAE news</h3>
+  <p>Scroll down in the expanded panel to see <strong>live news from 12 UAE real estate sources</strong>. Click any headline to read the full article. Stay informed about market trends, new launches, and regulatory changes without leaving the app.</p>
+
+  <h3>Keyboard shortcuts</h3>
+  <p><strong>Ctrl+Space</strong> is the primary shortcut. Highlight any text on your screen and press Ctrl+Space to extract contact information and open the compact action window.</p>
+  <p>Hotkeys can be customized from the <strong>keyboard icon</strong> in the panel header.</p>
+
+  <h3>Customize settings</h3>
+  <p>Click the <strong>gear icon</strong> in the panel header to open Settings. Here you can:</p>
+  <ol>
+    <li>Toggle individual features on or off</li>
+    <li>Switch WhatsApp between desktop mode and web mode</li>
+    <li>Customize your hotkey assignments</li>
+  </ol>
+
+  <hr class="divider">
+
+  <!-- ============================================ -->
+  <h2>Frequently Asked Questions</h2>
+
+  <h3>Do I need admin rights to install Ask Dave Real Estate Tools?</h3>
+  <p>No. Ask Dave Real Estate Tools installs to your user folder only. No admin rights, no IT approval needed.</p>
+
+  <h3>Do I need to install anything on my phone?</h3>
+  <p>Only if you use Android + Windows (install "Link to Windows" from the Play Store). iPhone users and WhatsApp-only users don't need anything extra on their phone.</p>
+
+  <h3>Can I use just WhatsApp and skip the phone connection?</h3>
+  <p>Yes. Set up WhatsApp Desktop (Step 3), skip Step 2, and turn off Dial in Ask Dave Real Estate Tools Settings. Many agents prefer this.</p>
+
+  <h3>Does it auto-dial when I click?</h3>
+  <p>No. It opens the number pre-filled and ready. You still press the call button yourself, so you cannot accidentally call someone.</p>
+
+  <h3>My Bluetooth headset doesn't work with calls</h3>
+  <p>Make sure your headset is paired to your <strong>PC</strong>, not your phone. Then check three things: (1) In <strong>Windows Settings &rarr; System &rarr; Sound</strong>, set your headset as both the default output and input device. (2) In <strong>Phone Link &rarr; Settings &rarr; Calls</strong>, make sure your headset is selected. (3) If your headset is also connected to your phone, disconnect it from the phone &mdash; having it connected to both can cause audio conflicts.</p>
+
+  <h3>Does it work with my CRM?</h3>
+  <p>Yes. Ask Dave Real Estate Tools doesn't connect to your CRM. It works on top of it. If you can see a phone number on your screen, you can highlight it. Works with Bayut, Property Finder, HubSpot, Salesforce, Excel, and anything else.</p>
+
+  <h3>Where does Ask Dave Real Estate Tools appear?</h3>
+  <p>In your system tray (bottom-right of your Windows taskbar, or the menu bar on Mac). If you can't see it, click the small "^" arrow in the tray to show hidden icons.</p>
+
+  <h3>Does it use any of my data?</h3>
+  <p>No. Ask Dave Real Estate Tools runs entirely on your computer. No data is sent anywhere, no accounts, no cloud services. Your phone numbers and templates stay on your machine.</p>
+
+  <h3>Does Ask Dave Real Estate Tools record my calls or messages?</h3>
+  <p>No. Ask Dave Real Estate Tools does not record, store, or transmit any calls, messages, or conversations. Your data stays on your device.</p>
+
+  <h3>What templates are included?</h3>
+  <p>6 WhatsApp templates and 6 Gmail templates for common real estate scenarios (listing introductions, viewing confirmations, follow-ups, and more). Plus 5 OneNote templates organized by client role (Tenant, Landlord, Buyer, Seller, Investor). All templates are editable &mdash; click the pencil icon on any template to customize it.</p>
+
+  <h3>Does it work on Mac?</h3>
+  <p>macOS support is in active development. The app is currently optimized for Windows. If you encounter issues on any platform, please let us know via <a href="https://github.com/Dave-Buckley/askdave-real-estate-tools/issues">GitHub</a> or <a href="mailto:dave.john.buckley@gmail.com">email</a>.</p>
+
+  <h3>What is the keyboard shortcut?</h3>
+  <p>The primary shortcut is <strong>Ctrl+Space</strong>. Highlight any text on screen and press Ctrl+Space to extract contact information and open the action window. You can customize hotkeys from the keyboard icon in the panel header.</p>
+
+  <hr class="divider">
+
+  <div class="platform-note">
+    <strong>Platform note:</strong> Ask Dave Real Estate Tools is currently optimized for Android + Windows. Support for macOS and iPhone is in active development. If you encounter any issues or have feature requests, please reach out via <a href="https://github.com/Dave-Buckley/askdave-real-estate-tools/issues">GitHub</a> or <a href="mailto:dave.john.buckley@gmail.com">email</a>.
+  </div>
+
+  <p style="text-align: center; color: #94A3B8; font-size: 0.82rem;">&copy; 2026 Ask Dave Real Estate Tools. Built for real estate agents in the UAE.</p>
+
+</body>
+</html>

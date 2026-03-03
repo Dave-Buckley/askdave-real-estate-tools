@@ -24,6 +24,8 @@
     .version { color: #94A3B8; font-size: 0.82rem; margin-bottom: 2rem; }
     ol { padding-left: 1.5rem; margin-bottom: 1rem; }
     ol li { margin-bottom: 0.5rem; font-size: 0.92rem; }
+    ul { padding-left: 1.5rem; margin-bottom: 1rem; }
+    ul li { margin-bottom: 0.5rem; font-size: 0.92rem; }
     .tip {
       background: #F0F9F6; border-left: 3px solid #14B8A6;
       padding: 0.75rem 1rem; margin: 1rem 0; border-radius: 0 6px 6px 0;
@@ -58,6 +60,18 @@
       font-family: inherit; margin-bottom: 2rem;
     }
     .print-btn:hover { background: #132D46; }
+    .dev-note {
+      background: #FEF3C7; border-left: 3px solid #F59E0B;
+      padding: 0.75rem 1rem; margin: 0.75rem 0 1rem; border-radius: 0 6px 6px 0;
+      font-size: 0.85rem; color: #92400E;
+    }
+    .dev-note strong { color: #78350F; }
+    .platform-note {
+      background: #F0F9F6; border-left: 3px solid #14B8A6;
+      padding: 0.75rem 1rem; margin: 2rem 0; border-radius: 0 6px 6px 0;
+      font-size: 0.88rem;
+    }
+    .platform-note strong { color: #0C1B2A; }
   </style>
 </head>
 <body>
@@ -78,7 +92,7 @@
   <ol>
     <li>Download the installer:
       <br><strong>Windows:</strong> AskDave-RealEstateTools-Setup.exe
-      <br><strong>Mac:</strong> Coming soon
+      <br><strong>Mac:</strong> Coming soon &mdash; macOS support is in active development
     </li>
     <li>Double-click the installer to run it. <strong>No admin rights needed.</strong> It installs just for your user account.</li>
     <li>After installation, Ask Dave Real Estate Tools starts automatically and appears as an icon in your <strong>system tray</strong> (bottom-right of your taskbar on Windows, or the menu bar on Mac).</li>
@@ -113,8 +127,9 @@
   </div>
 
   <!-- iPhone + Windows -->
-  <div class="combo-header">iPhone + Windows <span style="background:#FEF3C7;color:#92400E;font-size:0.75em;padding:0.1em 0.4em;border-radius:3px;margin-left:0.5em;">BETA</span></div>
+  <div class="combo-header">iPhone + Windows <span style="background:#FEF3C7;color:#92400E;font-size:0.75em;padding:0.1em 0.4em;border-radius:3px;margin-left:0.5em;">IN DEVELOPMENT</span></div>
   <div class="combo-body">
+    <div class="dev-note"><strong>Note:</strong> This platform combination is in active development. The core features work, but you may encounter issues. If you run into any issues, please let us know via <a href="https://github.com/Dave-Buckley/askdave-real-estate-tools/issues">GitHub</a> or <a href="mailto:dave.john.buckley@gmail.com">email</a> and we'll work to resolve them.</div>
     <p>Uses <strong>Microsoft Phone Link</strong> via Bluetooth, which is free and pre-installed on Windows 10/11.</p>
     <ol>
       <li>On your iPhone, make sure <strong>Bluetooth</strong> is turned on.</li>
@@ -129,8 +144,9 @@
   </div>
 
   <!-- iPhone + Mac -->
-  <div class="combo-header">iPhone + Mac <span style="background:#FEF3C7;color:#92400E;font-size:0.75em;padding:0.1em 0.4em;border-radius:3px;margin-left:0.5em;">BETA</span></div>
+  <div class="combo-header">iPhone + Mac <span style="background:#FEF3C7;color:#92400E;font-size:0.75em;padding:0.1em 0.4em;border-radius:3px;margin-left:0.5em;">IN DEVELOPMENT</span></div>
   <div class="combo-body">
+    <div class="dev-note"><strong>Note:</strong> This platform combination is in active development. The core features work, but you may encounter issues. If you run into any issues, please let us know via <a href="https://github.com/Dave-Buckley/askdave-real-estate-tools/issues">GitHub</a> or <a href="mailto:dave.john.buckley@gmail.com">email</a> and we'll work to resolve them.</div>
     <p>Built into Apple. <strong>No extra apps needed.</strong></p>
     <ol>
       <li>Make sure your iPhone and Mac are signed into the <strong>same Apple ID</strong>.</li>
@@ -143,8 +159,9 @@
   </div>
 
   <!-- Android + Mac -->
-  <div class="combo-header">Android + Mac <span style="background:#FEF3C7;color:#92400E;font-size:0.75em;padding:0.1em 0.4em;border-radius:3px;margin-left:0.5em;">BETA</span></div>
+  <div class="combo-header">Android + Mac <span style="background:#FEF3C7;color:#92400E;font-size:0.75em;padding:0.1em 0.4em;border-radius:3px;margin-left:0.5em;">IN DEVELOPMENT</span></div>
   <div class="combo-body">
+    <div class="dev-note"><strong>Note:</strong> This platform combination is in active development. The core features work, but you may encounter issues. If you run into any issues, please let us know via <a href="https://github.com/Dave-Buckley/askdave-real-estate-tools/issues">GitHub</a> or <a href="mailto:dave.john.buckley@gmail.com">email</a> and we'll work to resolve them.</div>
     <p>No built-in call handoff for this combination. <strong>Use WhatsApp instead.</strong></p>
     <ol>
       <li>There's no built-in way to route phone calls from a Mac through an Android phone.</li>
@@ -218,34 +235,60 @@
   <!-- ============================================ -->
   <h2>Step 4: How to Use Ask Dave Real Estate Tools</h2>
 
-  <h3>Trigger the popup with a highlighted phone number</h3>
-  <p>See a phone number on any website, email, CRM, PDF, or spreadsheet? <strong>Highlight it with your mouse</strong>, then press <strong>Ctrl+Space</strong>. A small popup appears near the number with "Dial" and "WhatsApp" buttons. Click whichever you need.</p>
+  <h3>Highlight and extract contact info</h3>
+  <p>See a phone number, email, or block of text anywhere on screen? <strong>Highlight it with your mouse</strong>, then press <strong>Ctrl+Space</strong>. The compact window appears showing the detected phone number.</p>
+  <p>If you highlighted a block of text (for example, from a CRM or email signature), the app automatically extracts:</p>
+  <ul>
+    <li>Phone number</li>
+    <li>Email address</li>
+    <li>Contact name</li>
+    <li>Property unit</li>
+  </ul>
+  <p>This works with any website, email, CRM, PDF, or spreadsheet &mdash; if you can see it on your screen, you can highlight it.</p>
 
-  <div class="tip"><strong>Prefer the mouse?</strong> After you highlight a phone number, you can also click the <strong>tray icon</strong> that appears near your selection instead of pressing Ctrl+Space.</div>
+  <h3>Dial or WhatsApp instantly</h3>
+  <p>From the compact window, click <strong>Dial</strong> to open the number in Phone Link, or <strong>WhatsApp</strong> to start a chat. These are the two primary actions available at a glance.</p>
+  <p>Click <strong>Expand</strong> to open the full panel with all features.</p>
 
-  <h3>Send a template message</h3>
+  <h3>Send template messages</h3>
+  <p>In the expanded panel, browse <strong>WhatsApp templates (6)</strong> or <strong>Gmail templates (6)</strong> for common real estate scenarios.</p>
   <ol>
-    <li>Click the Ask Dave Real Estate Tools icon in your system tray to open the main panel.</li>
-    <li>Type a phone number or contact name at the top.</li>
-    <li>Browse the template list and click one to select it.</li>
-    <li>The template previews with the contact name auto-filled.</li>
-    <li>Click <strong>"Send via WhatsApp"</strong> to open the message in WhatsApp, or <strong>"Copy"</strong> to paste it anywhere.</li>
+    <li>Click any template to preview it with the contact's details auto-filled.</li>
+    <li>Placeholders (<strong>{name}</strong>, <strong>{number}</strong>, <strong>{email}</strong>, <strong>{unit}</strong>) fill automatically from the contact card.</li>
+    <li>Click the <strong>pencil icon</strong> on any template to customize the message text, subject line, or body.</li>
+    <li>Send via WhatsApp or Gmail with one click.</li>
   </ol>
+
+  <h3>Create OneNote pages</h3>
+  <p>Click the <strong>OneNote</strong> button and choose a role: Tenant, Landlord, Buyer, Seller, or Investor. A structured OneNote page is created in your "Real Estate" notebook with qualifying questions pre-filled and the contact's details included.</p>
+  <div class="tip"><strong>Tip:</strong> There are 5 OneNote templates, one for each client role, each with role-specific qualifying questions to guide your conversation.</div>
+
+  <h3>Send RERA forms</h3>
+  <p>In the <strong>Forms</strong> section, choose from <strong>Sales</strong>, <strong>Rentals</strong>, or <strong>Off-plan</strong> tabs to find the official RERA form you need.</p>
+  <ol>
+    <li>Send the form directly via WhatsApp or Gmail with one click.</li>
+    <li><strong>KYC forms</strong> (internal use) can be downloaded to your computer with the <strong>Save As</strong> button.</li>
+  </ol>
+
+  <h3>Book viewings and set follow-ups</h3>
+  <ol>
+    <li>Click <strong>"Viewing"</strong> or <strong>"Consultation"</strong> to create a Google Calendar event with the contact's details pre-filled.</li>
+    <li>Set <strong>follow-up reminders</strong> at 7, 15, or 30 days to stay on top of your pipeline.</li>
+  </ol>
+
+  <h3>Browse UAE news</h3>
+  <p>Scroll down in the expanded panel to see <strong>live news from 12 UAE real estate sources</strong>. Click any headline to read the full article. Stay informed about market trends, new launches, and regulatory changes without leaving the app.</p>
 
   <h3>Keyboard shortcuts</h3>
-  <ol>
-    <li><strong>Ctrl+Space:</strong> Detect a phone number from your currently highlighted text and open the action popup.</li>
-    <li>You can also use the <strong>tray icon</strong> as a mouse alternative to the hotkey.</li>
-    <li>All hotkeys can be customised from the Ask Dave Real Estate Tools <strong>Settings</strong> panel (right-click the tray icon, then choose Settings).</li>
-  </ol>
+  <p><strong>Ctrl+Space</strong> is the primary shortcut. Highlight any text on your screen and press Ctrl+Space to extract contact information and open the compact action window.</p>
+  <p>Hotkeys can be customized from the <strong>keyboard icon</strong> in the panel header.</p>
 
-  <h3>Customise your settings</h3>
-  <p>Right-click the Ask Dave Real Estate Tools icon in the system tray and choose <strong>Settings</strong>. Here you can:</p>
+  <h3>Customize settings</h3>
+  <p>Click the <strong>gear icon</strong> in the panel header to open Settings. Here you can:</p>
   <ol>
-    <li>Turn individual features on or off</li>
-    <li>Change or reassign your hotkeys</li>
-    <li>Switch WhatsApp between phone mode and desktop mode</li>
-    <li>Create, edit, and delete message templates</li>
+    <li>Toggle individual features on or off</li>
+    <li>Switch WhatsApp between desktop mode and web mode</li>
+    <li>Customize your hotkey assignments</li>
   </ol>
 
   <hr class="divider">
@@ -278,9 +321,23 @@
   <p>No. Ask Dave Real Estate Tools runs entirely on your computer. No data is sent anywhere, no accounts, no cloud services. Your phone numbers and templates stay on your machine.</p>
 
   <h3>Does Ask Dave Real Estate Tools record my calls or messages?</h3>
-  <p>No. Agent Kit does not record, store, or transmit any calls, messages, or conversations. Your data stays on your device.</p>
+  <p>No. Ask Dave Real Estate Tools does not record, store, or transmit any calls, messages, or conversations. Your data stays on your device.</p>
+
+  <h3>What templates are included?</h3>
+  <p>6 WhatsApp templates and 6 Gmail templates for common real estate scenarios (listing introductions, viewing confirmations, follow-ups, and more). Plus 5 OneNote templates organized by client role (Tenant, Landlord, Buyer, Seller, Investor). All templates are editable &mdash; click the pencil icon on any template to customize it.</p>
+
+  <h3>Does it work on Mac?</h3>
+  <p>macOS support is in active development. The app is currently optimized for Windows. If you encounter issues on any platform, please let us know via <a href="https://github.com/Dave-Buckley/askdave-real-estate-tools/issues">GitHub</a> or <a href="mailto:dave.john.buckley@gmail.com">email</a>.</p>
+
+  <h3>What is the keyboard shortcut?</h3>
+  <p>The primary shortcut is <strong>Ctrl+Space</strong>. Highlight any text on screen and press Ctrl+Space to extract contact information and open the action window. You can customize hotkeys from the keyboard icon in the panel header.</p>
 
   <hr class="divider">
+
+  <div class="platform-note">
+    <strong>Platform note:</strong> Ask Dave Real Estate Tools is currently optimized for Android + Windows. Support for macOS and iPhone is in active development. If you encounter any issues or have feature requests, please reach out via <a href="https://github.com/Dave-Buckley/askdave-real-estate-tools/issues">GitHub</a> or <a href="mailto:dave.john.buckley@gmail.com">email</a>.
+  </div>
+
   <p style="text-align: center; color: #94A3B8; font-size: 0.82rem;">&copy; 2026 Ask Dave Real Estate Tools. Built for real estate agents in the UAE.</p>
 
 </body>

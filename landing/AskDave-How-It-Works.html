@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ask Dave Real Estate Tools - How It Works</title>
+  <style>
+    @media print {
+      body { font-size: 11pt; }
+      .page-break { page-break-before: always; }
+      .no-print { display: none; }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: #334155; line-height: 1.7; max-width: 800px;
+      margin: 0 auto; padding: 2rem;
+    }
+    h1 { font-size: 1.8rem; color: #0C1B2A; margin-bottom: 0.25rem; }
+    h2 { font-size: 1.3rem; color: #0C1B2A; margin: 2rem 0 0.75rem; padding-bottom: 0.4rem; border-bottom: 2px solid #2DD4A8; }
+    h3 { font-size: 1.05rem; color: #0C1B2A; margin: 1.5rem 0 0.5rem; }
+    p { margin-bottom: 0.75rem; font-size: 0.92rem; }
+    .subtitle { color: #64748B; font-size: 1rem; margin-bottom: 0.25rem; }
+    .version { color: #94A3B8; font-size: 0.82rem; margin-bottom: 2rem; }
+    ol, ul { padding-left: 1.5rem; margin-bottom: 1rem; }
+    ol li, ul li { margin-bottom: 0.5rem; font-size: 0.92rem; }
+    .feature-box {
+      border: 1px solid #E2E8F0; border-radius: 8px; padding: 1.25rem;
+      margin-bottom: 1.5rem; background: #FAFBFC;
+    }
+    .feature-box h3 { margin-top: 0; color: #0C1B2A; }
+    .feature-label {
+      display: inline-block; font-size: 0.72rem; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.05em; padding: 0.2rem 0.5rem; border-radius: 4px; margin-bottom: 0.5rem;
+    }
+    .label-popup { background: #DBEAFE; color: #1E40AF; }
+    .label-panel { background: #D1FAE5; color: #065F46; }
+    .label-tray { background: #FEF3C7; color: #92400E; }
+    .label-auto { background: #EDE9FE; color: #5B21B6; }
+    .step-flow {
+      display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center;
+      margin: 0.75rem 0;
+    }
+    .step-flow .step {
+      background: white; border: 1px solid #E2E8F0; border-radius: 6px;
+      padding: 0.4rem 0.75rem; font-size: 0.85rem; font-weight: 500;
+    }
+    .step-flow .arrow { color: #94A3B8; font-size: 1.1rem; }
+    .tip {
+      background: #F0F9F6; border-left: 3px solid #14B8A6;
+      padding: 0.75rem 1rem; margin: 1rem 0; border-radius: 0 6px 6px 0;
+      font-size: 0.88rem;
+    }
+    .tip strong { color: #0C1B2A; }
+    .hotkey {
+      display: inline-block; background: #F1F5F9; border: 1px solid #CBD5E1;
+      border-radius: 4px; padding: 0.1rem 0.4rem; font-family: 'Consolas', 'Courier New', monospace;
+      font-size: 0.82rem; color: #475569;
+    }
+    .divider { border: none; border-top: 1px solid #E2E8F0; margin: 2rem 0; }
+    .print-btn {
+      background: #0C1B2A; color: white; border: none; padding: 0.6rem 1.5rem;
+      border-radius: 6px; font-size: 0.88rem; font-weight: 600; cursor: pointer;
+      font-family: inherit; margin-bottom: 2rem;
+    }
+    .print-btn:hover { background: #132D46; }
+    table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.88rem; }
+    th { text-align: left; padding: 0.5rem 0.75rem; background: #F1F5F9; border-bottom: 2px solid #E2E8F0; font-weight: 600; }
+    td { padding: 0.5rem 0.75rem; border-bottom: 1px solid #F1F5F9; }
+  </style>
+</head>
+<body>
+
+  <button class="print-btn no-print" onclick="window.print()">Print / Save as PDF</button>
+
+  <h1>Ask Dave Real Estate Tools &ndash; How It Works</h1>
+  <p class="subtitle">A complete guide to every feature</p>
+  <p class="version">Ask Dave Real Estate Tools v1.0.0 &copy; 2026</p>
+
+  <p>Ask Dave Real Estate Tools runs quietly in your system tray and helps you do everything faster &ndash; <strong>dial</strong>, <strong>message on WhatsApp</strong>, <strong>send emails</strong>, <strong>take structured notes in OneNote</strong>, <strong>send RERA forms</strong>, <strong>book viewings</strong>, <strong>set follow-up reminders</strong>, and <strong>stay informed with UAE real estate news</strong>. It works on top of whatever you already use &ndash; your CRM, your browser, Excel, emails, PDFs &ndash; anything where you can highlight text on screen.</p>
+
+  <p>There are two main parts to the tool:</p>
+  <ul>
+    <li><strong>The Compact Window</strong> &ndash; a dark-themed frameless window (320&times;260) that appears when you highlight text and press <span class="hotkey">Ctrl+Space</span></li>
+    <li><strong>The Expanded Panel</strong> &ndash; the full-size view (380&times;680) with contact details, templates, forms, scheduling, and news</li>
+  </ul>
+
+  <!-- ============================================ -->
+  <h2>1. Smart Text Detection</h2>
+
+  <div class="feature-box">
+    <span class="feature-label label-auto">Automatic</span>
+    <h3>Highlight text, get instant actions</h3>
+    <p>Highlight any text on your screen, then press <span class="hotkey">Ctrl+Space</span>. Ask Dave Real Estate Tools intelligently extracts phone numbers, email addresses, names, and property units from whatever you highlighted. The compact window appears with the detected information ready for action.</p>
+
+    <div class="step-flow">
+      <span class="step">Highlight text on screen</span>
+      <span class="arrow">&rarr;</span>
+      <span class="step">Press Ctrl+Space</span>
+      <span class="arrow">&rarr;</span>
+      <span class="step">Compact window appears</span>
+      <span class="arrow">&rarr;</span>
+      <span class="step">Click Dial, WhatsApp, or Expand</span>
+    </div>
+
+    <p><strong>Where it works:</strong> Everywhere. Browsers, CRM systems (Bayut, Property Finder, HubSpot, Salesforce), Excel, Word, PDFs, emails, WhatsApp Desktop, Outlook &ndash; if you can highlight text, Ask Dave Real Estate Tools will detect the data.</p>
+
+    <h3>Phone number detection</h3>
+    <p>The app recognises phone numbers in all common formats:</p>
+    <table>
+      <tr><th>Format</th><th>Example</th><th>Detected?</th></tr>
+      <tr><td>UAE mobile</td><td>0501234567</td><td>Yes</td></tr>
+      <tr><td>UAE mobile with country code</td><td>+971501234567</td><td>Yes</td></tr>
+      <tr><td>UAE mobile with 00 prefix</td><td>00971501234567</td><td>Yes</td></tr>
+      <tr><td>UAE mobile with spaces</td><td>05 012 34567</td><td>Yes</td></tr>
+      <tr><td>UAE landline</td><td>04 123 4567</td><td>Yes</td></tr>
+      <tr><td>International numbers</td><td>+44 7911 123456</td><td>Yes</td></tr>
+      <tr><td>Random text</td><td>"Call me tomorrow"</td><td>No (ignored)</td></tr>
+    </table>
+
+    <h3>Email detection</h3>
+    <p>Standalone email addresses are also detected from your highlighted text. When an email is found, it automatically enables the Gmail compose option in the expanded panel.</p>
+
+    <h3>Block text extraction</h3>
+    <p>You don't need to carefully select just a phone number. Highlight an entire CRM record, email signature, or contact card &ndash; the app will pull out <strong>all the fields</strong> automatically: phone number, email address, name, and property unit. Labels like "Full Name:", "Email:", "Property Interest:", and "Unit 1204, Marina Heights Tower" are all understood.</p>
+
+    <div class="tip"><strong>Smart number handling:</strong> Ask Dave Real Estate Tools automatically normalises every number to international format. Whether you highlight "0501234567" or "00971501234567" or "+971 50 123 4567", it all becomes the same clean number.</div>
+  </div>
+
+  <!-- ============================================ -->
+  <h2>2. The Compact Window</h2>
+
+  <div class="feature-box">
+    <span class="feature-label label-popup">Compact Window</span>
+    <h3>Your quick-action starting point</h3>
+    <p>When you highlight text and press <span class="hotkey">Ctrl+Space</span>, the compact window appears. It is a dark-themed frameless window (320&times;260) with a custom title bar and the following elements:</p>
+
+    <table>
+      <tr><th>Element</th><th>What it does</th></tr>
+      <tr><td><strong>Phone number row</strong></td><td>Displays the detected phone number with a UAE flag icon. You can also edit the number directly.</td></tr>
+      <tr><td><strong>Dial button</strong></td><td>Sends the number to your phone's dialler via Microsoft Phone Link. The number is pre-filled &ndash; you press the call button yourself.</td></tr>
+      <tr><td><strong>WhatsApp button</strong></td><td>Opens a WhatsApp conversation with the detected number. Choose a template or start a blank chat.</td></tr>
+      <tr><td><strong>Expand link</strong></td><td>Opens the full expanded panel (380&times;680) with all features: contact card, templates, forms, scheduling, and more.</td></tr>
+    </table>
+
+    <div class="step-flow">
+      <span class="step">Highlight text</span>
+      <span class="arrow">&rarr;</span>
+      <span class="step">Press Ctrl+Space</span>
+      <span class="arrow">&rarr;</span>
+      <span class="step">Compact window shows detected number</span>
+      <span class="arrow">&rarr;</span>
+      <span class="step">Click Dial, WhatsApp, or Expand</span>
+    </div>
+
+    <div class="tip"><strong>Tip:</strong> The compact window stays out of your way at 320&times;260 pixels. For quick calls and WhatsApp messages, you never need to open the full panel &ndash; just highlight, press <span class="hotkey">Ctrl+Space</span>, and click.</div>
+  </div>
+
+  <!-- ============================================ -->
+  <h2>3. Click-to-Dial &amp; Phone Link</h2>
+
+  <div class="feature-box">
+    <span class="feature-label label-popup">Compact Window</span>
+    <h3>How the Dial button works</h3>
+    <p>When you click <strong>Dial</strong> in the compact window or the expanded panel, Ask Dave Real Estate Tools sends the phone number to your phone's dialler via <strong>Microsoft Phone Link</strong>. The number is pre-filled and ready &ndash; you still press the green call button yourself. It will <strong>not</strong> auto-call anyone.</p>
+
+    <div class="step-flow">
+      <span class="step">Click Dial</span>
+      <span class="arrow">&rarr;</span>
+      <span class="step">Phone Link receives number</span>
+      <span class="arrow">&rarr;</span>
+      <span class="step">Your phone's dialler opens</span>
+      <span class="arrow">&rarr;</span>
+      <span class="step">You press Call</span>
+    </div>
+  </div>
+
+  <div class="feature-box">
+    <span class="feature-label label-tray">Setup</span>
+    <h3>Setting up Phone Link (one-time, Android + Windows)</h3>
+    <p>If you haven't connected your phone yet, follow these steps once:</p>
+    <ol>
+      <li>On your PC, open the <strong>Start menu</strong> and search for <strong>"Phone Link"</strong>. Open it.</li>
+      <li>On your Android phone, install <strong>"Link to Windows"</strong> from the Google Play Store.</li>
+      <li>In Phone Link on your PC, click <strong>Get started</strong>. A QR code appears on screen.</li>
+      <li>Open the Link to Windows app on your phone and <strong>scan the QR code</strong>.</li>
+      <li>Grant <strong>all permissions</strong> when asked &ndash; calls, contacts, messages, and notifications.</li>
+    </ol>
+  </div>
+
+  <div class="feature-box">
+    <span class="feature-label label-tray">Important</span>
+    <h3>Making calls go to your phone (not your PC speakers)</h3>
+    <p>By default, Phone Link may try to ring through your PC speakers instead of your phone. To make calls go straight to your phone's dialler:</p>
+    <ol>
+      <li>Open <strong>Phone Link</strong> on your PC.</li>
+      <li>Click the <strong>Settings gear icon</strong> (top-right corner).</li>
+      <li>Go to <strong>Features</strong>.</li>
+      <li>Under <strong>Calls</strong>, make sure <strong>"Use this PC to make and receive calls"</strong> is turned <strong>ON</strong>.</li>
+      <li>Under the same section, look for the <strong>"Open calls in"</strong> option. Set it to <strong>"Phone"</strong> if available.</li>
+    </ol>
+
+    <div class="tip">
+      <strong>If calls still ring on your PC:</strong> Open <strong>Phone Link &rarr; Settings &rarr; Features &rarr; Calls</strong> and toggle the calls setting <strong>OFF then ON again</strong>. Then make a test call. If it still routes to your PC, try:
+      <ol style="margin-top: 0.5rem;">
+        <li>Open <strong>Windows Settings &rarr; Bluetooth &amp; devices &rarr; Phone Link</strong></li>
+        <li>Make sure your phone is listed and connected</li>
+        <li>Restart both Phone Link on your PC and Link to Windows on your phone</li>
+      </ol>
+    </div>
+
+    <div class="tip"><strong>Test it:</strong> Open Phone Link, go to the <strong>Calls</strong> tab, and dial any number. If the call rings on your actual phone (not your PC speakers), everything is set up correctly and Ask Dave Real Estate Tools will work the same way.</div>
+  </div>
+
+  <div class="feature-box">
+    <span class="feature-label label-auto">Alternatives</span>
+    <h3>If you don't want to use Phone Link</h3>
+    <p>Phone Link is optional. Many agents in Dubai use <strong>WhatsApp for everything</strong> and skip phone calls entirely. If that's you:</p>
+    <ul>
+      <li>Ignore the Dial button and use the <strong>WhatsApp button</strong> instead</li>
+      <li>You can also use the Dial button as a <strong>"Copy number"</strong> action &ndash; it copies the number to your clipboard so you can paste it into any other app or dial manually on your phone</li>
+    </ul>
+
+    <h3>iPhone + Windows <span style="background:#FEF3C7;color:#92400E;font-size:0.7em;padding:0.1em 0.4em;border-radius:3px;font-weight:600;">BETA</span></h3>
+    <p>Phone Link also works with iPhone via Bluetooth:</p>
+    <ol>
+      <li>Turn on <strong>Bluetooth</strong> on your iPhone.</li>
+      <li>Open <strong>Phone Link</strong> on your PC and choose <strong>"iPhone"</strong>.</li>
+      <li>Scan the QR code with your iPhone camera and tap <strong>Pair</strong>.</li>
+      <li>Grant permissions for calls, contacts, and notifications.</li>
+    </ol>
+    <p>Calls go through your iPhone. Keep it within about 10 metres of your PC.</p>
+
+    <h3>iPhone + Mac <span style="background:#FEF3C7;color:#92400E;font-size:0.7em;padding:0.1em 0.4em;border-radius:3px;font-weight:600;">BETA</span></h3>
+    <p>No extra apps needed &ndash; Apple handles this natively:</p>
+    <ol>
+      <li>Sign into the <strong>same Apple ID</strong> on both devices.</li>
+      <li>Connect both to the <strong>same Wi-Fi network</strong>.</li>
+      <li>On your iPhone: <strong>Settings &rarr; Phone &rarr; Calls on Other Devices &rarr; ON</strong>.</li>
+      <li>Toggle on your Mac in the list below.</li>
+    </ol>
+
+    <h3>Android + Mac <span style="background:#FEF3C7;color:#92400E;font-size:0.7em;padding:0.1em 0.4em;border-radius:3px;font-weight:600;">BETA</span></h3>
+    <p>No built-in call routing for this combination. Use <strong>WhatsApp Desktop</strong> for all calls and messages instead.</p>
+  </div>
+
+  <div class="page-break"></div>
+
+  <!-- ============================================ -->
+  <h2>4. The Expanded Panel &ndash; Full Feature View</h2>
+
+  <div class="feature-box">
+    <span class="feature-label label-panel">Panel</span>
+    <h3>Everything you need in one window</h3>
+    <p>Click <strong>Expand</strong> in the compact window (or click the system tray icon) to open the full expanded panel. This is where all of the app's features live, laid out from top to bottom:</p>
+
+    <ol>
+      <li><strong>Phone number input</strong> &ndash; The detected number appears here. You can also type or paste a number manually. The app normalises it automatically.</li>
+      <li><strong>Contact card</strong> &ndash; Shows editable fields for <strong>name</strong>, <strong>email</strong>, and <strong>unit/property</strong>. These are auto-filled from your highlighted text or can be entered manually.</li>
+      <li><strong>Action buttons (2&times;2 grid)</strong> &ndash; <strong>Dial</strong>, <strong>WhatsApp</strong>, <strong>Gmail</strong>, and <strong>OneNote</strong>. One click for each action.</li>
+      <li><strong>Schedule section</strong> &ndash; <strong>Book Viewing</strong> and <strong>Book Consultation</strong> buttons that open Google Calendar with event details pre-filled from the contact card.</li>
+      <li><strong>Follow-up reminders</strong> &ndash; <strong>7-day</strong>, <strong>15-day</strong>, and <strong>30-day</strong> buttons. Creates a Google Calendar reminder with the contact's details.</li>
+      <li><strong>WhatsApp Templates</strong> &ndash; 6 message templates. Click one to send it via WhatsApp with placeholders filled in. Click the pencil icon to edit.</li>
+      <li><strong>Gmail Templates</strong> &ndash; 6 email templates. Click one to open Gmail compose with subject and body pre-filled. Click the pencil icon to edit.</li>
+      <li><strong>OneNote Templates</strong> &ndash; 5 role-based templates (Tenant, Landlord, Buyer, Seller, Investor). Creates a structured page in your "Real Estate" notebook with qualifying questions.</li>
+      <li><strong>Forms (Sales / Rentals / Off-plan tabs)</strong> &ndash; RERA contract forms. Send directly via WhatsApp or Gmail.</li>
+      <li><strong>KYC Forms</strong> &ndash; 3 internal compliance forms with a Download (Save As) button. For internal use only.</li>
+      <li><strong>UAE News Feed</strong> &ndash; Live headlines from 12 UAE real estate news sources. Click any headline to read the full article.</li>
+    </ol>
+
+    <h3>Using the panel with contact details</h3>
+    <div class="step-flow">
+      <span class="step">Highlight text</span>
+      <span class="arrow">&rarr;</span>
+      <span class="step">Ctrl+Space</span>
+      <span class="arrow">&rarr;</span>
+      <span class="step">Click Expand</span>
+      <span class="arrow">&rarr;</span>
+      <span class="step">Name, email, unit auto-filled</span>
+      <span class="arrow">&rarr;</span>
+      <span class="step">Pick any action</span>
+    </div>
+
+    <p>All templates use placeholders &ndash; <strong>{name}</strong>, <strong>{number}</strong>, <strong>{email}</strong>, and <strong>{unit}</strong> &ndash; which are automatically replaced with the contact's details from the contact card.</p>
+  </div>
+
+  <!-- ============================================ -->
+  <h2>5. Message Templates</h2>
+
+  <div class="feature-box">
+    <span class="feature-label label-panel">Panel</span>
+    <h3>WhatsApp Templates (6 templates)</h3>
+    <p>Ask Dave Real Estate Tools comes with 6 WhatsApp message templates for common real estate situations:</p>
+
+    <table>
+      <tr><th>Template</th><th>When to use it</th></tr>
+      <tr><td>Listing Introduction</td><td>First contact about a new property</td></tr>
+      <tr><td>Follow-Up</td><td>After a conversation or viewing</td></tr>
+      <tr><td>Viewing Confirmation</td><td>Day before a scheduled viewing</td></tr>
+      <tr><td>Viewing Reminder</td><td>Day of the viewing</td></tr>
+      <tr><td>New Listing Alert</td><td>Notifying a client about a matching property</td></tr>
+      <tr><td>Thank You</td><td>After a viewing or meeting</td></tr>
+    </table>
+
+    <h3>Gmail Templates (6 templates)</h3>
+    <p>There are also 6 Gmail email templates. Clicking one opens Gmail compose in your browser with the subject line and email body pre-filled. Templates work by opening a <code>mailto:</code> link with all the content ready to send.</p>
+
+    <h3>OneNote Templates (5 role-based templates)</h3>
+    <p>OneNote templates are organised by client role: <strong>Tenant</strong>, <strong>Landlord</strong>, <strong>Buyer</strong>, <strong>Seller</strong>, and <strong>Investor</strong>. Each template creates a structured page in your "Real Estate" OneNote notebook with role-specific qualifying questions pre-filled.</p>
+
+    <h3>Editing templates</h3>
+    <p>Every template is fully editable. Click the <strong>pencil icon</strong> next to any template to customise the message text. You can modify the wording, add your name and agency, and adjust the tone to match your style.</p>
+
+    <p>All templates support these placeholders:</p>
+    <table>
+      <tr><th>Placeholder</th><th>Replaced with</th></tr>
+      <tr><td><strong>{name}</strong></td><td>The contact's name from the contact card</td></tr>
+      <tr><td><strong>{number}</strong></td><td>The contact's phone number</td></tr>
+      <tr><td><strong>{email}</strong></td><td>The contact's email address</td></tr>
+      <tr><td><strong>{unit}</strong></td><td>The property unit or name</td></tr>
+    </table>
+
+    <div class="tip"><strong>Tip:</strong> Customise the built-in templates with your actual name and agency. Change the default agent name and agency references to your own. Click the pencil icon on any template to start editing. A yellow <strong>*</strong> indicator appears next to any template you have customised.</div>
+  </div>
+
+  <div class="page-break"></div>
+
+  <!-- ============================================ -->
+  <h2>6. Additional Features</h2>
+
+  <div class="feature-box">
+    <span class="feature-label label-panel">Panel</span>
+    <h3>OneNote Integration</h3>
+    <p>Click the <strong>OneNote</strong> button in the action grid, then select a client role (Tenant, Landlord, Buyer, Seller, or Investor). Ask Dave Real Estate Tools creates a structured page in a <strong>"Real Estate"</strong> notebook in your default OneNote notebooks folder, organised into sections by role.</p>
+    <p>Each page is pre-filled with the contact's details and role-specific qualifying questions &ndash; budget range, preferred locations, timeline, and other key information you need to capture during the conversation.</p>
+    <div class="tip"><strong>Requires:</strong> OneNote desktop application installed on your PC. The integration uses PowerShell COM automation to communicate with OneNote directly.</div>
+  </div>
+
+  <div class="feature-box">
+    <span class="feature-label label-panel">Panel</span>
+    <h3>Gmail Templates</h3>
+    <p>The 6 Gmail templates open your browser with a Gmail compose window. The subject line and email body are pre-filled with the template content and the contact's details. This works by constructing a <code>mailto:</code> link &ndash; no Gmail login is needed within the app itself.</p>
+    <p>If an email address was detected from your highlighted text, it is automatically placed in the "To" field.</p>
+  </div>
+
+  <div class="feature-box">
+    <span class="feature-label label-panel">Panel</span>
+    <h3>RERA Forms</h3>
+    <p>The Forms section contains official RERA contract forms organised into three tabs:</p>
+    <ul>
+      <li><strong>Sales</strong> &ndash; Sale and purchase agreement forms</li>
+      <li><strong>Rentals</strong> &ndash; Tenancy contract and rental forms</li>
+      <li><strong>Off-plan</strong> &ndash; Off-plan sale and reservation forms</li>
+    </ul>
+    <p>Each form can be sent directly to the client via <strong>WhatsApp</strong> or <strong>Gmail</strong> using the send buttons next to each form.</p>
+  </div>
+
+  <div class="feature-box">
+    <span class="feature-label label-panel">Panel</span>
+    <h3>KYC Forms</h3>
+    <p>The KYC Forms section contains 3 internal compliance forms used within your brokerage. These are <strong>download only</strong> &ndash; click the <strong>Save As</strong> button to download a copy to your computer. There is no send functionality for KYC forms, as they are meant for internal use.</p>
+  </div>
+
+  <div class="feature-box">
+    <span class="feature-label label-panel">Panel</span>
+    <h3>Google Calendar &ndash; Book Viewings &amp; Consultations</h3>
+    <p>The Schedule section has two buttons: <strong>Book Viewing</strong> and <strong>Book Consultation</strong>. Clicking either one opens Google Calendar in your browser with a new event pre-filled with the contact's name, phone number, email, and property unit from the contact card.</p>
+    <p>You choose the date and time in Google Calendar, add any notes, and save. No Google account login is required within the app &ndash; it simply opens the calendar URL.</p>
+  </div>
+
+  <div class="feature-box">
+    <span class="feature-label label-panel">Panel</span>
+    <h3>Follow-up Reminders</h3>
+    <p>Below the Schedule section, three follow-up buttons let you set reminders:</p>
+    <table>
+      <tr><th>Button</th><th>What it does</th></tr>
+      <tr><td><strong>7 days</strong></td><td>Creates a Google Calendar reminder 7 days from today with the contact's details</td></tr>
+      <tr><td><strong>15 days</strong></td><td>Creates a Google Calendar reminder 15 days from today</td></tr>
+      <tr><td><strong>30 days</strong></td><td>Creates a Google Calendar reminder 30 days from today</td></tr>
+    </table>
+    <p>Each reminder includes the contact's name, number, and any property details so you have full context when the reminder fires.</p>
+  </div>
+
+  <div class="feature-box">
+    <span class="feature-label label-panel">Panel</span>
+    <h3>UAE News Feed</h3>
+    <p>At the bottom of the expanded panel, a live news feed pulls headlines from <strong>12 UAE real estate news sources</strong>. Browse the latest market news, regulatory updates, and industry developments without leaving the app. Click any headline to open the full article in your browser.</p>
+  </div>
+
+  <!-- ============================================ -->
+  <h2>7. System Tray &amp; Settings</h2>
+
+  <div class="feature-box">
+    <span class="feature-label label-tray">System Tray</span>
+    <h3>Ask Dave Real Estate Tools lives in your taskbar</h3>
+    <p>Ask Dave Real Estate Tools runs in the background as a system tray icon. It starts automatically when you turn on your computer and stays out of your way until you need it.</p>
+
+    <table>
+      <tr><th>Action</th><th>What happens</th></tr>
+      <tr><td><strong>Left-click</strong> the tray icon</td><td>Opens the compact window</td></tr>
+      <tr><td><strong>Right-click</strong> the tray icon</td><td>Shows menu: Open Panel, Settings, Quit</td></tr>
+      <tr><td>Press <span class="hotkey">Ctrl+Space</span></td><td>Detects highlighted text and opens the compact window</td></tr>
+    </table>
+
+    <h3>Settings</h3>
+    <p>Settings are accessible in two ways: right-click the tray icon and choose <strong>Settings</strong>, or click the <strong>gear icon</strong> in the expanded panel header.</p>
+    <ul>
+      <li><strong>Clipboard detection:</strong> Turn on/off automatic phone number detection</li>
+      <li><strong>Hotkey customisation:</strong> Change the <span class="hotkey">Ctrl+Space</span> shortcut to a different key combination if needed</li>
+      <li><strong>WhatsApp mode:</strong> Choose between opening WhatsApp in your browser ("Web") or in the WhatsApp Desktop app ("Desktop")</li>
+    </ul>
+
+    <div class="tip"><strong>Which WhatsApp mode?</strong> If you have WhatsApp Desktop installed, use <strong>"Desktop"</strong> mode &ndash; it's faster and opens directly in the app. If you don't want to install it, <strong>"Web"</strong> mode opens wa.me links in your browser which works with WhatsApp Web.</div>
+  </div>
+
+  <!-- ============================================ -->
+  <h2>8. Keyboard Shortcuts</h2>
+
+  <div class="feature-box">
+    <span class="feature-label label-auto">Works from any app</span>
+    <h3>Global shortcut</h3>
+    <p>Ask Dave Real Estate Tools uses one primary keyboard shortcut that works from any application:</p>
+
+    <table>
+      <tr><th>Shortcut</th><th>Action</th></tr>
+      <tr><td><span class="hotkey">Ctrl+Space</span></td><td>Detect text from highlighted selection and show the compact window</td></tr>
+    </table>
+
+    <p>This works from <strong>any application</strong> &ndash; your CRM, browser, Excel, Word, PDFs, emails &ndash; anywhere you can highlight text.</p>
+
+    <div class="tip"><strong>Customisation:</strong> If <span class="hotkey">Ctrl+Space</span> conflicts with another application, you can change the shortcut. Click the <strong>keyboard icon</strong> (Hotkeys button) in the expanded panel header to customise your key combination.</div>
+  </div>
+
+  <div class="page-break"></div>
+
+  <!-- ============================================ -->
+  <h2>Typical Workflow Examples</h2>
+
+  <h3>Example 1: Quick WhatsApp from CRM</h3>
+  <ol>
+    <li>You're in your CRM looking at a lead's phone number</li>
+    <li>Highlight the number and press <span class="hotkey">Ctrl+Space</span></li>
+    <li>The compact window appears with the number detected</li>
+    <li>Click <strong>WhatsApp</strong> &rarr; pick "Listing Introduction"</li>
+    <li>WhatsApp opens with the message ready &ndash; just hit Send</li>
+  </ol>
+
+  <h3>Example 2: Full contact flow from an email signature</h3>
+  <ol>
+    <li>You receive an email from a prospective buyer. Highlight the entire signature block (name, phone, email, property reference)</li>
+    <li>Press <span class="hotkey">Ctrl+Space</span> &ndash; the compact window shows the phone number</li>
+    <li>Click <strong>Expand</strong> &ndash; the full panel opens with name, email, and unit all auto-filled in the contact card</li>
+    <li>Click <strong>OneNote</strong> &rarr; select "Buyer" &ndash; a structured page is created with qualifying questions</li>
+    <li>Click <strong>Book Viewing</strong> &ndash; Google Calendar opens with the client's details pre-filled</li>
+    <li>Pick a WhatsApp template like "Viewing Confirmation" &ndash; the message includes their name and property unit</li>
+  </ol>
+
+  <h3>Example 3: Rapid calling through a list</h3>
+  <ol>
+    <li>Open your contact list in Excel or your CRM</li>
+    <li>Highlight the first number, press <span class="hotkey">Ctrl+Space</span> &ndash; compact window appears</li>
+    <li>Click <strong>Dial</strong> &ndash; Phone Link opens the number on your phone</li>
+    <li>Make your call, hang up</li>
+    <li>Highlight the next number, press <span class="hotkey">Ctrl+Space</span> &ndash; compact window updates</li>
+    <li>Click <strong>Dial</strong> again &ndash; repeat</li>
+  </ol>
+
+  <hr class="divider">
+
+  <!-- ============================================ -->
+  <h2>Quick Reference</h2>
+
+  <table>
+    <tr><th>I want to...</th><th>Do this</th></tr>
+    <tr><td>Call someone</td><td>Highlight their number &rarr; <span class="hotkey">Ctrl+Space</span> &rarr; click <strong>Dial</strong></td></tr>
+    <tr><td>WhatsApp someone</td><td>Highlight their number &rarr; <span class="hotkey">Ctrl+Space</span> &rarr; click <strong>WhatsApp</strong></td></tr>
+    <tr><td>Send a WhatsApp template</td><td><span class="hotkey">Ctrl+Space</span> &rarr; Expand &rarr; pick a WhatsApp template</td></tr>
+    <tr><td>Send a Gmail template</td><td><span class="hotkey">Ctrl+Space</span> &rarr; Expand &rarr; pick a Gmail template</td></tr>
+    <tr><td>Create a OneNote page</td><td><span class="hotkey">Ctrl+Space</span> &rarr; Expand &rarr; click <strong>OneNote</strong> &rarr; pick a role</td></tr>
+    <tr><td>Send a RERA form</td><td><span class="hotkey">Ctrl+Space</span> &rarr; Expand &rarr; Forms &rarr; pick form &rarr; Send via WhatsApp/Gmail</td></tr>
+    <tr><td>Download a KYC form</td><td><span class="hotkey">Ctrl+Space</span> &rarr; Expand &rarr; KYC Forms &rarr; click <strong>Save As</strong></td></tr>
+    <tr><td>Book a viewing</td><td><span class="hotkey">Ctrl+Space</span> &rarr; Expand &rarr; click <strong>Book Viewing</strong></td></tr>
+    <tr><td>Set a follow-up reminder</td><td><span class="hotkey">Ctrl+Space</span> &rarr; Expand &rarr; click <strong>7 / 15 / 30 day</strong></td></tr>
+    <tr><td>Read UAE news</td><td><span class="hotkey">Ctrl+Space</span> &rarr; Expand &rarr; scroll to <strong>News</strong></td></tr>
+    <tr><td>Edit a template</td><td>Click the <strong>pencil icon</strong> next to any template</td></tr>
+    <tr><td>Change settings</td><td>Click the <strong>gear icon</strong> in the panel header</td></tr>
+    <tr><td>Customise hotkeys</td><td>Click the <strong>keyboard icon</strong> in the panel header</td></tr>
+    <tr><td>Quit Ask Dave Real Estate Tools</td><td>Right-click tray icon &rarr; <strong>Quit</strong></td></tr>
+  </table>
+
+  <hr class="divider">
+
+  <h2>Privacy &amp; Security</h2>
+  <ul>
+    <li><strong>No data leaves your computer.</strong> Ask Dave Real Estate Tools runs 100% locally. No cloud, no accounts, no tracking.</li>
+    <li><strong>No CRM access.</strong> Ask Dave Real Estate Tools never connects to or reads from your CRM. It only sees text you highlight on screen.</li>
+    <li><strong>Your templates are stored locally</strong> in your user profile. They stay on your machine.</li>
+    <li><strong>No login required.</strong> The app has no authentication, no sign-up, and no user accounts. Your privacy is the default.</li>
+    <li><strong>No hidden costs.</strong> Ask Dave Real Estate Tools is free to use. No subscriptions, no API fees, no trial periods.</li>
+  </ul>
+
+  <hr class="divider">
+
+  <h2>Platform Support</h2>
+  <p>Ask Dave Real Estate Tools is currently optimised for <strong>Android + Windows</strong>. The Dial feature works best with Microsoft Phone Link connecting your Android phone to your Windows PC.</p>
+  <p>macOS and iPhone support are in active development. If you encounter any issues or have feature requests, please reach out via <a href="https://github.com/Dave-Buckley/askdave-real-estate-tools/issues">GitHub</a> or <a href="mailto:dave.john.buckley@gmail.com">email</a>.</p>
+
+  <hr class="divider">
+  <p style="text-align: center; color: #94A3B8; font-size: 0.82rem;">&copy; 2026 Ask Dave Real Estate Tools. Built for real estate agents in the UAE.</p>
+
+</body>
+</html>
