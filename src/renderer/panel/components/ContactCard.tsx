@@ -1,5 +1,6 @@
-import { useState } from 'react'
-import type { AppSettings, ContactRole } from '../../../shared/types'
+import { useState, useEffect } from 'react'
+import type { AppSettings, ContactRole, ContactChecklist, TransactionType } from '../../../shared/types'
+import { TRANSACTION_CHECKLISTS } from '../../../shared/checklists'
 
 const ALL_ROLES: ContactRole[] = ['Tenant', 'Landlord', 'Buyer', 'Seller', 'Investor']
 
@@ -9,6 +10,22 @@ const ROLE_COLORS: Record<ContactRole, { bg: string; border: string; text: strin
   Buyer: { bg: 'bg-gray-50', border: 'border-gray-200', text: 'text-gray-500', activeBg: 'bg-green-50', activeBorder: 'border-green-300', activeText: 'text-green-700' },
   Seller: { bg: 'bg-gray-50', border: 'border-gray-200', text: 'text-gray-500', activeBg: 'bg-red-50', activeBorder: 'border-red-300', activeText: 'text-red-700' },
   Investor: { bg: 'bg-gray-50', border: 'border-gray-200', text: 'text-gray-500', activeBg: 'bg-purple-50', activeBorder: 'border-purple-300', activeText: 'text-purple-700' }
+}
+
+const TRANSACTION_LABELS: Record<TransactionType, string> = {
+  tenancy: 'Tenancy',
+  renewal: 'Renewal',
+  sale: 'Sale',
+  'off-plan': 'Off-Plan'
+}
+
+/** Format an ISO timestamp as a short date like "Mar 3" */
+function formatShortDate(iso: string): string {
+  try {
+    return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+  } catch {
+    return ''
+  }
 }
 
 interface ContactCardProps {
@@ -21,6 +38,7 @@ interface ContactCardProps {
   oneNoteEnabled: boolean
   calendarEnabled: boolean
   followUpPromptEnabled: boolean
+  checklistEnabled: boolean
   roles: ContactRole[]
   onRolesChange: (roles: ContactRole[]) => void
 }
@@ -35,6 +53,7 @@ export default function ContactCard({
   oneNoteEnabled,
   calendarEnabled,
   followUpPromptEnabled,
+  checklistEnabled,
   roles,
   onRolesChange
 }: ContactCardProps) {
@@ -42,6 +61,19 @@ export default function ContactCard({
   const [showWhatsAppMenu, setShowWhatsAppMenu] = useState(false)
   const [oneNoteError, setOneNoteError] = useState<string | null>(null)
   const [followUpStatus, setFollowUpStatus] = useState<{ type: 'success' | 'error'; message: string } | null>(null)
+
+  // Checklist state
+  const [checklistExpanded, setChecklistExpanded] = useState(false)
+  const [checklist, setChecklist] = useState<ContactChecklist | null>(null)
+  const [confirmChangeType, setConfirmChangeType] = useState(false)
+
+  // Load checklist from store whenever e164 changes
+  useEffect(() => {
+    if (!checklistEnabled) return
+    window.electronAPI.getChecklist(e164).then((saved: ContactChecklist | null) => {
+      setChecklist(saved)
+    })
+  }, [e164, checklistEnabled])
 
   const handleDial = () => {
     window.electronAPI.dial(e164)
@@ -89,6 +121,63 @@ export default function ContactCard({
     }
     setTimeout(() => setFollowUpStatus(null), 4000)
   }
+
+  // --- Checklist handlers ---
+
+  const selectTransactionType = (type: TransactionType) => {
+    const now = new Date().toISOString()
+    const newChecklist: ContactChecklist = {
+      transactionType: type,
+      items: TRANSACTION_CHECKLISTS[type].map((item) => ({ ...item, receivedAt: undefined })),
+      updatedAt: now
+    }
+    setChecklist(newChecklist)
+    setConfirmChangeType(false)
+    window.electronAPI.saveChecklist(e164, newChecklist as unknown as Record<string, unknown>)
+  }
+
+  const handleTickItem = (itemId: string) => {
+    if (!checklist) return
+    const now = new Date().toISOString()
+    // Merge static list with saved state — use static as source of truth for labels
+    const staticItems = TRANSACTION_CHECKLISTS[checklist.transactionType]
+    const savedMap = new Map(checklist.items.map((i) => [i.id, i.receivedAt]))
+
+    const updatedItems = staticItems.map((staticItem) => {
+      const currentlyTicked = !!savedMap.get(staticItem.id)
+      return {
+        id: staticItem.id,
+        label: staticItem.label,
+        receivedAt: staticItem.id === itemId
+          ? (currentlyTicked ? undefined : now)
+          : savedMap.get(staticItem.id)
+      }
+    })
+
+    const updatedChecklist: ContactChecklist = {
+      transactionType: checklist.transactionType,
+      items: updatedItems,
+      updatedAt: now
+    }
+    setChecklist(updatedChecklist)
+    window.electronAPI.saveChecklist(e164, updatedChecklist as unknown as Record<string, unknown>)
+  }
+
+  // Derive rendered items by merging static list with saved timestamps
+  const getRenderedItems = () => {
+    if (!checklist) return []
+    const staticItems = TRANSACTION_CHECKLISTS[checklist.transactionType]
+    const savedMap = new Map(checklist.items.map((i) => [i.id, i.receivedAt]))
+    return staticItems.map((staticItem) => ({
+      id: staticItem.id,
+      label: staticItem.label,
+      receivedAt: savedMap.get(staticItem.id)
+    }))
+  }
+
+  const renderedItems = getRenderedItems()
+  const tickedCount = renderedItems.filter((i) => !!i.receivedAt).length
+  const totalCount = renderedItems.length
 
   return (
     <div className="bg-white border border-gray-200 rounded-lg p-3 space-y-2">
@@ -276,6 +365,129 @@ export default function ContactCard({
             <p className={`text-xs ${followUpStatus.type === 'success' ? 'text-green-600' : 'text-red-500'}`}>
               {followUpStatus.message}
             </p>
+          )}
+        </div>
+      )}
+
+      {/* Document checklist section */}
+      {checklistEnabled && (
+        <div className="border-t border-gray-100 pt-2">
+          {!checklist ? (
+            /* No checklist yet — show transaction type selector */
+            <div className="space-y-1.5">
+              <p className="text-[11px] text-gray-400 font-medium">Documents</p>
+              <p className="text-[11px] text-gray-400">Select transaction type to start checklist:</p>
+              <div className="flex flex-wrap gap-1">
+                {(Object.keys(TRANSACTION_LABELS) as TransactionType[]).map((type) => (
+                  <button
+                    key={type}
+                    onClick={() => selectTransactionType(type)}
+                    className="px-2 py-0.5 text-[11px] font-medium text-gray-600 bg-gray-50 border border-gray-200 rounded hover:bg-gray-100 transition-colors"
+                  >
+                    {TRANSACTION_LABELS[type]}
+                  </button>
+                ))}
+              </div>
+            </div>
+          ) : (
+            /* Checklist exists — show header with progress + collapsible list */
+            <div className="space-y-1">
+              {/* Section header */}
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-1.5">
+                  <button
+                    onClick={() => setChecklistExpanded(!checklistExpanded)}
+                    className="flex items-center gap-1.5 text-[11px] font-medium text-gray-600 hover:text-gray-800 transition-colors"
+                  >
+                    <span className="text-[10px] text-gray-400">
+                      {checklistExpanded ? '▾' : '▸'}
+                    </span>
+                    <span>Documents</span>
+                    <span className="text-[10px] text-gray-400">
+                      ({TRANSACTION_LABELS[checklist.transactionType]})
+                    </span>
+                  </button>
+                  <span className={`text-[10px] font-medium px-1.5 py-0.5 rounded-full ${
+                    tickedCount === totalCount && totalCount > 0
+                      ? 'bg-green-100 text-green-700'
+                      : 'bg-gray-100 text-gray-500'
+                  }`}>
+                    {tickedCount}/{totalCount}
+                  </span>
+                </div>
+
+                {/* Change type link */}
+                {!confirmChangeType ? (
+                  <button
+                    onClick={() => setConfirmChangeType(true)}
+                    className="text-[10px] text-gray-400 hover:text-gray-600 transition-colors"
+                  >
+                    Change type
+                  </button>
+                ) : (
+                  <div className="flex items-center gap-1">
+                    <span className="text-[10px] text-gray-400">Switch to:</span>
+                    {(Object.keys(TRANSACTION_LABELS) as TransactionType[])
+                      .filter((t) => t !== checklist.transactionType)
+                      .map((type) => (
+                        <button
+                          key={type}
+                          onClick={() => selectTransactionType(type)}
+                          className="text-[10px] text-blue-500 hover:text-blue-700"
+                        >
+                          {TRANSACTION_LABELS[type]}
+                        </button>
+                      ))
+                    }
+                    <button
+                      onClick={() => setConfirmChangeType(false)}
+                      className="text-[10px] text-gray-400 hover:text-gray-600"
+                    >
+                      &#10005;
+                    </button>
+                  </div>
+                )}
+              </div>
+
+              {/* Collapsible document list */}
+              {checklistExpanded && (
+                <div className="space-y-1 max-h-40 overflow-y-auto pl-1">
+                  {renderedItems.map((item) => {
+                    const ticked = !!item.receivedAt
+                    return (
+                      <div
+                        key={item.id}
+                        className="flex items-center gap-2 cursor-pointer group"
+                        onClick={() => handleTickItem(item.id)}
+                      >
+                        {/* Checkbox */}
+                        <div className={`flex-shrink-0 w-3.5 h-3.5 rounded border flex items-center justify-center transition-colors ${
+                          ticked
+                            ? 'bg-green-500 border-green-500'
+                            : 'border-gray-300 group-hover:border-gray-400'
+                        }`}>
+                          {ticked && (
+                            <svg width="8" height="8" viewBox="0 0 8 8" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                              <polyline points="1,4 3,6 7,2" />
+                            </svg>
+                          )}
+                        </div>
+                        {/* Label */}
+                        <span className={`text-[11px] flex-1 ${ticked ? 'text-gray-400 line-through' : 'text-gray-700'}`}>
+                          {item.label}
+                        </span>
+                        {/* Timestamp */}
+                        {ticked && item.receivedAt && (
+                          <span className="text-[10px] text-green-600 flex-shrink-0">
+                            {formatShortDate(item.receivedAt)}
+                          </span>
+                        )}
+                      </div>
+                    )
+                  })}
+                </div>
+              )}
+            </div>
           )}
         </div>
       )}

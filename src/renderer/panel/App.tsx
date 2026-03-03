@@ -233,6 +233,7 @@ function App(): React.JSX.Element {
           oneNoteEnabled={settings.oneNoteEnabled}
           calendarEnabled={settings.calendarEnabled}
           followUpPromptEnabled={settings.followUpPromptEnabled}
+          checklistEnabled={settings.checklistEnabled}
           roles={contactRoles}
           onRolesChange={handleRolesChange}
         />
