@@ -58,12 +58,6 @@
       font-size: 0.82rem; color: #475569;
     }
     .divider { border: none; border-top: 1px solid #E2E8F0; margin: 2rem 0; }
-    .print-btn {
-      background: #0C1B2A; color: white; border: none; padding: 0.6rem 1.5rem;
-      border-radius: 6px; font-size: 0.88rem; font-weight: 600; cursor: pointer;
-      font-family: inherit; margin-bottom: 2rem;
-    }
-    .print-btn:hover { background: #132D46; }
     table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.88rem; }
     th { text-align: left; padding: 0.5rem 0.75rem; background: #F1F5F9; border-bottom: 2px solid #E2E8F0; font-weight: 600; }
     td { padding: 0.5rem 0.75rem; border-bottom: 1px solid #F1F5F9; }
@@ -71,9 +65,10 @@
 </head>
 <body>
 
-  <button class="print-btn no-print" onclick="window.print()">Print / Save as PDF</button>
-
-  <h1>Ask Dave Real Estate Tools &ndash; How It Works</h1>
+  <div style="display:flex;align-items:center;gap:1rem;margin-bottom:0.5rem;">
+    <img src="icon-128.png" alt="Ask Dave Real Estate" style="width:48px;height:48px;border-radius:10px;">
+    <h1 style="margin:0;">Ask Dave Real Estate Tools &ndash; How It Works</h1>
+  </div>
   <p class="subtitle">A complete guide to every feature</p>
   <p class="version">Ask Dave Real Estate Tools v1.0.0 &copy; 2026</p>
 

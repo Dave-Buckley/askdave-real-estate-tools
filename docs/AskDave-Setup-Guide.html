@@ -54,12 +54,6 @@
     }
     .combo-body ol { margin-top: 0.5rem; }
     .divider { border: none; border-top: 1px solid #E2E8F0; margin: 2rem 0; }
-    .print-btn {
-      background: #0C1B2A; color: white; border: none; padding: 0.6rem 1.5rem;
-      border-radius: 6px; font-size: 0.88rem; font-weight: 600; cursor: pointer;
-      font-family: inherit; margin-bottom: 2rem;
-    }
-    .print-btn:hover { background: #132D46; }
     .dev-note {
       background: #FEF3C7; border-left: 3px solid #F59E0B;
       padding: 0.75rem 1rem; margin: 0.75rem 0 1rem; border-radius: 0 6px 6px 0;
@@ -76,9 +70,10 @@
 </head>
 <body>
 
-  <button class="print-btn no-print" onclick="window.print()">Print / Save as PDF</button>
-
-  <h1>Ask Dave Real Estate Tools Setup Guide</h1>
+  <div style="display:flex;align-items:center;gap:1rem;margin-bottom:0.5rem;">
+    <img src="icon-128.png" alt="Ask Dave Real Estate" style="width:48px;height:48px;border-radius:10px;">
+    <h1 style="margin:0;">Ask Dave Real Estate Tools Setup Guide</h1>
+  </div>
   <p class="subtitle">Real Estate Agent Productivity Toolkit</p>
   <p class="version">Ask Dave Real Estate Tools v1.0.0 &copy; 2026</p>
 
