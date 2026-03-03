@@ -54,6 +54,7 @@ export const store = new Store<AppSettings>({
     phoneLinkEnabled: process.platform === 'win32',
     followUpPromptEnabled: true,
     checklistEnabled: true,
+    newsEnabled: true,
     templates: DEFAULT_TEMPLATES,
     contacts: {}
   }

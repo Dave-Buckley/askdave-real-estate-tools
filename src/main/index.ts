@@ -8,6 +8,7 @@ import { registerIPCHandlers } from './ipc'
 import { setupAutoUpdater } from './updater'
 import { restoreGoogleTokens } from './auth/google'
 import { startPhoneLinkWatcher, stopPhoneLinkWatcher } from './phone-link'
+import { fetchNews } from './news'
 
 import { HotkeyConfig } from '../shared/types'
 
@@ -121,6 +122,14 @@ app.whenReady().then(() => {
   // Start Phone Link watcher for incoming call detection (Windows only)
   if (process.platform === 'win32' && store.get('phoneLinkEnabled')) {
     startPhoneLinkWatcher()
+  }
+
+  // Start news feed background refresh (initial fetch + 30-minute interval)
+  if (store.get('newsEnabled')) {
+    fetchNews().catch(console.error)
+    setInterval(() => {
+      if (store.get('newsEnabled')) fetchNews().catch(console.error)
+    }, 30 * 60 * 1000)
   }
 
   // Listen for store changes to re-register hotkeys dynamically

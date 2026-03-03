@@ -5,6 +5,13 @@ export interface Template {
   category: string    // e.g., "introduction", "follow-up", "viewing"
 }
 
+export interface NewsItem {
+  title: string
+  link: string
+  pubDate: string
+  source: string
+}
+
 export type TransactionType = 'tenancy' | 'sale' | 'renewal' | 'off-plan'
 
 export interface ChecklistItem {
@@ -34,6 +41,7 @@ export interface AppSettings {
   oneNoteSectionId?: string    // Cached "Contacts" section ID (Graph API)
   followUpPromptEnabled: boolean  // Show follow-up reminder buttons on ContactCard
   checklistEnabled: boolean    // Document checklist per client by transaction type
+  newsEnabled: boolean         // UAE real estate news feed
   templates: Template[]
   contacts: Record<string, Contact>  // Keyed by E.164 phone number
 }

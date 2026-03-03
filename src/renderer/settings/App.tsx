@@ -190,6 +190,7 @@ function App(): React.JSX.Element {
             phoneLinkEnabled={settings.phoneLinkEnabled}
             followUpPromptEnabled={settings.followUpPromptEnabled}
             checklistEnabled={settings.checklistEnabled}
+            newsEnabled={settings.newsEnabled}
             onToggle={handleToggle}
           />
         </div>

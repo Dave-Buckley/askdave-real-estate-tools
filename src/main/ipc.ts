@@ -10,6 +10,7 @@ import { microsoftSignIn, microsoftSignOut, microsoftGetAccount } from './auth/m
 import { googleSignIn, googleSignOut, isGoogleConnected, googleGetEmail } from './auth/google'
 import { getContact, upsertContact, addRole, removeRole, listContacts, deleteContact } from './contacts'
 import type { Contact, ContactRole as ContactRoleType } from '../shared/types'
+import { fetchNews, getCachedNews, getLastFetched } from './news'
 
 /**
  * Broadcast updated templates to all renderer windows so they stay in sync.
@@ -249,5 +250,22 @@ export function registerIPCHandlers(): void {
   ipcMain.handle('checklist:get', (_event, e164: string) => {
     const contact = getContact(e164)
     return contact?.checklist ?? null
+  })
+
+  // --- News ---
+
+  ipcMain.handle('news:get', async () => {
+    const STALE_MS = 30 * 60 * 1000
+    if (Date.now() - getLastFetched() < STALE_MS && getCachedNews().length > 0) {
+      return { items: getCachedNews(), lastFetched: getLastFetched() }
+    }
+    const items = await fetchNews()
+    return { items, lastFetched: getLastFetched() }
+  })
+
+  // --- Shell ---
+
+  ipcMain.handle('shell:open-external', (_event, url: string) => {
+    shell.openExternal(url)
   })
 }

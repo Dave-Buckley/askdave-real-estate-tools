@@ -6,6 +6,7 @@ interface FeatureTogglesProps {
   phoneLinkEnabled: boolean
   followUpPromptEnabled: boolean
   checklistEnabled: boolean
+  newsEnabled: boolean
   onToggle: (key: string, value: boolean) => void
 }
 
@@ -45,6 +46,11 @@ const FEATURES = [
     key: 'checklistEnabled',
     label: 'Document Checklists',
     description: 'Track required documents per client by transaction type'
+  },
+  {
+    key: 'newsEnabled',
+    label: 'News Feed',
+    description: 'Show UAE real estate news from industry sources'
   }
 ]
 
@@ -56,6 +62,7 @@ export default function FeatureToggles({
   phoneLinkEnabled,
   followUpPromptEnabled,
   checklistEnabled,
+  newsEnabled,
   onToggle
 }: FeatureTogglesProps) {
   const values: Record<string, boolean> = {
@@ -65,7 +72,8 @@ export default function FeatureToggles({
     calendarEnabled,
     phoneLinkEnabled,
     followUpPromptEnabled,
-    checklistEnabled
+    checklistEnabled,
+    newsEnabled
   }
 
   const isWindows = navigator.userAgent.includes('Windows')

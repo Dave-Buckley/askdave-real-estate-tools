@@ -12,9 +12,13 @@
     "build:all": "electron-vite build && electron-builder --win --mac"
   },
   "dependencies": {
+    "@azure/msal-node": "^5.0.5",
+    "@microsoft/microsoft-graph-client": "^3.0.7",
     "electron-store": "^9.0.0",
     "electron-updater": "^6.3.9",
+    "googleapis": "^171.4.0",
     "libphonenumber-js": "^1.12.38",
+    "rss-parser": "^3.13.0",
     "zod": "^3.24.2"
   },
   "devDependencies": {

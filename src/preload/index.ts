@@ -71,5 +71,12 @@ contextBridge.exposeInMainWorld('electronAPI', {
   onIncomingCall: (cb: (data: { e164: string; displayNumber: string; contactName: string | null }) => void) =>
     ipcRenderer.on('phone-link:incoming-call', (_e, data) => cb(data)),
   onCallEnded: (cb: (data: { e164: string; displayNumber: string; contactName: string | null }) => void) =>
-    ipcRenderer.on('phone-link:call-ended', (_e, data) => cb(data))
+    ipcRenderer.on('phone-link:call-ended', (_e, data) => cb(data)),
+
+  // News
+  getNews: () =>
+    ipcRenderer.invoke('news:get') as Promise<{ items: Array<{ title: string; link: string; pubDate: string; source: string }>; lastFetched: number }>,
+
+  // Shell
+  openExternal: (url: string) => ipcRenderer.invoke('shell:open-external', url)
 })
