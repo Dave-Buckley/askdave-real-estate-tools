@@ -80,7 +80,7 @@ function buildRolePsOutlines(role: ContactRole, varPrefix: string): string {
     .join('\n  ')
 
   const dLines = tmpl.documents
-    .map((d) => `$${varPrefix} += '<one:OE><one:T><![CDATA[\\u2610 ${psEscape(d)}]]></one:T></one:OE>'`)
+    .map((d) => `$${varPrefix} += '<one:OE><one:T><![CDATA[\u2610 ${psEscape(d)}]]></one:T></one:OE>'`)
     .join('\n  ')
 
   return `

@@ -41,13 +41,13 @@ export const DEFAULT_TEMPLATES: Template[] = [
   {
     id: 'tpl-007',
     name: 'Request Docs — Tenant',
-    body: 'Hi {name}, to proceed with the tenancy agreement I\'ll need the following documents:\n\n1. Passport copy (valid)\n2. Emirates ID (front & back)\n3. UAE residence visa copy\n4. Proof of income (salary certificate or bank statement)\n\nPlease send clear photos or scans at your earliest convenience. Let me know if you have any questions.',
+    body: 'Hi {name}, to help find the right property for you, could you please share the following:\n\n1. Yearly budget (AED)\n2. Number of cheques preferred (1 / 2 / 4 / 6 / 12)\n3. Location preference\n4. Property type (apartment / villa / townhouse / studio)\n5. Number of bedrooms\n6. Furnished or unfurnished\n7. Desired move-in date\n8. Visa status\n9. Bank account with cheque book status\n\nDocuments needed:\n- Emirates ID (front & back)\n- Salary certificate or employment letter\n\nPlease send what you can and I\'ll start matching properties for you.',
     category: 'documents'
   },
   {
     id: 'tpl-008',
     name: 'Request Docs — Landlord',
-    body: 'Hi {name}, to list your property and prepare the tenancy contract I\'ll need the following:\n\n1. Passport copy (valid)\n2. Emirates ID (front & back)\n3. Title deed copy\n4. DEWA premise number\n5. Form A (listing agreement) — I\'ll prepare this for your signature\n\nIf the property is under a company name, I\'ll also need the trade licence and POA. Please send clear scans when ready.',
+    body: 'Hi {name}, to list your property I\'ll need the following:\n\n1. Emirates ID (front & back)\n2. Title deed copy\n3. Property details:\n   - Building / community name\n   - Unit number & floor\n   - Number of bedrooms & bathrooms\n   - Furnished / unfurnished\n   - Parking spaces\n4. Expected annual rent (AED)\n5. Property photos (living room, bedrooms, kitchen, bathrooms, balcony view)\n6. Listing Form — I\'ll prepare this for your signature\n\nIf the property is under a company name, I\'ll also need the trade licence and POA. Please send clear photos or scans when ready.',
     category: 'documents'
   },
   {
@@ -104,9 +104,7 @@ export const DEFAULT_ROLE_TEMPLATES: Record<ContactRole, RoleTemplate> = {
       'Deal-breakers (ground floor, shared gym, etc.)'
     ],
     documents: [
-      'Passport copy (valid)',
       'Emirates ID (front & back)',
-      'UAE residence visa copy',
       'Salary certificate or employment letter',
       'Post-dated rent cheques',
       'Security deposit cheque (5% of annual rent)',
@@ -137,15 +135,11 @@ export const DEFAULT_ROLE_TEMPLATES: Record<ContactRole, RoleTemplate> = {
       'Pet policy (allowed / not allowed)'
     ],
     documents: [
-      'Passport copy (valid)',
       'Emirates ID (front & back)',
       'Title deed copy',
-      'NOC from mortgage bank (if mortgaged)',
-      'Service charge clearance letter',
-      'Form A2 (RERA rental listing agreement)',
+      'Listing Form',
       'Trakheesi permit number',
-      'DEWA premise number',
-      'Previous Ejari cancellation confirmation',
+      'Service charge clearance letter',
       'Floor plan / layout',
       'Tenancy contract (Form Unified — for agent to prepare)',
       'Power of Attorney (if owner is abroad)'
@@ -171,20 +165,15 @@ export const DEFAULT_ROLE_TEMPLATES: Record<ContactRole, RoleTemplate> = {
       'Must-have features (maid room, study, private pool, etc.)'
     ],
     documents: [
-      'Passport copy (valid)',
       'Emirates ID (front & back)',
-      'Visa copy (if UAE resident)',
-      'Mortgage pre-approval letter',
-      'Proof of funds / bank statement (cash buyers)',
+      'Mortgage pre-approval letter (if financing)',
+      'Proof of funds / bank statement (if cash buyer)',
       'Form B (RERA buyer agreement)',
       'Form F / MOU (Memorandum of Understanding)',
       'NOC from developer',
       'DLD transfer certificate',
-      'Trustee office receipt (4% DLD fee + admin)',
       'Manager\'s cheques (seller, agent, DLD)',
-      'Agent commission receipt',
-      'Mortgage registration (if financed)',
-      'DEWA transfer / new connection'
+      'Mortgage registration (if financed)'
     ]
   },
   Seller: {
@@ -206,15 +195,13 @@ export const DEFAULT_ROLE_TEMPLATES: Record<ContactRole, RoleTemplate> = {
       'Timeline to sell (urgent / flexible / 6+ months)'
     ],
     documents: [
-      'Passport copy (valid)',
       'Emirates ID (front & back)',
       'Original title deed',
-      'Form A (RERA listing agreement)',
+      'Listing Form',
       'Form F / MOU (Memorandum of Understanding)',
       'NOC from developer',
       'Service charge clearance letter',
       'Mortgage clearance certificate (if mortgaged)',
-      'Bank consent to sell (if mortgage outstanding)',
       'Trakheesi permit number',
       'DEWA final bill / clearance',
       'Property condition report',
@@ -240,8 +227,7 @@ export const DEFAULT_ROLE_TEMPLATES: Record<ContactRole, RoleTemplate> = {
       'Interest in assignment / off-plan resale before handover'
     ],
     documents: [
-      'Passport copy (valid)',
-      'Emirates ID (if UAE resident)',
+      'Emirates ID (front & back)',
       'Proof of funds / bank reference letter',
       'EOI / reservation form',
       'SPA (Sale & Purchase Agreement)',
