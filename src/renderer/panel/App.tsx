@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
-import { Settings2, X, Keyboard, Phone, Copy, Minus, Square, ChevronLeft, ChevronDown } from 'lucide-react'
+import { Settings2, X, Keyboard, BookOpen, Phone, Copy, Minus, Square, ChevronLeft, ChevronDown } from 'lucide-react'
 import type { Template, AppSettings, ContactInfo, ContactRole } from '../../shared/types'
 import PhoneInput from './components/PhoneInput'
 import ContactCard from './components/ContactCard'
@@ -8,11 +8,12 @@ import TemplateEditor from './components/TemplateEditor'
 import RoleTemplateEditor from './components/RoleTemplateEditor'
 import FormEditor from './components/FormEditor'
 import HotkeyPanel from './components/HotkeyPanel'
+import FlashcardView from './components/FlashcardView'
 import IncomingCallBar from './components/IncomingCallBar'
 import type { RoleTemplate, FormTemplateOverride } from '../../shared/types'
 import type { FormEntry } from '../../shared/forms'
 
-type View = 'main' | 'template-editor' | 'template-preview' | 'hotkeys' | 'role-template-editor' | 'form-editor'
+type View = 'main' | 'template-editor' | 'template-preview' | 'hotkeys' | 'role-template-editor' | 'form-editor' | 'education'
 type PanelMode = 'compact' | 'expanded'
 
 /** Custom draggable title bar for the frameless window.
@@ -619,6 +620,18 @@ function App(): React.JSX.Element {
     )
   }
 
+  // ── Education / Flashcards view ──────────────────────────────────────
+  if (view === 'education') {
+    return (
+      <div className="h-screen bg-[#0d0d0e] flex flex-col overflow-hidden">
+        <TitleBar title="Education" onBack={() => setView('main')} />
+        <div className="flex-1 p-3 overflow-y-auto min-h-0">
+          <FlashcardView onBack={() => setView('main')} />
+        </div>
+      </div>
+    )
+  }
+
   // ── Hotkey reference view ─────────────────────────────────────────────
   if (view === 'hotkeys' && settings) {
     return (
@@ -646,6 +659,13 @@ function App(): React.JSX.Element {
           title="Keyboard shortcuts"
         >
           <Keyboard size={14} strokeWidth={1.5} />
+        </button>
+        <button
+          onClick={() => setView('education')}
+          className="w-8 h-8 flex items-center justify-center text-[#a1a1aa] hover:text-[#ededee] hover:bg-white/[0.08] transition-colors"
+          title="Education"
+        >
+          <BookOpen size={14} strokeWidth={1.5} />
         </button>
         <button
           onClick={() => window.electronAPI.openSettings()}

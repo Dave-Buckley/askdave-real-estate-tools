@@ -263,6 +263,7 @@ export const store = new Store<AppSettings>({
     templates: DEFAULT_TEMPLATES,
     contacts: {},
     oneNoteRoleTemplates: DEFAULT_ROLE_TEMPLATES,
-    formOverrides: {}
+    formOverrides: {},
+    flashcardProgress: {}
   }
 })

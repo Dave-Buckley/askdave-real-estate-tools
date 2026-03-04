@@ -106,6 +106,12 @@ contextBridge.exposeInMainWorld('electronAPI', {
   saveFormAs: (subFolder: string, fileName: string) =>
     ipcRenderer.invoke('forms:save-as', subFolder, fileName) as Promise<{ success: boolean; path?: string }>,
 
+  // Flashcard progress
+  getFlashcardProgress: () =>
+    ipcRenderer.invoke('flashcard:getProgress') as Promise<Record<string, { confidence: 1 | 2 | 3; timesSeen: number; lastSeen: string }>>,
+  saveFlashcardProgress: (cardId: string, progress: { confidence: 1 | 2 | 3; timesSeen: number; lastSeen: string }) =>
+    ipcRenderer.invoke('flashcard:saveProgress', cardId, progress),
+
   // Shell
   openExternal: (url: string) => ipcRenderer.invoke('shell:open-external', url),
   showItemInFolder: (filePath: string) => ipcRenderer.invoke('shell:show-item', filePath)

@@ -18,6 +18,28 @@ export interface FormTemplateOverride {
   emailBody?: string
 }
 
+export interface FlashCard {
+  id: string
+  question: string
+  type: 'flashcard' | 'multiple-choice'
+  answer: string
+  options?: string[] // 4 options for multiple-choice (one is the correct answer)
+}
+
+export interface FlashcardDeck {
+  id: string
+  name: string
+  description: string
+  cardCount: number
+  cards: FlashCard[]
+}
+
+export interface CardProgress {
+  confidence: 1 | 2 | 3
+  timesSeen: number
+  lastSeen: string // ISO timestamp
+}
+
 export interface AppSettings {
   clipboardEnabled: boolean
   hotkeysEnabled: boolean
@@ -39,6 +61,7 @@ export interface AppSettings {
   contacts: Record<string, Contact>  // Keyed by E.164 phone number
   oneNoteRoleTemplates?: Record<ContactRole, RoleTemplate>
   formOverrides?: Record<string, FormTemplateOverride>
+  flashcardProgress: Record<string, CardProgress>
 }
 
 export type ContactRole = 'Tenant' | 'Landlord' | 'Buyer' | 'Seller' | 'Investor'

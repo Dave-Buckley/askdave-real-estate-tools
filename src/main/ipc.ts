@@ -5,7 +5,7 @@ import { store, DEFAULT_ROLE_TEMPLATES } from './store'
 import { openDialler, openWhatsApp, buildWhatsAppURL } from './actions'
 import { setSkipNextClipboardChange, suppressDetection } from './clipboard'
 import { getPanelWindow, showSettings, showPanel, expandPanel } from './tray'
-import { Template, ContactRole, FormTemplateOverride } from '../shared/types'
+import { Template, ContactRole, FormTemplateOverride, CardProgress } from '../shared/types'
 import { openContactPage, openNotebookSection } from './onenote'
 import { openCalendarBooking, createFollowUp } from './calendar'
 import { getContact, upsertContact, addRole, removeRole, listContacts, deleteContact } from './contacts'
@@ -251,6 +251,19 @@ export function registerIPCHandlers(): void {
     fs.copyFileSync(sourcePath, filePath)
     shell.showItemInFolder(filePath)
     return { success: true, path: filePath }
+  })
+
+  // --- Flashcard progress ---
+
+  ipcMain.handle('flashcard:getProgress', () => {
+    return store.get('flashcardProgress') ?? {}
+  })
+
+  ipcMain.handle('flashcard:saveProgress', (_event, cardId: string, progress: CardProgress) => {
+    const current = store.get('flashcardProgress') ?? {}
+    const updated = { ...current, [cardId]: progress }
+    store.set('flashcardProgress', updated)
+    return updated
   })
 
   // --- Shell ---
