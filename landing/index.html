@@ -555,6 +555,7 @@
       .hero-visual > div { width: 160px !important; height: 250px !important; }
       .section { padding: 4rem 1rem; }
       .hero { padding: 7rem 1rem 3.5rem; }
+      #education > div > div[style*="grid-template-columns: 1fr 1fr"] { grid-template-columns: 1fr !important; }
     }
     @media (max-width: 600px) {
       .features-grid { grid-template-columns: 1fr; }
@@ -573,6 +574,7 @@
         <li><a href="#features">Features</a></li>
         <li><a href="#getting-started">Getting Started</a></li>
         <li><a href="#templates">Templates</a></li>
+        <li><a href="#education">Education</a></li>
         <li><a href="#download">Download</a></li>
       </ul>
       <a href="#download" class="nav-cta">Download</a>
@@ -669,6 +671,11 @@
           <div class="feature-icon">&#9000;</div>
           <h3>Customisable Shortcuts</h3>
           <p>Press Ctrl+Space to extract contact info from highlighted text. Customise hotkeys from the keyboard icon in the panel header.</p>
+        </div>
+        <div class="feature-cell" style="border: 1px solid rgba(129,140,248,0.2); background: linear-gradient(135deg, rgba(129,140,248,0.04), transparent);">
+          <div class="feature-icon">&#127891;</div>
+          <h3>Education &amp; Training</h3>
+          <p>1,500+ flashcards across 10 decks. RERA exam prep, property law, sales scripts, objection handling, and Dubai market knowledge. Spaced repetition with mastery tracking.</p>
         </div>
       </div>
     </div>
@@ -1004,6 +1011,150 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section class="section section-alt" id="education" style="overflow: hidden;">
+    <div class="section-center">
+      <div class="section-eyebrow">Education</div>
+      <div class="section-title">Master real estate — one card at a time</div>
+      <div class="section-sub">1,500+ flashcards built specifically for Dubai real estate agents. Whether you're preparing for your RERA exam or sharpening your sales skills, it's all built in.</div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start;">
+
+        <!-- Left: Visual deck showcase -->
+        <div>
+          <!-- Mock flashcard UI -->
+          <div style="background: #111111; border-radius: 16px; padding: 1.5rem; border: 1px solid #2a2a2a; position: relative; overflow: hidden;">
+            <!-- Glow effect -->
+            <div style="position: absolute; top: -40px; right: -40px; width: 120px; height: 120px; background: rgba(129,140,248,0.1); border-radius: 50%; filter: blur(40px);"></div>
+
+            <!-- Header -->
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
+              <span style="color: #ededee; font-size: 0.85rem; font-weight: 600;">Education</span>
+              <span style="color: #52525b; font-size: 0.7rem;">10 decks</span>
+            </div>
+
+            <!-- Overall progress ring -->
+            <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem; background: linear-gradient(90deg, rgba(129,140,248,0.08), rgba(34,211,238,0.06)); border-radius: 8px; margin-bottom: 1rem; border: 1px solid rgba(255,255,255,0.04);">
+              <svg width="36" height="36" viewBox="0 0 36 36" style="transform: rotate(-90deg);">
+                <circle cx="18" cy="18" r="14" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="3"/>
+                <circle cx="18" cy="18" r="14" fill="none" stroke="#818cf8" stroke-width="3" stroke-dasharray="62 38" stroke-linecap="round"/>
+              </svg>
+              <div>
+                <div style="color: #ededee; font-size: 0.72rem; font-weight: 500;">932 of 1,500 mastered</div>
+                <div style="color: #52525b; font-size: 0.65rem;">Great progress!</div>
+              </div>
+            </div>
+
+            <!-- Deck cards -->
+            <div style="display: flex; flex-direction: column; gap: 6px;">
+              <div style="display: flex; align-items: center; gap: 0.6rem; padding: 0.6rem 0.7rem; background: linear-gradient(135deg, rgba(56,189,248,0.08), transparent); border: 1px solid rgba(56,189,248,0.1); border-radius: 10px;">
+                <div style="width: 32px; height: 32px; background: rgba(56,189,248,0.12); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.85rem;">&#127963;</div>
+                <div style="flex: 1;">
+                  <div style="color: #ededee; font-size: 0.72rem; font-weight: 600;">RERA Exam &amp; Licensing</div>
+                  <div style="height: 4px; background: rgba(255,255,255,0.06); border-radius: 2px; margin-top: 4px; overflow: hidden;">
+                    <div style="height: 100%; width: 75%; background: linear-gradient(90deg, #4ade80, #fbbf24); border-radius: 2px;"></div>
+                  </div>
+                </div>
+                <span style="color: #38bdf8; font-size: 0.6rem; font-weight: 600; background: rgba(56,189,248,0.12); padding: 2px 6px; border-radius: 10px;">119</span>
+              </div>
+
+              <div style="display: flex; align-items: center; gap: 0.6rem; padding: 0.6rem 0.7rem; background: linear-gradient(135deg, rgba(167,139,250,0.08), transparent); border: 1px solid rgba(167,139,250,0.1); border-radius: 10px;">
+                <div style="width: 32px; height: 32px; background: rgba(167,139,250,0.12); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.85rem;">&#128221;</div>
+                <div style="flex: 1;">
+                  <div style="color: #ededee; font-size: 0.72rem; font-weight: 600;">Sales Contracts &amp; Process</div>
+                  <div style="height: 4px; background: rgba(255,255,255,0.06); border-radius: 2px; margin-top: 4px; overflow: hidden;">
+                    <div style="height: 100%; width: 45%; background: linear-gradient(90deg, #4ade80, #fbbf24); border-radius: 2px;"></div>
+                  </div>
+                </div>
+                <span style="color: #a78bfa; font-size: 0.6rem; font-weight: 600; background: rgba(167,139,250,0.12); padding: 2px 6px; border-radius: 10px;">156</span>
+              </div>
+
+              <div style="display: flex; align-items: center; gap: 0.6rem; padding: 0.6rem 0.7rem; background: linear-gradient(135deg, rgba(251,146,60,0.08), transparent); border: 1px solid rgba(251,146,60,0.1); border-radius: 10px;">
+                <div style="width: 32px; height: 32px; background: rgba(251,146,60,0.12); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.85rem;">&#128737;</div>
+                <div style="flex: 1;">
+                  <div style="color: #ededee; font-size: 0.72rem; font-weight: 600;">Dealing with Objections</div>
+                  <div style="height: 4px; background: rgba(255,255,255,0.06); border-radius: 2px; margin-top: 4px; overflow: hidden;">
+                    <div style="height: 100%; width: 30%; background: linear-gradient(90deg, #4ade80, #f87171); border-radius: 2px;"></div>
+                  </div>
+                </div>
+                <span style="color: #fb923c; font-size: 0.6rem; font-weight: 600; background: rgba(251,146,60,0.12); padding: 2px 6px; border-radius: 10px;">107</span>
+              </div>
+
+              <div style="display: flex; align-items: center; gap: 0.6rem; padding: 0.6rem 0.7rem; background: linear-gradient(135deg, rgba(251,191,36,0.08), transparent); border: 1px solid rgba(251,191,36,0.1); border-radius: 10px;">
+                <div style="width: 32px; height: 32px; background: rgba(251,191,36,0.12); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.85rem;">&#127757;</div>
+                <div style="flex: 1;">
+                  <div style="color: #ededee; font-size: 0.72rem; font-weight: 600;">Dubai Market Knowledge</div>
+                  <div style="height: 4px; background: rgba(255,255,255,0.06); border-radius: 2px; margin-top: 4px; overflow: hidden;">
+                    <div style="height: 100%; width: 60%; background: linear-gradient(90deg, #4ade80, #fbbf24); border-radius: 2px;"></div>
+                  </div>
+                </div>
+                <span style="color: #fbbf24; font-size: 0.6rem; font-weight: 600; background: rgba(251,191,36,0.12); padding: 2px 6px; border-radius: 10px;">198</span>
+              </div>
+
+              <div style="text-align: center; padding: 0.3rem; color: #52525b; font-size: 0.65rem;">+ 6 more decks</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Feature details -->
+        <div>
+          <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+
+            <div style="display: flex; gap: 1rem; align-items: flex-start;">
+              <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #818cf8, #6366f1); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0;">&#127891;</div>
+              <div>
+                <h3 style="font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.95rem; color: var(--heading); margin-bottom: 0.3rem;">10 Expert-Curated Decks</h3>
+                <p style="font-size: 0.82rem; color: var(--text-light); line-height: 1.7; font-weight: 300;">RERA Exam &amp; Licensing, Property Law, Mortgages, Sales Contracts, Rental &amp; Leasing, Sales Skills, Market Analysis, Property Marketing, Objection Handling, and Dubai Market Knowledge.</p>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 1rem; align-items: flex-start;">
+              <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #22d3ee, #06b6d4); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0;">&#128260;</div>
+              <div>
+                <h3 style="font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.95rem; color: var(--heading); margin-bottom: 0.3rem;">Spaced Repetition</h3>
+                <p style="font-size: 0.82rem; color: var(--text-light); line-height: 1.7; font-weight: 300;">Cards you struggle with appear more often. Cards you've mastered fade back. The algorithm adapts to your confidence level — red, yellow, or green — so you study smarter, not harder.</p>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 1rem; align-items: flex-start;">
+              <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #f59e0b, #d97706); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0;">&#127942;</div>
+              <div>
+                <h3 style="font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.95rem; color: var(--heading); margin-bottom: 0.3rem;">Two Card Types</h3>
+                <p style="font-size: 0.82rem; color: var(--text-light); line-height: 1.7; font-weight: 300;">Classic flashcards with tap-to-reveal answers, plus multiple choice questions that test your knowledge under pressure. Track your accuracy and build streaks.</p>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 1rem; align-items: flex-start;">
+              <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #4ade80, #22c55e); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0;">&#128202;</div>
+              <div>
+                <h3 style="font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.95rem; color: var(--heading); margin-bottom: 0.3rem;">Progress Tracking</h3>
+                <p style="font-size: 0.82rem; color: var(--text-light); line-height: 1.7; font-weight: 300;">Visual mastery rings show your overall progress. Each deck has its own progress bar. See exactly which topics need more work and which you've conquered.</p>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Stat callouts -->
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; margin-top: 2rem;">
+            <div style="text-align: center; padding: 1rem; background: var(--ice); border-radius: 10px; border: 1px solid var(--border-light);">
+              <div style="font-family: 'DM Serif Display', serif; font-size: 1.5rem; color: var(--heading);">1,500+</div>
+              <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 0.2rem;">Flashcards</div>
+            </div>
+            <div style="text-align: center; padding: 1rem; background: var(--ice); border-radius: 10px; border: 1px solid var(--border-light);">
+              <div style="font-family: 'DM Serif Display', serif; font-size: 1.5rem; color: var(--heading);">10</div>
+              <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 0.2rem;">Topic Decks</div>
+            </div>
+            <div style="text-align: center; padding: 1rem; background: var(--ice); border-radius: 10px; border: 1px solid var(--border-light);">
+              <div style="font-family: 'DM Serif Display', serif; font-size: 1.5rem; color: var(--heading);">100%</div>
+              <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 0.2rem;">Offline &amp; Private</div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>

@@ -58,6 +58,12 @@
       font-size: 0.82rem; color: #475569;
     }
     .divider { border: none; border-top: 1px solid #E2E8F0; margin: 2rem 0; }
+    .print-btn {
+      background: #0C1B2A; color: white; border: none; padding: 0.6rem 1.5rem;
+      border-radius: 6px; font-size: 0.88rem; font-weight: 600; cursor: pointer;
+      font-family: inherit; margin-bottom: 2rem;
+    }
+    .print-btn:hover { background: #132D46; }
     table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.88rem; }
     th { text-align: left; padding: 0.5rem 0.75rem; background: #F1F5F9; border-bottom: 2px solid #E2E8F0; font-weight: 600; }
     td { padding: 0.5rem 0.75rem; border-bottom: 1px solid #F1F5F9; }
@@ -65,10 +71,9 @@
 </head>
 <body>
 
-  <div style="display:flex;align-items:center;gap:1rem;margin-bottom:0.5rem;">
-    <img src="icon-128.png" alt="Ask Dave Real Estate" style="width:48px;height:48px;border-radius:10px;">
-    <h1 style="margin:0;">Ask Dave Real Estate Tools &ndash; How It Works</h1>
-  </div>
+  <button class="print-btn no-print" onclick="window.print()">Print / Save as PDF</button>
+
+  <h1>Ask Dave Real Estate Tools &ndash; How It Works</h1>
   <p class="subtitle">A complete guide to every feature</p>
   <p class="version">Ask Dave Real Estate Tools v1.0.0 &copy; 2026</p>
 
@@ -216,7 +221,7 @@
       <li>You can also use the Dial button as a <strong>"Copy number"</strong> action &ndash; it copies the number to your clipboard so you can paste it into any other app or dial manually on your phone</li>
     </ul>
 
-    <h3>iPhone + Windows</h3>
+    <h3>iPhone + Windows <span style="background:#FEF3C7;color:#92400E;font-size:0.7em;padding:0.1em 0.4em;border-radius:3px;font-weight:600;">BETA</span></h3>
     <p>Phone Link also works with iPhone via Bluetooth:</p>
     <ol>
       <li>Turn on <strong>Bluetooth</strong> on your iPhone.</li>
@@ -225,6 +230,18 @@
       <li>Grant permissions for calls, contacts, and notifications.</li>
     </ol>
     <p>Calls go through your iPhone. Keep it within about 10 metres of your PC.</p>
+
+    <h3>iPhone + Mac <span style="background:#FEF3C7;color:#92400E;font-size:0.7em;padding:0.1em 0.4em;border-radius:3px;font-weight:600;">BETA</span></h3>
+    <p>No extra apps needed &ndash; Apple handles this natively:</p>
+    <ol>
+      <li>Sign into the <strong>same Apple ID</strong> on both devices.</li>
+      <li>Connect both to the <strong>same Wi-Fi network</strong>.</li>
+      <li>On your iPhone: <strong>Settings &rarr; Phone &rarr; Calls on Other Devices &rarr; ON</strong>.</li>
+      <li>Toggle on your Mac in the list below.</li>
+    </ol>
+
+    <h3>Android + Mac <span style="background:#FEF3C7;color:#92400E;font-size:0.7em;padding:0.1em 0.4em;border-radius:3px;font-weight:600;">BETA</span></h3>
+    <p>No built-in call routing for this combination. Use <strong>WhatsApp Desktop</strong> for all calls and messages instead.</p>
   </div>
 
   <div class="page-break"></div>
@@ -249,6 +266,7 @@
       <li><strong>Forms (Sales / Rentals / Off-plan tabs)</strong> &ndash; RERA contract forms. Send directly via WhatsApp or Gmail.</li>
       <li><strong>KYC Forms</strong> &ndash; 3 internal compliance forms with a Download (Save As) button. For internal use only.</li>
       <li><strong>UAE News Feed</strong> &ndash; Live headlines from 12 UAE real estate news sources. Click any headline to read the full article.</li>
+      <li><strong>Education &amp; Flashcards</strong> &ndash; 1,500+ flashcards across 10 decks. Access via the book icon in the panel header. Spaced repetition with mastery tracking.</li>
     </ol>
 
     <h3>Using the panel with contact details</h3>
@@ -372,7 +390,50 @@
   </div>
 
   <!-- ============================================ -->
-  <h2>7. System Tray &amp; Settings</h2>
+  <h2>7. Education &amp; Flashcards</h2>
+
+  <div class="feature-box">
+    <span class="feature-label label-panel">Panel</span>
+    <h3>1,500+ flashcards built for Dubai real estate</h3>
+    <p>Click the <strong>book icon</strong> in the panel header to open the Education view. It contains 10 topic decks with over 1,500 flashcards designed specifically for real estate agents in Dubai.</p>
+
+    <h3>Available decks</h3>
+    <table>
+      <tr><th>Deck</th><th>Cards</th><th>What it covers</th></tr>
+      <tr><td>RERA Exam &amp; Licensing</td><td>119</td><td>Exam prep, BRN/ORN, compliance, ethics, telemarketing rules</td></tr>
+      <tr><td>Property Law &amp; Ownership</td><td>27+</td><td>Freehold vs leasehold, Golden Visa, inheritance, ownership rights</td></tr>
+      <tr><td>Mortgages &amp; Finance</td><td>100+</td><td>LTV ratios, bank processes, eligibility, fees, financing</td></tr>
+      <tr><td>Sales Contracts &amp; Process</td><td>150+</td><td>Form A/B/F, MOU, NOC, DLD transfer, trustee office</td></tr>
+      <tr><td>Rental &amp; Leasing</td><td>150+</td><td>Tenancy contracts, Ejari, rent cheques, RERA rental index</td></tr>
+      <tr><td>Sales Skills &amp; Scripts</td><td>200+</td><td>Closing techniques, prospecting scripts, NLP, persuasion</td></tr>
+      <tr><td>Market Analysis</td><td>100+</td><td>CMA methodology, absorption rate, supply-demand, pricing</td></tr>
+      <tr><td>Property Marketing</td><td>100+</td><td>Listing descriptions, photography, video, portal optimization</td></tr>
+      <tr><td>Dealing with Objections</td><td>107</td><td>Buyer, seller, tenant, and landlord objection scripts</td></tr>
+      <tr><td>Dubai Market Knowledge</td><td>198</td><td>Dubai 2040, buyer personas, market trends, community insights</td></tr>
+    </table>
+
+    <h3>How it works</h3>
+    <p>Each deck uses <strong>spaced repetition</strong> to help you learn efficiently. Cards you struggle with appear more often. Cards you've mastered fade back. After each card, rate your confidence:</p>
+    <ul>
+      <li><strong style="color: #ef4444;">Again</strong> &ndash; show this card more often</li>
+      <li><strong style="color: #f59e0b;">Good</strong> &ndash; show at normal frequency</li>
+      <li><strong style="color: #22c55e;">Easy</strong> &ndash; show less often</li>
+    </ul>
+
+    <h3>Two card types</h3>
+    <ul>
+      <li><strong>Flashcards:</strong> Tap to reveal the answer. Rate your confidence.</li>
+      <li><strong>Multiple choice:</strong> Choose from 4 options. The correct answer is highlighted after you pick.</li>
+    </ul>
+
+    <h3>Progress tracking</h3>
+    <p>Each deck shows a progress bar (green = mastered, yellow = learning, red = needs work). An overall mastery ring on the deck selection screen shows your progress across all 1,500+ cards. Your progress is saved locally and persists between sessions.</p>
+
+    <div class="tip"><strong>Best for:</strong> New agents preparing for the RERA exam, experienced agents brushing up on property law, or anyone wanting to sharpen their objection handling and closing skills. Study a few cards between calls to build knowledge over time.</div>
+  </div>
+
+  <!-- ============================================ -->
+  <h2>8. System Tray &amp; Settings</h2>
 
   <div class="feature-box">
     <span class="feature-label label-tray">System Tray</span>
@@ -398,7 +459,7 @@
   </div>
 
   <!-- ============================================ -->
-  <h2>8. Keyboard Shortcuts</h2>
+  <h2>9. Keyboard Shortcuts</h2>
 
   <div class="feature-box">
     <span class="feature-label label-auto">Works from any app</span>
@@ -466,6 +527,7 @@
     <tr><td>Book a viewing</td><td><span class="hotkey">Ctrl+Space</span> &rarr; Expand &rarr; click <strong>Book Viewing</strong></td></tr>
     <tr><td>Set a follow-up reminder</td><td><span class="hotkey">Ctrl+Space</span> &rarr; Expand &rarr; click <strong>7 / 15 / 30 day</strong></td></tr>
     <tr><td>Read UAE news</td><td><span class="hotkey">Ctrl+Space</span> &rarr; Expand &rarr; scroll to <strong>News</strong></td></tr>
+    <tr><td>Study flashcards</td><td>Click the <strong>book icon</strong> in the panel header &rarr; pick a deck &rarr; study</td></tr>
     <tr><td>Edit a template</td><td>Click the <strong>pencil icon</strong> next to any template</td></tr>
     <tr><td>Change settings</td><td>Click the <strong>gear icon</strong> in the panel header</td></tr>
     <tr><td>Customise hotkeys</td><td>Click the <strong>keyboard icon</strong> in the panel header</td></tr>
@@ -486,8 +548,8 @@
   <hr class="divider">
 
   <h2>Platform Support</h2>
-  <p>Ask Dave Real Estate Tools runs on <strong>Windows 10 or later</strong> and works with both <strong>Android</strong> and <strong>iPhone</strong>. The Dial feature uses Microsoft Phone Link to connect your phone to your Windows PC. Android connects via the Link to Windows app, and iPhone connects via Bluetooth.</p>
-  <p>If you encounter any issues or have feature requests, please reach out via <a href="https://github.com/Dave-Buckley/askdave-real-estate-tools/issues">GitHub</a> or <a href="mailto:dave.john.buckley@gmail.com">email</a>.</p>
+  <p>Ask Dave Real Estate Tools is currently optimised for <strong>Android + Windows</strong>. The Dial feature works best with Microsoft Phone Link connecting your Android phone to your Windows PC.</p>
+  <p>macOS and iPhone support are in active development. If you encounter any issues or have feature requests, please reach out via <a href="https://github.com/Dave-Buckley/askdave-real-estate-tools/issues">GitHub</a> or <a href="mailto:dave.john.buckley@gmail.com">email</a>.</p>
 
   <hr class="divider">
   <p style="text-align: center; color: #94A3B8; font-size: 0.82rem;">&copy; 2026 Ask Dave Real Estate Tools. Built for real estate agents in the UAE.</p>
