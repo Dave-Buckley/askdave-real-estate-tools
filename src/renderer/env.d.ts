@@ -1,4 +1,4 @@
-import type { Template, AppSettings, ContactRole, Contact, RoleTemplate, FormTemplateOverride } from '../shared/types'
+import type { Template, AppSettings, ContactRole, Contact, RoleTemplate, FormTemplateOverride, TranscriberStatus } from '../shared/types'
 
 export interface ElectronAPI {
   // Panel window controls
@@ -79,12 +79,13 @@ export interface ElectronAPI {
   onIncomingCall: (cb: (data: { e164: string; displayNumber: string; contactName: string | null }) => void) => void
   onCallEnded: (cb: (data: { e164: string; displayNumber: string; contactName: string | null }) => void) => void
 
-  // Transcriber
-  openRecorder: () => void
-  closeRecorder: () => void
-  onTranscriberState: (cb: (state: { state: string; elapsed?: number }) => void) => void
+  // Transcriber (WiFi server)
+  startTranscriberServer: () => Promise<{ success: boolean; url?: string; port?: number; error?: string }>
+  stopTranscriberServer: () => Promise<{ success: boolean }>
+  getTranscriberState: () => Promise<TranscriberStatus>
+  getTranscriberAudio: () => Promise<Float32Array | null>
+  onTranscriberState: (cb: (status: TranscriberStatus) => void) => void
   removeTranscriberStateListener: () => void
-  transcribeComplete: (transcript: string) => void
 }
 
 export interface SettingsAPI {

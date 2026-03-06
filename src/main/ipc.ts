@@ -11,6 +11,7 @@ import { openCalendarBooking, createFollowUp } from './calendar'
 import { getContact, upsertContact, addRole, removeRole, listContacts, deleteContact } from './contacts'
 import type { Contact, ContactRole as ContactRoleType } from '../shared/types'
 import { fetchNews, getCachedNews, getLastFetched } from './news'
+import { startServer, stopServer, getServerState, onStateChange, getReceivedAudio } from './transcriber-server'
 
 /**
  * Broadcast updated templates to all renderer windows so they stay in sync.
@@ -274,5 +275,36 @@ export function registerIPCHandlers(): void {
 
   ipcMain.handle('shell:show-item', (_event, filePath: string) => {
     shell.showItemInFolder(filePath)
+  })
+
+  // --- Transcriber (WiFi server) ---
+
+  ipcMain.handle('transcriber:start-server', async () => {
+    try {
+      const { port, url } = await startServer()
+      // Register state change callback to relay to renderer
+      onStateChange((status) => {
+        const panel = getPanelWindow()
+        if (panel && !panel.isDestroyed()) {
+          panel.webContents.send('transcriber:state', status)
+        }
+      })
+      return { success: true, url, port }
+    } catch (err) {
+      return { success: false, error: err instanceof Error ? err.message : String(err) }
+    }
+  })
+
+  ipcMain.handle('transcriber:stop-server', () => {
+    stopServer()
+    return { success: true }
+  })
+
+  ipcMain.handle('transcriber:get-state', () => {
+    return getServerState()
+  })
+
+  ipcMain.handle('transcriber:get-audio', () => {
+    return getReceivedAudio()
   })
 }

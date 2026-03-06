@@ -8,6 +8,7 @@ import { registerIPCHandlers } from './ipc'
 import { setupAutoUpdater } from './updater'
 import { startPhoneLinkWatcher, stopPhoneLinkWatcher } from './phone-link'
 import { fetchNews } from './news'
+import { stopServer as stopTranscriberServer } from './transcriber-server'
 
 import { exec } from 'child_process'
 import { HotkeyConfig } from '../shared/types'
@@ -283,6 +284,7 @@ app.on('will-quit', () => {
   unregisterHotkeys()
   stopClipboardWatcher()
   stopPhoneLinkWatcher()
+  stopTranscriberServer()
 })
 
 // Tray app: do not quit when all windows close

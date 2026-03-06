@@ -116,13 +116,17 @@ contextBridge.exposeInMainWorld('electronAPI', {
   openExternal: (url: string) => ipcRenderer.invoke('shell:open-external', url),
   showItemInFolder: (filePath: string) => ipcRenderer.invoke('shell:show-item', filePath),
 
-  // Transcriber
-  openRecorder: () => ipcRenderer.send('transcriber:open-recorder'),
-  closeRecorder: () => ipcRenderer.send('transcriber:close-recorder'),
-  onTranscriberState: (cb: (state: { state: string; elapsed?: number }) => void) =>
-    ipcRenderer.on('transcriber:state', (_e, state) => cb(state)),
+  // Transcriber (WiFi server)
+  startTranscriberServer: () =>
+    ipcRenderer.invoke('transcriber:start-server') as Promise<{ success: boolean; url?: string; port?: number; error?: string }>,
+  stopTranscriberServer: () =>
+    ipcRenderer.invoke('transcriber:stop-server') as Promise<{ success: boolean }>,
+  getTranscriberState: () =>
+    ipcRenderer.invoke('transcriber:get-state'),
+  getTranscriberAudio: () =>
+    ipcRenderer.invoke('transcriber:get-audio') as Promise<Float32Array | null>,
+  onTranscriberState: (cb: (status: import('../shared/types').TranscriberStatus) => void) =>
+    ipcRenderer.on('transcriber:state', (_e, status) => cb(status)),
   removeTranscriberStateListener: () =>
-    ipcRenderer.removeAllListeners('transcriber:state'),
-  transcribeComplete: (transcript: string) =>
-    ipcRenderer.send('transcriber:complete', transcript)
+    ipcRenderer.removeAllListeners('transcriber:state')
 })
