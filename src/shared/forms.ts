@@ -76,11 +76,11 @@ export const FORMS: FormEntry[] = [
     fileName: 'Form I - Sales (Seller).pdf',
     subFolder: 'Sales',
     categories: ['sales'],
-    description: 'RERA commission disclosure form for seller',
+    description: 'Agent-to-agent commission split agreement for sales (seller side)',
     signable: true,
-    whatsappMessage: 'Hi {name}, please find attached Form I — the commission disclosure form as required by RERA. This outlines the agency fees for the sale of {unit}. Please review and sign.',
-    emailSubject: 'Form I — Commission Disclosure (Seller) for {unit}',
-    emailBody: 'Dear {name},\n\nPlease find attached Form I, the RERA-mandated commission disclosure form for the sale of your property.\n\nThis document outlines the agreed agency commission and fee structure. Please review, sign, and return.\n\nBest regards'
+    whatsappMessage: 'Hi {name}, please find attached Form I for our commission split on the sale of {unit}. This outlines the agreed commission sharing terms between our brokerages. Please review, sign, and return.',
+    emailSubject: 'Form I — Commission Split Agreement (Seller Side) for {unit}',
+    emailBody: 'Dear {name},\n\nPlease find attached Form I, the commission split agreement for the seller side of the sale of {unit}.\n\nThis RERA-mandated document outlines the agreed commission sharing arrangement between our brokerages for this transaction. Please review all terms, sign, and return at your earliest convenience.\n\nBest regards'
   },
   {
     id: 'form-i-buyer',
@@ -88,11 +88,11 @@ export const FORMS: FormEntry[] = [
     fileName: 'Form I - Sales (Buyer).pdf',
     subFolder: 'Sales',
     categories: ['sales', 'offplan'],
-    description: 'RERA commission disclosure form for buyer',
+    description: 'Agent-to-agent commission split agreement for sales (buyer side)',
     signable: true,
-    whatsappMessage: 'Hi {name}, please find attached Form I — the commission disclosure form as required by RERA. This outlines the agency fees for the purchase of {unit}. Please review and sign.',
-    emailSubject: 'Form I — Commission Disclosure (Buyer) for {unit}',
-    emailBody: 'Dear {name},\n\nPlease find attached Form I, the RERA-mandated commission disclosure form for the purchase of {unit}.\n\nThis document outlines the agreed agency commission and fee structure. Please review, sign, and return.\n\nBest regards'
+    whatsappMessage: 'Hi {name}, please find attached Form I for our commission split on the purchase of {unit}. This outlines the agreed commission sharing terms between our brokerages. Please review, sign, and return.',
+    emailSubject: 'Form I — Commission Split Agreement (Buyer Side) for {unit}',
+    emailBody: 'Dear {name},\n\nPlease find attached Form I, the commission split agreement for the buyer side of the purchase of {unit}.\n\nThis RERA-mandated document outlines the agreed commission sharing arrangement between our brokerages for this transaction. Please review all terms, sign, and return at your earliest convenience.\n\nBest regards'
   },
   {
     id: 'form-u',
@@ -187,11 +187,11 @@ export const FORMS: FormEntry[] = [
     fileName: 'Form I - Leasing (Landlord).pdf',
     subFolder: 'Rentals',
     categories: ['rentals'],
-    description: 'RERA commission disclosure form for landlord',
+    description: 'Agent-to-agent commission split agreement for leasing (landlord side)',
     signable: true,
-    whatsappMessage: 'Hi {name}, please find attached Form I — the commission disclosure form as required by RERA for the leasing of {unit}. Please review and sign.',
-    emailSubject: 'Form I — Commission Disclosure (Landlord) for {unit}',
-    emailBody: 'Dear {name},\n\nPlease find attached Form I, the RERA-mandated commission disclosure form for the leasing of your property.\n\nThis document outlines the agreed agency commission and fee structure. Please review, sign, and return.\n\nBest regards'
+    whatsappMessage: 'Hi {name}, please find attached Form I for our commission split on the lease of {unit}. This outlines the agreed commission sharing terms between our brokerages. Please review, sign, and return.',
+    emailSubject: 'Form I — Commission Split Agreement (Landlord Side) for {unit}',
+    emailBody: 'Dear {name},\n\nPlease find attached Form I, the commission split agreement for the landlord side of the lease of {unit}.\n\nThis RERA-mandated document outlines the agreed commission sharing arrangement between our brokerages for this transaction. Please review all terms, sign, and return at your earliest convenience.\n\nBest regards'
   },
   {
     id: 'form-i-tenant',
@@ -199,11 +199,11 @@ export const FORMS: FormEntry[] = [
     fileName: 'Form I - Leasing (Tenant).pdf',
     subFolder: 'Rentals',
     categories: ['rentals'],
-    description: 'RERA commission disclosure form for tenant',
+    description: 'Agent-to-agent commission split agreement for leasing (tenant side)',
     signable: true,
-    whatsappMessage: 'Hi {name}, please find attached Form I — the commission disclosure form as required by RERA. This outlines the agency fees for the tenancy. Please review and sign.',
-    emailSubject: 'Form I — Commission Disclosure (Tenant) for {unit}',
-    emailBody: 'Dear {name},\n\nPlease find attached Form I, the RERA-mandated commission disclosure form for your tenancy.\n\nThis document outlines the agreed agency commission and fee structure. Please review, sign, and return.\n\nBest regards'
+    whatsappMessage: 'Hi {name}, please find attached Form I for our commission split on the tenancy of {unit}. This outlines the agreed commission sharing terms between our brokerages. Please review, sign, and return.',
+    emailSubject: 'Form I — Commission Split Agreement (Tenant Side) for {unit}',
+    emailBody: 'Dear {name},\n\nPlease find attached Form I, the commission split agreement for the tenant side of the lease of {unit}.\n\nThis RERA-mandated document outlines the agreed commission sharing arrangement between our brokerages for this transaction. Please review all terms, sign, and return at your earliest convenience.\n\nBest regards'
   },
   {
     id: 'tenancy-contract',
