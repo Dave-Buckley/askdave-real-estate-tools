@@ -1,266 +1,371 @@
-# PITFALLS — Real Estate Agent Productivity Toolkit
+# Pitfalls Research
 
-**Project:** Windows desktop app for UAE real estate agents (click-to-dial, click-to-WhatsApp, OneNote notes, Google Calendar, signable RERA forms, message templates, route planning, news feed)
-**Research Date:** 2026-03-01
-**Milestone:** Greenfield — pre-roadmap pitfall prevention
-
----
-
-## How to Use This Document
-
-Each pitfall below follows a consistent structure:
-- **What it is** — the failure mode
-- **Warning signs** — how to detect it early
-- **Prevention strategy** — concrete, actionable steps
-- **Phase** — when in the project lifecycle this must be addressed
-
-Pitfalls are ordered from highest risk (most commonly fatal) to lower risk (costly but recoverable).
+**Domain:** Adding General Notes + Form I template rewrites to existing Electron desktop app (v1.1)
+**Researched:** 2026-03-06
+**Confidence:** HIGH (based on direct codebase analysis of onenote.ts, forms.ts, ContactCard.tsx, ipc.ts, store.ts, types.ts, preload/index.ts)
 
 ---
 
-## PITFALL 1: Building a Lightweight Tool That Silently Becomes a Shadow CRM
+## Critical Pitfalls
 
-**What it is:** The project brief explicitly excludes CRM data — but individual features (contact notes in OneNote, reminders in Google Calendar, WhatsApp history, call logs from click-to-dial) collectively create a fragmented CRM without the architecture to support it. Data becomes inconsistent across surfaces, agents get confused about the single source of truth, and the tool gets blamed for data loss that was actually a design gap.
+### Pitfall 1: Milestone context says "Graph API PATCH" but the codebase uses COM API via PowerShell
+
+**What goes wrong:**
+The milestone context describes "OneNote pages already have role template content appended via Graph API PATCH." This is incorrect. The actual implementation in `src/main/onenote.ts` uses the OneNote COM API via PowerShell (`New-Object -ComObject OneNote.Application`) with `UpdatePageContent()`. If the General Notes feature is built targeting the Microsoft Graph API, it would require an entirely different code path: OAuth/MSAL authentication, internet connectivity, and HTML content format -- none of which exist in the current app. The app has zero authentication flows; OneNote integration piggybacks on the locally signed-in OneNote desktop application.
+
+**Why it happens:**
+Milestone planning was written without re-reading the implementation. COM API and Graph API are two completely different integration surfaces with different content formats (COM uses OneNote XML Schema with `<one:Page>` elements and CDATA; Graph API uses HTML).
+
+**How to avoid:**
+Build the General Notes push-to-OneNote feature using the same COM API pattern already in `onenote.ts`. The append operation should use `UpdatePageContent()` with a `<one:Page>` wrapper containing new `<one:Outline>` elements, exactly like `buildAppendScript()` already does for adding role sections to existing pages. Reuse `runPowerShell()` for execution. Do NOT introduce Graph API, OAuth, or any new authentication mechanism.
 
 **Warning signs:**
-- Sprint planning discussions start including phrases like "we should also store..." or "agents need to see all their interactions in one place"
-- Feature requests emerge for searching across notes and calls together
-- Agents ask "where did I save that contact note?" — meaning they cannot predict which system holds what
-- The data model grows a "contacts" table even though the brief says not to touch CRM data
+- Any code that imports `@microsoft/microsoft-graph-client` or references `https://graph.microsoft.com`
+- Any OAuth/MSAL authentication flow being added
+- Any HTML content being sent to OneNote (COM API uses XML, not HTML)
+- Any new npm dependencies related to Microsoft identity
 
-**Prevention strategy:**
-- Write a one-page Data Boundary Document at project start that maps every data type to its authoritative owner (OneNote owns notes, Google Calendar owns reminders, WhatsApp owns chat, the agent's existing CRM owns contact records). This document must be referenced in every feature design session.
-- For click-to-dial and click-to-WhatsApp: launch the external app only; do not log the call or message outcome inside this tool unless the agent explicitly copies it somewhere.
-- When building the OneNote integration, scope notes to be attached to calendar events or manual entries only — never auto-create a contacts database as a side effect.
-- At the end of each sprint, audit every new data field added and ask: "does this belong in a CRM?" If yes, remove it or explicitly redirect to the agent's CRM.
-
-**Phase:** Define (architecture) and Design (every feature spec). Revisit at the start of every sprint.
+**Phase to address:**
+Phase 1 (General Notes implementation) -- use existing COM API pattern from day one
 
 ---
 
-## PITFALL 2: WhatsApp Integration Breaking Due to API Policy Changes
+### Pitfall 2: ContactCard.tsx is already 693 lines -- adding General Notes inline creates an unmaintainable monolith
 
-**What it is:** "Click-to-WhatsApp" sounds trivial but the implementation path has a minefield. WhatsApp Business API is governed by Meta policies that change with little notice, require business verification, and restrict automated or templated messaging in ways that vary by country. UAE agents using personal WhatsApp numbers (not WhatsApp Business) hit authentication walls. Tools that use unofficial automation libraries (e.g., web scraping whatsapp.com) violate Terms of Service and get accounts banned.
+**What goes wrong:**
+ContactCard.tsx currently has 10+ expandable sections (phone input, name/email/unit, action buttons, schedule, follow-up, WhatsApp templates, Gmail templates, OneNote templates, Forms, KYC, News) with 15+ `useState` hooks and 12+ handler functions. Adding a General Notes section with textarea state, push-to-OneNote handler, loading/disabled state, success/error feedback, and clear-after-push logic directly in this file pushes it past 800 lines. Every future modification becomes risky because unrelated sections share the same component scope.
+
+**Why it happens:**
+"Just add one more section" feels trivial when the collapsible-section pattern is already established. Each section is small individually, but the cumulative state management and handler count makes the component fragile and hard to reason about.
+
+**How to avoid:**
+Extract the General Notes section into its own component (`GeneralNotes.tsx` or `NotesSection.tsx`). It should accept `e164`, `contactName`, `oneNotePageId`, and a callback for pushing to OneNote as props, and manage its own textarea state, push handler, loading/success/error states internally. The parent ContactCard only renders `<GeneralNotes ... />` in the correct position. This is the same pattern the codebase already uses with `<NewsFeed />` (rendered at line 684 of ContactCard.tsx).
 
 **Warning signs:**
-- The technical spec says "we'll use the WhatsApp web API" without referencing the official Cloud API or Business API documentation
-- The plan involves opening a browser tab and automating clicks on web.whatsapp.com
-- No mention of Meta Business Verification in the timeline
-- The message templates feature is designed without acknowledging Meta's template approval process
+- ContactCard.tsx growing past 750 lines
+- More than 3 new `useState` hooks added to the ContactCard component body
+- New IPC handler logic mixed into ContactCard's existing handlers
+- Textarea `onChange` causing re-renders of the entire 10-section card
 
-**Prevention strategy:**
-- Use only the `whatsapp://` URI scheme for click-to-open (this opens the WhatsApp app with a pre-filled number/message and requires zero API access, no approval, no ToS risk). This covers the core click-to-WhatsApp use case completely.
-- For message templates that auto-fill the message field: use the `wa.me` deep link format with URL-encoded text (`https://wa.me/<number>?text=<encoded_message>`). This is officially supported.
-- Do NOT build any feature that reads WhatsApp messages, tracks delivery, or auto-sends without agent confirmation. These require Cloud API access, Meta Business Verification, and phone number registration — which takes weeks and can fail.
-- Document the chosen integration method in the architecture decision log with the rationale. If the scope ever creeps toward "auto-send," flag it immediately as a policy risk.
-
-**Phase:** Architecture (before any development begins). Re-verify at each phase gate.
+**Phase to address:**
+Phase 1 (General Notes) -- extract as separate component from the start
 
 ---
 
-## PITFALL 3: RERA Form Signing Built Without Legal Validity Review
+### Pitfall 3: General Notes text clearing before push confirms, or not clearing after success
 
-**What it is:** The tool includes "signable RERA forms (web platform)" — but digital signatures in UAE real estate transactions have specific legal requirements under UAE Electronic Transactions Law (Federal Decree-Law No. 46 of 2021) and RERA/DLD regulatory frameworks. A signature UI that looks functional but does not meet the legal standard for a valid electronic signature creates signed documents that are legally unenforceable, exposing agents and their clients to serious risk. This is one of the most dangerous pitfalls because it can go undetected until a transaction dispute.
+**What goes wrong:**
+The spec says "clears after push." Two failure modes exist: (1) clearing the textarea before the COM API call succeeds, causing permanent data loss if the push fails, or (2) forgetting to clear after success, so the user pushes the same note twice. Both destroy user trust in the tool.
+
+**Why it happens:**
+Optimistic clearing (clear immediately, hope it works) is tempting for responsiveness. But the COM API call via PowerShell takes 2-5 seconds minimum (creating COM object, hierarchy lookup, UpdatePageContent). The existing `runPowerShell()` has a 30-second timeout. If the call fails (OneNote not installed, COM registration issue 80040154, OneNote syncing, timeout), the note text is gone with no recovery.
+
+**How to avoid:**
+Implement a defensive async pattern:
+1. On push: `setPushing(true)` -- disable textarea + button, show spinner
+2. `await` the IPC call to main process
+3. On success: `setNoteText('')` + show brief success indicator (green checkmark, fade after 2s)
+4. On error: show error message, keep textarea text intact, re-enable editing
+5. Finally: `setPushing(false)`
+
+Never call `setNoteText('')` before the await resolves.
 
 **Warning signs:**
-- The form signing feature is described as "just drawing on a PDF" or "adding a signature image"
-- No legal counsel or RERA compliance review is scheduled before development
-- The spec does not distinguish between a qualified electronic signature, advanced electronic signature, and a simple signature image
-- No discussion of certificate-based signature providers (e.g., UAE Pass, DocuSign, Adobe Sign with UAE compliance)
-- The word "enforceable" never appears in the feature spec
+- `setNoteText('')` called before `await` completes
+- No loading/disabled state during the push operation
+- No error handling on the IPC call result
+- User able to click push button multiple times during a pending operation
 
-**Prevention strategy:**
-- Before writing a single line of code for the signing feature: engage a UAE real estate lawyer or compliance consultant to define exactly what signature method is legally acceptable for each form type (MOU, Form A, Form B, Form F, tenancy contracts, etc.).
-- Strongly consider integrating with UAE Pass (the national digital identity and signature platform) for signature authority — this is already accepted by DLD and RERA for many form types and removes the legal ambiguity entirely.
-- As an alternative or fallback: integrate with an established e-signature platform (DocuSign or Adobe Sign) configured for UAE jurisdiction compliance rather than building a custom signature UI.
-- If building a custom signing UI is unavoidable: ensure it generates a signed audit trail (timestamp, IP, device fingerprint, signer identity verification) and stores it with the document. Get this design legally reviewed before launch.
-- Scope the initial release to "form preparation and pre-fill" only (no signing), and ship signing only after the legal review is complete.
-
-**Phase:** Define (legal requirements) before Design or Build. Do not start building the signing feature until the legal question is resolved.
+**Phase to address:**
+Phase 1 (General Notes) -- implement defensive async pattern from the start
 
 ---
 
-## PITFALL 4: Windows Desktop App That Is Too Hard to Install for Non-Technical Agents
+### Pitfall 4: Appending notes to a non-existent OneNote page (contact never opened in OneNote)
 
-**What it is:** The brief explicitly requires "easily installable" for non-technical agents. Real estate agents in UAE brokerages are predominantly non-technical — many are multilingual, mobile-first, and unfamiliar with Windows system permissions dialogs. Common failure modes: installer requires admin rights that agents don't have on brokerage machines; Windows Defender SmartScreen blocks an unsigned executable; the app requires .NET or Visual C++ redistributable that isn't present; the installer asks for configuration (API keys, OAuth tokens) during setup; IT departments at brokerages block unsigned software.
+**What goes wrong:**
+The existing COM API flow in `openContactPage()` either finds an existing page by E.164 in the title or creates a new one. It stores the page ID in `contact.oneNotePageId`. But the General Notes feature needs to append to a specific existing page. If the user has never clicked a OneNote role button for this contact, no page exists and no `oneNotePageId` is stored. The push will fail -- either with a cryptic COM error or by silently doing nothing.
+
+**Why it happens:**
+The existing OneNote integration was designed for "open/create and navigate" -- the user explicitly creates a page by clicking a role. General Notes assumes a page already exists to append to. These are different interaction patterns.
+
+**How to avoid:**
+1. Before pushing, check if the contact has a stored `oneNotePageId` (via `window.electronAPI.getContact(e164)`)
+2. If no `oneNotePageId` exists: disable the push button and show a message like "Open this contact in OneNote first (click a role above)" or offer to create the page as part of the push
+3. For the append operation, build a new function `appendGeneralNote(pageId: string, noteText: string)` in `onenote.ts` using the same pattern as `buildAppendScript()` -- construct a `<one:Page>` with new `<one:Outline>` containing the timestamped note
+4. Always append to the single page stored in `contact.oneNotePageId`, not to all role pages
+5. Add a new IPC handler `onenote:append-note` and corresponding preload exposure
 
 **Warning signs:**
-- The project has no code-signing certificate budgeted
-- Installation instructions include "right-click and run as administrator" or "click More Info then Run Anyway"
-- The setup wizard has more than 3 steps
-- OAuth flows (Google Calendar, OneNote) are triggered during first-run with no guidance
-- Testing has only been done on the developer's machine
+- Push button enabled when no `oneNotePageId` exists for the contact
+- No check for `contact.oneNotePageId` before attempting append
+- Attempting to create a page as a side effect of pushing notes (conflates two operations)
+- No visual indication of whether a OneNote page exists for this contact
 
-**Prevention strategy:**
-- Budget for an Extended Validation (EV) code-signing certificate from the start — this eliminates the SmartScreen warning entirely. Standard OV certificates reduce but do not eliminate warnings. This is a non-negotiable requirement given the target user.
-- Design the installer to require zero configuration during setup. All OAuth flows (Google Calendar, Microsoft OneNote) must happen inside the running app on first use, with guided in-app walkthroughs, not during installation.
-- Use a user-space installer (no admin rights required) — NSIS, Inno Setup with user-mode install, or an MSIX package distributed via the Microsoft Store or a direct download. MSIX is the modern Windows recommendation and does not require admin rights.
-- Test the complete installation on a clean Windows machine (fresh VM with no developer tools installed) with a standard user account (not admin) before every release.
-- Prepare a one-page visual installation guide in English and Arabic.
-- Build an auto-updater from day one. Manual update processes are abandoned within weeks by non-technical users, leading to fragmentation and support burden.
-
-**Phase:** Architecture (installer choice and signing strategy) and Build (testing on clean machines). Auto-updater must be in v1.
+**Phase to address:**
+Phase 1 (General Notes) -- handle the "no page yet" case explicitly in the UI
 
 ---
 
-## PITFALL 5: Google Calendar and Microsoft OneNote OAuth Scope Creep and Token Management Failure
+### Pitfall 5: Form I template rewrites accidentally break placeholder substitution
 
-**What it is:** Integrating with Google Calendar and Microsoft OneNote requires OAuth 2.0 flows with specific permission scopes. Common failures: requesting overly broad scopes (which triggers security warnings that make agents decline authorization), storing refresh tokens insecurely (plaintext in app config files on shared brokerage machines), not handling token expiry gracefully (silent failures that appear as "the feature just stopped working"), and not handling the case where an agent's organization restricts third-party OAuth apps.
+**What goes wrong:**
+The 4 Form I entries in `shared/forms.ts` use `{name}`, `{unit}`, `{number}`, and `{email}` placeholders that get filled by `fillPlaceholders()` in ContactCard.tsx (line 162-169). When rewriting messages from client-facing ("Hi {name}, please find attached Form I...") to agent-to-agent commission split language, developers might: (a) forget to include placeholders entirely, (b) use different syntax (`{{name}}`, `%name%`, `$name`), or (c) use placeholders that don't apply in the agent-to-agent context.
+
+**Why it happens:**
+The agent-to-agent context changes who `{name}` refers to. In the current client-facing messages, `{name}` is the client. In agent-to-agent messages, the contact in the card might be the other agent, making `{name}` refer to that agent and `{unit}` refer to the property being discussed. This semantic shift is easy to get wrong.
+
+**How to avoid:**
+1. Establish explicitly what `{name}` means in agent-to-agent context: it should be the **other agent's name** (the person currently loaded in the contact card)
+2. Keep using the exact same 4 placeholders (`{name}`, `{unit}`, `{number}`, `{email}`) -- do not invent new ones
+3. Ensure `{unit}` is always referenced because commission split discussions need to identify the specific property/deal
+4. Mentally run `fillPlaceholders()` on each rewritten message with test data (e.g., name="Ahmed", unit="507 Burj Vista") and verify it reads naturally as a message to another agent
+5. Do NOT change the `fillPlaceholders()` function itself
 
 **Warning signs:**
-- The OAuth scope list includes anything beyond calendar read/write and OneNote read/write
-- Tokens are stored in a config file in the app directory or in the Windows registry without encryption
-- The app has no error handling when a token expires or is revoked — it just silently fails
-- No testing has been done with a Microsoft 365 Business or Google Workspace account that has third-party app restrictions enabled
-- The app requires re-authorization every time it restarts
+- New placeholder syntax appearing in the rewritten messages
+- Messages that don't reference `{unit}` (commission splits are always per-deal)
+- Messages that say "Dear {name}" but assume {name} is a client, not a fellow agent
+- The `fillPlaceholders` function being modified to support new placeholders
 
-**Prevention strategy:**
-- Request the minimum necessary OAuth scopes. For Google Calendar: `https://www.googleapis.com/auth/calendar.events` only (not full calendar access). For OneNote: `Notes.ReadWrite` only.
-- Store OAuth refresh tokens in the Windows Credential Manager (DPAPI-protected), never in plaintext files. This is a one-day implementation task with significant security benefit.
-- Implement graceful token expiry handling: when a token is invalid, show a clear in-app prompt ("Your Google Calendar connection has expired — click here to reconnect") rather than silently failing or crashing.
-- Test explicitly against Microsoft 365 Business accounts with conditional access policies, and Google Workspace accounts with third-party app restrictions. These are the account types most UAE brokerage agents will have.
-- Document the exact OAuth app setup steps (Google Cloud Console, Azure App Registration) and include screenshots. These steps must be reproducible by a non-developer setting up the production OAuth app.
-
-**Phase:** Architecture (token storage design) and Build (OAuth flow implementation and error handling).
+**Phase to address:**
+Phase 2 (Form I rewrites) -- verify placeholders work before committing
 
 ---
 
-## PITFALL 6: Route Planning Feature That Is Unusable Due to UAE Address Data Quality
+### Pitfall 6: Changing Form I defaults in shared/forms.ts while user overrides silently mask changes
 
-**What it is:** UAE addresses are notoriously non-standard. Many properties have no street address — they are identified by plot number, building name, or community name. Many agents navigate by landmark ("next to Mall of the Emirates") or GPS coordinates, not postal addresses. Route planning features built assuming formatted street addresses will fail to resolve many UAE property locations, making the feature unreliable and therefore abandoned.
+**What goes wrong:**
+The app has a `formOverrides` system (stored in electron-store, keyed by form `id` like `form-i-seller`). Users can customize any form's WhatsApp/email messages via the edit pencil icon. If the default messages in `shared/forms.ts` are rewritten but a user already has saved custom overrides for Form I entries, the user will still see their old custom versions, not the new agent-to-agent defaults. The `handleFormWhatsApp()` function (line 190) checks overrides first: `override?.whatsappMessage ?? form.whatsappMessage`.
+
+**Why it happens:**
+The override system was designed correctly for normal customization. But this is an unusual case: the defaults themselves are changing purpose (from client-facing to agent-to-agent). Existing overrides will mask the entire purpose change.
+
+**How to avoid:**
+For this specific case (David is the primary/only user), the simplest approach is correct:
+1. Just change the defaults in `forms.ts`
+2. If David has custom overrides for any Form I entry, he'll still see those -- which is probably fine since he'd update them manually anyway
+3. "Reset to Default" in the edit modal will give the new agent-to-agent language
+4. Optionally: add a one-time migration in the main process startup that clears `formOverrides` entries for the 4 Form I IDs, so the new defaults take effect immediately
+
+Do NOT change the form IDs (`form-i-seller` -> `form-i-seller-agent`) -- this creates orphaned overrides and is unnecessary complexity for a single-user scenario.
 
 **Warning signs:**
-- The route planning spec assumes addresses entered in a standard "street number, street name, city" format
-- No discussion of integration with Google Maps Place Search (which handles UAE landmarks and building names) versus just geocoding formatted addresses
-- No user testing of address entry with actual UAE property addresses
-- The spec does not address what happens when an address cannot be geocoded
+- Changing defaults without realizing overrides take precedence at runtime
+- Testing only the defaults without checking if overrides exist in the store
+- Changing form IDs, breaking override associations
 
-**Prevention strategy:**
-- Use Google Maps Places Autocomplete API for all address entry — it handles UAE building names, community names, landmarks, and Arabic-language input. Do not use a simple geocoding-only API.
-- Allow agents to save a location by dropping a pin on a map, not just typing an address. This is the most reliable method for UAE properties.
-- When adding a property to the route planner, default to map-based confirmation ("is this the right location?") rather than assuming the geocoded result is correct.
-- Limit the route planning feature to what agents actually need: ordered list of addresses for a day's viewings, with a "navigate to next" button that opens Google Maps or Waze for turn-by-turn directions. Do not build a custom routing engine.
-- Test address entry with 20 real UAE property addresses across Dubai, Abu Dhabi, and Sharjah before declaring the feature production-ready.
-
-**Phase:** Design (address input pattern) and Build (Maps API integration). User testing with real addresses before launch.
+**Phase to address:**
+Phase 2 (Form I rewrites) -- decide on override handling before editing forms.ts
 
 ---
 
-## PITFALL 7: Message Templates That Violate UAE Telecom Regulatory Authority Rules on Unsolicited Messaging
+## Moderate Pitfalls
 
-**What it is:** UAE has strict rules on unsolicited commercial communications enforced by the Telecommunications and Digital Government Regulatory Authority (TDRA). Bulk or automated messaging (even via WhatsApp) to contacts who have not explicitly opted in can result in account bans, regulatory fines, and reputational damage to the brokerage. A tool that makes mass-messaging easy without opt-in guardrails becomes a liability rather than a productivity tool.
+### Pitfall 7: OneNote COM API XML encoding issues in free-form user input
+
+**What goes wrong:**
+User-typed notes can contain characters that break XML: `<`, `>`, `&`, quotes, Unicode emoji, or the literal string `]]>` which terminates CDATA sections. The existing code wraps content in `<![CDATA[...]]>` sections (see `buildRolePsOutlines`, line 79-83), which handles most characters. But CDATA itself breaks if the note contains the literal string `]]>`. The existing `psEscape()` function (line 12) only handles PowerShell single-quote escaping (`'` -> `''`), not XML-unsafe content within CDATA.
+
+**Why it happens:**
+General Notes is the **first feature** where the user types arbitrary free-form text that flows into OneNote XML. All previous content (role template labels, questions, document checklist items) is developer-defined and controlled. A real estate agent's free-form notes might include: price ranges with `<` and `>`, company names with `&`, or property descriptions with special characters.
+
+**How to avoid:**
+1. Continue using CDATA sections (already the established pattern)
+2. Before embedding in CDATA, replace the literal string `]]>` in user input with `]] >` (insert space) or split the CDATA section at that boundary
+3. Test with these strings: `Price < 2M & > 1.5M`, `Company A & B`, `end ]]> test`, emoji like thumbs up
+4. PowerShell string quoting also needs care: notes containing single quotes must go through `psEscape()` before embedding in the PowerShell script
 
 **Warning signs:**
-- The message templates feature design includes "send to multiple contacts at once" or "bulk send"
-- No discussion of opt-in status in the contact selection flow
-- Templates include marketing language ("limited time offer," "exclusive listing") designed for cold outreach
-- The UI makes it easy to select 50+ contacts and send a template in two clicks
+- OneNote COM API throwing `0x80042014` errors (malformed XML)
+- Notes containing `&` or `<` silently not appearing in OneNote
+- PowerShell script errors when notes contain single quotes
 
-**Prevention strategy:**
-- Design message templates as a one-at-a-time feature only — the agent selects one contact, reviews the pre-filled template, and sends. No bulk send in v1.
-- If multi-contact sending is requested in future: require explicit confirmation per batch and cap at a small number (e.g., 10 per session) with a cooldown.
-- Include a brief disclaimer in the app UI near the templates feature: "Only message contacts who have consented to receive property information."
-- Template design should focus on personalised follow-up (post-viewing feedback, document requests, appointment confirmations) rather than mass marketing — these are both more effective and lower risk.
-- Consult with the brokerage's legal team before launch to confirm the templates comply with their existing client communication policies.
-
-**Phase:** Design (feature scope) and Define (legal review of messaging compliance).
+**Phase to address:**
+Phase 1 (General Notes) -- add XML-safe content escaping
 
 ---
 
-## PITFALL 8: Feature Overload Causing Agent Abandonment
+### Pitfall 8: No timestamp on appended notes making OneNote page a mess
 
-**What it is:** The tool has eight distinct feature areas. Real estate agents in UAE brokerages are busy, often working across multiple active deals simultaneously, and are primarily mobile workers who use laptops or desktops only for specific administrative tasks. A tool that requires learning eight new workflows will be opened a few times and abandoned. The irony of productivity tools: they must be fast to adopt to deliver any productivity gain at all.
+**What goes wrong:**
+If the General Notes feature appends plain text to the OneNote page without a timestamp, the agent ends up with a wall of text on the page with no way to know when each note was written. After 10+ pushes, the OneNote page becomes an unstructured dump that's harder to read than if the agent had just typed directly into OneNote.
+
+**Why it happens:**
+The spec says "push to OneNote, clears after push" but doesn't specify formatting. The temptation is to just append the text as a new `<one:Outline>` block. Without timestamps, the chronological context is lost.
+
+**How to avoid:**
+Each pushed note should be formatted as a timestamped outline:
+```
+--- General Note (06 Mar 2026, 14:30) ---
+[Note text here]
+```
+Use a `<one:Outline>` with the timestamp as the first `<one:OE>` element (matching the pattern used for role sections which have headers like "Tenant Qualifying Questions"). The timestamp should be human-readable (not ISO 8601) since agents will read this in OneNote.
 
 **Warning signs:**
-- The onboarding flow introduces all eight features at first launch
-- There is no concept of a "daily driver" core workflow — every feature is presented as equally important
-- User testing is not planned before release
-- The product has no metrics on which features are actually used after the first week
-- The first release ships all eight features simultaneously
+- Notes appended without any identifying header
+- Multiple notes appearing as one continuous text block
+- No way to distinguish between notes pushed at different times
 
-**Prevention strategy:**
-- Identify the two or three features with the highest daily-use frequency and lowest learning curve. Based on the feature list: click-to-WhatsApp, message templates, and OneNote notes are strong candidates for the "daily driver" core. These should be perfected before the others ship.
-- Phase the feature rollout: ship the daily-driver core in v1, add remaining features in v1.1 and v1.2. This also reduces QA surface area per release.
-- Design the app's home screen around the daily workflow, not a menu of eight equal options. Agents should be able to complete their most frequent action in under 3 clicks.
-- Conduct a minimum of 5 structured user testing sessions with working UAE real estate agents before v1 release. Observe — do not explain — and fix what confuses them.
-- Build usage telemetry (opt-in, privacy-respecting) from day one to identify which features are and are not being used after launch.
-
-**Phase:** Define (feature prioritisation) and Design (information architecture and onboarding). Phased release strategy must be in the roadmap.
+**Phase to address:**
+Phase 1 (General Notes) -- include timestamp formatting in the append function
 
 ---
 
-## PITFALL 9: Arabic Language Support Added as an Afterthought
+### Pitfall 9: Form I rewrite scope creep into other form entries
 
-**What it is:** A significant portion of UAE real estate agents are Arabic-speaking, and many clients communicate primarily in Arabic. Building the entire app in English and then attempting to add Arabic support later is extremely costly: RTL layout requires rethinking almost every UI component, date/number formats change, and string externalization that wasn't done from day one requires touching every file. Tools that launch English-only in the UAE market frequently alienate a large user segment permanently.
+**What goes wrong:**
+While editing the 4 Form I entries in `forms.ts`, it's tempting to also "improve" adjacent form messages, fix typos in Form A/B/F templates, update company names, or restructure the forms array. This creates a large diff that's hard to review and risks introducing bugs in templates that were working fine.
+
+**Why it happens:**
+The `forms.ts` file has 20+ form entries. The 4 Form I entries are scattered across the file (lines 74-96 for sales, lines 185-206 for rentals). While scrolling through to find them, other entries are visible and invite tweaking.
+
+**How to avoid:**
+1. Touch exactly 4 objects in `forms.ts`: `form-i-seller` (line 74), `form-i-buyer` (line 86), `form-i-landlord` (line 185), `form-i-tenant` (line 197)
+2. Change only the `whatsappMessage`, `emailSubject`, and `emailBody` fields
+3. Do NOT change: `id`, `name`, `fileName`, `subFolder`, `categories`, `description`, `signable`
+4. If other improvements are noticed, note them for a separate commit/task
 
 **Warning signs:**
-- The UI framework choice was made without evaluating RTL support
-- String literals are hardcoded in the source rather than in a localization file
-- No Arabic-speaking agent has been included in user testing
-- The roadmap says "Arabic support — future version" without a date or budget
+- Git diff touching more than 4 form entries in forms.ts
+- Changes to form metadata fields (name, fileName, categories)
+- New form entries being added in the same change
 
-**Prevention strategy:**
-- Choose a UI framework with proven RTL support from the start. Electron + React with CSS logical properties handles RTL well. WinForms/WPF require more manual RTL work but are manageable.
-- Externalize all UI strings to a localization file from day one — even if only English is shipped in v1. This costs one to two days upfront and saves weeks later.
-- Test the layout with Arabic text strings (which are typically 20-40% longer than their English equivalents) from day one to prevent overflow and truncation surprises.
-- Include at least two Arabic-speaking agents in the initial user testing cohort.
-- Plan Arabic as v1.1 (first update after initial release), not "future." Budget for professional translation of all UI strings and in-app guidance — do not use machine translation for a professional tool.
-
-**Phase:** Architecture (framework selection) and Define (localization strategy). Arabic must be on the roadmap with a date.
+**Phase to address:**
+Phase 2 (Form I rewrites) -- discipline the scope strictly
 
 ---
 
-## PITFALL 10: News Feed Becoming a Maintenance and Credibility Liability
+### Pitfall 10: Landing page update forgetting the dual-location sync requirement
 
-**What it is:** A real estate news feed sounds like a small feature but carries ongoing operational weight. If the feed shows outdated, irrelevant, or low-quality content, agents lose trust in the entire tool. If the news source changes its feed format or removes RSS access, the feature silently breaks. If the tool curates news manually, it becomes a content operation that diverts engineering attention.
+**What goes wrong:**
+The project has content in two places: `docs/` and `landing/`. The MEMORY.md explicitly states "landing/ and docs/ must stay in sync." Updating the landing page to mention General Notes or show new screenshots but forgetting to update the corresponding `docs/` files creates drift that gets worse over time.
+
+**Why it happens:**
+The landing page is the visible deliverable; the docs folder feels like internal documentation. Easy to update one location and forget the other.
+
+**How to avoid:**
+1. After any landing page content change, check if a corresponding file exists in `docs/` and update it
+2. Screenshots specifically: `docs/screenshots/` and `landing/screenshots/` should have the same set of images
+3. Treat this as a checklist item at the end of the landing page phase, not during it
 
 **Warning signs:**
-- The news feed is planned as a manual curation process without a defined owner
-- No RSS/API sources have been identified and validated
-- There is no fallback plan if a news source removes feed access
-- The feature has no "last updated" timestamp visible to the agent
-- There is no content quality filter — the feed would show any article mentioning "UAE real estate"
+- `landing/screenshots/` and `docs/screenshots/` having different file counts
+- Landing page text mentioning "General Notes" but docs/ not reflecting it
 
-**Prevention strategy:**
-- Source news exclusively from reliable RSS feeds with stable, long-term availability: Property Finder News, Bayut blog, Gulf News Property section, Arabian Business Real Estate, DLD official announcements. Validate that each source has an accessible RSS feed before committing to it.
-- Build the news feed as a simple RSS aggregator with caching (refresh every 60 minutes, show cached content if fetch fails, display "last updated" timestamp).
-- Do not build a custom content pipeline in v1. Fetch, cache, display — nothing more.
-- Set a monitoring alert for when any feed source returns an error for more than 24 hours.
-- Display a clear "last updated" timestamp on the feed so agents know whether the content is fresh.
-- Make the news feed a non-critical feature: if all feeds fail, the app still works fully. The news feed should be the last thing an agent notices is broken, not the first.
-
-**Phase:** Build (implementation simplicity and fallback handling). Do not invest significant architecture effort in this feature.
+**Phase to address:**
+Phase 3 (Landing page update) -- verify sync as final step
 
 ---
 
-## Summary Table
+## Technical Debt Patterns
 
-| # | Pitfall | Severity | Phase to Address |
-|---|---------|----------|-----------------|
-| 1 | Shadow CRM data accumulation | Critical | Define + every sprint |
-| 2 | WhatsApp API policy violations | Critical | Architecture |
-| 3 | RERA forms legally unenforceable | Critical | Define (legal) |
-| 4 | Installer blocked / too hard to install | High | Architecture + Build |
-| 5 | OAuth token management failure | High | Architecture + Build |
-| 6 | Route planning broken by UAE address formats | High | Design + Build |
-| 7 | Message templates enabling unsolicited spam | High | Define + Design |
-| 8 | Feature overload causing abandonment | High | Define + Design |
-| 9 | Arabic support added too late | Medium-High | Architecture + Define |
-| 10 | News feed becoming a maintenance burden | Medium | Build |
+| Shortcut | Immediate Benefit | Long-term Cost | When Acceptable |
+|----------|-------------------|----------------|-----------------|
+| Adding General Notes state directly to ContactCard.tsx | Faster to implement, no new file | 800+ line component, harder to maintain, keystroke re-renders all sections | Never -- extract from the start (NewsFeed pattern exists) |
+| Hardcoding note format as plain text only | No rich text complexity | Can't add formatting, bullet points, or styled headings later | Acceptable for v1.1 -- plain text with timestamps is sufficient |
+| Not persisting draft notes locally before push | No electron-store schema change | User loses typed notes if panel is closed/minimized before push | Acceptable for v1.1 -- notes are typically short, push-then-forget |
+| Skipping OneNote page existence check before push | Less code, fewer edge cases | Push fails with confusing COM error when no page exists | Never -- always check `oneNotePageId` |
+| Reusing existing form IDs after purpose change | No migration needed, no orphaned overrides | "Reset to Default" gives unexpected language if user customized for old purpose | Acceptable -- David is the only user and understands the change |
+
+## Integration Gotchas
+
+| Integration | Common Mistake | Correct Approach |
+|-------------|----------------|------------------|
+| OneNote COM API (append) | Sending full page XML (replaces all content) | Send partial `<one:Page>` with only new `<one:Outline>` elements -- `UpdatePageContent` merges new outlines, does not replace existing ones. Pattern: `buildAppendScript()` in onenote.ts |
+| OneNote COM API (CDATA) | Assuming CDATA handles all input safely | Strip or escape `]]>` from user input before wrapping in CDATA; also run through `psEscape()` for PowerShell string safety |
+| OneNote COM API (namespace) | Hardcoding the `xmlns:one="..."` URL | Detect namespace dynamically from hierarchy XML -- already done correctly in existing code (`$ns = $doc.DocumentElement.NamespaceURI`). Copy this pattern exactly. |
+| OneNote COM API (timeout) | Reducing the PowerShell timeout for "faster" UX | COM calls take 2-10s depending on OneNote sync state. The existing 30s timeout in `runPowerShell()` is correct. Show a loading indicator instead of reducing the timeout. |
+| electron-store (formOverrides) | Mutating the stored object directly instead of spreading | Always spread (`{ ...current, [key]: value }`) before `store.set()`. Existing code in ipc.ts does this correctly -- follow the pattern. |
+| IPC (new handler) | Forgetting to expose in preload | Every new `ipcMain.handle()` in ipc.ts needs a corresponding `contextBridge.exposeInMainWorld()` entry in preload/index.ts, or the renderer can't call it. |
+
+## Performance Traps
+
+| Trap | Symptoms | Prevention | When It Breaks |
+|------|----------|------------|----------------|
+| Textarea onChange re-rendering entire ContactCard | Typing lag, stuttery input in notes field | Extract GeneralNotes as isolated component -- React re-renders are scoped to the component tree | Immediately noticeable with fast typing |
+| Loading full contact record every render cycle | Slow panel open, unnecessary IPC round-trips | Load contact data once on mount or when e164 changes, cache in state with `useEffect` | With 100+ contacts and frequent panel opens |
+| Pushing notes on every keystroke (auto-save) | OneNote COM API hammered, PowerShell processes pile up | Only push on explicit button click or Ctrl+Enter. Never on onChange or debounced auto-save. | Immediately -- COM API is not designed for rapid calls |
+
+## Security Mistakes
+
+| Mistake | Risk | Prevention |
+|---------|------|------------|
+| Logging note content to debug files | The existing error handler writes debug info to `askdave-onenote-error.txt` in tmpdir (onenote.ts line 340). If note content is included, client information sits in a temp file. | Log "note push failed" and the error message, but NOT the note content itself. |
+| Caching note text in electron-store for draft persistence | Notes could contain sensitive client details (financials, personal info) that would persist on disk | Do NOT persist draft notes. Textarea state lives only in React component state. Cleared on unmount. |
+| Form I commission amounts in WhatsApp URL previews | Commission percentages/amounts in WhatsApp message previews visible to anyone nearby | Keep commission language generic in defaults ("as per our agreement" / "as discussed") rather than specific amounts. Agent can customize with specifics per-deal if they choose. |
+
+## UX Pitfalls
+
+| Pitfall | User Impact | Better Approach |
+|---------|-------------|-----------------|
+| No visual feedback during OneNote push (2-5 second wait) | User clicks push, nothing happens, clicks again, gets duplicate notes | Show inline spinner + disable button during push. Success: brief green checkmark that fades. Error: red text with message. |
+| Textarea too small for useful notes | Agent can't see what they've typed, constant scrolling | Start at 3-4 rows height with `resize: vertical` CSS. Match existing dark theme input styling (white bg would look jarring). |
+| General Notes section always expanded by default | Takes vertical space from more-used sections; scrolling increases | Default collapsed with chevron, matching every other section in ContactCard (templates, forms, KYC, news all default collapsed) |
+| Push button labeled just "Push" or "Save" | Ambiguous -- save where? Push to what? | Label: "Push to OneNote" with `FileText` icon (already used for OneNote in the codebase). Makes the destination explicit. |
+| No indication whether a OneNote page exists for this contact | User clicks push, gets error, doesn't understand why | Show "Open in OneNote first" or conditional UI based on `oneNotePageId` existence |
+| Form I messages still sounding client-facing after rewrite | Agent sends to another agent, message says "Dear {name}, please find attached..." which sounds wrong between agents | Use peer-appropriate tone: "Hi {name}," not "Dear {name},". Reference "commission split" and "deal" language. Drop formal closings like "Best regards" -- agents messaging each other on WhatsApp don't write like that. |
+
+## "Looks Done But Isn't" Checklist
+
+- [ ] **General Notes:** Verify note actually appears in the OneNote page (open OneNote and check) -- not just "success" returned from COM API
+- [ ] **General Notes:** Verify textarea clears ONLY after confirmed success, retains text on error
+- [ ] **General Notes:** Test with special characters: `<`, `>`, `&`, single quotes `'`, emoji, `]]>`, multi-line with blank lines
+- [ ] **General Notes:** Test when OneNote desktop app is not running (COM should launch it, but verify)
+- [ ] **General Notes:** Test when no OneNote page exists for the contact (graceful message, not crash)
+- [ ] **General Notes:** Test when OneNote is installed but user is not signed in
+- [ ] **General Notes:** Verify the note includes a timestamp header in OneNote
+- [ ] **General Notes:** Verify the push button is disabled while a push is in progress (no double-push)
+- [ ] **General Notes:** New IPC handler registered in ipc.ts AND exposed in preload/index.ts AND typed in the electronAPI interface
+- [ ] **Form I rewrites:** All 4 entries still have correct `{name}` and `{unit}` placeholders
+- [ ] **Form I rewrites:** WhatsApp message reads naturally as agent-to-agent (not agent-to-client)
+- [ ] **Form I rewrites:** Email subject and body read naturally as agent-to-agent
+- [ ] **Form I rewrites:** No other form entries were accidentally modified (git diff check)
+- [ ] **Form I rewrites:** `formOverrides` in electron-store don't mask the new defaults (or this is intentionally accepted)
+- [ ] **Landing page:** `docs/` and `landing/` are in sync after update
+- [ ] **Landing page:** Screenshots show the General Notes section if it's being promoted as a feature
+
+## Recovery Strategies
+
+| Pitfall | Recovery Cost | Recovery Steps |
+|---------|---------------|----------------|
+| Built with Graph API instead of COM API | HIGH (1-2 days wasted) | Rip out OAuth/Graph code entirely. Rewrite using COM API pattern from onenote.ts. Test with existing PowerShell approach. |
+| ContactCard.tsx became a monolith (>800 lines) | MEDIUM (2-4 hours) | Extract GeneralNotes component after the fact. Move state and handlers out. Test that parent-child props work correctly. |
+| Notes lost due to premature textarea clear | UNRECOVERABLE | User must retype notes from memory. No local backup exists. Prevention is the only strategy. |
+| Form I placeholders broken | LOW (15 min) | Fix the template strings in forms.ts, test with `fillPlaceholders()` by previewing in the app. |
+| User overrides masking new Form I defaults | LOW (30 min) | Either manually clear overrides in electron-store config file, or add a migration. |
+| XML encoding breaks OneNote push | LOW (30 min) | Add CDATA content escaping in onenote.ts. Pattern: replace `]]>` with `]] >`. |
+| Landing/docs out of sync | LOW (15 min) | Copy updated files from landing/ to docs/ (or vice versa). |
+| New IPC handler not exposed in preload | LOW (10 min) | Add the missing `contextBridge.exposeInMainWorld()` entry in preload/index.ts. Common miss because there are 3 files to update (ipc.ts, preload/index.ts, and the renderer call site). |
+
+## Pitfall-to-Phase Mapping
+
+| Pitfall | Prevention Phase | Verification |
+|---------|------------------|--------------|
+| COM API vs Graph API confusion | Phase 1 (General Notes) | Code review: no Graph API imports, uses `runPowerShell()` + `UpdatePageContent()` pattern |
+| ContactCard monolith | Phase 1 (General Notes) | ContactCard.tsx stays under 720 lines; GeneralNotes.tsx exists as separate component file |
+| Clear-after-push race condition | Phase 1 (General Notes) | Manual test: interrupt push (close OneNote mid-operation), verify textarea retains text |
+| No page exists for contact | Phase 1 (General Notes) | Test with a brand new phone number that has never been opened in OneNote |
+| XML encoding in CDATA | Phase 1 (General Notes) | Test with `< > & ' ]]>` characters in note text |
+| Note timestamps | Phase 1 (General Notes) | Open OneNote after push, verify timestamp header is present and readable |
+| IPC handler registration | Phase 1 (General Notes) | Verify handler in ipc.ts, exposure in preload/index.ts, and call site in renderer all exist |
+| Placeholder breakage | Phase 2 (Form I rewrites) | Run fillPlaceholders() on each new message with sample data in the app UI |
+| Override masking | Phase 2 (Form I rewrites) | Check formOverrides in electron-store config after update |
+| Scope creep in forms.ts | Phase 2 (Form I rewrites) | Git diff shows exactly 4 form entries changed, only whatsappMessage/emailSubject/emailBody fields |
+| Agent-to-agent tone | Phase 2 (Form I rewrites) | Read each message aloud -- does it sound like one agent talking to another, or like a formal client letter? |
+| Landing/docs sync | Phase 3 (Landing page) | Compare file lists and content between `docs/` and `landing/` directories |
+
+## Sources
+
+- Direct analysis: `src/main/onenote.ts` -- COM API via PowerShell, `UpdatePageContent`, `buildAppendScript()`, `psEscape()`, `runPowerShell()` with 30s timeout
+- Direct analysis: `src/shared/forms.ts` -- 4 Form I entries: `form-i-seller` (ln 74), `form-i-buyer` (ln 86), `form-i-landlord` (ln 185), `form-i-tenant` (ln 197)
+- Direct analysis: `src/renderer/panel/components/ContactCard.tsx` -- 693 lines, `fillPlaceholders()` at ln 162, `formOverrides` check at ln 190-191
+- Direct analysis: `src/main/ipc.ts` -- IPC handler patterns, `store:saveFormOverride` handler, `onenote:open` handler
+- Direct analysis: `src/preload/index.ts` -- `contextBridge.exposeInMainWorld` surface for all renderer-to-main calls
+- Direct analysis: `src/shared/types.ts` -- `Contact` type has `oneNotePageId?: string` field, `FormTemplateOverride` type
+- Direct analysis: `src/main/store.ts` -- `formOverrides` default is `{}`, electron-store schema
+- Project MEMORY.md: "landing/ and docs/ must stay in sync", COM error codes (80040154) already handled
 
 ---
-
-## Key Constraints Cross-Reference
-
-The following critical constraints from the project brief have direct pitfall implications:
-
-| Constraint | Related Pitfall | Enforcement Note |
-|-----------|----------------|-----------------|
-| Must NOT touch CRM data | Pitfall 1 | Data Boundary Document required at project start |
-| Must NOT scrape property portals | Pitfall 2, 7 | No web automation of any external platform |
-| Must be simple for non-technical agents | Pitfall 4, 8, 9 | User testing mandatory before each release |
-| Must be easily installable | Pitfall 4 | EV code signing + user-space installer + clean machine testing |
-
----
-
-*Research basis: Domain knowledge of UAE real estate market, Windows desktop app development patterns, Meta WhatsApp API policy, UAE electronic transactions law, OAuth 2.0 security practices, and real estate technology adoption research.*
+*Pitfalls research for: v1.1 General Notes + Form I template rewrites*
+*Researched: 2026-03-06*

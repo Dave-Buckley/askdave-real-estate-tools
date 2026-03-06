@@ -1,336 +1,219 @@
 # Technology Stack
 
-**Project:** Real Estate Agent Productivity Toolkit (Windows Desktop + Web Platform)
-**Researched:** 2026-03-01
-**Research Confidence:** MEDIUM — Based on training data through August 2025. External tools (Context7, WebSearch, WebFetch) were unavailable during this research session. Version numbers should be verified against official docs before locking in.
+**Project:** Real Estate Agent Toolkit v1.1 -- General Notes + Form I Fixes
+**Researched:** 2026-03-06
+**Confidence:** HIGH
 
 ---
 
-## Recommended Stack
+## Executive Assessment
 
-### Desktop Shell Framework
+**No new dependencies are needed for v1.1.** Every capability required for General Notes (OneNote append) and Form I template rewrites already exists in the current stack. This is a UI + text-content milestone, not a technology change.
 
-| Technology | Version | Purpose | Why |
-|------------|---------|---------|-----|
-| **Electron** | ~v33 (latest stable) | Windows desktop app shell | Ships Chromium+Node.js, which means full npm ecosystem access, proven clipboard/hotkey/tray APIs, and auto-update support out of the box. Non-technical agents get a standard `.exe` installer. Tauri is lighter but requires Rust and WebView2 — adding friction for a Windows-only target where bundle size is not the primary concern. |
-
-**Why NOT Tauri:** Tauri v2 is excellent but the Rust toolchain requirement and its plugin ecosystem maturity are still catching up. For a team likely unfamiliar with Rust, debugging native issues is harder. Electron's Node.js backend lets the same JavaScript/TypeScript team own the entire stack. Bundle size concern is real (~150MB) but acceptable for an office workstation tool.
-
-**Why NOT NW.js:** Smaller community, fewer recent updates, Electron has better long-term support trajectory.
-
-**Why NOT .NET MAUI / WinUI 3:** Requires .NET ecosystem familiarity; web UI components (for the forms web platform) don't integrate as naturally as with an Electron/browser stack.
+The v1.0 stack (below) is validated and shipped. This document focuses exclusively on how the existing stack serves the new features.
 
 ---
 
-### UI Framework (inside Electron renderer)
+## Current Stack (Shipped in v1.0 -- DO NOT change)
 
-| Technology | Version | Purpose | Why |
-|------------|---------|---------|-----|
-| **React** | v19 (latest stable) | UI component tree | Largest ecosystem, best tooling. The forms web platform (separate web app) also uses React, keeping the team in a single mental model. |
-| **Vite** | v6 | Build tooling | Fast HMR, native ESM, lighter than Webpack. First-class Electron + React templates exist. |
-| **TypeScript** | v5.x | Type safety | Catches API contract errors at build time — critical when integrating OneNote, Google Calendar, and WhatsApp APIs with different response shapes. |
-| **Tailwind CSS** | v4 | Styling | Utility-first, no context switching to separate CSS files. v4 drops the config file requirement and is faster. Agent-facing UI will be dense (sidepanel tool) so utility classes shine here. |
+### Core Framework
+| Technology | Version | Purpose | Status |
+|------------|---------|---------|--------|
+| Electron | ^34.0.0 | Desktop app shell | Shipped |
+| electron-vite | ^5.0.0 | Build toolchain | Shipped |
+| React | ^19.0.0 | UI framework | Shipped |
+| TypeScript | ^5.7.0 | Type safety | Shipped |
+| Tailwind CSS | ^4.0.0 | Styling | Shipped |
 
-**Why NOT Vue/Svelte:** React's dominance means more Electron-specific examples, more Stack Overflow answers, and easier hiring. For a tight productivity tool this isn't a close call.
+### Data & Storage
+| Technology | Version | Purpose | Status |
+|------------|---------|---------|--------|
+| electron-store | ^9.0.0 | Persistent settings, contacts, form overrides | Shipped |
 
----
+### OneNote Integration
+| Technology | Version | Purpose | Status |
+|------------|---------|---------|--------|
+| PowerShell COM (`OneNote.Application`) | Built into Windows | OneNote read/write via local COM API | Shipped |
+| `runPowerShell()` in `src/main/onenote.ts` | N/A | Executes PS1 scripts with error handling | Shipped |
+| `buildAppendScript()` in `src/main/onenote.ts` | N/A | Appends Outline XML to existing page by pageId | Shipped |
+| `openContactPage()` in `src/main/onenote.ts` | N/A | Creates or navigates to contact page, stores pageId | Shipped |
 
-### State Management
-
-| Technology | Version | Purpose | Why |
-|------------|---------|---------|-----|
-| **Zustand** | v5 | Global app state | Minimal boilerplate. Avoids Redux overhead for a relatively simple state surface (active contact, selected template, calendar events). Plays well with React 19. |
-| **TanStack Query** | v5 | Server/API state, caching | Handles the caching, background refresh, and error states for Google Calendar, OneNote, and WhatsApp API calls. Prevents stale data without manual polling logic. |
-
----
-
-### System-Level Features (Electron main process)
-
-| Technology | Version | Purpose | Why |
-|------------|---------|---------|-----|
-| **Electron built-in `globalShortcut`** | (bundled) | System-wide hotkeys | No extra library needed. Electron's `globalShortcut` module works even when the app is not focused. |
-| **Electron built-in `clipboard`** | (bundled) | Clipboard read/write/monitoring | Clipboard monitoring (polling `clipboard.readText()` on interval) is the standard Electron pattern. Native clipboard events are not cross-platform stable; interval polling at 500ms is imperceptible. |
-| **Electron built-in `Tray` + `Menu`** | (bundled) | System tray icon, quick-access menu | Keeps the tool accessible without taking taskbar real estate. Non-technical agents expect a tray icon for background tools. |
-| **Electron built-in `shell`** | (bundled) | Opening URLs in default browser (WhatsApp Web, Google Maps) | `shell.openExternal()` is the correct, sandboxed way to open WhatsApp Web links (`https://wa.me/...`) and Google Maps route URLs. |
-| **`electron-updater`** | v6 | Auto-update via GitHub Releases or S3 | Non-technical agents must not be asked to manually update. `electron-updater` handles silent background updates with a single prompt to restart. Works with `electron-builder`. |
+### Forms System
+| Technology | Version | Purpose | Status |
+|------------|---------|---------|--------|
+| `src/shared/forms.ts` (FORMS array) | N/A | 20 static form definitions with WhatsApp/email templates | Shipped |
+| `FormTemplateOverride` type | N/A | User-editable overrides stored in electron-store | Shipped |
 
 ---
 
-### Packaging & Distribution
+## What v1.1 Needs (and Why No New Libraries)
 
-| Technology | Version | Purpose | Why |
-|------------|---------|---------|-----|
-| **`electron-builder`** | v25 | Produce NSIS `.exe` installer for Windows | Industry standard. Produces a proper Windows installer with Start Menu shortcut, uninstaller, and auto-update feed. NSIS target is the most compatible for non-technical Windows users. |
+### Feature 1: General Notes -- OneNote Append
 
-**Signing note (MEDIUM confidence):** A Windows code-signing certificate is required to avoid SmartScreen warnings on first install. This is not optional for non-technical users who will panic at "Unknown publisher" dialogs. Budget for an EV certificate (~$300/yr) or use a standard OV certificate. This is an infrastructure cost, not a code decision, but it blocks distribution.
+**What it does:** A textarea in the ContactCard where the agent types free-form notes. A "Push to OneNote" button appends the text below existing page content. The textarea clears on success.
 
----
+**Why the existing stack covers this completely:**
 
-### Click-to-Dial
+1. **UI (textarea + button):** Standard React + Tailwind. The ContactCard already contains 694 lines of similar UI patterns -- inputs, buttons, collapsible sections, status messages, loading states.
 
-| Technology | Version | Purpose | Why |
-|------------|---------|---------|-----|
-| **`tel:` URI + `shell.openExternal()`** | (native) | Trigger system default phone app | The simplest approach. On Windows with a softphone (3CX, RingCentral, Zoom Phone, etc.) installed, `tel:+1234567890` opens the softphone's dialer. No SDK required. If the agent's CRM already has a softphone plugin, this avoids conflicts. |
-| **3CX JS Browser SDK** | (if 3CX) | Direct dial from app if 3CX is CRM phone | Only use if the team standardizes on 3CX. Adds complexity and a vendor dependency. |
+2. **Local state for draft text:** The `Contact` type in `shared/types.ts` already has a `notes: string` field (line 125). Draft notes can live in component state (cleared on push) or persist via `upsertContact()` if we want drafts to survive app restarts.
 
-**Recommendation:** Start with `tel:` URI. Validate with actual agents which softphone they use. Only integrate a specific SDK in a later phase.
+3. **OneNote append mechanism:** The `buildAppendScript()` function (line 222 of `onenote.ts`) already generates PowerShell that appends XML Outline elements to an existing page by `pageId`. General Notes needs a simplified variant that wraps arbitrary text in OneNote XML:
+   ```xml
+   <one:Page xmlns:one="..." ID="...">
+     <one:Outline>
+       <one:OEChildren>
+         <one:OE>
+           <one:T><![CDATA[--- General Notes (2026-03-06 14:30) ---]]></one:T>
+         </one:OE>
+         <one:OE>
+           <one:T><![CDATA[Agent's free-form text here...]]></one:T>
+         </one:OE>
+       </one:OEChildren>
+     </one:Outline>
+   </one:Page>
+   ```
+   The `UpdatePageContent()` COM method performs a partial merge -- it adds new Outline elements without removing existing ones. This is already proven in `buildAppendScript()`.
 
----
+4. **Page ID resolution:** The contact's `oneNotePageId` is stored when a page is created (line 317: `upsertContact(data.e164, { oneNotePageId: result.pageId })`). If no page exists yet, call `openContactPage()` first to create one, then append notes to the returned `pageId`.
 
-### Click-to-WhatsApp
+5. **IPC channel:** Add one new handler (e.g., `onenote:append-notes`) in `ipc.ts` following the existing `onenote:open` pattern (line 172). Expose via preload following `openInOneNote` pattern (preload `index.ts` lines 57-58).
 
-| Technology | Version | Purpose | Why |
-|------------|---------|---------|-----|
-| **WhatsApp Click-to-Chat URL** | (no library) | Open pre-filled WhatsApp message in default app or WhatsApp Web | `https://wa.me/{phone}?text={encodedMessage}` opened via `shell.openExternal()`. Zero dependencies, no API key, works with both WhatsApp Desktop and WhatsApp Web. |
-| **WhatsApp Business API (via Meta)** | (if bulk/automated) | Programmatic message sending | Only needed if agents want to send messages without the WhatsApp UI opening (e.g., bulk sends). Requires Meta business verification, per-message cost. Defer to a later phase. |
+6. **Error handling:** The existing `runPowerShell()` function (line 25) already handles COM errors, timeouts, and missing OneNote gracefully. Reuse it directly.
 
-**Recommendation:** Start with click-to-chat URL. This covers 95% of agent use cases with zero complexity.
+**New code needed (all within existing files):**
 
----
+| File | Change | Lines of Code (est.) |
+|------|--------|---------------------|
+| `src/main/onenote.ts` | Add `appendNotesToPage(pageId, text)` function | ~30 lines |
+| `src/main/ipc.ts` | Add `onenote:append-notes` handler | ~15 lines |
+| `src/preload/index.ts` | Add `appendNotesToOneNote()` method | ~3 lines |
+| `src/renderer/env.d.ts` | Add type declaration for new preload method | ~2 lines |
+| `src/renderer/panel/components/ContactCard.tsx` | Add textarea + "Push to OneNote" button section | ~60 lines |
 
-### Microsoft OneNote Integration
+**Total estimated new code: ~110 lines across 5 existing files.**
 
-| Technology | Version | Purpose | Why |
-|------------|---------|---------|-----|
-| **Microsoft Graph API** | v1.0 | Read/write OneNote pages and notebooks | The official, stable, long-term supported API. Graph v1.0 (not beta) for production use. |
-| **`@azure/msal-node`** | v2 | OAuth2 / MSAL authentication for Graph API | The Microsoft-maintained Node.js auth library. Handles token refresh, caching, and the OAuth2 flow. Do not roll your own auth. |
-| **`axios`** or **`node-fetch`** | v5 (node-fetch) | HTTP calls to Graph API | TanStack Query handles caching; the HTTP client is interchangeable. Prefer `node-fetch` in Electron's Node.js main process, Axios in renderer if needed. |
+### Feature 2: Form I Template Rewrites
 
-**Auth flow:** Use MSAL's `PublicClientApplication` with the Authorization Code + PKCE flow. Register an app in Azure AD (free). Scopes needed: `Notes.ReadWrite`, `Calendars.ReadWrite` (if using Outlook Calendar instead of Google).
+**What it does:** Change the 4 Form I WhatsApp and email messages from client-facing language to agent-to-agent commission split language. These forms are sent between cooperating agents, not to clients.
 
-**Known complexity (HIGH confidence):** OneNote via Graph API is read/write but the page content model is HTML-based and not trivial to manipulate programmatically. Start with "append a note to a page" rather than full rich edit. Full OneNote editing in-app is a significant feature; scoping to "create/append" is realistic for an MVP.
+**Why no new dependencies:** Pure text edit in `src/shared/forms.ts`. The 4 Form I entries are:
 
----
+| ID | Name | Line |
+|----|------|------|
+| `form-i-seller` | Form I -- Sales (Seller) | 74 |
+| `form-i-buyer` | Form I -- Sales (Buyer) | 86 |
+| `form-i-landlord` | Form I -- Leasing (Landlord) | 185 |
+| `form-i-tenant` | Form I -- Leasing (Tenant) | 196 |
 
-### Google Calendar Integration
+Each has `whatsappMessage`, `emailSubject`, and `emailBody` fields. Rewrite the text from "Hi {name}, please find attached Form I -- the commission disclosure form..." to agent-to-agent language about commission splits (e.g., "Hi {name}, please find attached Form I for the commission split on {unit}. Please review the agreed terms and return signed.").
 
-| Technology | Version | Purpose | Why |
-|------------|---------|---------|-----|
-| **Google Calendar API v3** | v3 | Read/write calendar events | Stable, well-documented REST API. |
-| **`googleapis` npm package** | v144+ | Official Google API client for Node.js | Handles auth, pagination, and type generation. Do not use raw HTTP calls — the client handles token refresh and quota headers. |
-| **OAuth2 with `electron-google-oauth2`** or manual flow** | - | Google OAuth2 in Electron | Google blocks the embedded WebView for OAuth by default (security policy). Must open Google's OAuth consent page in the **system browser** (`shell.openExternal()`), then catch the redirect via a localhost server in the main process. `electron-google-oauth2` wraps this pattern. |
+**Important behavioral note:** Users who have already customized these templates via `formOverrides` in electron-store will NOT see the changes. Overrides take priority by design (see `ContactCard.tsx` line 191: `override?.whatsappMessage ?? form.whatsappMessage`). Only users on default templates see the new agent-to-agent wording. This is correct behavior -- do not reset overrides.
 
-**Critical pitfall (HIGH confidence):** Google explicitly blocks `file://` and embedded WebView OAuth flows. The app MUST use the system browser redirect pattern with a local loopback server (e.g., `http://127.0.0.1:{random_port}/callback`). This is non-trivial to implement correctly. Plan a dedicated spike for auth.
+**Structural changes: None.** Same fields, same types, different text content.
 
----
+### Feature 3: Landing Page Update
 
-### Message Templates
+**What it does:** Update landing page to reflect the General Notes feature.
 
-| Technology | Version | Purpose | Why |
-|------------|---------|---------|-----|
-| **`handlebars`** | v4 | Template variable interpolation (`{{client_name}}`, `{{property_address}}`) | Lightweight, well-known, safe (no code execution). Familiar to anyone who's used email marketing tools. |
-| **SQLite via `better-sqlite3`** | v11 | Local storage of templates | Templates are user data that must persist across sessions. SQLite is the right choice for a local desktop app — no server needed, no network dependency, simple backup (copy the file). `better-sqlite3` is synchronous and works cleanly in Electron's main process. |
-
-**Why NOT localStorage/IndexedDB:** Browser storage is per-profile and not directly accessible from the main process. SQLite is more durable, queryable, and easier to back up / migrate.
-
-**Why NOT a cloud database for templates:** Templates are personal agent preferences. Keeping them local reduces infrastructure, eliminates sync complexity, and works offline.
-
----
-
-### Viewing Route Planner
-
-| Technology | Version | Purpose | Why |
-|------------|---------|---------|-----|
-| **Google Maps JavaScript API** | latest | Map display, place search, route visualization | No realistic alternative for real estate (street view, satellite imagery, address autocomplete). |
-| **Google Maps Directions API** | latest | Multi-stop route optimization | Waypoint optimization (reorder stops for shortest route) is available in the standard Directions API with `optimize:true`. |
-| **Google Maps Embed API** | latest | If rendering map in Electron WebView | `<webview>` or `BrowserView` in Electron can host the Maps JS API. Alternatively, open route in browser tab via `shell.openExternal()` with a Google Maps URL. |
-
-**Recommendation:** Phase 1 — generate an optimized Google Maps URL (with all addresses as waypoints) and open it in the system browser. This requires no API key, no billing, and works immediately. Phase 2 — embed the map in the app using Maps JS API (requires billing account and API key).
-
-**API key management:** Never bundle API keys in the renderer (exposed to users via DevTools). Store keys in Electron's main process environment, pass results to renderer via IPC.
+**Why no new dependencies:** The `landing/` directory is a static HTML/CSS page. Add a description and screenshot of the new feature. No build tooling involved.
 
 ---
 
-### Signable Forms Web Platform
+## Alternatives Considered (and Rejected)
 
-This is a **separate web application** (not part of the Electron desktop app) that agents share links to for client e-signatures.
-
-| Technology | Version | Purpose | Why |
-|------------|---------|---------|-----|
-| **Next.js** | v15 | Web app framework | App Router with React Server Components handles the public-facing form viewer and the agent-facing form builder. SSR ensures forms load fast for clients on mobile. |
-| **Vercel** | (hosting) | Deployment | Zero-config deployment for Next.js. Auto-scaling, edge CDN, preview deployments. For a real estate business, this is the right tradeoff vs. managing servers. |
-| **`react-signature-canvas`** or **`signature_pad`** | latest | Capture client signature on touch/mouse | `signature_pad` (Szimek) is the most mature, dependency-free canvas signature library. Works on iOS Safari (critical — clients sign on phones). |
-| **Supabase** | v2 | Database (form definitions, submissions, signatures) + Auth (agent login) + Storage (signed PDF storage) | Postgres-backed BaaS. The real-time subscription feature is useful if agents want live "client just signed" notifications. Row-level security keeps agent data isolated. Better than Firebase for structured relational data (forms have fields, submissions have field values). |
-| **`pdf-lib`** | v1 | Generate signed PDF from completed form | Pure JavaScript, runs in Node.js (Vercel Edge/serverless). Embeds the signature image and field values into a PDF template. No headless browser needed. |
-| **Resend** | (email) | Send "form ready to sign" emails and "form signed" confirmations | Modern transactional email API with good React Email support. Better DX than SendGrid for a small app. |
-
-**Why NOT DocuSign/Adobe Sign SDK:** Overkill for a custom forms solution. Those are enterprise products with per-envelope pricing. Building a lightweight e-sign flow with `signature_pad` + `pdf-lib` + Supabase storage is entirely feasible for the real estate use case and eliminates recurring per-document costs.
-
-**Legal note (MEDIUM confidence):** E-signatures are legally binding in most jurisdictions under ESIGN Act (US) and eIDAS (EU) if you capture intent, audit trail, and identity. Supabase provides the audit trail (timestamps, IP, user agent). Consult local real estate regulations for any additional requirements.
+| What Was Considered | Why NOT |
+|-------------------|---------|
+| Microsoft Graph API for OneNote append | Already using COM API which works without auth tokens, no login required, faster, works offline. Switching to Graph would require OAuth2 setup -- a regression in UX and complexity. COM is the right choice for a Windows desktop app where OneNote is installed locally. |
+| Rich text editor (TipTap, Slate, ProseMirror) | Overkill. Agents need to type quick free-text notes, not formatted documents. A plain `<textarea>` is faster to use and faster to build. OneNote itself handles formatting -- the agent can edit in OneNote after pushing. |
+| Markdown parser for notes | OneNote does not render markdown. Plain text in CDATA is the correct approach for the COM API. Adding a markdown library that OneNote ignores would be misleading. |
+| Local SQLite/IndexedDB for notes storage | Defeats the core value proposition. Notes must live in OneNote alongside qualifying questions and rapport notes so they are portable when agents change firms. Local-only storage is a dead end. |
+| Debounced auto-push to OneNote | Too aggressive. OneNote COM calls take 1-3 seconds. Auto-push while typing would create lag and unpredictable behavior. An explicit "Push" button gives the agent clear control and immediate feedback. |
+| New state management library (Redux, Zustand, Jotai) | The app uses React component state + electron-store successfully across 694 lines of ContactCard UI. Adding a state management library for one textarea is unnecessary complexity. |
 
 ---
 
-### News Feed
+## What NOT to Add
 
-| Technology | Version | Purpose | Why |
-|------------|---------|---------|-----|
-| **RSS/Atom feed parsing via `rss-parser`** | v3 | Aggregate real estate news from industry sources | Real estate publications (Inman, RealTrends, local MLS announcements) publish RSS feeds. No API key required, works offline with cached results. |
-| **Custom API aggregator (optional Phase 2)** | - | Curated news feed with filtering | If the team wants to curate sources or filter by keyword (e.g., local suburb names), a lightweight serverless function (Vercel Edge) can aggregate and cache feeds. |
-
-**Why NOT a news API (NewsAPI, etc.):** Adds cost and API key management. RSS is free and sufficient for the use case. Agents want real estate–specific news, not general news, so curation beats algorithmic search.
-
----
-
-### Local Data Persistence
-
-| Technology | Version | Purpose | Why |
-|------------|---------|---------|-----|
-| **`better-sqlite3`** | v11 | All local persistent data (templates, contacts cache, settings, viewed properties) | Single `.db` file in `app.getPath('userData')`. Synchronous API is clean in Electron main process. Supports full SQL for future reporting features. |
-| **`electron-store`** | v10 | App preferences and auth tokens (encrypted) | JSON key-value store with optional encryption. Use for settings that don't need SQL (window position, theme, last-used template). Not for large datasets. |
+| Do NOT Add | Reason |
+|-----------|--------|
+| Any new npm packages | Everything needed is already installed or built into the platform |
+| Rich text editor library | Plain text is intentional -- agents type quick notes, not documents |
+| Markdown parser | OneNote does not render markdown; plain text in CDATA is correct |
+| State management library | React state + electron-store is sufficient |
+| Auto-sync/polling for OneNote | COM API is request-response; agent pushes when ready |
+| New IPC patterns or frameworks | Existing `ipcMain.handle` / `ipcRenderer.invoke` pattern works |
+| Database for notes | Notes belong in OneNote, not in a local database |
 
 ---
 
-### IPC and Security
+## Files to Modify (Complete List)
 
-| Technology | Version | Purpose | Why |
-|------------|---------|---------|-----|
-| **Electron `contextBridge` + `ipcRenderer`/`ipcMain`** | (bundled) | Secure communication between renderer and main process | `contextBridge` exposes only specific functions to the renderer, preventing renderer-side code from accessing Node.js APIs directly. This is the current Electron security best practice. `nodeIntegration: false` + `contextIsolation: true` are mandatory. |
+### General Notes
+| File | Change Type | What |
+|------|-------------|------|
+| `src/main/onenote.ts` | Add function | `appendNotesToPage(pageId: string, notesText: string): Promise<void>` |
+| `src/main/ipc.ts` | Add handler | `onenote:append-notes` IPC channel |
+| `src/preload/index.ts` | Add method | `appendNotesToOneNote(e164, text)` exposed to renderer |
+| `src/renderer/env.d.ts` | Add type | Type declaration for new preload method |
+| `src/renderer/panel/components/ContactCard.tsx` | Add UI | "General Notes" collapsible section with textarea + "Push to OneNote" button |
 
-**Why this matters:** If a malicious website is ever loaded in the renderer (unlikely but possible if agents paste URLs), `contextIsolation` prevents it from accessing the filesystem or executing Node.js code.
+### Form I Rewrites
+| File | Change Type | What |
+|------|-------------|------|
+| `src/shared/forms.ts` | Text edit | Rewrite `whatsappMessage`, `emailSubject`, `emailBody` for 4 Form I entries |
 
----
-
-### Testing
-
-| Technology | Version | Purpose | Why |
-|------------|---------|---------|-----|
-| **Vitest** | v3 | Unit tests for business logic (template interpolation, route URL generation, API response parsing) | Vite-native, fast, Jest-compatible API. Electron-specific logic runs in main process and can be tested in Node environment. |
-| **Playwright** | v1.49+ | End-to-end tests for Electron app and web forms platform | Playwright has first-class Electron support via `playwright-electron`. Also covers the Next.js web platform. Single test framework for both surfaces. |
-
----
-
-## Full Stack at a Glance
-
-```
-Desktop App (Electron v33 + React 19 + TypeScript + Vite + Tailwind v4)
-├── Main process: system APIs, SQLite, OAuth flows, IPC
-├── Renderer: React UI, TanStack Query, Zustand
-├── Packaging: electron-builder → NSIS .exe
-└── Updates: electron-updater → GitHub Releases
-
-Web Platform (Next.js v15 on Vercel)
-├── Supabase (Postgres + Auth + Storage)
-├── signature_pad (e-signature capture)
-├── pdf-lib (signed PDF generation)
-└── Resend (transactional email)
-
-Shared/Integrations
-├── Microsoft Graph API + @azure/msal-node (OneNote)
-├── googleapis (Google Calendar)
-├── WhatsApp click-to-chat URLs (zero dependency)
-├── tel: URI (click-to-dial, zero dependency)
-├── Google Maps URL generation → system browser (Phase 1)
-└── rss-parser (news feed)
-```
+### Landing Page
+| File | Change Type | What |
+|------|-------------|------|
+| `landing/index.html` | Add content | General Notes feature description + screenshot |
 
 ---
 
-## Alternatives Considered
-
-| Category | Recommended | Alternative | Why Not |
-|----------|-------------|-------------|---------|
-| Desktop framework | Electron v33 | Tauri v2 | Rust toolchain complexity, plugin ecosystem less mature for this feature set |
-| Desktop framework | Electron v33 | NW.js | Smaller community, slower update cadence |
-| Desktop framework | Electron v33 | .NET MAUI | Wrong ecosystem for a web-centric team; no React reuse |
-| UI framework | React 19 | Vue 3 | Fewer Electron examples, smaller ecosystem for this use case |
-| State management | Zustand | Redux Toolkit | Overkill for this app's state complexity |
-| Local DB | better-sqlite3 | lowdb / JSON files | No SQL, poor performance for search/filter operations |
-| Local DB | better-sqlite3 | PostgreSQL (local) | Massive operational overhead for a desktop tool |
-| Web forms hosting | Vercel + Next.js | AWS / self-hosted | Operational complexity not justified for this team size |
-| Forms DB | Supabase | Firebase | Relational data model fits forms/submissions better than document store |
-| E-signature | Custom (signature_pad + pdf-lib) | DocuSign/Adobe Sign | Per-document cost, unnecessary complexity for in-house forms |
-| Phone integration | tel: URI | TAPI / Windows Telephony API | Requires C++ interop, fragile, overkill |
-| WhatsApp | Click-to-chat URL | WhatsApp Business API | Meta verification required, per-message cost, no advantage for manual sends |
-
----
-
-## Installation (Desktop App)
+## Installation
 
 ```bash
-# Scaffold with Electron + Vite + React + TypeScript template
-npm create electron-vite@latest my-app -- --template react-ts
-cd my-app
-npm install
-
-# State & data fetching
-npm install zustand @tanstack/react-query
-
-# Local database
-npm install better-sqlite3
-npm install -D @types/better-sqlite3
-
-# Secure preferences + encrypted token storage
-npm install electron-store
-
-# Template interpolation
-npm install handlebars
-
-# RSS feed parsing
-npm install rss-parser
-
-# Microsoft Graph auth
-npm install @azure/msal-node
-
-# Google APIs client
-npm install googleapis
-
-# Packaging
-npm install -D electron-builder electron-updater
-
-# Styling
-npm install -D tailwindcss @tailwindcss/vite
-```
-
-```bash
-# Web Platform (separate repo)
-npx create-next-app@latest forms-platform --typescript --tailwind --app
-cd forms-platform
-npm install @supabase/supabase-js signature_pad pdf-lib resend
+# No new packages to install for v1.1
+# Verify existing setup works:
+cd "C:/Users/David/AI Projects/GSD Sessions/Real Estate Ecosystem"
+npm run dev
 ```
 
 ---
 
-## Confidence Levels by Area
+## Integration Notes
 
-| Area | Confidence | Notes |
-|------|------------|-------|
-| Electron as framework choice | HIGH | Dominant for JavaScript desktop apps through training cutoff; not displaced by 2026 |
-| React 19 + Vite 6 + TypeScript | HIGH | Mainstream, stable, well-documented |
-| Tailwind CSS v4 | MEDIUM | v4 was in RC near training cutoff; verify stable release and API changes |
-| Zustand v5 + TanStack Query v5 | HIGH | Both stable, widely used |
-| better-sqlite3 v11 | MEDIUM | Verify current version; API is stable |
-| Microsoft Graph API + msal-node | HIGH | Official Microsoft SDK, long-term stable |
-| googleapis npm package version | MEDIUM | Package updates frequently; verify current major version |
-| Google OAuth in Electron (system browser pattern) | HIGH | Google's policy blocking embedded WebView is firm and well-documented |
-| WhatsApp click-to-chat URL approach | HIGH | Stable, no API changes expected |
-| Next.js v15 App Router | HIGH | Stable release |
-| Supabase for web platform | HIGH | Mature BaaS, well-documented |
-| signature_pad library | HIGH | Stable, widely used |
-| pdf-lib | HIGH | Stable, pure JS, no headless browser needed |
-| electron-builder NSIS packaging | HIGH | Standard Windows packaging approach |
-| electron-updater | HIGH | Standard auto-update approach |
-| Windows code-signing requirement | HIGH | SmartScreen behavior is consistent and well-documented |
+### General Notes -- Key Design Decisions
 
----
+1. **Textarea placement in ContactCard:** Add as a new collapsible section (following the existing pattern of Templates, Forms, KYC, News). Place it after OneNote Templates and before Forms -- logically grouped with the OneNote features. Use the `StickyNote` or `NotebookPen` icon from lucide-react (already installed).
 
-## Critical Decisions That Need Validation Before Phase 1
+2. **Push behavior when no OneNote page exists:** If `contact.oneNotePageId` is undefined, the push should first call `openContactPage()` to create the page, then call `appendNotesToPage()` with the returned `pageId`. This handles the case where an agent types notes before ever opening OneNote for that contact.
 
-1. **Softphone vendor** — Which softphone do target agents use (3CX? RingCentral? Zoom Phone?)? This determines whether `tel:` URI is sufficient or a vendor SDK is needed.
-2. **OneNote vs. Outlook Notes vs. custom notes** — Some agents may not actively use OneNote. Validate adoption before building the integration.
-3. **Code-signing certificate** — Must be procured before any public distribution. Lead time can be 1-3 weeks for EV certificates.
-4. **WhatsApp Business Account** — Click-to-chat URLs work for personal WhatsApp. If the brokerage uses a shared WhatsApp Business number, the Business API may be required in a later phase.
-5. **Google Maps billing** — Maps JS API and Directions API require a billing account. Free tier is generous ($200/month credit) but must be set up before Phase 1 map work begins.
-6. **Forms platform legal review** — Confirm e-signature requirements with a local real estate attorney before launch.
+3. **Timestamp in notes:** Each push should prepend a timestamp header (e.g., "--- General Notes (2026-03-06 14:30) ---") so the agent can see when each batch of notes was added in OneNote. This is free-text, not structured data.
+
+4. **Multi-line notes:** The OneNote COM API handles multi-line text correctly in CDATA sections. However, each line should be a separate `<one:OE>` element for proper OneNote rendering. Split on newlines when building the XML.
+
+5. **Clear on success only:** The textarea clears only after a successful COM call. On error, the text is preserved so the agent does not lose their notes.
+
+### Form I -- Context for Rewrite
+
+Form I is the RERA commission disclosure form. In practice, it is sent between cooperating agents to agree on commission splits, NOT to clients. The current templates address the contact as "Dear {name}" and talk about "your property" -- this makes sense for client-facing forms but is wrong for Form I.
+
+The rewrite should:
+- Address the receiving agent professionally
+- Reference the property by unit/address
+- State the commission split terms clearly
+- Request signed return
+- Keep the tone professional but direct (agent-to-agent, not formal client letter)
 
 ---
 
 ## Sources
 
-- Electron documentation and security best practices (training data, HIGH confidence for architecture patterns)
-- Microsoft Graph API documentation — OneNote and Calendar scopes (training data, HIGH confidence for API existence; verify current Graph v1.0 endpoint paths)
-- Google Calendar API v3 and OAuth2 for desktop apps — Google's policy on embedded WebView blocked (training data, HIGH confidence; this is a firm security policy)
-- WhatsApp click-to-chat URL format — `https://wa.me/{phone}?text={encoded}` (training data, HIGH confidence; stable URL format)
-- Next.js App Router, Supabase, pdf-lib, signature_pad (training data, MEDIUM confidence on exact versions)
-- Tailwind CSS v4 release status (training data, MEDIUM confidence — verify stable release date and breaking changes)
-
-**Note:** All version numbers should be verified against npm or official docs before locking the package.json. This research was produced without access to live web tools.
+- Direct codebase analysis of `src/main/onenote.ts` (343 lines, `buildAppendScript()` at line 222, `runPowerShell()` at line 25, `openContactPage()` at line 296) -- HIGH confidence
+- Direct codebase analysis of `src/shared/forms.ts` (263 lines, 4 Form I entries at lines 74, 86, 185, 196) -- HIGH confidence
+- Direct codebase analysis of `src/shared/types.ts` (`Contact.notes` field at line 125) -- HIGH confidence
+- Direct codebase analysis of `src/renderer/panel/components/ContactCard.tsx` (694 lines, existing collapsible section pattern) -- HIGH confidence
+- Direct codebase analysis of `src/main/ipc.ts` (OneNote IPC handlers at lines 170-179) -- HIGH confidence
+- Direct codebase analysis of `src/preload/index.ts` (OneNote preload methods at lines 57-60) -- HIGH confidence
+- Direct codebase analysis of `package.json` (current dependency list, 2 runtime deps + 20 dev deps) -- HIGH confidence

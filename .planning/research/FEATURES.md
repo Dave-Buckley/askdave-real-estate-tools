@@ -1,177 +1,231 @@
 # Feature Landscape
 
-**Domain:** Real estate agent productivity toolkit (UAE/Dubai market, lettings + sales)
-**Researched:** 2026-03-01
-**Confidence note:** External research tools unavailable this session. Analysis draws from deep domain knowledge of UAE real estate workflows, the competitive productivity tool landscape, and the validated pain points documented in PROJECT.md. Confidence is MEDIUM-HIGH for table stakes (well-established patterns), MEDIUM for differentiators (market-specific, less externally verified).
+**Domain:** Real estate agent productivity toolkit (UAE/Dubai market) -- v1.1 milestone features
+**Researched:** 2026-03-06
+**Scope:** General Notes notepad, Form I template rewrites, landing page v1.1 update
+**Overall confidence:** HIGH -- Features are small, well-scoped, and build on existing v1.0 architecture
 
 ---
 
 ## Research Context
 
-This tool sits **alongside** a CRM — it does not replace it. The CRM handles pipeline management, activity logging, and deal tracking. This tool handles the repetitive micro-tasks agents do hundreds of times per week: dialling, messaging, note-taking, reminders, and viewing logistics.
+v1.0 shipped with 102 commits, 9,905 LOC, and a complete feature set including OneNote integration, 20 RERA forms with WhatsApp/email templates, contact cards, transcriber, flashcards, and news feed. This v1.1 research covers three narrowly scoped additions.
 
-**Dubai-specific context that shapes feature prioritization:**
-- WhatsApp is the primary communication channel, not email or phone alone
-- RERA (Real Estate Regulatory Agency) mandates specific forms (Form A, B, F) before any deal can proceed
-- Agents work with a highly international client base — Arabic, Russian, Mandarin, English are common
-- Cheque-based rent payments create document-heavy tenancy workflows
-- Emirates ID is mandatory for all transactions
-- Agents use personal phones (Samsung/iPhone), Windows PCs, and typically access multiple systems simultaneously
+**Existing infrastructure these features build on:**
+- OneNote COM API via PowerShell (`src/main/onenote.ts`) -- creates/finds pages, appends outlines
+- Contact model with `notes: string` field already in `Contact` interface (`src/shared/types.ts`)
+- Form template system with `FormEntry` + `FormTemplateOverride` for customizable WhatsApp/email messages (`src/shared/forms.ts`)
+- ContactCard component with 10 collapsible sections (`src/renderer/panel/components/ContactCard.tsx`)
+- Landing page as static HTML (`landing/AskDave-Overview.html`, `landing/index.html`)
 
 ---
 
 ## Table Stakes
 
-Features users expect. Missing = product feels incomplete or agents abandon it within days.
+Features that make General Notes and Form I templates feel complete. Missing = feels half-baked.
 
-| Feature | Why Expected | Complexity | Notes |
-|---------|--------------|------------|-------|
-| Click-to-dial | Manual dialling is the single most repeated friction point. Any productivity tool for agents that doesn't eliminate this fails immediately. | Low | Requires phone mirroring app (e.g., Samsung Link to Windows, Phone Link) or VoIP. The actual trigger is simple; the phone integration is the complexity. |
-| Click-to-WhatsApp | Dubai agents live in WhatsApp. Opening a chat manually (copy number, open app, paste) adds 20–30 seconds per message. Multiply by 50 contacts/day. | Low | `https://wa.me/[number]` deep-link handles this. Desktop WhatsApp or phone — both work via this URL. |
-| Message templates | Agents send near-identical messages constantly (viewing confirmations, follow-up after call, renewal reminders). Without templates, this is a daily time sink. | Low–Med | Templates need variable substitution (name, property, date). Must be easy for non-technical agents to edit. |
-| Contact notes | Agents need a place to record qualifying info (budget, requirements, timeline) immediately after a call. Without this they rely on memory or scattered notepad files. | Med | OneNote integration is the chosen approach. Auto-create/find page per contact is the key behavior. |
-| Follow-up reminders | The most common complaint from agents: "I forgot to call back." A 3-day/15-day/30-day system covers 90% of follow-up cadences in UAE real estate cycles. | Low–Med | Google Calendar integration. The value is in the one-click creation, not the calendar feature itself. |
-| Days-since-last-call indicator | Without this, agents have no passive awareness of which contacts are going cold. It's a lightweight accountability mechanism. | Low | Calculated from last interaction timestamp. Needs a local store of call events or manual log. |
-| Desktop widget / callback panel | Agents need their day's callbacks visible without opening another full application. A persistent panel is the "home base" for the tool. | Med | Always-on-top window. Must not obscure other work. Shows today's reminders and follow-ups. |
-| Inbound caller recognition | When the phone rings, agents shouldn't have to search for who it is. This triggers the most immediate value moment. | Med | Requires phone mirroring integration to detect incoming calls and surface OneNote page. |
-| Quick viewing booking | Creating a Google Calendar event and sending an invite is a routine task. Doing it from a contact card removes context switching. | Low–Med | Google Calendar API. Select contact, enter time and address, send invite. |
-| Document checklist | Every transaction in UAE real estate has a mandatory document list (Emirates ID, tenancy contract, NOC, etc.). Agents forget items without a structured checklist. | Low | Configurable per transaction type (tenancy, sale, renewal). No backend needed — local state is fine. |
+| Feature | Why Expected | Complexity | Dependencies |
+|---------|--------------|------------|-------------|
+| **General Notes text area in contact card** | Agents take scratch notes during calls (property address, price mentioned, callback time). Without a visible text area in the contact card, they have to open a separate app or use paper. This was explicitly deferred from v1.0 (NOTE-04). | Low | Contact model already has `notes: string` field. ContactCard already has the prop structure for it. |
+| **Push-to-OneNote for general notes** | The scratchpad is only half the feature. Agents need the notes to persist somewhere durable and searchable. OneNote is already the app's note system. Appending to the existing contact page is the natural behavior. | Low-Med | Existing `openContactPage()` in `onenote.ts` handles page creation/finding. Need a new `appendNotes()` function that appends free-text as an outline to an existing page. |
+| **Clear after push** | Scratchpad semantics mean the text area empties after pushing to OneNote. This reinforces that OneNote is the permanent store and the text area is transient. Agents should not wonder "did it save?" or "is this the latest version?" | Low | Simple state reset after successful push. No persistence of notes needed locally beyond the current session. |
+| **Form I template rewrite -- agent-to-agent language** | The 4 Form I variants currently use client-facing language ("Hi {name}, please find attached Form I -- the commission disclosure form as required by RERA"). Form I is an agent-to-agent (A2A) agreement used between cooperating brokers. The templates must address a fellow agent/broker, not a client. | Low | Text-only change in `src/shared/forms.ts`. No code logic changes needed. |
+| **All 4 Form I variants covered** | Sales Buyer, Sales Seller, Leasing Landlord, Leasing Tenant -- all four must be rewritten. Missing one creates inconsistency. | Low | IDs: `form-i-seller`, `form-i-buyer`, `form-i-landlord`, `form-i-tenant` in `FORMS` array. |
 
 ---
 
 ## Differentiators
 
-Features that set this product apart. Not universally expected in productivity tools, but high value in this specific market.
+Features that elevate v1.1 beyond a bug-fix release.
 
-| Feature | Value Proposition | Complexity | Notes |
-|---------|-------------------|------------|-------|
-| Signable RERA forms (Form A, B, F) | RERA mandates signed forms before listings or offers can proceed. Agents currently print, scan, or use third-party tools (DocuSign etc. at cost). A built-in, correctly formatted version eliminates a workflow bottleneck unique to Dubai. | High | Web-based so clients can sign on any device. Must match RERA format exactly. Digital signatures need to be legally acceptable (UAE Electronic Transactions Law No. 1 of 2006 supports e-signatures). |
-| OneNote integration with qualifying templates | Most note tools are generic. Templates pre-structured for tenant/landlord/buyer/seller/portfolio qualification turn a blank note into a structured briefing. Agents capture the right information every time. | Med | Auto-create OneNote page with template content populated. Five role types require five template variants. |
-| Multi-role contact support | A contact can be both a landlord and a buyer. Generic CRMs force separate records. This tool treats one person's multiple roles as a unified view with adapted notes and templates. | Med | Tag-based role system. Determines which qualifying template is shown. Affects which message templates are available. |
-| Route planner for viewings | UAE traffic is brutal. Agents booking multiple viewings in a day without optimizing order waste significant time. A route optimizer built into the booking flow is directly tied to daily productivity. | Med | Google Maps Directions API with waypoint optimization. Input: list of addresses. Output: optimal order + estimated time. |
-| Email with WhatsApp follow-up | Sending an email and then WhatsApping the client "I just sent you an email — check your inbox" is standard Dubai agent behavior (clients miss emails). Automating this two-step in one click is a real time-saver. | Low–Med | Email send (SMTP/Gmail API) + WhatsApp deep-link triggered together. Simple workflow but uniquely valuable in this market. |
-| Translation before sending | Dubai's client base is highly international. Agents who can draft in English and auto-translate to Arabic or Russian before sending serve their clients better. | Med | Integration with a translation API (DeepL or Google Translate). Applied to composed email/message content before send. |
-| Real estate news feed | Curated UAE/Dubai property news gives agents talking points with clients and situational awareness about market conditions. Most tools don't include this. | Low–Med | RSS aggregation from Property Finder blog, Gulf News property, Khaleej Times real estate, DLD news. No scraping of portal listings — just editorial content. |
-| Quick property notepad with OneNote push | Mid-call, agents need to capture property details fast (beds, price, location, condition). A structured notepad that formats and pushes to OneNote prevents lost information. | Low–Med | Local form with fields, one-click push to a designated OneNote section. |
+| Feature | Value Proposition | Complexity | Dependencies |
+|---------|-------------------|------------|-------------|
+| **Timestamped note push** | When notes are appended to OneNote, prefix with a timestamp (`2026-03-06 14:32`). Agents who push notes multiple times during a deal get a chronological log. This is how professional CRM note systems work. | Low | Simple `new Date().toLocaleString()` prefix in the OneNote outline XML. |
+| **Push feedback toast** | After pushing notes to OneNote, show a brief success toast ("Notes pushed to OneNote") or error toast. Gives agents confidence the push worked without switching to OneNote to verify. | Low | Existing pattern in ContactCard: `followUpStatus` state with auto-dismiss `setTimeout`. Copy this pattern. |
+| **Form I description update** | The `description` field for Form I entries currently says "RERA commission disclosure form for [role]." This should say "Agent-to-agent commission split agreement for [transaction type]" to match the rewritten templates. | Low | Text change in `forms.ts` alongside the template rewrite. |
+| **Landing page v1.1 section** | Update the product overview and landing page to mention General Notes as a feature. Shows the product is actively developed and adds a selling point for download consideration. | Low-Med | HTML edit in `landing/AskDave-Overview.html` and possibly `landing/index.html`. |
 
 ---
 
 ## Anti-Features
 
-Features to explicitly NOT build, with rationale.
+Features to explicitly NOT build for General Notes or Form I in v1.1.
 
 | Anti-Feature | Why Avoid | What to Do Instead |
 |--------------|-----------|-------------------|
-| CRM replacement (pipeline, deals, leads) | Agents already have CRMs mandated by their agency. Competing with it creates IT approval friction, security reviews, and data migration headaches. It also enlarges scope massively. | Stay a satellite tool. Integrate with calendar and notes only — both are personal, not agency-controlled. |
-| Call logging / activity tracking | This is exactly what CRMs do. Duplicating it creates two sources of truth, confusion, and double-entry. Agencies have compliance reasons for tracking in the CRM. | The days-since-call indicator is a lightweight proxy. Let CRM own the official log. |
-| Data scraping from CRM or property portals | Portals (Property Finder, Bayut) prohibit scraping in ToS. CRM scraping creates security liability for agencies. This would make the tool un-deployable at real companies. | Agents manually input what they need. The tool doesn't pull data — it helps agents use data they already have. |
-| Market data / area insights | This data would need portal APIs (restricted) or scraping (prohibited). It's also available natively in the portals agents already use. | Link out to DLD's official transaction data or Property Finder's area stats if needed. Don't build it. |
-| Team dashboards / leaderboards | Requires multi-user data sharing, backend infrastructure, and agency-level administration. This is a v1 solo agent tool, not a team management platform. | Possible v2+ feature once the core tool has adoption and the team management need is validated. |
-| Cheque / currency calculators | Simple arithmetic. Agents use their phone's calculator. Adding this adds complexity for zero differentiation. | Direct agents to existing calculator apps. |
-| AI-generated listing descriptions | Tempting but out of scope. Agents have their own voice, listings go into portal systems this tool doesn't touch, and it increases complexity significantly. | Agents can use ChatGPT independently for this. |
-| Built-in dialler (VoIP) | Building or integrating a full VoIP stack is a major infrastructure commitment. Dubai agents primarily use their personal mobile numbers — a VoIP call from a desktop is a step backward. | Click-to-dial triggers the agent's phone via phone mirroring (Samsung Link to Windows, Phone Link). The phone makes the call; the tool just initiates. |
-| Client portal / self-service | A portal where clients upload documents or sign off on tasks is a separate product with its own user management, auth, and UX. | Keep signing to specific RERA forms via shared link. Don't build a general client portal. |
-| Internal agency messaging / team chat | Agencies already use WhatsApp groups, Teams, or Slack internally. Another chat tool adds nothing. | This tool's messaging features are for agent-to-client communication only. |
+| **Local persistence of general notes** | The `Contact.notes` field exists in the store, but using it creates a second source of truth alongside OneNote. The scratchpad should be transient -- type, push, clear. If agents want to keep notes, they push to OneNote. | Use React component state only. Do not persist to electron-store. The `notes` field in Contact can remain for future use but should not be the backing store for this scratchpad. |
+| **Rich text / markdown editor** | Over-engineering the notepad. Agents are typing fast during calls. A plain textarea with monospace-friendly styling is all they need. Rich text adds complexity for zero value in a scratchpad. | Plain `<textarea>` element. No formatting toolbar. |
+| **Two-way OneNote sync** | Pulling notes back from OneNote into the scratchpad creates sync conflicts, requires reading page content via COM (fragile), and violates the "scratchpad" mental model. | One-way push only. Agents who want to review notes open OneNote directly (the "Notes" button already does this). |
+| **Form I auto-fill with agent details** | Tempting to auto-fill the cooperating agent's brokerage name, BRN, etc. But agents send Form I to agents they may have just met via co-broke platforms. The template should be generic. | Keep `{name}` placeholder for the cooperating agent's name. Let agents fill in details manually or use the form override system. |
+| **Form I for off-plan category** | Form I Buyer currently appears under the `offplan` category tab. Agent-to-agent commission agreements for off-plan are less common (developer handles commission). Consider whether to keep it there. | Keep Form I Buyer under `offplan` -- it does apply when a buyer's agent brings a client to another agent's off-plan listing. No change needed. |
 
 ---
 
 ## Feature Dependencies
 
 ```
-Click-to-dial
-  └── Phone mirroring app installed (Samsung Link to Windows or Phone Link) [external dependency]
+General Notes Text Area
+  +-- ContactCard.tsx (add textarea + push button below existing inputs or as new collapsible section)
+  +-- No new IPC channels needed for the textarea itself (component state only)
 
-Click-to-WhatsApp
-  └── WhatsApp Desktop or phone accessible [external dependency, almost always true]
+Push-to-OneNote
+  +-- onenote.ts: new function to append free-text to existing page by pageId
+  +-- Contact must have oneNotePageId (set when OneNote page was first created)
+  +-- If no OneNote page exists yet, push should create one first, then append
+  +-- New IPC handler: 'onenote:append-notes' (e164, notes text)
+  +-- preload: expose appendNotesToOneNote() method
 
-Inbound caller recognition
-  └── Phone mirroring app installed (same dependency as click-to-dial)
-  └── Contact notes (needs a contact to surface)
+Clear After Push
+  +-- Depends on successful push-to-OneNote response
+  +-- setState('') on the textarea after success
 
-Contact notes (OneNote integration)
-  └── OneNote account (personal Microsoft account or work M365)
-  └── Multi-role contact support (roles determine which template is loaded)
+Form I Template Rewrite
+  +-- forms.ts: update whatsappMessage, emailSubject, emailBody for 4 entries
+  +-- forms.ts: update description for 4 entries
+  +-- No code changes -- pure content
 
-Follow-up reminders
-  └── Google Calendar account
-  └── Desktop widget (reminders surface in the widget)
-
-Desktop widget
-  └── Follow-up reminders (data source)
-  └── Days-since-last-call indicator (data source)
-
-Quick viewing booking
-  └── Google Calendar account (same as reminders)
-  └── Route planner (natural pairing — book then plan route)
-
-Route planner
-  └── Google Maps API key [external dependency]
-  └── Quick viewing booking (logical predecessor, though can work standalone)
-
-Signable RERA forms
-  └── Web hosting for form platform [separate from desktop app]
-  └── E-signature mechanism (drawn signature or typed — not DocuSign dependency)
-
-Email with WhatsApp follow-up
-  └── Click-to-WhatsApp (reuses the same mechanism)
-  └── Email configuration (SMTP or Gmail API)
-
-Translation option
-  └── Translation API key (DeepL or Google Translate) [external dependency]
-  └── Email composing flow (translation applies pre-send)
-
-Message templates
-  └── Contact notes (name/role data feeds into template variable substitution)
-
-Quick property notepad
-  └── Contact notes / OneNote integration (pushes to same OneNote structure)
-
-Document checklist
-  └── Multi-role contact support (checklist varies by transaction type)
-
-Real estate news feed
-  └── RSS sources (DLD, Property Finder blog, Gulf News property) [external, editorial not scraped]
-
-Days-since-last-call indicator
-  └── Local event store (lightweight — could be a simple JSON log of call timestamps)
+Landing Page Update
+  +-- Depends on General Notes being implemented (to describe accurately)
+  +-- Can mention Form I improvements as "improved agent collaboration tools"
 ```
 
 ---
 
-## MVP Recommendation
+## General Notes -- Expected Behavior Analysis
 
-**Core loop that proves value in week one:**
+### How scratchpad notes work in real estate agent tools
 
-1. **Click-to-dial** — Immediate daily value. Proves the tool in the first hour of use.
-2. **Click-to-WhatsApp** — Equally immediate. Used more than dialling in Dubai.
-3. **Message templates** — First compound value: calling + messaging with templates is a full communication workflow.
-4. **Contact notes with OneNote integration** — Qualifies leads, stores information, works with multi-role.
-5. **Follow-up reminders (3/15/30 day)** — Closes the loop: contact, message, follow up.
-6. **Desktop widget** — Makes the above visible and accessible without opening separate apps.
+Based on domain research and analysis of CRM note-taking patterns:
 
-**Second tier (high value, slightly more build):**
+**The scratchpad pattern (what agents expect):**
+1. Agent receives/makes a call
+2. Contact card pops up (already works via clipboard detection)
+3. Agent types notes during the call in a text area -- budget, requirements, callback time, property details mentioned
+4. After the call, agent clicks "Push to OneNote" (or similar)
+5. Notes are appended to the contact's OneNote page with a timestamp
+6. Text area clears, ready for next call
+7. Agent moves to next contact
 
-7. **Inbound caller recognition** — Reactive companion to click-to-dial.
-8. **Multi-role contact support** — Enables the templates and notes to adapt properly.
-9. **Quick viewing booking** — Rounds out the daily workflow.
-10. **Document checklist** — Low complexity, high perceived professionalism.
+**Key design decisions:**
+- **Placement in ContactCard:** The text area should appear between the Name/Email/Unit inputs and the Action buttons. Rationale: agents fill in contact details and notes before taking action (dial, WhatsApp, etc.). Alternatively, it could be a new collapsible section, but since it is a scratchpad used during every call, it should be always visible -- not hidden behind an accordion.
+- **Size:** 3-4 rows minimum, resizable. Agents type varying amounts. Too small = frustrating during calls. Too large = pushes action buttons below the fold.
+- **Push button:** Small button adjacent to or below the textarea, styled like existing action buttons. Label: "Push to OneNote" with the FileText icon. Disabled when textarea is empty.
+- **Keyboard shortcut:** Consider Ctrl+Enter to push notes (power users will want this). Not required for v1.1 but low effort.
 
-**Defer to v2 or later:**
+**What NOT to do:**
+- Do not auto-save to OneNote on every keystroke (too many COM calls, performance killer)
+- Do not require agents to select a role before pushing notes (notes are general, not role-specific)
+- Do not add a "Save locally" button (creates two systems for notes)
 
-- **Signable RERA forms** — High complexity, separate web platform needed, legal verification required. Validate core tool first.
-- **Route planner** — Google Maps API integration adds setup cost. Valuable but not day-one critical.
-- **Translation** — API key management, polished UX needed. Nice to have.
-- **Real estate news feed** — Low complexity but adds surface area. Fine for early release, not MVP.
-- **Email with WhatsApp follow-up** — Email integration (OAuth, SMTP config) adds onboarding friction. WhatsApp alone covers most Dubai communication.
-- **Quick property notepad** — Useful but overlaps with contact notes. Defer until note-taking workflow is proven.
+### OneNote append behavior
+
+The existing `buildAppendScript()` function in `onenote.ts` already demonstrates how to append outlines to an existing page via COM. The General Notes push should follow the same pattern:
+
+1. Find the page by `oneNotePageId` (stored in contact record)
+2. Build an outline with timestamp header and the notes text
+3. Use `UpdatePageContent()` partial update to append
+4. Return success/failure
+
+If the contact has no `oneNotePageId` yet (never opened in OneNote), the push should first create the page (using existing `openContactPage` logic), then append the notes.
+
+---
+
+## Form I -- Agent-to-Agent Template Rewrite Analysis
+
+### What Form I actually is
+
+Form I is a **broker-to-broker agreement** (agent-to-agent, or A2A) used in Dubai real estate. It formalizes cooperation between two RERA-certified agents -- one representing the buyer/tenant and the other representing the seller/landlord. The form:
+
+- Identifies both cooperating brokerages and their BRN (Broker Registration Number)
+- Specifies the property under cooperation
+- Defines the commission split (commonly 50/50)
+- Protects both agents' clients and listings from poaching
+- Is required by RERA when agents from different brokerages collaborate on a deal
+
+**Current problem:** The 4 Form I templates in `forms.ts` address clients ("Hi {name}, please find attached Form I -- the commission disclosure form as required by RERA"). This is wrong. Form I is never sent to clients. It is sent between agents.
+
+### Template rewrite requirements
+
+**Audience change:** From client ({name} = client name) to cooperating agent ({name} = other agent's name)
+
+**Tone change:** From formal client service ("Dear {name}, Please find attached...") to professional peer-to-peer ("Hi {name}, Please find attached Form I for our cooperation on {unit}...")
+
+**Content change:**
+- Remove "commission disclosure" language (that is what clients see)
+- Add "commission split agreement" or "agent cooperation agreement" language
+- Reference the property, not the client's transaction
+- Mention that both parties should sign and retain copies
+- WhatsApp messages should be concise (agents message each other casually)
+- Email messages should be slightly more formal but still peer-level
+
+**Four variants needed:**
+
+| ID | Current Description | New Description | Key Difference |
+|----|-------------------|-----------------|----------------|
+| `form-i-seller` | Commission disclosure for seller | Agent-to-agent agreement -- listing agent side (sales) | Listing agent sends to buyer's agent |
+| `form-i-buyer` | Commission disclosure for buyer | Agent-to-agent agreement -- buyer's agent side (sales) | Buyer's agent sends to listing agent |
+| `form-i-landlord` | Commission disclosure for landlord | Agent-to-agent agreement -- listing agent side (leasing) | Listing agent sends to tenant's agent |
+| `form-i-tenant` | Commission disclosure for tenant | Agent-to-agent agreement -- tenant's agent side (leasing) | Tenant's agent sends to listing agent |
+
+**Typical commission splits (for template context):**
+- Sales: 50/50 split of the total commission (2% of sale price is standard total)
+- Leasing: 50/50 split of the total commission (5% of annual rent is standard total)
+- Negotiable based on who brought the lead, who did the viewings, etc.
+
+---
+
+## Landing Page -- v1.1 Update Scope
+
+### What needs to change
+
+1. **Version number:** Update from v1.0 to v1.1 wherever displayed
+2. **Feature mention:** Add "General Notes" to the feature list/grid -- a scratchpad for call notes that pushes directly to OneNote
+3. **Agent tools mention:** Update or add mention of Form I agent-to-agent cooperation tools
+4. **Screenshot:** Take a new screenshot showing the General Notes textarea in the contact card (deferred -- screenshot TODO already exists)
+
+### What does NOT need to change
+
+- Overall page structure and design
+- Existing feature descriptions (transcriber, flashcards, forms, etc.)
+- Download/setup flow
+- Pricing or access model
+
+---
+
+## MVP Recommendation (v1.1 scope)
+
+**Priority order for implementation:**
+
+1. **Form I template rewrite** -- Pure text change, zero code risk, immediately shippable. Start here to get a quick win.
+2. **General Notes textarea in ContactCard** -- Add the UI element with component state. No backend work needed for this step.
+3. **Push-to-OneNote for general notes** -- New IPC handler + OneNote append function. Builds on existing COM API patterns.
+4. **Clear-after-push + feedback toast** -- Polish that completes the scratchpad UX.
+5. **Landing page update** -- Do last since it describes the finished features.
+
+**Defer to v1.2 or later:**
+- **Ctrl+Enter keyboard shortcut** for pushing notes (nice-to-have, low priority)
+- **Note history** in the app (OneNote is the history; don't duplicate it)
+- **Form I auto-fill** with agent/brokerage details from settings
+
+---
+
+## Complexity Assessment
+
+| Feature | Estimated Effort | Risk Level | Notes |
+|---------|-----------------|------------|-------|
+| Form I template rewrite | ~30 min | None | Text-only change in forms.ts |
+| General Notes textarea | ~1 hour | None | React state + textarea + styling |
+| Push-to-OneNote | ~2-3 hours | Low | New COM script following existing pattern in onenote.ts |
+| Clear + toast feedback | ~30 min | None | Copy existing followUpStatus pattern |
+| Landing page update | ~1-2 hours | None | HTML edits in landing/ |
+| **Total** | **~5-7 hours** | **Low** | Well within a single session |
 
 ---
 
 ## Sources
 
-- Domain knowledge: UAE/Dubai real estate workflows, RERA regulatory context, WhatsApp communication norms in the Gulf market (MEDIUM confidence — well-established market patterns, unverified externally this session)
-- Project context: PROJECT.md pain points validated from Allsopp & Allsopp experience (HIGH confidence — first-party validated)
-- UAE Electronic Transactions and Commerce Law No. 1 of 2006 — e-signature legal basis (MEDIUM confidence — well-established, recommend legal verification before shipping signable forms)
-- Google Maps Waypoint Optimization API — available and supports address ordering (HIGH confidence — stable Google API, widely documented)
-- WhatsApp deep-link format (wa.me) — stable, documented by Meta (HIGH confidence)
-- External research tools unavailable this session; G2, Capterra, and competitor feature lists not consulted. Recommend verifying table stakes assumptions against Property Finder, Bayut, and agency-specific tools in a follow-up research pass.
+- **Codebase analysis** (HIGH confidence): Direct reading of `ContactCard.tsx` (694 lines), `onenote.ts` (344 lines), `forms.ts` (263 lines), `types.ts`, `contacts.ts`, `store.ts`, `preload/index.ts`
+- **RERA Form I purpose**: [Sotheby's RERA Guide](https://sothebysrealty.ae/the-journal/a-guide-to-rera-forms-in-dubai/), [Bayut RERA Guide](https://www.bayut.com/mybayut/guide-rera-forms-dubai/), [Engel & Volkers RERA Guide](https://www.engelvoelkers.com/ae/en/resources/types-of-rera-forms-in-dubai-for-property-transactions), [Co-broke A2A Guide](https://co-broke.app/the-ultimate-guide-to-agent-to-agent-contract-form-i-in-dubai) (HIGH confidence -- multiple authoritative sources confirm Form I is agent-to-agent, not client-facing)
+- **Commission split standards**: [Co-broke Commission Negotiation](https://co-broke.app/how-to-negotiate-agent-to-agent-commission-in-dubai), [ACASA Commission Guide](https://www.acasa.ae/blogs/real-estate-commissions-a-comprehensive-guide) (MEDIUM confidence -- standard market practice, varies by deal)
+- **CRM note-taking patterns**: [iHomeFinder CRM Features 2026](https://www.ihomefinder.com/blog/agent-and-broker-resources/real-estate-crm-features-2026/), [OneNote CRM Integration](https://www.kizan.com/blog/onenotes-small-step-for-productivity-one-giant-leap-for-crm) (MEDIUM confidence -- general patterns, not specific to this tool's architecture)
+- **PROJECT.md** (HIGH confidence): First-party validated requirements from David's experience at Allsopp & Allsopp and Paragon Properties
