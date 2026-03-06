@@ -264,6 +264,7 @@ export const store = new Store<AppSettings>({
     contacts: {},
     oneNoteRoleTemplates: DEFAULT_ROLE_TEMPLATES,
     formOverrides: {},
-    flashcardProgress: {}
+    flashcardProgress: {},
+    whisperModel: 'onnx-community/whisper-base.en'
   }
 })

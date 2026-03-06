@@ -62,6 +62,7 @@ export interface AppSettings {
   oneNoteRoleTemplates?: Record<ContactRole, RoleTemplate>
   formOverrides?: Record<string, FormTemplateOverride>
   flashcardProgress: Record<string, CardProgress>
+  whisperModel: WhisperModelId
 }
 
 export type ContactRole = 'Tenant' | 'Landlord' | 'Buyer' | 'Seller' | 'Investor'
@@ -77,6 +78,31 @@ export interface HotkeyConfig {
   dialKey: string
   whatsappEnabled: boolean
   whatsappKey: string
+}
+
+// --- Meeting Transcriber ---
+
+export type WhisperModelId =
+  | 'onnx-community/whisper-tiny.en'
+  | 'onnx-community/whisper-base.en'
+  | 'onnx-community/whisper-small.en'
+  | 'onnx-community/whisper-small'
+
+export type TranscriberState =
+  | 'idle'
+  | 'recording'
+  | 'paused'
+  | 'transcribing'
+  | 'done'
+  | 'error'
+
+export interface TranscriberStatus {
+  state: TranscriberState
+  elapsed?: number          // seconds recorded so far
+  transcript?: string       // result text (when state=done)
+  error?: string            // error message (when state=error)
+  modelLoading?: boolean    // true while downloading/loading model
+  modelProgress?: number    // 0-100 download progress
 }
 
 export interface ContactInfo {
