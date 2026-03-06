@@ -65,11 +65,11 @@ Requirements for v1.1 Polish & Agent Tools. Each maps to roadmap phases 5-7.
 
 ### General Notes
 
-- [ ] **NOTE-05**: User can type freeform notes in a text area within the contact card
+- [x] **NOTE-05**: User can type freeform notes in a text area within the contact card
 - [x] **NOTE-06**: User can push notes to OneNote with one click (appends below existing page content)
-- [ ] **NOTE-07**: Textarea clears only after OneNote push confirms success
+- [x] **NOTE-07**: Textarea clears only after OneNote push confirms success
 - [x] **NOTE-08**: Each push includes a timestamp header in OneNote for chronological log
-- [ ] **NOTE-09**: User sees success/error feedback after push (toast or inline indicator)
+- [x] **NOTE-09**: User sees success/error feedback after push (toast or inline indicator)
 
 ### Landing Page
 
@@ -182,11 +182,11 @@ Deferred to future releases. Significant complexity or external dependencies.
 | FORMI-01 | Phase 5 | Complete |
 | FORMI-02 | Phase 5 | Complete |
 | FORMI-03 | Phase 5 | Complete |
-| NOTE-05 | Phase 6 | Pending |
+| NOTE-05 | Phase 6 | Complete |
 | NOTE-06 | Phase 6 | Complete |
-| NOTE-07 | Phase 6 | Pending |
+| NOTE-07 | Phase 6 | Complete |
 | NOTE-08 | Phase 6 | Complete |
-| NOTE-09 | Phase 6 | Pending |
+| NOTE-09 | Phase 6 | Complete |
 | LAND-01 | Phase 7 | Pending |
 | LAND-02 | Phase 7 | Pending |
 

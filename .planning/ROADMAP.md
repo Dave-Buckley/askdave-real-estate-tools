@@ -24,7 +24,7 @@ See milestones/v1.0-ROADMAP.md for full phase details.
 **Milestone Goal:** Ship the deferred General Notes notepad with push-to-OneNote, fix Form I templates for agent-to-agent use, and update the landing page.
 
 - [x] **Phase 5: Form I Template Rewrites** - Rewrite all 4 Form I templates from client-facing to agent-to-agent commission split language
-- [ ] **Phase 6: General Notes** - Freeform note-taking in contact card with one-click push to OneNote
+- [x] **Phase 6: General Notes** - Freeform note-taking in contact card with one-click push to OneNote
 - [ ] **Phase 7: Landing Page Update** - Update landing page to reflect v1.1 features
 
 ## Phase Details
@@ -56,8 +56,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 06-01-PLAN.md -- OneNote push-notes backend (IPC + PowerShell script + preload bridge)
-- [ ] 06-02-PLAN.md -- GeneralNotes.tsx component + ContactCard mount + App.tsx wiring
+- [x] 06-01-PLAN.md -- OneNote push-notes backend (IPC + PowerShell script + preload bridge)
+- [x] 06-02-PLAN.md -- GeneralNotes.tsx component + ContactCard mount + App.tsx wiring
 
 ### Phase 7: Landing Page Update
 **Goal**: Landing page accurately describes the full v1.1 feature set
@@ -82,5 +82,5 @@ Plans:
 | 3. Forms, News & Web | v1.0 | 4/4 | Complete | 2026-03-05 |
 | 4. Meeting Transcriber | v1.0 | 3/3 | Complete | 2026-03-06 |
 | 5. Form I Template Rewrites | v1.1 | 1/1 | Complete | 2026-03-06 |
-| 6. General Notes | v1.1 | 0/2 | Planning complete | - |
+| 6. General Notes | v1.1 | 2/2 | Complete | 2026-03-06 |
 | 7. Landing Page Update | v1.1 | 0/? | Not started | - |

@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Polish & Agent Tools
 status: executing
-last_updated: "2026-03-06T16:22:00.000Z"
+last_updated: "2026-03-06T16:45:00.000Z"
 progress:
   total_phases: 5
-  completed_phases: 4
+  completed_phases: 5
   total_plans: 13
-  completed_plans: 15
+  completed_plans: 16
 ---
 
 # Project State
@@ -18,16 +18,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-06)
 
 **Core value:** Make every agent faster at the tasks they repeat hundreds of times a week -- calling, messaging, note-taking, and organizing -- without touching the CRM or creating security concerns.
-**Current focus:** Phase 6 - General Notes
+**Current focus:** Phase 7 - Landing Page Update
 
 ## Current Position
 
-Phase: 6 of 7 (General Notes) -- second phase of v1.1
-Plan: 1 of 2 complete
-Status: Executing phase 6
-Last activity: 2026-03-06 - Completed 06-01: OneNote push-notes backend
+Phase: 7 of 7 (Landing Page Update) -- third phase of v1.1
+Plan: 0 of ? complete
+Status: Phase 6 complete, ready for Phase 7
+Last activity: 2026-03-06 - Completed 06-02: GeneralNotes UI component + ContactCard mount
 
-Progress: [###############░░░░░] 64% (v1.0 complete, v1.1 in progress)
+Progress: [################░░░░] 80% (v1.0 complete, v1.1 Phase 5-6 complete)
 
 ## Performance Metrics
 
@@ -37,8 +37,9 @@ Progress: [###############░░░░░] 64% (v1.0 complete, v1.1 in progress)
 - Average: ~2.3 plans/day
 
 **v1.1 Metrics:**
-- Plans completed: 1
+- Plans completed: 2
 - 06-01: 3min (3 tasks, 4 files)
+- 06-02: 21min (3 tasks, 3 files)
 
 ## Accumulated Context
 
@@ -54,6 +55,8 @@ Recent decisions affecting current work:
 - [Phase 05]: Form I templates use 'commission split agreement' label, address cooperating agent, keep RERA-mandated reference
 - [Phase 06]: OneNote template sections merged into single Outline block (no separate bordered boxes)
 - [Phase 06]: Stale pageId auto-detected and recovered with fallback to page creation
+- [Phase 06]: GeneralNotes extracted as self-contained component to avoid growing ContactCard monolith
+- [Phase 06]: Role dropdown disappears after first push via onPageCreated callback updating App.tsx state
 
 ### Pending Todos
 
@@ -74,5 +77,5 @@ Recent decisions affecting current work:
 ## Session Continuity
 
 Last session: 2026-03-06
-Stopped at: Completed 06-01-PLAN.md (OneNote push-notes backend)
-Resume file: .planning/phases/06-general-notes/06-01-SUMMARY.md
+Stopped at: Completed 06-02-PLAN.md (GeneralNotes UI component)
+Resume file: .planning/phases/06-general-notes/06-02-SUMMARY.md
