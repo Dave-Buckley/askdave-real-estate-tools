@@ -34,21 +34,30 @@ Make every agent faster at the tasks they repeat hundreds of times a week — ca
 - 1,517 education flashcards with spaced repetition — v1.0
 - RERA forms + KYC forms with WhatsApp/email send — v1.0
 
+<!-- Shipped in v1.1 (2026-03-06) -->
+
+- General Notes: ephemeral textarea in contact card, push to OneNote — v1.1
+- Form I template rewrites: agent-to-agent commission split language — v1.1
+- Landing page updated with v1.1 feature descriptions — v1.1
+
 ### Active
 
-- [ ] General Notes: text area in contact card, push to OneNote (appends below existing content), clears after push
-- [ ] Fix Form I templates: rewrite all 4 Form I WhatsApp/email messages from client-facing to agent-to-agent commission split language
+- [ ] In-app Area Guides: dedicated screen with Dubai community profiles and side-by-side cross-comparison, accessible from title bar next to Education
+- [ ] Quick Calculators: mortgage, commission split, ROI/yield calculators with effective date and source reference displayed
+- [ ] Activity Timeline: auto-log calls, WhatsApp sends, form sends, and notes per contact
+- [ ] Voice Memo to OneNote: reuse Whisper for post-call voice note transcription pushed to contact's OneNote page
+- [ ] Property Quick-Share: clipboard URL detection for property listings triggers WhatsApp share button (same UX as phone number detection)
 
 ### Out of Scope
 
 - CRM replacement — this works alongside existing CRM systems, not instead of them
-- Call logging / call tagging — CRM handles activity tracking
+- Lead pipeline / deal tracker — CRM handles this
+- Commission tracker — not needed, CRM handles
+- Daily briefing dashboard — not needed
 - Data scraping from CRM or property portals — security and compliance risk
-- Area insights / market data — sourcing involves scraping which isn't allowed
 - Scrcpy / ADB phone mirroring — requires USB debugging, too technical for agents
 - Built-in VoIP dialler — agents use personal phones via Phone Link
 - Bulk message sending — TDRA compliance risk
-- Cheque/currency calculators — simple enough to do manually
 
 ## Context
 
@@ -79,14 +88,16 @@ Make every agent faster at the tasks they repeat hundreds of times a week — ca
 | Signable forms deferred to v3+ | Legal complexity (UAE e-signature law) and separate web platform too much for v1 | — Pending |
 | Simple instruction website, not a web app | v1 is desktop-focused; website just explains and distributes the tool | — Pending |
 
-## Current Milestone: v1.1 Polish & Agent Tools
+## Current Milestone: v1.2 Agent Productivity
 
-**Goal:** Ship the deferred General Notes notepad and fix Form I templates for agent-to-agent use, then update the landing page.
+**Goal:** Give agents in-app reference tools, activity tracking, and smarter clipboard detection to make them more effective during and after client interactions.
 
 **Target features:**
-- General Notes text area in contact card with push-to-OneNote
-- Form I template rewrites (agent-to-agent commission split language)
-- Landing page update to reflect v1.1 changes
+- In-app Area Guides with community profiles and cross-comparison
+- Quick Calculators (mortgage, commission split, ROI/yield) with effective date + source reference
+- Activity Timeline — auto-log interactions per contact
+- Voice Memo to OneNote — post-call voice note transcription
+- Property Quick-Share — clipboard URL detection for listing links
 
 ---
-*Last updated: 2026-03-06 after milestone v1.1 started*
+*Last updated: 2026-03-06 after milestone v1.2 started*

@@ -24,5 +24,16 @@
 - **NOTE-04**: Quick notepad for mid-call notes pushed to OneNote (deferred to v1.1)
 - **ORG-02**: Calendar invite sent to client email (dropped — not needed, agent adds attendees in Google Calendar UI)
 
+## v1.1 Polish & Agent Tools (Shipped: 2026-03-06)
+
+**Phases:** 3 | **Plans:** 3 | **Timeline:** 1 day (2026-03-06)
+
+**Key accomplishments:**
+- General Notes: ephemeral textarea in contact card with push-to-OneNote
+- Form I template rewrites: agent-to-agent commission split language (all 4 WhatsApp/email messages)
+- Landing page updated with v1.1 feature descriptions, Area Guides trimmed to brief mention
+
+**Requirements:** LAND-01, LAND-02, plus quick task for Form I
+
 ---
 
