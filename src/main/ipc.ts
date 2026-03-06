@@ -6,7 +6,7 @@ import { openDialler, openWhatsApp, buildWhatsAppURL } from './actions'
 import { setSkipNextClipboardChange, suppressDetection } from './clipboard'
 import { getPanelWindow, showSettings, showPanel, expandPanel } from './tray'
 import { Template, ContactRole, FormTemplateOverride, CardProgress } from '../shared/types'
-import { openContactPage, openNotebookSection } from './onenote'
+import { openContactPage, openNotebookSection, pushNotesToOneNote } from './onenote'
 import { openCalendarBooking, createFollowUp } from './calendar'
 import { getContact, upsertContact, addRole, removeRole, listContacts, deleteContact } from './contacts'
 import type { Contact, ContactRole as ContactRoleType } from '../shared/types'
@@ -176,6 +176,13 @@ export function registerIPCHandlers(): void {
 
   ipcMain.handle('onenote:open-section', async () => {
     return await openNotebookSection()
+  })
+
+  ipcMain.handle('onenote:push-notes', async (_event, data: {
+    e164: string; name: string; displayNumber: string; notes: string;
+    role?: ContactRole; unit?: string; email?: string
+  }) => {
+    return await pushNotesToOneNote(data)
   })
 
   // --- Calendar ---

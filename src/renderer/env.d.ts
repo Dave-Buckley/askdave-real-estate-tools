@@ -47,6 +47,7 @@ export interface ElectronAPI {
   // OneNote
   openInOneNote: (data: { name: string; displayNumber: string; roles: ContactRole[]; e164: string; unit?: string; email?: string }) => Promise<{ success: boolean; error?: string; pageId?: string }>
   openOneNoteSection: () => Promise<{ success: boolean; error?: string }>
+  pushNotesToOneNote: (data: { e164: string; name: string; displayNumber: string; notes: string; role?: ContactRole; unit?: string; email?: string }) => Promise<{ success: boolean; error?: string; pageId?: string; created?: boolean }>
 
   // Calendar
   bookCalendar: (data: { name: string; displayNumber: string; roles: ContactRole[]; e164: string; unit?: string; email?: string }, type: 'viewing' | 'consultation', templateBody?: string) => Promise<void>

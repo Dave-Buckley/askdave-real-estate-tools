@@ -58,6 +58,8 @@ contextBridge.exposeInMainWorld('electronAPI', {
     ipcRenderer.invoke('onenote:open', data) as Promise<{ success: boolean; error?: string; pageId?: string }>,
   openOneNoteSection: () =>
     ipcRenderer.invoke('onenote:open-section') as Promise<{ success: boolean; error?: string }>,
+  pushNotesToOneNote: (data: { e164: string; name: string; displayNumber: string; notes: string; role?: string; unit?: string; email?: string }) =>
+    ipcRenderer.invoke('onenote:push-notes', data) as Promise<{ success: boolean; error?: string; pageId?: string; created?: boolean }>,
 
   // Calendar
   bookCalendar: (data: { name: string; displayNumber: string; roles: string[]; e164: string; unit?: string; email?: string }, type: 'viewing' | 'consultation', templateBody?: string) =>
