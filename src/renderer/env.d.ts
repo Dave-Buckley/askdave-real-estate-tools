@@ -78,6 +78,13 @@ export interface ElectronAPI {
   // Phone Link events
   onIncomingCall: (cb: (data: { e164: string; displayNumber: string; contactName: string | null }) => void) => void
   onCallEnded: (cb: (data: { e164: string; displayNumber: string; contactName: string | null }) => void) => void
+
+  // Transcriber
+  openRecorder: () => void
+  closeRecorder: () => void
+  onTranscriberState: (cb: (state: { state: string; elapsed?: number }) => void) => void
+  removeTranscriberStateListener: () => void
+  transcribeComplete: (transcript: string) => void
 }
 
 export interface SettingsAPI {

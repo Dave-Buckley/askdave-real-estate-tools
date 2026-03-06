@@ -114,5 +114,15 @@ contextBridge.exposeInMainWorld('electronAPI', {
 
   // Shell
   openExternal: (url: string) => ipcRenderer.invoke('shell:open-external', url),
-  showItemInFolder: (filePath: string) => ipcRenderer.invoke('shell:show-item', filePath)
+  showItemInFolder: (filePath: string) => ipcRenderer.invoke('shell:show-item', filePath),
+
+  // Transcriber
+  openRecorder: () => ipcRenderer.send('transcriber:open-recorder'),
+  closeRecorder: () => ipcRenderer.send('transcriber:close-recorder'),
+  onTranscriberState: (cb: (state: { state: string; elapsed?: number }) => void) =>
+    ipcRenderer.on('transcriber:state', (_e, state) => cb(state)),
+  removeTranscriberStateListener: () =>
+    ipcRenderer.removeAllListeners('transcriber:state'),
+  transcribeComplete: (transcript: string) =>
+    ipcRenderer.send('transcriber:complete', transcript)
 })
