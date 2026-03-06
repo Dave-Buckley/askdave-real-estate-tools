@@ -59,9 +59,9 @@ Requirements for v1.1 Polish & Agent Tools. Each maps to roadmap phases 5-7.
 
 ### Form I Templates
 
-- [ ] **FORMI-01**: All 4 Form I WhatsApp messages rewritten with agent-to-agent commission split language
-- [ ] **FORMI-02**: All 4 Form I email subjects and bodies rewritten with agent-to-agent language
-- [ ] **FORMI-03**: All 4 Form I descriptions updated to reflect agent-to-agent purpose
+- [x] **FORMI-01**: All 4 Form I WhatsApp messages rewritten with agent-to-agent commission split language
+- [x] **FORMI-02**: All 4 Form I email subjects and bodies rewritten with agent-to-agent language
+- [x] **FORMI-03**: All 4 Form I descriptions updated to reflect agent-to-agent purpose
 
 ### General Notes
 
@@ -179,9 +179,9 @@ Deferred to future releases. Significant complexity or external dependencies.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| FORMI-01 | Phase 5 | Pending |
-| FORMI-02 | Phase 5 | Pending |
-| FORMI-03 | Phase 5 | Pending |
+| FORMI-01 | Phase 5 | Complete |
+| FORMI-02 | Phase 5 | Complete |
+| FORMI-03 | Phase 5 | Complete |
 | NOTE-05 | Phase 6 | Pending |
 | NOTE-06 | Phase 6 | Pending |
 | NOTE-07 | Phase 6 | Pending |
