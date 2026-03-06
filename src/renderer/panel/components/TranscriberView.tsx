@@ -411,6 +411,14 @@ export default function TranscriberView({ onBack }: TranscriberViewProps): React
   if (phase === 'source-select') {
     return (
       <div className="flex flex-col gap-3">
+        {/* Consent notice */}
+        <div className="flex items-start gap-2.5 px-3 py-2.5 bg-[rgba(245,158,11,0.08)] border border-[rgba(245,158,11,0.2)] rounded-lg">
+          <AlertCircle size={14} className="text-[#f59e0b] shrink-0 mt-0.5" />
+          <p className="text-[11px] text-[#d4a34a] leading-relaxed">
+            Please ensure all participants have given their consent before recording.
+          </p>
+        </div>
+
         <p className="text-xs text-[#a1a1aa] text-center mb-1">Choose recording source</p>
 
         {/* Phone Mic card */}

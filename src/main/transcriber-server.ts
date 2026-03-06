@@ -165,6 +165,9 @@ function getRecorderHTML(): string {
 <body>
 <h1>Meeting Recorder</h1>
 <p class="subtitle">Ask Dave Real Estate Tools</p>
+<div style="background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.25);border-radius:8px;padding:10px 14px;margin-bottom:16px;max-width:340px;text-align:center">
+  <p style="font-size:12px;color:#d4a34a;line-height:1.4;margin:0">Please ensure all participants have given their consent before recording.</p>
+</div>
 <div id="status" class="status">Connecting to desktop...</div>
 <div id="timer" class="timer">00:00</div>
 <div id="controls" class="btn-group">
