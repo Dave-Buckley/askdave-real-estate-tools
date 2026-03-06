@@ -50,11 +50,11 @@ See milestones/v1.0-ROADMAP.md for full phase details.
   2. Agent can select 2-3 communities and view them side-by-side with differences highlighted (best yield, lowest service charge)
   3. Every area guide displays a "data effective as of" date and source attribution so the agent knows the freshness of the data
   4. Agent can share a formatted area summary to a client via WhatsApp with one click
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 08-01: TBD
-- [ ] 08-02: TBD
+- [ ] 08-01-PLAN.md — Data model (12 communities) + list/detail views with search, sort, and SVG charts
+- [ ] 08-02-PLAN.md — Side-by-side comparison table + WhatsApp share with editable preview
 
 ### Phase 9: Quick Calculators
 **Goal**: Agent can run common financial calculations with UAE-specific parameters during or after client calls
@@ -129,7 +129,7 @@ Plans:
 | 5. Form I Template Rewrites | v1.1 | 1/1 | Complete | 2026-03-06 |
 | 6. General Notes | v1.1 | 2/2 | Complete | 2026-03-06 |
 | 7. Landing Page Update | v1.1 | 1/1 | Complete | 2026-03-06 |
-| 8. Area Guides | v1.2 | 0/? | Not started | - |
+| 8. Area Guides | v1.2 | 0/2 | Planning complete | - |
 | 9. Quick Calculators | v1.2 | 0/? | Not started | - |
 | 10. Client Data Removal | v1.2 | 0/? | Not started | - |
 | 11. Voice Memo | v1.2 | 0/? | Not started | - |
