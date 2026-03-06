@@ -12,28 +12,32 @@ Make every agent faster at the tasks they repeat hundreds of times a week — ca
 
 ### Validated
 
-(None yet — ship to validate)
+<!-- Shipped in v1.0 MVP (2026-03-06) -->
+
+- Click-to-dial via Phone Link / tel: URI — v1.0
+- Click-to-WhatsApp via wa.me deep link — v1.0
+- Message templates (WhatsApp/Gmail/OneNote) with auto contact name fill — v1.0
+- OneNote integration: per-contact pages keyed on phone number — v1.0
+- Role-based qualifying templates (tenant, landlord, buyer, seller, portfolio) — v1.0
+- Multi-role contact support with adaptive templates — v1.0
+- Follow-up reminders (7/15/30 day) via Google Calendar — v1.0
+- Quick booking: viewing/consultation events from contact card — v1.0
+- Document checklist per client per transaction type — v1.0
+- System tray app with configurable global hotkeys — v1.0
+- Clipboard phone number detection with action popup — v1.0
+- Inbound caller recognition via Windows Phone Link — v1.0
+- UAE phone number normalization (E.164) — v1.0
+- NSIS installer, no admin rights, auto-updates via GitHub Releases — v1.0
+- UAE real estate news feed via RSS — v1.0
+- Landing page and product overview — v1.0
+- Meeting transcriber: phone mic (WiFi) + desktop mic, local Whisper AI — v1.0
+- 1,517 education flashcards with spaced repetition — v1.0
+- RERA forms + KYC forms with WhatsApp/email send — v1.0
 
 ### Active
 
-- [ ] Click-to-dial: highlight a phone number, one click to call via Phone Link / tel: URI
-- [ ] Click-to-WhatsApp: highlight a number, one click to open a WhatsApp chat via wa.me deep link
-- [ ] Message templates: editable reusable scripts with auto contact name fill
-- [ ] Contact notes with OneNote integration: auto-create/find OneNote pages per contact keyed on phone number
-- [ ] Role-based qualifying templates: tenant, landlord, buyer, seller, portfolio
-- [ ] Multi-role contact support: one contact can wear multiple hats, templates adapt
-- [ ] Quick property notepad: jot details mid-call, one button pushes to OneNote
-- [ ] Follow-up reminders: 3/15/30 day buttons that auto-create Google Calendar reminders
-- [ ] Quick booking: create a viewing event from a contact and send a calendar invite
-- [ ] Document checklist: per client, per transaction type (tenancy, sale, renewal), trackable
-- [ ] System tray app with configurable global hotkeys
-- [ ] Clipboard phone number detection with action popup
-- [ ] Inbound caller recognition on desktop via Windows Phone Link notifications
-- [ ] UAE phone number normalization (all formats to +971 E.164)
-- [ ] Clean .exe installer, no admin rights, auto-updates
-- [ ] Real estate news feed: curated UAE property news via RSS
-- [ ] Instruction/marketing website with download links
-- [ ] Meeting transcriber: record client meetings via microphone and auto-transcribe to structured notes
+- [ ] General Notes: text area in contact card, push to OneNote (appends below existing content), clears after push
+- [ ] Fix Form I templates: rewrite all 4 Form I WhatsApp/email messages from client-facing to agent-to-agent commission split language
 
 ### Out of Scope
 
@@ -75,5 +79,14 @@ Make every agent faster at the tasks they repeat hundreds of times a week — ca
 | Signable forms deferred to v3+ | Legal complexity (UAE e-signature law) and separate web platform too much for v1 | — Pending |
 | Simple instruction website, not a web app | v1 is desktop-focused; website just explains and distributes the tool | — Pending |
 
+## Current Milestone: v1.1 Polish & Agent Tools
+
+**Goal:** Ship the deferred General Notes notepad and fix Form I templates for agent-to-agent use, then update the landing page.
+
+**Target features:**
+- General Notes text area in contact card with push-to-OneNote
+- Form I template rewrites (agent-to-agent commission split language)
+- Landing page update to reflect v1.1 changes
+
 ---
-*Last updated: 2026-03-01 after requirements definition*
+*Last updated: 2026-03-06 after milestone v1.1 started*
