@@ -76,7 +76,7 @@ Plans:
 - [ ] 03-03-PLAN.md -- Website polish: electron-builder GitHub Releases config, landing page download URLs, GitHub Pages prep
 
 ### Phase 4: Meeting Transcriber
-**Goal**: Agents can record client meetings via microphone and get an ephemeral transcript they can copy-paste into ChatGPT -- fully local, fully free, no data saved to disk
+**Goal**: Agents can record client meetings via phone microphone over local WiFi and get an ephemeral transcript they can copy-paste into ChatGPT -- fully local, fully free, no data saved to disk
 **Depends on**: Phase 1 (core app)
 **Requirements**: REC-01, REC-02, REC-03, TRANS-01, TRANS-02, TRANS-03, PRIV-01
 **Success Criteria** (what must be TRUE):
@@ -88,8 +88,8 @@ Plans:
 **Plans**: 3 plans
 Plans:
 - [x] 04-01-PLAN.md -- Foundation: shared types, Whisper Web Worker, preload API extensions (partially obsolete -- AudioRecorder replaced by phone recording)
-- [ ] 04-02-PLAN.md -- (REPLANNING: local WiFi server, QR code, phone recorder page, WebSocket audio transfer)
-- [ ] 04-03-PLAN.md -- (REPLANNING: desktop UI for QR/status/transcript, revised IPC, settings)
+- [ ] 04-02-PLAN.md -- WiFi server infrastructure: cleanup obsolete artifacts, local HTTP+WebSocket server, phone recorder page, IPC/preload revision
+- [ ] 04-03-PLAN.md -- Desktop UI: TranscriberView with QR code, connection status, recording timer, Whisper transcription, transcript display with Copy All
 
 ## Progress
 
@@ -101,4 +101,4 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 | 1. Core App + Communication | 5/5 | Complete | 2026-03-02 |
 | 2. Notes and Calendar Integration | 3/3 | Complete   | 2026-03-02 |
 | 3. Secondary Features and Website | 3/3 | Complete   | 2026-03-03 |
-| 4. Meeting Transcriber | 0/3 | Re-planning | -- |
+| 4. Meeting Transcriber | 1/3 | In Progress | -- |
