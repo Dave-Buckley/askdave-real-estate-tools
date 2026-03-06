@@ -100,31 +100,38 @@ export default function NewsFeed({ onBack }: NewsFeedProps) {
         )}
 
         {!loading && items.length > 0 && (
-          <div className="space-y-0">
-            {items.map((item, index) => (
-              <button
-                key={`${item.link}-${index}`}
-                onClick={() => handleArticleClick(item.link)}
-                className="w-full text-left px-0 py-2.5 border-b border-white/[0.07] last:border-b-0 hover:bg-white/[0.04] transition-colors rounded group"
-              >
-                {/* Title */}
-                <p className="text-sm font-medium text-[#ededee] leading-tight line-clamp-2 mb-1 group-hover:text-indigo-300 transition-colors">
-                  {item.title}
-                </p>
+          <>
+            <div className="space-y-0">
+              {items.map((item, index) => (
+                <button
+                  key={`${item.link}-${index}`}
+                  onClick={() => handleArticleClick(item.link)}
+                  className="w-full text-left px-0 py-2.5 border-b border-white/[0.07] last:border-b-0 hover:bg-white/[0.04] transition-colors rounded group"
+                >
+                  {/* Title */}
+                  <p className="text-sm font-medium text-[#ededee] leading-tight line-clamp-2 mb-1 group-hover:text-indigo-300 transition-colors">
+                    {item.title}
+                  </p>
 
-                {/* Source + Date row */}
-                <div className="flex items-center gap-2">
-                  <span className={`text-[13px] px-1.5 py-0.5 rounded-full font-medium ${getSourceColor(item.source)}`}>
-                    {item.source}
-                  </span>
-                  <span className="text-[13px] text-[#a1a1aa]">
-                    {formatDate(item.pubDate)}
-                  </span>
-                  <ExternalLink size={14} strokeWidth={1.5} className="text-[#a1a1aa] ml-auto opacity-0 group-hover:opacity-100 transition-opacity" />
-                </div>
-              </button>
-            ))}
-          </div>
+                  {/* Source + Date row */}
+                  <div className="flex items-center gap-2">
+                    <span className={`text-[13px] px-1.5 py-0.5 rounded-full font-medium ${getSourceColor(item.source)}`}>
+                      {item.source}
+                    </span>
+                    <span className="text-[13px] text-[#a1a1aa]">
+                      {formatDate(item.pubDate)}
+                    </span>
+                    <ExternalLink size={14} strokeWidth={1.5} className="text-[#a1a1aa] ml-auto opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </div>
+                </button>
+              ))}
+            </div>
+
+            {/* Attribution */}
+            <p className="text-[10px] text-[#5a5a60] text-center mt-3 px-2 leading-relaxed">
+              Headlines sourced from public RSS feeds. Tap to read at original source. All content remains the property of its respective publishers.
+            </p>
+          </>
         )}
       </div>
     </div>

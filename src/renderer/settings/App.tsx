@@ -144,6 +144,13 @@ function App(): React.JSX.Element {
         </div>
       </section>
 
+      {/* Legal disclaimer */}
+      <section className="bg-[#161617] border border-white/[0.07] rounded-xl p-3">
+        <p className="text-[10px] text-[#5a5a60] leading-relaxed">
+          News headlines are sourced from publicly available RSS feeds and remain the intellectual property of their respective publishers. This app is not a media outlet and does not produce original news content. Meeting recordings are processed locally on your device using Whisper — no audio or transcripts are transmitted externally. Users are responsible for obtaining consent from all participants before recording, in accordance with UAE Federal Decree-Law No. 34 of 2021.
+        </p>
+      </section>
+
       {/* Version info */}
       <p className="text-[13px] text-[#a1a1aa] text-center">
         Ask Dave Real Estate Tools v1.0.0 &copy; 2026
