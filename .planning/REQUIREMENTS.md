@@ -78,7 +78,7 @@ Requirements for v1.1 Polish & Agent Tools. Each maps to roadmap phases 5-7.
 
 ## v1.2 Requirements
 
-Requirements for v1.2 Agent Productivity. Each maps to roadmap phases 8+.
+Requirements for v1.2 Agent Productivity. Each maps to roadmap phases 8-12.
 
 ### Area Guides
 
@@ -95,7 +95,7 @@ Requirements for v1.2 Agent Productivity. Each maps to roadmap phases 8+.
 
 ### Client Data Removal
 
-- [ ] **PRIV-02**: App stores zero client PII locally — no contact names, emails, phone numbers, or roles persisted to disk
+- [ ] **PRIV-02**: App stores zero client PII locally -- no contact names, emails, phone numbers, or roles persisted to disk
 - [ ] **PRIV-03**: Contact details entered during a session are ephemeral (RAM only)
 - [ ] **PRIV-04**: OneNote page lookups work without local contact cache
 
@@ -233,6 +233,31 @@ Deferred to future releases. Significant complexity or external dependencies.
 - Mapped to phases: 10
 - Unmapped: 0
 
+### v1.2 Traceability
+
+| Requirement | Phase | Status |
+|-------------|-------|--------|
+| AREA-01 | Phase 8 | Pending |
+| AREA-02 | Phase 8 | Pending |
+| AREA-03 | Phase 8 | Pending |
+| CALC-01 | Phase 9 | Pending |
+| CALC-02 | Phase 9 | Pending |
+| CALC-03 | Phase 9 | Pending |
+| CALC-04 | Phase 9 | Pending |
+| PRIV-02 | Phase 10 | Pending |
+| PRIV-03 | Phase 10 | Pending |
+| PRIV-04 | Phase 10 | Pending |
+| MEMO-01 | Phase 11 | Pending |
+| MEMO-02 | Phase 11 | Pending |
+| MEMO-03 | Phase 11 | Pending |
+| SHARE-01 | Phase 12 | Pending |
+| SHARE-02 | Phase 12 | Pending |
+
+**v1.2 Coverage:**
+- v1.2 requirements: 15 total
+- Mapped to phases: 15
+- Unmapped: 0
+
 ---
 *Requirements defined: 2026-03-01*
-*Last updated: 2026-03-06 -- v1.2 requirements defined*
+*Last updated: 2026-03-06 -- v1.2 roadmap created, traceability added*

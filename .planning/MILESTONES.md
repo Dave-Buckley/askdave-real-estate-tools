@@ -22,7 +22,7 @@
 
 ### Known Gaps
 - **NOTE-04**: Quick notepad for mid-call notes pushed to OneNote (deferred to v1.1)
-- **ORG-02**: Calendar invite sent to client email (dropped — not needed, agent adds attendees in Google Calendar UI)
+- **ORG-02**: Calendar invite sent to client email (dropped -- not needed, agent adds attendees in Google Calendar UI)
 
 ## v1.1 Polish & Agent Tools (Shipped: 2026-03-06)
 
@@ -33,7 +33,19 @@
 - Form I template rewrites: agent-to-agent commission split language (all 4 WhatsApp/email messages)
 - Landing page updated with v1.1 feature descriptions, Area Guides trimmed to brief mention
 
-**Requirements:** LAND-01, LAND-02, plus quick task for Form I
+**Requirements:** 10/10 v1.1 requirements complete
+
+## v1.2 Agent Productivity (In Progress)
+
+**Phases:** 5 (phases 8-12) | **Plans:** TBD
+
+**Goal:** Give agents in-app reference tools, remove all client PII from local storage, add voice-to-OneNote workflow, and extend clipboard detection to property listing URLs.
+
+**Planned features:**
+- Area Guides: 10 Dubai community profiles with comparison view
+- Quick Calculators: mortgage, commission split, ROI/yield, DLD costs (UAE-specific)
+- Client Data Removal: zero PII on disk, all contact data transient
+- Voice Memo: record, transcribe via Whisper, push to OneNote
+- Property Quick-Share: clipboard URL detection for Bayut/PropertyFinder/Dubizzle
 
 ---
-

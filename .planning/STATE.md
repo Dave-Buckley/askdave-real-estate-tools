@@ -2,10 +2,10 @@
 gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: Agent Productivity
-status: defining_requirements
+status: ready_to_plan
 last_updated: "2026-03-06"
 progress:
-  total_phases: 0
+  total_phases: 5
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
@@ -18,14 +18,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-06)
 
 **Core value:** Make every agent faster at the tasks they repeat hundreds of times a week -- calling, messaging, note-taking, and organizing -- without touching the CRM or creating security concerns.
-**Current focus:** v1.2 Agent Productivity
+**Current focus:** Phase 8 - Area Guides (v1.2)
 
 ## Current Position
 
-Phase: Not started (defining requirements)
+Phase: 8 of 12 (Area Guides) -- first phase of v1.2
 Plan: --
-Status: Defining requirements
-Last activity: 2026-03-06 -- Milestone v1.2 started
+Status: Ready to plan
+Last activity: 2026-03-06 -- Roadmap created for v1.2 (phases 8-12)
+
+Progress: [####################..........] 70% (phases 1-7 complete, 8-12 remaining)
 
 ## Performance Metrics
 
@@ -47,37 +49,26 @@ Last activity: 2026-03-06 -- Milestone v1.2 started
 Decisions are logged in PROJECT.md Key Decisions table.
 Recent decisions affecting current work:
 
-- v1.1: General Notes is a text area in contact card; push appends below existing OneNote content; clears after push (scratchpad behavior)
-- v1.1: Form I templates are agent-to-agent (commission split), not client-facing -- need rewrite of all 4 WhatsApp/email messages
-- v1.1: Landing page update included in scope
-- v1.1: Phase ordering -- Form I first (zero risk), General Notes second (core feature), Landing Page last (must describe finished features)
-- [Phase 05]: Form I templates use 'commission split agreement' label, address cooperating agent, keep RERA-mandated reference
-- [Phase 06]: OneNote template sections merged into single Outline block (no separate bordered boxes)
-- [Phase 06]: Stale pageId auto-detected and recovered with fallback to page creation
-- [Phase 06]: GeneralNotes extracted as self-contained component to avoid growing ContactCard monolith
-- [Phase 06]: Role dropdown disappears after first push via onPageCreated callback updating App.tsx state
-- [Phase 07]: General Notes gets dedicated feature card (split from OneNote card), not a full standalone section
-- [Phase 07]: Existing Agent-to-Agent Forms content sufficient for LAND-02 (no changes needed)
-- [Phase 07]: Area Guides trimmed to brief mention preserving section anchor and background alternation
+- v1.2: Activity Timeline simplified -- OneNote timestamps ARE the activity record, no local event logging
+- v1.2: Zero client PII on disk -- app's USP, all contact data is transient session state
+- v1.2: Phase order -- Area Guides, Calculators, Client Data Removal, Voice Memo, Property Quick-Share
+- v1.2: Area Guides and Calculators are renderer-only (no IPC, no data model changes)
+- v1.2: Client Data Removal before Voice Memo (stabilize contact model first)
+- v1.2: Property Quick-Share last (touches clipboard watcher, isolate regressions)
 
 ### Pending Todos
 
-- **Test meeting transcriber end-to-end** -- phone mic via WiFi, desktop mic, QR code on mobile, model download, ephemeral data cleanup
-- **Take screenshots for landing page** -- transcriber source picker, recording view, transcript view for landing/screenshots/
-- **Add silent TickTick reminder integration** (area: api) -- config-gated, no UI surface, personal feature
+- **Test meeting transcriber end-to-end** -- phone mic via WiFi, desktop mic, QR code on mobile
+- **Take screenshots for landing page** -- transcriber views for landing/screenshots/
+- **Add silent TickTick reminder integration** (area: api) -- config-gated, personal feature
 
 ### Blockers/Concerns
 
-(None identified)
-
-### Quick Tasks Completed
-
-| # | Description | Date | Commit | Directory |
-|---|-------------|------|--------|-----------|
-| 1 | Rewrite Form I WhatsApp/email templates and descriptions from client-facing to agent-to-agent commission split language | 2026-03-06 | 2fb977f | [1-rewrite-form-i-whatsapp-email-templates-](./quick/1-rewrite-form-i-whatsapp-email-templates-/) |
+- Phase 10 (Client Data Removal) was NOT covered by research agents -- needs careful impact analysis during planning
+- Voice Memo + Transcriber could double-load Whisper model (~200-400MB each) -- accepted for v1.2, shared worker deferred to v1.3
 
 ## Session Continuity
 
 Last session: 2026-03-06
-Stopped at: Completed 07-01-PLAN.md (Landing page update) -- v1.1 milestone complete
-Resume file: .planning/phases/07-landing-page-update/07-01-SUMMARY.md
+Stopped at: v1.2 roadmap created (phases 8-12), ready to plan Phase 8
+Resume file: None
