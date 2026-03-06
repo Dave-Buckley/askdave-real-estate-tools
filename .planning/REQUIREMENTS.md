@@ -76,6 +76,40 @@ Requirements for v1.1 Polish & Agent Tools. Each maps to roadmap phases 5-7.
 - [x] **LAND-01**: Landing page updated with General Notes feature description
 - [x] **LAND-02**: Landing page updated with agent-to-agent collaboration tools mention
 
+## v1.2 Requirements
+
+Requirements for v1.2 Agent Productivity. Each maps to roadmap phases 8+.
+
+### Area Guides
+
+- [ ] **AREA-01**: Agent can view Dubai community profiles (10+ areas) from a dedicated screen in the title bar
+- [ ] **AREA-02**: Agent can compare two or more communities side-by-side (price/sqft, yield, growth, property types)
+- [ ] **AREA-03**: Each area guide displays a "data effective as of" date and source attribution
+
+### Quick Calculators
+
+- [ ] **CALC-01**: Agent can calculate monthly mortgage payment (principal, rate, term)
+- [ ] **CALC-02**: Agent can calculate commission split between cooperating agents
+- [ ] **CALC-03**: Agent can calculate ROI/yield on a property (purchase price, rental income)
+- [ ] **CALC-04**: Each calculator displays effective date and source reference for rates used (DLD fees, LTV limits, etc.)
+
+### Client Data Removal
+
+- [ ] **PRIV-02**: App stores zero client PII locally — no contact names, emails, phone numbers, or roles persisted to disk
+- [ ] **PRIV-03**: Contact details entered during a session are ephemeral (RAM only)
+- [ ] **PRIV-04**: OneNote page lookups work without local contact cache
+
+### Voice Memo
+
+- [ ] **MEMO-01**: Agent can record a short voice note after a call using their microphone
+- [ ] **MEMO-02**: Voice note is transcribed locally using Whisper AI
+- [ ] **MEMO-03**: Transcript is pushed to the contact's OneNote page with timestamp
+
+### Property Quick-Share
+
+- [ ] **SHARE-01**: App detects property listing URLs in clipboard (Bayut, Property Finder, Dubizzle)
+- [ ] **SHARE-02**: Detected URL triggers a WhatsApp share button (same UX as phone number detection)
+
 ## v2 Requirements
 
 Deferred to future release. Tracked but not in current roadmap.
@@ -131,6 +165,10 @@ Deferred to future releases. Significant complexity or external dependencies.
 | AI-generated listing descriptions | Out of product scope |
 | Scrcpy / ADB phone mirroring | Requires USB debugging -- too technical and scary for agents |
 | Cheque/currency calculators | Simple enough to do manually |
+| Lead pipeline / deal tracker | CRM handles this |
+| Commission tracker | CRM handles this |
+| Daily briefing dashboard | Not needed |
+| Local activity event logging | App stores no client data; OneNote timestamps are the activity record |
 | Speaker diarization | Separate enhancement for future version |
 | In-app meeting summaries / AI extraction | Agent uses ChatGPT externally for now |
 | Saved transcript history / searchable archive | Explicitly out of scope (privacy) |
@@ -197,4 +235,4 @@ Deferred to future releases. Significant complexity or external dependencies.
 
 ---
 *Requirements defined: 2026-03-01*
-*Last updated: 2026-03-06 -- v1.1 requirements mapped to phases 5-7*
+*Last updated: 2026-03-06 -- v1.2 requirements defined*
