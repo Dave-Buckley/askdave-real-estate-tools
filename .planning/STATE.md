@@ -2,13 +2,13 @@
 gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Polish & Agent Tools
-status: unknown
-last_updated: "2026-03-06T16:52:02.095Z"
+status: complete
+last_updated: "2026-03-06T18:20:00Z"
 progress:
-  total_phases: 6
-  completed_phases: 5
-  total_plans: 15
-  completed_plans: 16
+  total_phases: 7
+  completed_phases: 7
+  total_plans: 16
+  completed_plans: 17
 ---
 
 # Project State
@@ -18,16 +18,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-06)
 
 **Core value:** Make every agent faster at the tasks they repeat hundreds of times a week -- calling, messaging, note-taking, and organizing -- without touching the CRM or creating security concerns.
-**Current focus:** Phase 7 - Landing Page Update
+**Current focus:** v1.1 milestone complete
 
 ## Current Position
 
-Phase: 7 of 7 (Landing Page Update) -- third phase of v1.1
-Plan: 0 of ? complete
-Status: Phase 6 complete, ready for Phase 7
-Last activity: 2026-03-06 - Completed 06-02: GeneralNotes UI component + ContactCard mount
+Phase: 7 of 7 (Landing Page Update) -- COMPLETE
+Plan: 1 of 1 complete
+Status: v1.1 milestone complete (all 3 phases: Form I, General Notes, Landing Page)
+Last activity: 2026-03-06 - Completed 07-01: Landing page update with v1.1 features
 
-Progress: [################░░░░] 80% (v1.0 complete, v1.1 Phase 5-6 complete)
+Progress: [####################] 100% (v1.0 + v1.1 complete)
 
 ## Performance Metrics
 
@@ -37,9 +37,10 @@ Progress: [################░░░░] 80% (v1.0 complete, v1.1 Phase 5-6 comp
 - Average: ~2.3 plans/day
 
 **v1.1 Metrics:**
-- Plans completed: 2
+- Plans completed: 3
 - 06-01: 3min (3 tasks, 4 files)
 - 06-02: 21min (3 tasks, 3 files)
+- 07-01: 2min (2 tasks, 2 files)
 
 ## Accumulated Context
 
@@ -57,6 +58,9 @@ Recent decisions affecting current work:
 - [Phase 06]: Stale pageId auto-detected and recovered with fallback to page creation
 - [Phase 06]: GeneralNotes extracted as self-contained component to avoid growing ContactCard monolith
 - [Phase 06]: Role dropdown disappears after first push via onPageCreated callback updating App.tsx state
+- [Phase 07]: General Notes gets dedicated feature card (split from OneNote card), not a full standalone section
+- [Phase 07]: Existing Agent-to-Agent Forms content sufficient for LAND-02 (no changes needed)
+- [Phase 07]: Area Guides trimmed to brief mention preserving section anchor and background alternation
 
 ### Pending Todos
 
@@ -77,5 +81,5 @@ Recent decisions affecting current work:
 ## Session Continuity
 
 Last session: 2026-03-06
-Stopped at: Completed 06-02-PLAN.md (GeneralNotes UI component)
-Resume file: .planning/phases/06-general-notes/06-02-SUMMARY.md
+Stopped at: Completed 07-01-PLAN.md (Landing page update) -- v1.1 milestone complete
+Resume file: .planning/phases/07-landing-page-update/07-01-SUMMARY.md

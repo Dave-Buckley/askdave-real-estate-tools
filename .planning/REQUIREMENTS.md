@@ -73,8 +73,8 @@ Requirements for v1.1 Polish & Agent Tools. Each maps to roadmap phases 5-7.
 
 ### Landing Page
 
-- [ ] **LAND-01**: Landing page updated with General Notes feature description
-- [ ] **LAND-02**: Landing page updated with agent-to-agent collaboration tools mention
+- [x] **LAND-01**: Landing page updated with General Notes feature description
+- [x] **LAND-02**: Landing page updated with agent-to-agent collaboration tools mention
 
 ## v2 Requirements
 
@@ -187,8 +187,8 @@ Deferred to future releases. Significant complexity or external dependencies.
 | NOTE-07 | Phase 6 | Complete |
 | NOTE-08 | Phase 6 | Complete |
 | NOTE-09 | Phase 6 | Complete |
-| LAND-01 | Phase 7 | Pending |
-| LAND-02 | Phase 7 | Pending |
+| LAND-01 | Phase 7 | Complete |
+| LAND-02 | Phase 7 | Complete |
 
 **v1.1 Coverage:**
 - v1.1 requirements: 10 total
