@@ -572,9 +572,10 @@
     <div class="nav-inner">
       <a href="#" class="logo"><img src="icon.png" alt="Ask Dave" style="width:28px;height:28px;border-radius:6px;vertical-align:middle;margin-right:0.5rem;">Ask Dave <span>Dubai Real Estate</span></a>
       <ul class="nav-links">
+        <li><a href="#demo">How It Works</a></li>
         <li><a href="#features">Features</a></li>
-        <li><a href="#getting-started">Getting Started</a></li>
         <li><a href="#templates">Templates</a></li>
+        <li><a href="#areas">Areas</a></li>
         <li><a href="#education">Education</a></li>
         <li><a href="#download">Coming Soon</a></li>
       </ul>
@@ -601,6 +602,49 @@
       </div>
       <div style="width: 220px; height: 340px; overflow: hidden; border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.18); background: #111111;">
         <img src="screenshots/templates.png" alt="WhatsApp and Gmail templates" style="width: 100%; height: 100%; object-fit: cover; object-position: top center;" class="screenshot-thumb">
+      </div>
+    </div>
+  </section>
+
+  <!-- POPUP DEMO -->
+  <section class="demo-dark" id="demo">
+    <div class="section-center">
+      <div class="section-eyebrow">See It In Action</div>
+      <div class="section-title">Highlight text, press Ctrl+Space, take action</div>
+      <div class="section-sub">Works with phone numbers, emails, or entire contact blocks. The app extracts everything automatically.</div>
+
+      <div class="demo-grid">
+        <div>
+          <ul class="demo-steps">
+            <li>
+              <div class="demo-num">1</div>
+              <div><strong>Highlight any text on screen</strong><span>A phone number, an email, or a whole block of text from any CRM, website, email, spreadsheet, or PDF.</span></div>
+            </li>
+            <li>
+              <div class="demo-num">2</div>
+              <div><strong>Press Ctrl+Space</strong><span>The compact window appears instantly. Phone numbers are cleaned up and formatted. Emails, names, and property units are extracted from larger text blocks.</span></div>
+            </li>
+            <li>
+              <div class="demo-num">3</div>
+              <div><strong>Choose Dial, WhatsApp, or Expand</strong><span>Click Dial to call via Phone Link, WhatsApp to start a chat, or Expand to access templates, forms, calendar, and more.</span></div>
+            </li>
+            <li>
+              <div class="demo-num">4</div>
+              <div><strong>Send templates, book viewings, take notes</strong><span>In the expanded panel: pick a WhatsApp or Gmail template, send a form, create a OneNote page, jot General Notes, or book a viewing into Google Calendar.</span></div>
+            </li>
+          </ul>
+        </div>
+        <div class="demo-visual">
+          <div class="popup-mock" style="background: #1a1a1a; border: 1px solid #2a2a2a;">
+            <div class="popup-phone" style="color: #e0e0e0;"><span class="popup-flag">&#127462;&#127466;</span> +971 50 123 4567</div>
+            <div class="popup-buttons">
+              <div class="popup-btn popup-btn-dial" style="background: #2a2a2a; color: #e0e0e0; border-color: #3a3a3a;">Dial</div>
+              <div class="popup-btn popup-btn-wa" style="background: #ffffff; color: #111111;">WhatsApp</div>
+              <div class="popup-btn" style="background: #2a2a2a; color: #999999; border: 1px solid #3a3a3a; flex: 1; text-align: center;">Expand</div>
+            </div>
+          </div>
+          <div class="popup-caption">Compact window appears when you press Ctrl+Space</div>
+        </div>
       </div>
     </div>
   </section>
@@ -641,12 +685,17 @@
         <div class="feature-cell">
           <div class="feature-icon">&#128214;</div>
           <h3>OneNote Integration</h3>
-          <p>Auto-creates structured OneNote pages organized by role: Tenant, Landlord, Buyer, Seller, or Investor. Qualifying questions pre-filled.</p>
+          <p>Auto-creates structured OneNote pages organized by role: Tenant, Landlord, Buyer, Seller, or Investor. Qualifying questions pre-filled so you never miss a detail.</p>
+        </div>
+        <div class="feature-cell">
+          <div class="feature-icon">&#128221;</div>
+          <h3>General Notes</h3>
+          <p>Jot freeform notes mid-call and push them to the contact's OneNote page with one click. Each note is timestamped automatically. Nothing is stored locally — OneNote is your single source of truth.</p>
         </div>
         <div class="feature-cell">
           <div class="feature-icon">&#128220;</div>
-          <h3>RERA Forms</h3>
-          <p>Sales, Rentals, and Off-plan contract forms. Send directly via WhatsApp or Gmail. Plus internal KYC forms with download.</p>
+          <h3>Dubai Real Estate Forms</h3>
+          <p>Sales, Rentals, Off-plan, and agent-to-agent commission forms. Send directly via WhatsApp or Gmail. Plus internal KYC forms with download.</p>
         </div>
         <div class="feature-cell">
           <div class="feature-icon">&#128197;</div>
@@ -728,6 +777,458 @@
             <img src="screenshots/onenote.png" alt="OneNote integration" style="width: 100%; height: 100%; object-fit: contain;" class="screenshot-thumb">
           </div>
           <p style="margin-top: 12px; font-size: 14px; color: var(--text-light);">OneNote contact pages with qualifying questions</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEMPLATES -->
+  <section class="section section-alt" id="templates">
+    <div class="section-center">
+      <div class="section-eyebrow">Templates</div>
+      <div class="section-title">Send personalised messages in seconds</div>
+      <div class="section-sub">Pre-loaded with messages real estate agents actually send. Pick one, type the name, and go.</div>
+
+      <div class="template-grid">
+        <div class="template-info">
+          <h3>WhatsApp, Gmail &amp; OneNote templates built for UAE real estate</h3>
+          <p>Placeholders like <strong>{name}</strong>, <strong>{unit}</strong>, and <strong>{email}</strong> auto-fill from the contact card. Click the pencil icon on any template to customise it.</p>
+          <p style="font-weight:600; color:var(--heading); font-size:0.82rem; margin-bottom:0.4rem;">WhatsApp Templates (6)</p>
+          <ul class="template-list" style="columns:1; margin-bottom:1rem;">
+            <li>Listing Introduction</li>
+            <li>Follow-Up</li>
+            <li>Viewing Confirmation</li>
+            <li>Viewing Reminder</li>
+            <li>New Listing Alert</li>
+            <li>Thank You</li>
+          </ul>
+          <p style="font-weight:600; color:var(--heading); font-size:0.82rem; margin-bottom:0.4rem;">Gmail Templates (6)</p>
+          <ul class="template-list" style="columns:1; margin-bottom:1rem;">
+            <li>Listing Introduction</li>
+            <li>Follow-Up</li>
+            <li>Viewing Confirmation</li>
+            <li>Viewing Reminder</li>
+            <li>New Listing Alert</li>
+            <li>Thank You</li>
+          </ul>
+          <p style="font-weight:600; color:var(--heading); font-size:0.82rem; margin-bottom:0.4rem;">OneNote Templates (5 roles)</p>
+          <ul class="template-list" style="columns:1; margin-bottom:1rem;">
+            <li>Tenant</li>
+            <li>Landlord</li>
+            <li>Buyer</li>
+            <li>Seller</li>
+            <li>Investor</li>
+          </ul>
+          <p class="template-note">Every template is editable. Click the pencil icon to customise messages with your own wording.</p>
+        </div>
+
+        <div class="wa-phone-mock">
+          <div class="wa-notch"></div>
+          <div class="wa-screen">
+            <div class="wa-header">
+              <div class="wa-avatar">AD</div>
+              <div class="wa-name">Ahmed Al-Khalidi</div>
+            </div>
+            <div class="wa-bubble">
+              Hi <span class="wa-highlight">Ahmed</span>, I have a new listing in Dubai Marina that matches your requirements. It's a 2BR apartment with full marina view, priced at AED 2.1M. Would you like to schedule a viewing this week?
+              <div class="wa-time">2:34 PM</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MEETING TRANSCRIBER -->
+  <section class="section" id="transcriber">
+    <div class="section-center">
+      <div class="section-eyebrow">Meeting Transcriber</div>
+      <div class="section-title">Record meetings. Transcribe locally. Keep everything private.</div>
+      <div class="section-sub">No cloud. No subscription. No audio leaves your device. Powered by local AI that runs entirely on your machine.</div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start;">
+
+        <!-- Left: Flow steps -->
+        <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+          <div style="display: flex; gap: 1rem; align-items: flex-start;">
+            <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #818cf8, #6366f1); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 0.9rem; flex-shrink: 0;">1</div>
+            <div>
+              <h3 style="font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.95rem; color: var(--heading); margin-bottom: 0.3rem;">Choose Your Source</h3>
+              <p style="font-size: 0.82rem; color: var(--text-light); line-height: 1.7; font-weight: 300;">Click the mic icon in the title bar. Pick <strong>Phone Mic</strong> to record from your phone over WiFi, or <strong>Desktop Mic</strong> to use your laptop mic or headset.</p>
+            </div>
+          </div>
+          <div style="display: flex; gap: 1rem; align-items: flex-start;">
+            <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #22d3ee, #06b6d4); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 0.9rem; flex-shrink: 0;">2</div>
+            <div>
+              <h3 style="font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.95rem; color: var(--heading); margin-bottom: 0.3rem;">Record the Meeting</h3>
+              <p style="font-size: 0.82rem; color: var(--text-light); line-height: 1.7; font-weight: 300;">For phone: scan the QR code, and your phone becomes a wireless mic. For desktop: select your mic or headset and hit record. Pause and resume any time.</p>
+            </div>
+          </div>
+          <div style="display: flex; gap: 1rem; align-items: flex-start;">
+            <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #f59e0b, #d97706); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 0.9rem; flex-shrink: 0;">3</div>
+            <div>
+              <h3 style="font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.95rem; color: var(--heading); margin-bottom: 0.3rem;">AI Transcribes Automatically</h3>
+              <p style="font-size: 0.82rem; color: var(--text-light); line-height: 1.7; font-weight: 300;">When you stop recording, Whisper AI transcribes the audio locally on your machine. No internet needed. No per-minute charges. Ever.</p>
+            </div>
+          </div>
+          <div style="display: flex; gap: 1rem; align-items: flex-start;">
+            <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #4ade80, #22c55e); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 0.9rem; flex-shrink: 0;">4</div>
+            <div>
+              <h3 style="font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.95rem; color: var(--heading); margin-bottom: 0.3rem;">Copy and Use</h3>
+              <p style="font-size: 0.82rem; color: var(--text-light); line-height: 1.7; font-weight: 300;">The transcript appears in the app. Copy All to paste into ChatGPT for summaries, action items, or follow-up emails. Or select and copy specific sections.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Key details -->
+        <div>
+          <div style="background: #111111; border-radius: 16px; padding: 2rem; border: 1px solid #2a2a2a; position: relative; overflow: hidden;">
+            <div style="position: absolute; top: -40px; right: -40px; width: 120px; height: 120px; background: rgba(129,140,248,0.1); border-radius: 50%; filter: blur(40px);"></div>
+
+            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem;">
+              <span style="font-size: 1.3rem;">&#127908;</span>
+              <span style="color: #ededee; font-size: 0.9rem; font-weight: 600;">Two Recording Modes</span>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 1.5rem;">
+              <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.85rem; background: rgba(129,140,248,0.08); border: 1px solid rgba(129,140,248,0.15); border-radius: 10px;">
+                <div style="width: 36px; height: 36px; background: rgba(129,140,248,0.15); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem;">&#128241;</div>
+                <div>
+                  <div style="color: #ededee; font-size: 0.78rem; font-weight: 600;">Phone Mic via WiFi</div>
+                  <div style="color: #71717a; font-size: 0.68rem;">Scan QR code, phone becomes wireless mic</div>
+                </div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.85rem; background: rgba(34,211,238,0.08); border: 1px solid rgba(34,211,238,0.15); border-radius: 10px;">
+                <div style="width: 36px; height: 36px; background: rgba(34,211,238,0.15); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem;">&#128187;</div>
+                <div>
+                  <div style="color: #ededee; font-size: 0.78rem; font-weight: 600;">Desktop Mic or Headset</div>
+                  <div style="color: #71717a; font-size: 0.68rem;">Pick any connected mic, record directly</div>
+                </div>
+              </div>
+            </div>
+
+            <div style="border-top: 1px solid #2a2a2a; padding-top: 1.25rem;">
+              <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                <span style="color: #4ade80; font-size: 0.85rem;">&#128274;</span>
+                <span style="color: #ededee; font-size: 0.78rem; font-weight: 600;">Fully Private</span>
+              </div>
+              <p style="color: #71717a; font-size: 0.72rem; line-height: 1.6;">Audio is processed locally by Whisper AI. No recordings are saved to disk. No data is sent to any server. When you navigate away, everything is discarded. Compliant with UAE privacy requirements.</p>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; margin-top: 1.25rem;">
+            <div style="text-align: center; padding: 1rem; background: var(--ice); border-radius: 10px; border: 1px solid var(--border-light);">
+              <div style="font-family: 'DM Serif Display', serif; font-size: 1.5rem; color: var(--heading);">$0</div>
+              <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 0.2rem;">Per Minute</div>
+            </div>
+            <div style="text-align: center; padding: 1rem; background: var(--ice); border-radius: 10px; border: 1px solid var(--border-light);">
+              <div style="font-family: 'DM Serif Display', serif; font-size: 1.5rem; color: var(--heading);">Local</div>
+              <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 0.2rem;">AI Processing</div>
+            </div>
+            <div style="text-align: center; padding: 1rem; background: var(--ice); border-radius: 10px; border: 1px solid var(--border-light);">
+              <div style="font-family: 'DM Serif Display', serif; font-size: 1.5rem; color: var(--heading);">0</div>
+              <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 0.2rem;">Data Sent</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- DUBAI REAL ESTATE FORMS -->
+  <section class="section section-alt" id="forms">
+    <div class="section-center">
+      <div class="section-eyebrow">Forms</div>
+      <div class="section-title">Every form you need, ready to send</div>
+      <div class="section-sub">20+ Dubai real estate forms organized by category. Send any form via WhatsApp or Gmail with one click. Placeholders auto-fill from the contact card.</div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start;">
+
+        <!-- Left: Form categories -->
+        <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+          <div style="background: var(--ice); border: 1px solid var(--border-light); border-radius: 12px; padding: 1.5rem;">
+            <div style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1rem;">
+              <div style="width: 32px; height: 32px; background: linear-gradient(135deg, #818cf8, #6366f1); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 0.85rem;">&#128200;</div>
+              <h3 style="font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.95rem; color: var(--heading);">Sales</h3>
+              <span style="font-size: 0.7rem; color: var(--text-muted); background: var(--white); padding: 2px 8px; border-radius: 10px; border: 1px solid var(--border-light);">13 forms</span>
+            </div>
+            <ul style="list-style: none; display: flex; flex-wrap: wrap; gap: 0.4rem;">
+              <li style="font-size: 0.72rem; color: var(--text-light); background: var(--white); padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border-light);">Form A &mdash; Listing</li>
+              <li style="font-size: 0.72rem; color: var(--text-light); background: var(--white); padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border-light);">Form B &mdash; Buyer</li>
+              <li style="font-size: 0.72rem; color: var(--text-light); background: var(--white); padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border-light);">Form F &mdash; MOU</li>
+              <li style="font-size: 0.72rem; color: var(--text-light); background: var(--white); padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border-light);">Form U &mdash; Termination</li>
+              <li style="font-size: 0.72rem; color: var(--text-light); background: var(--white); padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border-light);">Contract Clauses (4 variants)</li>
+              <li style="font-size: 0.72rem; color: var(--text-light); background: var(--white); padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border-light);">Listing Form</li>
+              <li style="font-size: 0.72rem; color: var(--text-light); background: var(--white); padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border-light);">Board Authorization</li>
+            </ul>
+          </div>
+
+          <div style="background: var(--ice); border: 1px solid var(--border-light); border-radius: 12px; padding: 1.5rem;">
+            <div style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1rem;">
+              <div style="width: 32px; height: 32px; background: linear-gradient(135deg, #22d3ee, #06b6d4); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 0.85rem;">&#127968;</div>
+              <h3 style="font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.95rem; color: var(--heading);">Rentals</h3>
+              <span style="font-size: 0.7rem; color: var(--text-muted); background: var(--white); padding: 2px 8px; border-radius: 10px; border: 1px solid var(--border-light);">6 forms</span>
+            </div>
+            <ul style="list-style: none; display: flex; flex-wrap: wrap; gap: 0.4rem;">
+              <li style="font-size: 0.72rem; color: var(--text-light); background: var(--white); padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border-light);">Tenancy Contract</li>
+              <li style="font-size: 0.72rem; color: var(--text-light); background: var(--white); padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border-light);">Contract Addendum</li>
+              <li style="font-size: 0.72rem; color: var(--text-light); background: var(--white); padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border-light);">Ejari Termination (NOC)</li>
+              <li style="font-size: 0.72rem; color: var(--text-light); background: var(--white); padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border-light);">Closing Mail</li>
+            </ul>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem;">
+            <div style="background: var(--ice); border: 1px solid var(--border-light); border-radius: 12px; padding: 1.25rem;">
+              <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
+                <div style="width: 28px; height: 28px; background: linear-gradient(135deg, #f59e0b, #d97706); border-radius: 6px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 0.75rem;">&#128100;</div>
+                <h3 style="font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.85rem; color: var(--heading);">KYC</h3>
+              </div>
+              <p style="font-size: 0.72rem; color: var(--text-light); line-height: 1.5;">Individual and company KYC forms with notes. Download or send.</p>
+            </div>
+            <div style="background: var(--ice); border: 1px solid var(--border-light); border-radius: 12px; padding: 1.25rem;">
+              <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
+                <div style="width: 28px; height: 28px; background: linear-gradient(135deg, #4ade80, #22c55e); border-radius: 6px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 0.75rem;">&#129309;</div>
+                <h3 style="font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.85rem; color: var(--heading);">Agent-to-Agent</h3>
+              </div>
+              <p style="font-size: 0.72rem; color: var(--text-light); line-height: 1.5;">Commission split agreements (Form I) for co-broker deals across all transaction types.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: How it works -->
+        <div>
+          <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+            <div style="display: flex; gap: 1rem; align-items: flex-start;">
+              <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #818cf8, #6366f1); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0;">&#128172;</div>
+              <div>
+                <h3 style="font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.95rem; color: var(--heading); margin-bottom: 0.3rem;">Send via WhatsApp</h3>
+                <p style="font-size: 0.82rem; color: var(--text-light); line-height: 1.7; font-weight: 300;">Each form has a pre-written WhatsApp message. Click Send and the message opens in WhatsApp with the client's name and property unit auto-filled. Attach the form and send.</p>
+              </div>
+            </div>
+            <div style="display: flex; gap: 1rem; align-items: flex-start;">
+              <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #22d3ee, #06b6d4); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0;">&#128231;</div>
+              <div>
+                <h3 style="font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.95rem; color: var(--heading); margin-bottom: 0.3rem;">Send via Gmail</h3>
+                <p style="font-size: 0.82rem; color: var(--text-light); line-height: 1.7; font-weight: 300;">Each form also has a professional email template. Click Gmail and a compose window opens with the subject, body, and required documents list ready to go.</p>
+              </div>
+            </div>
+            <div style="display: flex; gap: 1rem; align-items: flex-start;">
+              <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #f59e0b, #d97706); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0;">&#9998;</div>
+              <div>
+                <h3 style="font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.95rem; color: var(--heading); margin-bottom: 0.3rem;">Customise Any Template</h3>
+                <p style="font-size: 0.82rem; color: var(--text-light); line-height: 1.7; font-weight: 300;">Don't like the default wording? Click the edit icon on any form to rewrite the WhatsApp message or email body. Your customisations are saved automatically. Reset to default any time.</p>
+              </div>
+            </div>
+            <div style="display: flex; gap: 1rem; align-items: flex-start;">
+              <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #4ade80, #22c55e); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0;">&#128203;</div>
+              <div>
+                <h3 style="font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.95rem; color: var(--heading); margin-bottom: 0.3rem;">Document Checklists</h3>
+                <p style="font-size: 0.82rem; color: var(--text-light); line-height: 1.7; font-weight: 300;">Each contact has a document checklist based on their transaction type &mdash; tenancy, sale, off-plan, or renewal. Tick off documents as they come in. Nothing gets missed.</p>
+              </div>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; margin-top: 2rem;">
+            <div style="text-align: center; padding: 1rem; background: var(--ice); border-radius: 10px; border: 1px solid var(--border-light);">
+              <div style="font-family: 'DM Serif Display', serif; font-size: 1.5rem; color: var(--heading);">20+</div>
+              <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 0.2rem;">Forms</div>
+            </div>
+            <div style="text-align: center; padding: 1rem; background: var(--ice); border-radius: 10px; border: 1px solid var(--border-light);">
+              <div style="font-family: 'DM Serif Display', serif; font-size: 1.5rem; color: var(--heading);">4</div>
+              <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 0.2rem;">Categories</div>
+            </div>
+            <div style="text-align: center; padding: 1rem; background: var(--ice); border-radius: 10px; border: 1px solid var(--border-light);">
+              <div style="font-family: 'DM Serif Display', serif; font-size: 1.5rem; color: var(--heading);">1-Click</div>
+              <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 0.2rem;">Send</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- AREA GUIDES -->
+  <section class="section" id="areas">
+    <div class="section-center">
+      <div class="section-eyebrow">Area Guides</div>
+      <div class="section-title">10 Dubai communities at your fingertips</div>
+      <div class="section-sub">In-depth profiles for Downtown, Marina, Palm Jumeirah, Business Bay, Dubai Hills, JBR, Creek Harbour, JVC, MBR City, and Dubai South. Market stats, lifestyle insights, and investment outlook — all built into the app.</div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section class="section section-alt" id="education" style="overflow: hidden;">
+    <div class="section-center">
+      <div class="section-eyebrow">Education</div>
+      <div class="section-title">Master real estate — one card at a time</div>
+      <div class="section-sub">1,500+ flashcards built specifically for Dubai real estate agents. Whether you're preparing for your RERA exam or sharpening your sales skills, it's all built in.</div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start;">
+
+        <!-- Left: Visual deck showcase -->
+        <div>
+          <div style="background: #111111; border-radius: 16px; padding: 1.5rem; border: 1px solid #2a2a2a; position: relative; overflow: hidden;">
+            <div style="position: absolute; top: -40px; right: -40px; width: 120px; height: 120px; background: rgba(129,140,248,0.1); border-radius: 50%; filter: blur(40px);"></div>
+
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
+              <span style="color: #ededee; font-size: 0.85rem; font-weight: 600;">Education</span>
+              <span style="color: #52525b; font-size: 0.7rem;">10 decks</span>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem; background: linear-gradient(90deg, rgba(129,140,248,0.08), rgba(34,211,238,0.06)); border-radius: 8px; margin-bottom: 1rem; border: 1px solid rgba(255,255,255,0.04);">
+              <svg width="36" height="36" viewBox="0 0 36 36" style="transform: rotate(-90deg);">
+                <circle cx="18" cy="18" r="14" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="3"/>
+                <circle cx="18" cy="18" r="14" fill="none" stroke="#818cf8" stroke-width="3" stroke-dasharray="62 38" stroke-linecap="round"/>
+              </svg>
+              <div>
+                <div style="color: #ededee; font-size: 0.72rem; font-weight: 500;">932 of 1,500 mastered</div>
+                <div style="color: #52525b; font-size: 0.65rem;">Great progress!</div>
+              </div>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 6px;">
+              <div style="display: flex; align-items: center; gap: 0.6rem; padding: 0.6rem 0.7rem; background: linear-gradient(135deg, rgba(56,189,248,0.08), transparent); border: 1px solid rgba(56,189,248,0.1); border-radius: 10px;">
+                <div style="width: 32px; height: 32px; background: rgba(56,189,248,0.12); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.85rem;">&#127963;</div>
+                <div style="flex: 1;">
+                  <div style="color: #ededee; font-size: 0.72rem; font-weight: 600;">RERA Exam &amp; Licensing</div>
+                  <div style="height: 4px; background: rgba(255,255,255,0.06); border-radius: 2px; margin-top: 4px; overflow: hidden;">
+                    <div style="height: 100%; width: 75%; background: linear-gradient(90deg, #4ade80, #fbbf24); border-radius: 2px;"></div>
+                  </div>
+                </div>
+                <span style="color: #38bdf8; font-size: 0.6rem; font-weight: 600; background: rgba(56,189,248,0.12); padding: 2px 6px; border-radius: 10px;">118</span>
+              </div>
+
+              <div style="display: flex; align-items: center; gap: 0.6rem; padding: 0.6rem 0.7rem; background: linear-gradient(135deg, rgba(167,139,250,0.08), transparent); border: 1px solid rgba(167,139,250,0.1); border-radius: 10px;">
+                <div style="width: 32px; height: 32px; background: rgba(167,139,250,0.12); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.85rem;">&#128221;</div>
+                <div style="flex: 1;">
+                  <div style="color: #ededee; font-size: 0.72rem; font-weight: 600;">Sales Contracts &amp; Process</div>
+                  <div style="height: 4px; background: rgba(255,255,255,0.06); border-radius: 2px; margin-top: 4px; overflow: hidden;">
+                    <div style="height: 100%; width: 45%; background: linear-gradient(90deg, #4ade80, #fbbf24); border-radius: 2px;"></div>
+                  </div>
+                </div>
+                <span style="color: #a78bfa; font-size: 0.6rem; font-weight: 600; background: rgba(167,139,250,0.12); padding: 2px 6px; border-radius: 10px;">101</span>
+              </div>
+
+              <div style="display: flex; align-items: center; gap: 0.6rem; padding: 0.6rem 0.7rem; background: linear-gradient(135deg, rgba(251,146,60,0.08), transparent); border: 1px solid rgba(251,146,60,0.1); border-radius: 10px;">
+                <div style="width: 32px; height: 32px; background: rgba(251,146,60,0.12); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.85rem;">&#128737;</div>
+                <div style="flex: 1;">
+                  <div style="color: #ededee; font-size: 0.72rem; font-weight: 600;">Dealing with Objections</div>
+                  <div style="height: 4px; background: rgba(255,255,255,0.06); border-radius: 2px; margin-top: 4px; overflow: hidden;">
+                    <div style="height: 100%; width: 30%; background: linear-gradient(90deg, #4ade80, #f87171); border-radius: 2px;"></div>
+                  </div>
+                </div>
+                <span style="color: #fb923c; font-size: 0.6rem; font-weight: 600; background: rgba(251,146,60,0.12); padding: 2px 6px; border-radius: 10px;">107</span>
+              </div>
+
+              <div style="display: flex; align-items: center; gap: 0.6rem; padding: 0.6rem 0.7rem; background: linear-gradient(135deg, rgba(251,191,36,0.08), transparent); border: 1px solid rgba(251,191,36,0.1); border-radius: 10px;">
+                <div style="width: 32px; height: 32px; background: rgba(251,191,36,0.12); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.85rem;">&#127757;</div>
+                <div style="flex: 1;">
+                  <div style="color: #ededee; font-size: 0.72rem; font-weight: 600;">Dubai Market Knowledge</div>
+                  <div style="height: 4px; background: rgba(255,255,255,0.06); border-radius: 2px; margin-top: 4px; overflow: hidden;">
+                    <div style="height: 100%; width: 60%; background: linear-gradient(90deg, #4ade80, #fbbf24); border-radius: 2px;"></div>
+                  </div>
+                </div>
+                <span style="color: #fbbf24; font-size: 0.6rem; font-weight: 600; background: rgba(251,191,36,0.12); padding: 2px 6px; border-radius: 10px;">131</span>
+              </div>
+
+              <div style="text-align: center; padding: 0.3rem; color: #52525b; font-size: 0.65rem;">+ 6 more decks</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Feature details -->
+        <div>
+          <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+            <div style="display: flex; gap: 1rem; align-items: flex-start;">
+              <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #818cf8, #6366f1); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0;">&#127891;</div>
+              <div>
+                <h3 style="font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.95rem; color: var(--heading); margin-bottom: 0.3rem;">10 Expert-Curated Decks</h3>
+                <p style="font-size: 0.82rem; color: var(--text-light); line-height: 1.7; font-weight: 300;">RERA Exam &amp; Licensing, Property Law, Mortgages, Sales Contracts, Rental &amp; Leasing, Sales Skills, Market Analysis, Property Marketing, Objection Handling, and Dubai Market Knowledge.</p>
+              </div>
+            </div>
+            <div style="display: flex; gap: 1rem; align-items: flex-start;">
+              <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #22d3ee, #06b6d4); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0;">&#128260;</div>
+              <div>
+                <h3 style="font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.95rem; color: var(--heading); margin-bottom: 0.3rem;">Spaced Repetition</h3>
+                <p style="font-size: 0.82rem; color: var(--text-light); line-height: 1.7; font-weight: 300;">Cards you struggle with appear more often. Cards you've mastered fade back. The algorithm adapts to your confidence level — red, yellow, or green — so you study smarter, not harder.</p>
+              </div>
+            </div>
+            <div style="display: flex; gap: 1rem; align-items: flex-start;">
+              <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #f59e0b, #d97706); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0;">&#127942;</div>
+              <div>
+                <h3 style="font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.95rem; color: var(--heading); margin-bottom: 0.3rem;">Two Card Types</h3>
+                <p style="font-size: 0.82rem; color: var(--text-light); line-height: 1.7; font-weight: 300;">Classic flashcards with tap-to-reveal answers, plus multiple choice questions that test your knowledge under pressure. Track your accuracy and build streaks.</p>
+              </div>
+            </div>
+            <div style="display: flex; gap: 1rem; align-items: flex-start;">
+              <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #4ade80, #22c55e); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0;">&#128202;</div>
+              <div>
+                <h3 style="font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.95rem; color: var(--heading); margin-bottom: 0.3rem;">Progress Tracking</h3>
+                <p style="font-size: 0.82rem; color: var(--text-light); line-height: 1.7; font-weight: 300;">Visual mastery rings show your overall progress. Each deck has its own progress bar. See exactly which topics need more work and which you've conquered.</p>
+              </div>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; margin-top: 2rem;">
+            <div style="text-align: center; padding: 1rem; background: var(--ice); border-radius: 10px; border: 1px solid var(--border-light);">
+              <div style="font-family: 'DM Serif Display', serif; font-size: 1.5rem; color: var(--heading);">1,500+</div>
+              <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 0.2rem;">Flashcards</div>
+            </div>
+            <div style="text-align: center; padding: 1rem; background: var(--ice); border-radius: 10px; border: 1px solid var(--border-light);">
+              <div style="font-family: 'DM Serif Display', serif; font-size: 1.5rem; color: var(--heading);">10</div>
+              <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 0.2rem;">Topic Decks</div>
+            </div>
+            <div style="text-align: center; padding: 1rem; background: var(--ice); border-radius: 10px; border: 1px solid var(--border-light);">
+              <div style="font-family: 'DM Serif Display', serif; font-size: 1.5rem; color: var(--heading);">100%</div>
+              <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 0.2rem;">Offline &amp; Private</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section section-alt" id="faq">
+    <div class="section-center">
+      <div class="section-eyebrow">FAQ</div>
+      <div class="section-title">Common Questions</div>
+
+      <div class="faq-section" style="margin-top: 0;">
+        <div class="faq-item">
+          <div class="faq-q">Is my data private?</div>
+          <div class="faq-a">Yes. Ask Dave Dubai Real Estate does not record, store, or transmit any calls, messages, or conversations. Your data stays on your device. There are no accounts, no cloud sync, and no analytics.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Do I need to install anything on my phone?</div>
+          <div class="faq-a">Only if you're on Android. Install "Link to Windows" from the Play Store. iPhone users just need Bluetooth turned on — Phone Link connects automatically. WhatsApp users don't need anything extra.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Can I use WhatsApp without connecting my phone to my computer?</div>
+          <div class="faq-a">Yes. WhatsApp Desktop works independently once you scan the QR code. You don't need Phone Link for WhatsApp. It just works.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">What if I just want WhatsApp for everything and don't need Dial?</div>
+          <div class="faq-a">Open Ask Dave Dubai Real Estate Settings, turn off the Dial feature, and set WhatsApp as your default action. Many agents prefer this setup. You can skip Step 2 entirely.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Does it auto-dial when I click?</div>
+          <div class="faq-a">No. It opens the number pre-filled and ready. You still press the call button yourself, so you can't accidentally dial someone.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">What keyboard shortcuts does Ask Dave Dubai Real Estate use?</div>
+          <div class="faq-a">The default shortcut is Ctrl+Space to detect a phone number from highlighted text. You can also click the tray icon on screen instead. To customise your hotkeys, click the keyboard icon in the Ask Dave Dubai Real Estate panel.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Where does Ask Dave Dubai Real Estate appear after I install it?</div>
+          <div class="faq-a">In your system tray (bottom-right of your taskbar). Look for the Ask Dave Dubai Real Estate icon. Click it to open the panel, right-click for settings.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Does it work with any CRM?</div>
+          <div class="faq-a">Yes. Ask Dave Dubai Real Estate doesn't connect to your CRM. It works on top of it. If you can see a phone number on your screen, you can highlight it. Works with Bayut, Property Finder, HubSpot, Salesforce, Excel, and anything else.</div>
         </div>
       </div>
     </div>
@@ -875,7 +1376,7 @@
               </div>
               <div class="use-card">
                 <h4>&#128221; Templates, forms &amp; OneNote</h4>
-                <p>Click <strong>Expand</strong> to open the full panel. Browse WhatsApp and Gmail templates, send RERA forms, create OneNote pages, book viewings, and set follow-up reminders.</p>
+                <p>Click <strong>Expand</strong> to open the full panel. Browse WhatsApp and Gmail templates, send forms, create OneNote pages, jot General Notes mid-call, book viewings, and set follow-up reminders.</p>
               </div>
               <div class="use-card">
                 <h4>&#9881; Customise in Settings</h4>
@@ -888,275 +1389,7 @@
 
       </div><!-- /guide-steps -->
 
-      <div class="faq-section">
-        <h3>Common Questions</h3>
-        <div class="faq-item">
-          <div class="faq-q">Is my data private?</div>
-          <div class="faq-a">Yes. Ask Dave Dubai Real Estate does not record, store, or transmit any calls, messages, or conversations. Your data stays on your device. There are no accounts, no cloud sync, and no analytics.</div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q">Do I need to install anything on my phone?</div>
-          <div class="faq-a">Only if you're on Android. Install "Link to Windows" from the Play Store. iPhone users just need Bluetooth turned on — Phone Link connects automatically. WhatsApp users don't need anything extra.</div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q">Can I use WhatsApp without connecting my phone to my computer?</div>
-          <div class="faq-a">Yes. WhatsApp Desktop works independently once you scan the QR code. You don't need Phone Link for WhatsApp. It just works.</div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q">What if I just want WhatsApp for everything and don't need Dial?</div>
-          <div class="faq-a">Open Ask Dave Dubai Real Estate Settings, turn off the Dial feature, and set WhatsApp as your default action. Many agents prefer this setup. You can skip Step 2 entirely.</div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q">Does it auto-dial when I click?</div>
-          <div class="faq-a">No. It opens the number pre-filled and ready. You still press the call button yourself, so you can't accidentally dial someone.</div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q">What keyboard shortcuts does Ask Dave Dubai Real Estate use?</div>
-          <div class="faq-a">The default shortcut is Ctrl+Space to detect a phone number from highlighted text. You can also click the tray icon on screen instead. To customise your hotkeys, click the keyboard icon in the Ask Dave Dubai Real Estate panel.</div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q">Where does Ask Dave Dubai Real Estate appear after I install it?</div>
-          <div class="faq-a">In your system tray (bottom-right of your taskbar). Look for the Ask Dave Dubai Real Estate icon. Click it to open the panel, right-click for settings.</div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q">Does it work with any CRM?</div>
-          <div class="faq-a">Yes. Ask Dave Dubai Real Estate doesn't connect to your CRM. It works on top of it. If you can see a phone number on your screen, you can highlight it. Works with Bayut, Property Finder, HubSpot, Salesforce, Excel, and anything else.</div>
-        </div>
-      </div>
 
-    </div>
-  </section>
-
-  <!-- POPUP DEMO -->
-  <section class="demo-dark" id="demo">
-    <div class="section-center">
-      <div class="section-eyebrow">See It In Action</div>
-      <div class="section-title">Highlight text, press Ctrl+Space, take action</div>
-      <div class="section-sub">Works with phone numbers, emails, or entire contact blocks. The app extracts everything automatically.</div>
-
-      <div class="demo-grid">
-        <div>
-          <ul class="demo-steps">
-            <li>
-              <div class="demo-num">1</div>
-              <div><strong>Highlight any text on screen</strong><span>A phone number, an email, or a whole block of text from any CRM, website, email, spreadsheet, or PDF.</span></div>
-            </li>
-            <li>
-              <div class="demo-num">2</div>
-              <div><strong>Press Ctrl+Space</strong><span>The compact window appears instantly. Phone numbers are cleaned up and formatted. Emails, names, and property units are extracted from larger text blocks.</span></div>
-            </li>
-            <li>
-              <div class="demo-num">3</div>
-              <div><strong>Choose Dial, WhatsApp, or Expand</strong><span>Click Dial to call via Phone Link, WhatsApp to start a chat, or Expand to access templates, forms, calendar, and more.</span></div>
-            </li>
-            <li>
-              <div class="demo-num">4</div>
-              <div><strong>Send templates, book viewings, take notes</strong><span>In the expanded panel: pick a WhatsApp or Gmail template, send a RERA form, create a OneNote page, or book a viewing into Google Calendar.</span></div>
-            </li>
-          </ul>
-        </div>
-        <div class="demo-visual">
-          <div class="popup-mock" style="background: #1a1a1a; border: 1px solid #2a2a2a;">
-            <div class="popup-phone" style="color: #e0e0e0;"><span class="popup-flag">&#127462;&#127466;</span> +971 50 123 4567</div>
-            <div class="popup-buttons">
-              <div class="popup-btn popup-btn-dial" style="background: #2a2a2a; color: #e0e0e0; border-color: #3a3a3a;">Dial</div>
-              <div class="popup-btn popup-btn-wa" style="background: #ffffff; color: #111111;">WhatsApp</div>
-              <div class="popup-btn" style="background: #2a2a2a; color: #999999; border: 1px solid #3a3a3a; flex: 1; text-align: center;">Expand</div>
-            </div>
-          </div>
-          <div class="popup-caption">Compact window appears when you press Ctrl+Space</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- TEMPLATES -->
-  <section class="section" id="templates">
-    <div class="section-center">
-      <div class="section-eyebrow">Templates</div>
-      <div class="section-title">Send personalised messages in seconds</div>
-      <div class="section-sub">Pre-loaded with messages real estate agents actually send. Pick one, type the name, and go.</div>
-
-      <div class="template-grid">
-        <div class="template-info">
-          <h3>WhatsApp, Gmail &amp; OneNote templates built for UAE real estate</h3>
-          <p>Placeholders like <strong>{name}</strong>, <strong>{unit}</strong>, and <strong>{email}</strong> auto-fill from the contact card. Click the pencil icon on any template to customise it.</p>
-          <p style="font-weight:600; color:var(--heading); font-size:0.82rem; margin-bottom:0.4rem;">WhatsApp Templates (6)</p>
-          <ul class="template-list" style="columns:1; margin-bottom:1rem;">
-            <li>Listing Introduction</li>
-            <li>Follow-Up</li>
-            <li>Viewing Confirmation</li>
-            <li>Viewing Reminder</li>
-            <li>New Listing Alert</li>
-            <li>Thank You</li>
-          </ul>
-          <p style="font-weight:600; color:var(--heading); font-size:0.82rem; margin-bottom:0.4rem;">Gmail Templates (6)</p>
-          <ul class="template-list" style="columns:1; margin-bottom:1rem;">
-            <li>Listing Introduction</li>
-            <li>Follow-Up</li>
-            <li>Viewing Confirmation</li>
-            <li>Viewing Reminder</li>
-            <li>New Listing Alert</li>
-            <li>Thank You</li>
-          </ul>
-          <p style="font-weight:600; color:var(--heading); font-size:0.82rem; margin-bottom:0.4rem;">OneNote Templates (5 roles)</p>
-          <ul class="template-list" style="columns:1; margin-bottom:1rem;">
-            <li>Tenant</li>
-            <li>Landlord</li>
-            <li>Buyer</li>
-            <li>Seller</li>
-            <li>Investor</li>
-          </ul>
-          <p class="template-note">Every template is editable. Click the pencil icon to customise messages with your own wording.</p>
-        </div>
-
-        <div class="wa-phone-mock">
-          <div class="wa-notch"></div>
-          <div class="wa-screen">
-            <div class="wa-header">
-              <div class="wa-avatar">AD</div>
-              <div class="wa-name">Ahmed Al-Khalidi</div>
-            </div>
-            <div class="wa-bubble">
-              Hi <span class="wa-highlight">Ahmed</span>, I have a new listing in Dubai Marina that matches your requirements. It's a 2BR apartment with full marina view, priced at AED 2.1M. Would you like to schedule a viewing this week?
-              <div class="wa-time">2:34 PM</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- EDUCATION -->
-  <section class="section section-alt" id="education" style="overflow: hidden;">
-    <div class="section-center">
-      <div class="section-eyebrow">Education</div>
-      <div class="section-title">Master real estate — one card at a time</div>
-      <div class="section-sub">1,500+ flashcards built specifically for Dubai real estate agents. Whether you're preparing for your RERA exam or sharpening your sales skills, it's all built in.</div>
-
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start;">
-
-        <!-- Left: Visual deck showcase -->
-        <div>
-          <div style="background: #111111; border-radius: 16px; padding: 1.5rem; border: 1px solid #2a2a2a; position: relative; overflow: hidden;">
-            <div style="position: absolute; top: -40px; right: -40px; width: 120px; height: 120px; background: rgba(129,140,248,0.1); border-radius: 50%; filter: blur(40px);"></div>
-
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
-              <span style="color: #ededee; font-size: 0.85rem; font-weight: 600;">Education</span>
-              <span style="color: #52525b; font-size: 0.7rem;">10 decks</span>
-            </div>
-
-            <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem; background: linear-gradient(90deg, rgba(129,140,248,0.08), rgba(34,211,238,0.06)); border-radius: 8px; margin-bottom: 1rem; border: 1px solid rgba(255,255,255,0.04);">
-              <svg width="36" height="36" viewBox="0 0 36 36" style="transform: rotate(-90deg);">
-                <circle cx="18" cy="18" r="14" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="3"/>
-                <circle cx="18" cy="18" r="14" fill="none" stroke="#818cf8" stroke-width="3" stroke-dasharray="62 38" stroke-linecap="round"/>
-              </svg>
-              <div>
-                <div style="color: #ededee; font-size: 0.72rem; font-weight: 500;">932 of 1,500 mastered</div>
-                <div style="color: #52525b; font-size: 0.65rem;">Great progress!</div>
-              </div>
-            </div>
-
-            <div style="display: flex; flex-direction: column; gap: 6px;">
-              <div style="display: flex; align-items: center; gap: 0.6rem; padding: 0.6rem 0.7rem; background: linear-gradient(135deg, rgba(56,189,248,0.08), transparent); border: 1px solid rgba(56,189,248,0.1); border-radius: 10px;">
-                <div style="width: 32px; height: 32px; background: rgba(56,189,248,0.12); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.85rem;">&#127963;</div>
-                <div style="flex: 1;">
-                  <div style="color: #ededee; font-size: 0.72rem; font-weight: 600;">RERA Exam &amp; Licensing</div>
-                  <div style="height: 4px; background: rgba(255,255,255,0.06); border-radius: 2px; margin-top: 4px; overflow: hidden;">
-                    <div style="height: 100%; width: 75%; background: linear-gradient(90deg, #4ade80, #fbbf24); border-radius: 2px;"></div>
-                  </div>
-                </div>
-                <span style="color: #38bdf8; font-size: 0.6rem; font-weight: 600; background: rgba(56,189,248,0.12); padding: 2px 6px; border-radius: 10px;">118</span>
-              </div>
-
-              <div style="display: flex; align-items: center; gap: 0.6rem; padding: 0.6rem 0.7rem; background: linear-gradient(135deg, rgba(167,139,250,0.08), transparent); border: 1px solid rgba(167,139,250,0.1); border-radius: 10px;">
-                <div style="width: 32px; height: 32px; background: rgba(167,139,250,0.12); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.85rem;">&#128221;</div>
-                <div style="flex: 1;">
-                  <div style="color: #ededee; font-size: 0.72rem; font-weight: 600;">Sales Contracts &amp; Process</div>
-                  <div style="height: 4px; background: rgba(255,255,255,0.06); border-radius: 2px; margin-top: 4px; overflow: hidden;">
-                    <div style="height: 100%; width: 45%; background: linear-gradient(90deg, #4ade80, #fbbf24); border-radius: 2px;"></div>
-                  </div>
-                </div>
-                <span style="color: #a78bfa; font-size: 0.6rem; font-weight: 600; background: rgba(167,139,250,0.12); padding: 2px 6px; border-radius: 10px;">101</span>
-              </div>
-
-              <div style="display: flex; align-items: center; gap: 0.6rem; padding: 0.6rem 0.7rem; background: linear-gradient(135deg, rgba(251,146,60,0.08), transparent); border: 1px solid rgba(251,146,60,0.1); border-radius: 10px;">
-                <div style="width: 32px; height: 32px; background: rgba(251,146,60,0.12); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.85rem;">&#128737;</div>
-                <div style="flex: 1;">
-                  <div style="color: #ededee; font-size: 0.72rem; font-weight: 600;">Dealing with Objections</div>
-                  <div style="height: 4px; background: rgba(255,255,255,0.06); border-radius: 2px; margin-top: 4px; overflow: hidden;">
-                    <div style="height: 100%; width: 30%; background: linear-gradient(90deg, #4ade80, #f87171); border-radius: 2px;"></div>
-                  </div>
-                </div>
-                <span style="color: #fb923c; font-size: 0.6rem; font-weight: 600; background: rgba(251,146,60,0.12); padding: 2px 6px; border-radius: 10px;">107</span>
-              </div>
-
-              <div style="display: flex; align-items: center; gap: 0.6rem; padding: 0.6rem 0.7rem; background: linear-gradient(135deg, rgba(251,191,36,0.08), transparent); border: 1px solid rgba(251,191,36,0.1); border-radius: 10px;">
-                <div style="width: 32px; height: 32px; background: rgba(251,191,36,0.12); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.85rem;">&#127757;</div>
-                <div style="flex: 1;">
-                  <div style="color: #ededee; font-size: 0.72rem; font-weight: 600;">Dubai Market Knowledge</div>
-                  <div style="height: 4px; background: rgba(255,255,255,0.06); border-radius: 2px; margin-top: 4px; overflow: hidden;">
-                    <div style="height: 100%; width: 60%; background: linear-gradient(90deg, #4ade80, #fbbf24); border-radius: 2px;"></div>
-                  </div>
-                </div>
-                <span style="color: #fbbf24; font-size: 0.6rem; font-weight: 600; background: rgba(251,191,36,0.12); padding: 2px 6px; border-radius: 10px;">131</span>
-              </div>
-
-              <div style="text-align: center; padding: 0.3rem; color: #52525b; font-size: 0.65rem;">+ 6 more decks</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Right: Feature details -->
-        <div>
-          <div style="display: flex; flex-direction: column; gap: 1.5rem;">
-            <div style="display: flex; gap: 1rem; align-items: flex-start;">
-              <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #818cf8, #6366f1); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0;">&#127891;</div>
-              <div>
-                <h3 style="font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.95rem; color: var(--heading); margin-bottom: 0.3rem;">10 Expert-Curated Decks</h3>
-                <p style="font-size: 0.82rem; color: var(--text-light); line-height: 1.7; font-weight: 300;">RERA Exam &amp; Licensing, Property Law, Mortgages, Sales Contracts, Rental &amp; Leasing, Sales Skills, Market Analysis, Property Marketing, Objection Handling, and Dubai Market Knowledge.</p>
-              </div>
-            </div>
-            <div style="display: flex; gap: 1rem; align-items: flex-start;">
-              <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #22d3ee, #06b6d4); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0;">&#128260;</div>
-              <div>
-                <h3 style="font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.95rem; color: var(--heading); margin-bottom: 0.3rem;">Spaced Repetition</h3>
-                <p style="font-size: 0.82rem; color: var(--text-light); line-height: 1.7; font-weight: 300;">Cards you struggle with appear more often. Cards you've mastered fade back. The algorithm adapts to your confidence level — red, yellow, or green — so you study smarter, not harder.</p>
-              </div>
-            </div>
-            <div style="display: flex; gap: 1rem; align-items: flex-start;">
-              <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #f59e0b, #d97706); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0;">&#127942;</div>
-              <div>
-                <h3 style="font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.95rem; color: var(--heading); margin-bottom: 0.3rem;">Two Card Types</h3>
-                <p style="font-size: 0.82rem; color: var(--text-light); line-height: 1.7; font-weight: 300;">Classic flashcards with tap-to-reveal answers, plus multiple choice questions that test your knowledge under pressure. Track your accuracy and build streaks.</p>
-              </div>
-            </div>
-            <div style="display: flex; gap: 1rem; align-items: flex-start;">
-              <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #4ade80, #22c55e); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0;">&#128202;</div>
-              <div>
-                <h3 style="font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.95rem; color: var(--heading); margin-bottom: 0.3rem;">Progress Tracking</h3>
-                <p style="font-size: 0.82rem; color: var(--text-light); line-height: 1.7; font-weight: 300;">Visual mastery rings show your overall progress. Each deck has its own progress bar. See exactly which topics need more work and which you've conquered.</p>
-              </div>
-            </div>
-          </div>
-
-          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; margin-top: 2rem;">
-            <div style="text-align: center; padding: 1rem; background: var(--ice); border-radius: 10px; border: 1px solid var(--border-light);">
-              <div style="font-family: 'DM Serif Display', serif; font-size: 1.5rem; color: var(--heading);">1,500+</div>
-              <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 0.2rem;">Flashcards</div>
-            </div>
-            <div style="text-align: center; padding: 1rem; background: var(--ice); border-radius: 10px; border: 1px solid var(--border-light);">
-              <div style="font-family: 'DM Serif Display', serif; font-size: 1.5rem; color: var(--heading);">10</div>
-              <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 0.2rem;">Topic Decks</div>
-            </div>
-            <div style="text-align: center; padding: 1rem; background: var(--ice); border-radius: 10px; border: 1px solid var(--border-light);">
-              <div style="font-family: 'DM Serif Display', serif; font-size: 1.5rem; color: var(--heading);">100%</div>
-              <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 0.2rem;">Offline &amp; Private</div>
-            </div>
-          </div>
-        </div>
-
-      </div>
     </div>
   </section>
 
