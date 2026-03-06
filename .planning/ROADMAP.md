@@ -23,7 +23,7 @@ See milestones/v1.0-ROADMAP.md for full phase details.
 
 **Milestone Goal:** Ship the deferred General Notes notepad with push-to-OneNote, fix Form I templates for agent-to-agent use, and update the landing page.
 
-- [ ] **Phase 5: Form I Template Rewrites** - Rewrite all 4 Form I templates from client-facing to agent-to-agent commission split language
+- [x] **Phase 5: Form I Template Rewrites** - Rewrite all 4 Form I templates from client-facing to agent-to-agent commission split language
 - [ ] **Phase 6: General Notes** - Freeform note-taking in contact card with one-click push to OneNote
 - [ ] **Phase 7: Landing Page Update** - Update landing page to reflect v1.1 features
 
@@ -38,10 +38,10 @@ See milestones/v1.0-ROADMAP.md for full phase details.
   2. When user sends a Form I email, the subject and body use agent-to-agent language
   3. Form I entries in the forms list show descriptions reflecting agent-to-agent purpose
   4. Existing placeholder tokens ({name}, {unit}, etc.) still substitute correctly in the rewritten templates
-**Plans**: TBD
+**Plans**: Completed via quick task (1 plan)
 
 Plans:
-- [ ] 05-01: TBD
+- [x] 05-01: Rewrite Form I templates to agent-to-agent commission split language
 
 ### Phase 6: General Notes
 **Goal**: Agent can capture freeform notes during a call and push them to the contact's OneNote page
@@ -53,10 +53,11 @@ Plans:
   3. Textarea clears only after OneNote confirms the push succeeded (no data loss on failure)
   4. Each pushed note appears in OneNote with a timestamp header, creating a chronological log
   5. User sees a success or error indicator after the push completes
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 06-01: TBD
+- [ ] 06-01-PLAN.md -- OneNote push-notes backend (IPC + PowerShell script + preload bridge)
+- [ ] 06-02-PLAN.md -- GeneralNotes.tsx component + ContactCard mount + App.tsx wiring
 
 ### Phase 7: Landing Page Update
 **Goal**: Landing page accurately describes the full v1.1 feature set
@@ -80,6 +81,6 @@ Plans:
 | 2. Contact Intelligence | v1.0 | 4/4 | Complete | 2026-03-04 |
 | 3. Forms, News & Web | v1.0 | 4/4 | Complete | 2026-03-05 |
 | 4. Meeting Transcriber | v1.0 | 3/3 | Complete | 2026-03-06 |
-| 5. Form I Template Rewrites | v1.1 | 0/? | Not started | - |
-| 6. General Notes | v1.1 | 0/? | Not started | - |
+| 5. Form I Template Rewrites | v1.1 | 1/1 | Complete | 2026-03-06 |
+| 6. General Notes | v1.1 | 0/2 | Planning complete | - |
 | 7. Landing Page Update | v1.1 | 0/? | Not started | - |

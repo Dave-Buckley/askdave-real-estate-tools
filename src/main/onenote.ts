@@ -85,24 +85,24 @@ function buildRolePsOutlines(role: ContactRole, varPrefix: string): string {
 
   return `
   # ${role} — Qualifying Questions
-  $${varPrefix} += '<one:Outline><one:OEChildren>'
   $${varPrefix} += '<one:OE><one:T><![CDATA[${psEscape(tmpl.label)}]]></one:T></one:OE>'
   ${qLines}
-  $${varPrefix} += '</one:OEChildren></one:Outline>'
+
+  # Spacer between sections
+  $${varPrefix} += '<one:OE><one:T><![CDATA[ ]]></one:T></one:OE>'
 
   # ${role} — Rapport Notes
-  $${varPrefix} += '<one:Outline><one:OEChildren>'
   $${varPrefix} += '<one:OE><one:T><![CDATA[Rapport Notes]]></one:T></one:OE>'
   $${varPrefix} += '<one:OE><one:T><![CDATA[Family: ]]></one:T></one:OE>'
   $${varPrefix} += '<one:OE><one:T><![CDATA[Interests: ]]></one:T></one:OE>'
   $${varPrefix} += '<one:OE><one:T><![CDATA[Personal notes: ]]></one:T></one:OE>'
-  $${varPrefix} += '</one:OEChildren></one:Outline>'
+
+  # Spacer between sections
+  $${varPrefix} += '<one:OE><one:T><![CDATA[ ]]></one:T></one:OE>'
 
   # ${role} — Document Checklist
-  $${varPrefix} += '<one:Outline><one:OEChildren>'
   $${varPrefix} += '<one:OE><one:T><![CDATA[Document Checklist]]></one:T></one:OE>'
   ${dLines}
-  $${varPrefix} += '</one:OEChildren></one:Outline>'
 `
 }
 
@@ -192,17 +192,21 @@ function buildOneNoteScript(
     # Step 2: Add outlines via partial update
     $outlines = ''
 
-    # Contact info outline
+    # Single outline: contact info + role templates
     $outlines += '<one:Outline><one:OEChildren>'
     $outlines += '<one:OE><one:T><![CDATA[${psEscape(heading)}]]></one:T></one:OE>'
     $outlines += '<one:OE><one:T><![CDATA[Phone: ${psEscape(displayNumber)}]]></one:T></one:OE>'
     ${email ? `$outlines += '<one:OE><one:T><![CDATA[Email: ${psEscape(email)}]]></one:T></one:OE>'` : '# no email'}
     ${unit ? `$outlines += '<one:OE><one:T><![CDATA[Unit: ${psEscape(unit)}]]></one:T></one:OE>'` : '# no unit'}
     $outlines += '<one:OE><one:T><![CDATA[Roles: ${roles.join(', ')}]]></one:T></one:OE>'
-    $outlines += '</one:OEChildren></one:Outline>'
 
-    # Role-specific outlines (questions + rapport + documents)
+    # Spacer before role content
+    $outlines += '<one:OE><one:T><![CDATA[ ]]></one:T></one:OE>'
+
+    # Role-specific content (questions + rapport + documents)
 ${roleOutlines}
+
+    $outlines += '</one:OEChildren></one:Outline>'
 
     $contentXml = '<one:Page xmlns:one="' + $ns + '" ID="' + $newPageId + '">'
     $contentXml += $outlines
@@ -232,7 +236,9 @@ function buildAppendScript(pageId: string, role: ContactRole): string {
   $ns = $doc.DocumentElement.NamespaceURI
 
   $outlines = ''
+  $outlines += '<one:Outline><one:OEChildren>'
 ${outlineCode}
+  $outlines += '</one:OEChildren></one:Outline>'
 
   $contentXml = '<one:Page xmlns:one="' + $ns + '" ID="' + '${psEscape(pageId)}' + '">'
   $contentXml += $outlines
