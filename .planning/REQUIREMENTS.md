@@ -53,14 +53,46 @@ Requirements for initial release. Each maps to roadmap phases.
 - [x] **TRANS-03**: Transcript text is selectable for partial copy
 - [x] **PRIV-01**: All audio and transcript data is fully ephemeral — no audio or transcript saved to disk, no temp files, data discarded on navigation
 
+## v1.1 Requirements
+
+Requirements for v1.1 Polish & Agent Tools. Each maps to roadmap phases 5-7.
+
+### Form I Templates
+
+- [ ] **FORMI-01**: All 4 Form I WhatsApp messages rewritten with agent-to-agent commission split language
+- [ ] **FORMI-02**: All 4 Form I email subjects and bodies rewritten with agent-to-agent language
+- [ ] **FORMI-03**: All 4 Form I descriptions updated to reflect agent-to-agent purpose
+
+### General Notes
+
+- [ ] **NOTE-05**: User can type freeform notes in a text area within the contact card
+- [ ] **NOTE-06**: User can push notes to OneNote with one click (appends below existing page content)
+- [ ] **NOTE-07**: Textarea clears only after OneNote push confirms success
+- [ ] **NOTE-08**: Each push includes a timestamp header in OneNote for chronological log
+- [ ] **NOTE-09**: User sees success/error feedback after push (toast or inline indicator)
+
+### Landing Page
+
+- [ ] **LAND-01**: Landing page updated with General Notes feature description
+- [ ] **LAND-02**: Landing page updated with agent-to-agent collaboration tools mention
+
 ## v2 Requirements
 
-Deferred to next release. Tracked but not in current roadmap.
+Deferred to future release. Tracked but not in current roadmap.
 
 ### Communication Enhancements
 
 - **COMM-04**: Agent can send an email and auto-trigger a WhatsApp message notifying the contact to check their inbox
 - **COMM-05**: Agent can translate a composed email before sending via translation API
+
+### General Notes Enhancements
+
+- **NOTE-10**: Ctrl+Enter keyboard shortcut for pushing notes
+- **NOTE-11**: Rich text or markdown support in notes textarea
+
+### Form I Enhancements
+
+- **FORMI-04**: Form I auto-fill with agent/brokerage details from settings
 
 ### Mobile
 
@@ -103,6 +135,10 @@ Deferred to future releases. Significant complexity or external dependencies.
 | In-app meeting summaries / AI extraction | Agent uses ChatGPT externally for now |
 | Saved transcript history / searchable archive | Explicitly out of scope (privacy) |
 | Cloud transcription fallback | Conflicts with free/privacy requirements |
+| Local note persistence / draft saving | OneNote is single source of truth — app stores nothing locally |
+| Note history in-app | OneNote IS the history — no duplication |
+| Two-way OneNote sync | Complexity far exceeds value for v1.1 |
+| Form I override migration | Existing overrides mask new defaults by design; Reset button restores new text |
 
 ## Traceability
 
@@ -134,11 +170,31 @@ Deferred to future releases. Significant complexity or external dependencies.
 | TRANS-03 | Phase 4 | Complete |
 | PRIV-01 | Phase 4 | Complete |
 
-**Coverage:**
+**v1 Coverage:**
 - v1 requirements: 25 total
 - Mapped to phases: 25
 - Unmapped: 0
 
+### v1.1 Traceability
+
+| Requirement | Phase | Status |
+|-------------|-------|--------|
+| FORMI-01 | — | Pending |
+| FORMI-02 | — | Pending |
+| FORMI-03 | — | Pending |
+| NOTE-05 | — | Pending |
+| NOTE-06 | — | Pending |
+| NOTE-07 | — | Pending |
+| NOTE-08 | — | Pending |
+| NOTE-09 | — | Pending |
+| LAND-01 | — | Pending |
+| LAND-02 | — | Pending |
+
+**v1.1 Coverage:**
+- v1.1 requirements: 10 total
+- Mapped to phases: 0
+- Unmapped: 10
+
 ---
 *Requirements defined: 2026-03-01*
-*Last updated: 2026-03-06 — added Phase 4 meeting transcriber requirements (REC-01..03, TRANS-01..03, PRIV-01)*
+*Last updated: 2026-03-06 — added v1.1 requirements (FORMI-01..03, NOTE-05..09, LAND-01..02)*
