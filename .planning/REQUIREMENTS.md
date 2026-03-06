@@ -1,7 +1,7 @@
 # Requirements: Real Estate Agent Toolkit
 
 **Defined:** 2026-03-01
-**Core Value:** Make every agent faster at the tasks they repeat hundreds of times a week — calling, messaging, note-taking, and organizing — without touching the CRM or creating security concerns.
+**Core Value:** Make every agent faster at the tasks they repeat hundreds of times a week -- calling, messaging, note-taking, and organizing -- without touching the CRM or creating security concerns.
 
 ## v1 Requirements
 
@@ -51,7 +51,7 @@ Requirements for initial release. Each maps to roadmap phases.
 - [x] **TRANS-01**: After stopping the recording, the audio is transcribed to text automatically using local Whisper (no cloud, no cost)
 - [x] **TRANS-02**: Transcribed text appears in the main window with a Copy All button for pasting into ChatGPT
 - [x] **TRANS-03**: Transcript text is selectable for partial copy
-- [x] **PRIV-01**: All audio and transcript data is fully ephemeral — no audio or transcript saved to disk, no temp files, data discarded on navigation
+- [x] **PRIV-01**: All audio and transcript data is fully ephemeral -- no audio or transcript saved to disk, no temp files, data discarded on navigation
 
 ## v1.1 Requirements
 
@@ -124,19 +124,19 @@ Deferred to future releases. Significant complexity or external dependencies.
 |---------|--------|
 | CRM replacement | Tool works alongside existing CRM, not instead of it |
 | Call logging / call tagging | CRM handles activity tracking |
-| Data scraping from CRM or property portals | Security and compliance risk — hard boundary |
+| Data scraping from CRM or property portals | Security and compliance risk -- hard boundary |
 | Area insights / market data | Sourcing involves scraping which isn't allowed |
 | Built-in VoIP dialler | Agents use personal phones; tel: URI + Phone Link is correct |
 | Bulk message sending | TDRA compliance risk; one-contact-at-a-time only |
 | AI-generated listing descriptions | Out of product scope |
-| Scrcpy / ADB phone mirroring | Requires USB debugging — too technical and scary for agents |
+| Scrcpy / ADB phone mirroring | Requires USB debugging -- too technical and scary for agents |
 | Cheque/currency calculators | Simple enough to do manually |
 | Speaker diarization | Separate enhancement for future version |
 | In-app meeting summaries / AI extraction | Agent uses ChatGPT externally for now |
 | Saved transcript history / searchable archive | Explicitly out of scope (privacy) |
 | Cloud transcription fallback | Conflicts with free/privacy requirements |
-| Local note persistence / draft saving | OneNote is single source of truth — app stores nothing locally |
-| Note history in-app | OneNote IS the history — no duplication |
+| Local note persistence / draft saving | OneNote is single source of truth -- app stores nothing locally |
+| Note history in-app | OneNote IS the history -- no duplication |
 | Two-way OneNote sync | Complexity far exceeds value for v1.1 |
 | Form I override migration | Existing overrides mask new defaults by design; Reset button restores new text |
 
@@ -179,22 +179,22 @@ Deferred to future releases. Significant complexity or external dependencies.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| FORMI-01 | — | Pending |
-| FORMI-02 | — | Pending |
-| FORMI-03 | — | Pending |
-| NOTE-05 | — | Pending |
-| NOTE-06 | — | Pending |
-| NOTE-07 | — | Pending |
-| NOTE-08 | — | Pending |
-| NOTE-09 | — | Pending |
-| LAND-01 | — | Pending |
-| LAND-02 | — | Pending |
+| FORMI-01 | Phase 5 | Pending |
+| FORMI-02 | Phase 5 | Pending |
+| FORMI-03 | Phase 5 | Pending |
+| NOTE-05 | Phase 6 | Pending |
+| NOTE-06 | Phase 6 | Pending |
+| NOTE-07 | Phase 6 | Pending |
+| NOTE-08 | Phase 6 | Pending |
+| NOTE-09 | Phase 6 | Pending |
+| LAND-01 | Phase 7 | Pending |
+| LAND-02 | Phase 7 | Pending |
 
 **v1.1 Coverage:**
 - v1.1 requirements: 10 total
-- Mapped to phases: 0
-- Unmapped: 10
+- Mapped to phases: 10
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-03-01*
-*Last updated: 2026-03-06 — added v1.1 requirements (FORMI-01..03, NOTE-05..09, LAND-01..02)*
+*Last updated: 2026-03-06 -- v1.1 requirements mapped to phases 5-7*
