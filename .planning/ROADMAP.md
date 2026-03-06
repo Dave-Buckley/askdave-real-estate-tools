@@ -66,10 +66,10 @@ Plans:
 **Success Criteria** (what must be TRUE):
   1. Landing page includes a section describing the General Notes feature
   2. Landing page mentions agent-to-agent collaboration tools (Form I)
-**Plans**: TBD
+**Plans**: 1 plan
 
 Plans:
-- [ ] 07-01: TBD
+- [ ] 07-01-PLAN.md -- General Notes feature card, Area Guides trim, docs sync
 
 ## Progress
 
@@ -83,4 +83,4 @@ Plans:
 | 4. Meeting Transcriber | v1.0 | 3/3 | Complete | 2026-03-06 |
 | 5. Form I Template Rewrites | v1.1 | 1/1 | Complete | 2026-03-06 |
 | 6. General Notes | v1.1 | 2/2 | Complete | 2026-03-06 |
-| 7. Landing Page Update | v1.1 | 0/? | Not started | - |
+| 7. Landing Page Update | v1.1 | 0/1 | Not started | - |
