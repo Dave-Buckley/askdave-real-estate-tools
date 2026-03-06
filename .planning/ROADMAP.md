@@ -2,7 +2,7 @@
 
 ## Overview
 
-Three phases that deliver a working, distributable cross-platform desktop productivity tool for UAE real estate agents. Phase 1 ships a usable, demo-able product from day one — agents install the app and immediately can open any phone number in their dialler or WhatsApp with one click, and send templated messages. Phase 2 wires up OneNote and Google Calendar, completing the core daily workflow loop (communicate, document, follow up). Phase 3 finishes the remaining productivity features and ships the instruction website. The app runs on both Windows and macOS. Mobile is covered through existing apps (OneNote, Google Calendar) in v1, with a dedicated companion app planned for v2.
+Three phases that deliver a working, distributable cross-platform desktop productivity tool for UAE real estate agents. Phase 1 ships a usable, demo-able product from day one — agents install the app and immediately can open any phone number in their dialler or WhatsApp with one click, and send templated messages. Phase 2 wires up OneNote and Google Calendar, completing the core daily workflow loop (communicate, document, follow up). Phase 3 finishes the remaining productivity features and ships the instruction website. Phase 4 adds a meeting transcriber for hands-free note capture. The app runs on both Windows and macOS. Mobile is covered through existing apps (OneNote, Google Calendar) in v1, with a dedicated companion app planned for v2.
 
 ## Phases
 
@@ -15,7 +15,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [ ] **Phase 1: Core App + Communication** - Cross-platform Electron app with installer, system tray, hotkeys, click-to-dial, click-to-WhatsApp, message templates, clipboard detection
 - [x] **Phase 2: Notes and Calendar Integration** - OneNote per-contact pages with role templates, Google Calendar reminders and viewings, inbound caller recognition (completed 2026-03-02)
 - [x] **Phase 3: Secondary Features and Website** - Document checklists, UAE real estate news feed, and instruction/download website (completed 2026-03-03)
-- [ ] **Phase 4: Meeting Transcriber** - Record client meetings via microphone, transcribe audio to text, and save structured meeting notes for each contact
+- [ ] **Phase 4: Meeting Transcriber** - Record client meetings via microphone, transcribe locally with Whisper, ephemeral transcript with Copy All for ChatGPT workflow
 
 ## Phase Details
 
@@ -76,25 +76,29 @@ Plans:
 - [ ] 03-03-PLAN.md -- Website polish: electron-builder GitHub Releases config, landing page download URLs, GitHub Pages prep
 
 ### Phase 4: Meeting Transcriber
-**Goal**: Agents can record client meetings (in-person or phone) and get automatic transcriptions saved as structured meeting notes — no manual note-taking during calls
+**Goal**: Agents can record client meetings via microphone and get an ephemeral transcript they can copy-paste into ChatGPT -- fully local, fully free, no data saved to disk
 **Depends on**: Phase 1 (core app)
-**Requirements**: TBD (pending discussion)
+**Requirements**: REC-01, REC-02, REC-03, TRANS-01, TRANS-02, TRANS-03, PRIV-01
 **Success Criteria** (what must be TRUE):
-  1. Agent clicks a Record button in the app and audio is captured from the device microphone
-  2. After stopping the recording, the audio is transcribed to text automatically
-  3. Transcribed meeting notes are saved and associated with the current contact
-  4. Agent can review, edit, and export past meeting transcripts
-  5. All audio and transcript data stays on the device (privacy-first, no data leaves the machine unless the agent chooses to export)
-**Plans**: TBD (pending /gsd:plan-phase)
+  1. Agent clicks a mic icon in the title bar and audio is captured from the device microphone via a pop-out recorder window
+  2. Agent can pause and resume recording within a session
+  3. After stopping the recording, the audio is transcribed to text automatically using local Whisper (no cloud, no cost)
+  4. Transcribed text appears in the main window with a Copy All button and is fully selectable for partial copy
+  5. All audio and transcript data is fully ephemeral -- nothing saved to disk, data discarded on navigation or new recording
+**Plans**: 3 plans
+Plans:
+- [ ] 04-01-PLAN.md -- Foundation: shared types, AudioRecorder utility, Whisper Web Worker, preload API extensions
+- [ ] 04-02-PLAN.md -- Main process: pop-out recorder window, IPC state relay between windows, store defaults
+- [ ] 04-03-PLAN.md -- UI: mic icon in TitleBar, RecorderOverlay pop-out, TranscriptView with Copy All, Settings model selector
 
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 → 2 → 3
+Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Core App + Communication | 5/5 | Complete | 2026-03-02 |
 | 2. Notes and Calendar Integration | 3/3 | Complete   | 2026-03-02 |
 | 3. Secondary Features and Website | 3/3 | Complete   | 2026-03-03 |
-| 4. Meeting Transcriber | 0/? | Not Started | — |
+| 4. Meeting Transcriber | 0/3 | Not Started | -- |

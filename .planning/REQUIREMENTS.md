@@ -43,6 +43,16 @@ Requirements for initial release. Each maps to roadmap phases.
 
 - [x] **WEB-01**: A simple instruction/marketing website explains the tool's features, shows how to install it, and provides download links
 
+### Meeting Transcriber
+
+- [ ] **REC-01**: Agent clicks a Record button (mic icon in title bar) and audio is captured from the device microphone
+- [ ] **REC-02**: Agent can pause and resume recording within a session
+- [ ] **REC-03**: Recording state is visible in the main window (pulsing mic icon) while a pop-out recorder window shows controls
+- [ ] **TRANS-01**: After stopping the recording, the audio is transcribed to text automatically using local Whisper (no cloud, no cost)
+- [ ] **TRANS-02**: Transcribed text appears in the main window with a Copy All button for pasting into ChatGPT
+- [ ] **TRANS-03**: Transcript text is selectable for partial copy
+- [ ] **PRIV-01**: All audio and transcript data is fully ephemeral — no audio or transcript saved to disk, no temp files, data discarded on navigation
+
 ## v2 Requirements
 
 Deferred to next release. Tracked but not in current roadmap.
@@ -89,6 +99,10 @@ Deferred to future releases. Significant complexity or external dependencies.
 | AI-generated listing descriptions | Out of product scope |
 | Scrcpy / ADB phone mirroring | Requires USB debugging — too technical and scary for agents |
 | Cheque/currency calculators | Simple enough to do manually |
+| Speaker diarization | Separate enhancement for future version |
+| In-app meeting summaries / AI extraction | Agent uses ChatGPT externally for now |
+| Saved transcript history / searchable archive | Explicitly out of scope (privacy) |
+| Cloud transcription fallback | Conflicts with free/privacy requirements |
 
 ## Traceability
 
@@ -112,12 +126,19 @@ Deferred to future releases. Significant complexity or external dependencies.
 | ORG-03 | Phase 3 | Complete |
 | NEWS-01 | Phase 3 | Complete |
 | WEB-01 | Phase 3 | Complete |
+| REC-01 | Phase 4 | Pending |
+| REC-02 | Phase 4 | Pending |
+| REC-03 | Phase 4 | Pending |
+| TRANS-01 | Phase 4 | Pending |
+| TRANS-02 | Phase 4 | Pending |
+| TRANS-03 | Phase 4 | Pending |
+| PRIV-01 | Phase 4 | Pending |
 
 **Coverage:**
-- v1 requirements: 18 total
-- Mapped to phases: 18
+- v1 requirements: 25 total
+- Mapped to phases: 25
 - Unmapped: 0
 
 ---
 *Requirements defined: 2026-03-01*
-*Last updated: 2026-03-02 after roadmap revision — 3 phases, cross-platform, all 17 requirements mapped*
+*Last updated: 2026-03-06 — added Phase 4 meeting transcriber requirements (REC-01..03, TRANS-01..03, PRIV-01)*
