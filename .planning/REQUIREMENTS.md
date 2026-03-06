@@ -83,7 +83,7 @@ Requirements for v1.2 Agent Productivity. Each maps to roadmap phases 8-12.
 ### Area Guides
 
 - [x] **AREA-01**: Agent can view Dubai community profiles (10+ areas) from a dedicated screen in the title bar
-- [ ] **AREA-02**: Agent can compare two or more communities side-by-side (price/sqft, yield, growth, property types)
+- [x] **AREA-02**: Agent can compare two or more communities side-by-side (price/sqft, yield, growth, property types)
 - [x] **AREA-03**: Each area guide displays a "data effective as of" date and source attribution
 
 ### Quick Calculators
@@ -238,7 +238,7 @@ Deferred to future releases. Significant complexity or external dependencies.
 | Requirement | Phase | Status |
 |-------------|-------|--------|
 | AREA-01 | Phase 8 | Complete |
-| AREA-02 | Phase 8 | Pending |
+| AREA-02 | Phase 8 | Complete |
 | AREA-03 | Phase 8 | Complete |
 | CALC-01 | Phase 9 | Pending |
 | CALC-02 | Phase 9 | Pending |

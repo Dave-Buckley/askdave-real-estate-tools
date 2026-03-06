@@ -33,7 +33,7 @@ See milestones/v1.0-ROADMAP.md for full phase details.
 
 **Milestone Goal:** Give agents in-app reference tools (area guides, calculators), remove all client PII from local storage, add voice-to-OneNote workflow, and extend clipboard detection to property listing URLs.
 
-- [ ] **Phase 8: Area Guides** - Dedicated view with 10 Dubai community profiles and side-by-side comparison
+- [x] **Phase 8: Area Guides** - Dedicated view with 10 Dubai community profiles and side-by-side comparison
 - [ ] **Phase 9: Quick Calculators** - Mortgage, commission split, ROI/yield, and DLD cost calculators with UAE-specific defaults
 - [ ] **Phase 10: Client Data Removal** - Strip all client PII from local storage; app becomes a zero-data pass-through tool
 - [ ] **Phase 11: Voice Memo** - Record voice note, transcribe locally via Whisper, push transcript to contact's OneNote page
@@ -53,8 +53,8 @@ See milestones/v1.0-ROADMAP.md for full phase details.
 **Plans**: 2 plans
 
 Plans:
-- [ ] 08-01-PLAN.md — Data model (12 communities) + list/detail views with search, sort, and SVG charts
-- [ ] 08-02-PLAN.md — Side-by-side comparison table + WhatsApp share with editable preview
+- [x] 08-01-PLAN.md — Data model (12 communities) + list/detail views with search, sort, and SVG charts
+- [x] 08-02-PLAN.md — Side-by-side comparison table + WhatsApp share with editable preview
 
 ### Phase 9: Quick Calculators
 **Goal**: Agent can run common financial calculations with UAE-specific parameters during or after client calls
@@ -129,7 +129,7 @@ Plans:
 | 5. Form I Template Rewrites | v1.1 | 1/1 | Complete | 2026-03-06 |
 | 6. General Notes | v1.1 | 2/2 | Complete | 2026-03-06 |
 | 7. Landing Page Update | v1.1 | 1/1 | Complete | 2026-03-06 |
-| 8. Area Guides | v1.2 | 0/2 | Planning complete | - |
+| 8. Area Guides | v1.2 | 2/2 | Complete | 2026-03-06 |
 | 9. Quick Calculators | v1.2 | 0/? | Not started | - |
 | 10. Client Data Removal | v1.2 | 0/? | Not started | - |
 | 11. Voice Memo | v1.2 | 0/? | Not started | - |
