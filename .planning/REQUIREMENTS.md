@@ -47,10 +47,10 @@ Requirements for initial release. Each maps to roadmap phases.
 
 - [x] **REC-01**: Agent clicks a mic icon in the title bar, scans a QR code on their phone, and audio is captured from the phone microphone via local WiFi
 - [x] **REC-02**: Agent can pause and resume recording from the phone browser interface
-- [ ] **REC-03**: Recording state is visible in the desktop app (connection status, recording timer) while the phone browser shows recording controls
+- [x] **REC-03**: Recording state is visible in the desktop app (connection status, recording timer) while the phone browser shows recording controls
 - [x] **TRANS-01**: After stopping the recording, the audio is transcribed to text automatically using local Whisper (no cloud, no cost)
-- [ ] **TRANS-02**: Transcribed text appears in the main window with a Copy All button for pasting into ChatGPT
-- [ ] **TRANS-03**: Transcript text is selectable for partial copy
+- [x] **TRANS-02**: Transcribed text appears in the main window with a Copy All button for pasting into ChatGPT
+- [x] **TRANS-03**: Transcript text is selectable for partial copy
 - [x] **PRIV-01**: All audio and transcript data is fully ephemeral — no audio or transcript saved to disk, no temp files, data discarded on navigation
 
 ## v2 Requirements
@@ -128,10 +128,10 @@ Deferred to future releases. Significant complexity or external dependencies.
 | WEB-01 | Phase 3 | Complete |
 | REC-01 | Phase 4 | Complete |
 | REC-02 | Phase 4 | Complete |
-| REC-03 | Phase 4 | Pending |
-| TRANS-01 | Phase 4 | Pending |
-| TRANS-02 | Phase 4 | Pending |
-| TRANS-03 | Phase 4 | Pending |
+| REC-03 | Phase 4 | Complete |
+| TRANS-01 | Phase 4 | Complete |
+| TRANS-02 | Phase 4 | Complete |
+| TRANS-03 | Phase 4 | Complete |
 | PRIV-01 | Phase 4 | Complete |
 
 **Coverage:**
