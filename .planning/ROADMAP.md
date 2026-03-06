@@ -66,11 +66,11 @@ Plans:
   3. Agent can calculate ROI/yield on a property given purchase price and rental income (gross and net)
   4. Every calculator displays effective date, source reference for rates used, and an "estimates only" disclaimer
   5. Agent can copy a formatted calculation summary for pasting into WhatsApp
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 09-01: TBD
-- [ ] 09-02: TBD
+- [ ] 09-01-PLAN.md — Rate data + view shell + App.tsx integration + Commission and ROI/Yield calculators
+- [ ] 09-02-PLAN.md — Mortgage calculator with LTV rules + DLD cost calculator + WhatsApp share + session history
 
 ### Phase 10: Client Data Removal
 **Goal**: App stores zero client PII on disk -- all contact data is transient session state, making the app a true pass-through tool
@@ -130,7 +130,7 @@ Plans:
 | 6. General Notes | v1.1 | 2/2 | Complete | 2026-03-06 |
 | 7. Landing Page Update | v1.1 | 1/1 | Complete | 2026-03-06 |
 | 8. Area Guides | v1.2 | 2/2 | Complete | 2026-03-06 |
-| 9. Quick Calculators | v1.2 | 0/? | Not started | - |
+| 9. Quick Calculators | v1.2 | 0/2 | Not started | - |
 | 10. Client Data Removal | v1.2 | 0/? | Not started | - |
 | 11. Voice Memo | v1.2 | 0/? | Not started | - |
 | 12. Property Quick-Share | v1.2 | 0/? | Not started | - |
