@@ -102,6 +102,8 @@ Recent decisions affecting current work:
 ### Pending Todos
 
 - **Add silent TickTick reminder integration** (area: api) — config-gated, no UI surface, personal feature
+- **Test meeting transcriber end-to-end** — phone mic via WiFi, desktop mic, QR code on mobile, model download, ephemeral data cleanup
+- **Take screenshots for landing page** — transcriber source picker, recording view, transcript view for landing/screenshots/
 
 ### Blockers/Concerns
 
