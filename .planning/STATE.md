@@ -2,12 +2,12 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: complete
-last_updated: "2026-03-06T09:53:51Z"
+status: unknown
+last_updated: "2026-03-06T10:07:03.052Z"
 progress:
   total_phases: 4
   completed_phases: 4
-  total_plans: 14
+  total_plans: 13
   completed_plans: 14
 ---
 
