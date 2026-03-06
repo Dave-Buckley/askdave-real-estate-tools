@@ -2,6 +2,8 @@ import { useState, useMemo } from 'react'
 import { Search, ArrowUpDown, ChevronRight, ExternalLink, ArrowLeft, Share2 } from 'lucide-react'
 import { AREA_GUIDES, formatRange } from '../../../shared/area-guides'
 import type { CommunityProfile, AreaDataPoint } from '../../../shared/area-guides'
+import AreaCompare from './AreaCompare'
+import AreaSharePreview from './AreaSharePreview'
 
 interface AreaGuidesViewProps {
   onBack: () => void
@@ -202,10 +204,11 @@ function AreaList({ areas, searchQuery, sortBy, onSearchChange, onSortChange, on
 
 // ── AreaDetail ────────────────────────────────────────────────────────
 
-function AreaDetail({ area, onBack, onCompare }: {
+function AreaDetail({ area, onBack, onCompare, onShare }: {
   area: CommunityProfile
   onBack: () => void
   onCompare: () => void
+  onShare: () => void
 }) {
   // Max values for bar charts (across all communities for context)
   const maxPrice = Math.max(...AREA_GUIDES.map(a => {
@@ -226,26 +229,6 @@ function AreaDetail({ area, onBack, onCompare }: {
 
   const handleRefreshData = () => {
     window.electronAPI.openExternal('https://dxbinteract.com/')
-  }
-
-  const handleShareWhatsApp = () => {
-    const lines = [
-      `*${area.name} - Area Guide*`,
-      '',
-      `Price/sqft: AED ${formatRange(area.pricePerSqft.value)}`,
-      `Gross Yield: ${formatRange(area.rentalYield.value, '%')}`,
-      `Service Charges: AED ${formatRange(area.serviceCharges.value, '/sqft')}`,
-      `Avg Transaction: AED ${formatRange(area.avgTransactionPrice.value)}`,
-      `YoY Growth: ${formatRange(area.priceGrowthYoY.value, '%')}`,
-      `Freehold: ${area.freeholdStatus === 'freehold' ? 'Yes' : area.freeholdStatus === 'mixed' ? 'Mixed' : 'No'}`,
-      `Metro: ${area.metroAccess ? area.nearestMetro || 'Yes' : 'No'}`,
-      '',
-      `Data effective: ${area.pricePerSqft.effectiveDate}`,
-      `Source: ${area.pricePerSqft.source}`,
-      area.pricePerSqft.sourceUrl,
-    ]
-    const message = lines.join('\n')
-    window.electronAPI.openExternal(`https://wa.me/?text=${encodeURIComponent(message)}`)
   }
 
   return (
@@ -361,7 +344,7 @@ function AreaDetail({ area, onBack, onCompare }: {
           </button>
 
           <button
-            onClick={handleShareWhatsApp}
+            onClick={onShare}
             className="w-full py-2 text-[12px] font-medium text-white rounded-lg hover:opacity-90 transition-colors flex items-center justify-center gap-1.5"
             style={{ backgroundColor: '#25D366' }}
           >
@@ -388,6 +371,7 @@ export default function AreaGuidesView({ onBack }: AreaGuidesViewProps) {
   const [phase, setPhase] = useState<AreaGuidePhase>('list')
   const [selectedArea, setSelectedArea] = useState<CommunityProfile | null>(null)
   const [compareAreas, setCompareAreas] = useState<CommunityProfile[]>([])
+  const [showSharePreview, setShowSharePreview] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const [sortBy, setSortBy] = useState<SortBy>('name')
 
@@ -402,33 +386,44 @@ export default function AreaGuidesView({ onBack }: AreaGuidesViewProps) {
     setPhase('list')
   }
 
+  const handleBackToDetail = () => {
+    setCompareAreas([])
+    setPhase('detail')
+  }
+
   const handleCompare = () => {
-    // Compare UI will be wired in Plan 02
     setPhase('compare')
   }
 
-  if (phase === 'detail' && selectedArea) {
+  const handleShare = () => {
+    setShowSharePreview(true)
+  }
+
+  if (phase === 'compare' && selectedArea) {
     return (
-      <AreaDetail
-        area={selectedArea}
-        onBack={handleBackToList}
-        onCompare={handleCompare}
+      <AreaCompare
+        currentArea={selectedArea}
+        onBack={handleBackToDetail}
       />
     )
   }
 
-  if (phase === 'compare') {
-    // Placeholder for Plan 02 comparison feature
+  if (phase === 'detail' && selectedArea) {
     return (
-      <div className="flex flex-col items-center justify-center h-full gap-3">
-        <p className="text-sm text-[#a1a1aa]">Comparison view coming in the next update</p>
-        <button
-          onClick={handleBackToList}
-          className="text-[12px] text-[#818cf8] hover:text-[#a5b4fc] transition-colors"
-        >
-          Back to list
-        </button>
-      </div>
+      <>
+        <AreaDetail
+          area={selectedArea}
+          onBack={handleBackToList}
+          onCompare={handleCompare}
+          onShare={handleShare}
+        />
+        {showSharePreview && (
+          <AreaSharePreview
+            area={selectedArea}
+            onClose={() => setShowSharePreview(false)}
+          />
+        )}
+      </>
     )
   }
 
