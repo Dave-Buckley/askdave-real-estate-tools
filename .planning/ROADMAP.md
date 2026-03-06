@@ -15,6 +15,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [ ] **Phase 1: Core App + Communication** - Cross-platform Electron app with installer, system tray, hotkeys, click-to-dial, click-to-WhatsApp, message templates, clipboard detection
 - [x] **Phase 2: Notes and Calendar Integration** - OneNote per-contact pages with role templates, Google Calendar reminders and viewings, inbound caller recognition (completed 2026-03-02)
 - [x] **Phase 3: Secondary Features and Website** - Document checklists, UAE real estate news feed, and instruction/download website (completed 2026-03-03)
+- [ ] **Phase 4: Meeting Transcriber** - Record client meetings via microphone, transcribe audio to text, and save structured meeting notes for each contact
 
 ## Phase Details
 
@@ -74,6 +75,18 @@ Plans:
 - [ ] 03-02-PLAN.md -- UAE news feed: rss-parser, main-process fetch/cache, 30-min background refresh, panel view
 - [ ] 03-03-PLAN.md -- Website polish: electron-builder GitHub Releases config, landing page download URLs, GitHub Pages prep
 
+### Phase 4: Meeting Transcriber
+**Goal**: Agents can record client meetings (in-person or phone) and get automatic transcriptions saved as structured meeting notes — no manual note-taking during calls
+**Depends on**: Phase 1 (core app)
+**Requirements**: TBD (pending discussion)
+**Success Criteria** (what must be TRUE):
+  1. Agent clicks a Record button in the app and audio is captured from the device microphone
+  2. After stopping the recording, the audio is transcribed to text automatically
+  3. Transcribed meeting notes are saved and associated with the current contact
+  4. Agent can review, edit, and export past meeting transcripts
+  5. All audio and transcript data stays on the device (privacy-first, no data leaves the machine unless the agent chooses to export)
+**Plans**: TBD (pending /gsd:plan-phase)
+
 ## Progress
 
 **Execution Order:**
@@ -84,3 +97,4 @@ Phases execute in numeric order: 1 → 2 → 3
 | 1. Core App + Communication | 5/5 | Complete | 2026-03-02 |
 | 2. Notes and Calendar Integration | 3/3 | Complete   | 2026-03-02 |
 | 3. Secondary Features and Website | 3/3 | Complete   | 2026-03-03 |
+| 4. Meeting Transcriber | 0/? | Not Started | — |

@@ -115,6 +115,7 @@ function App(): React.JSX.Element {
   // If a contact card is already showing (e.g. email was detected first), just fill the phone — don't reset
   useEffect(() => {
     window.electronAPI.onPhoneDetected((e164, displayNumber) => {
+      setView('main')
       setActiveContact((prev) => {
         if (prev) {
           // Contact card already open — just update the phone number, keep other fields
@@ -137,6 +138,7 @@ function App(): React.JSX.Element {
   // If a contact card is already showing (e.g. phone was detected first), just fill the email
   useEffect(() => {
     window.electronAPI.onEmailDetected((email) => {
+      setView('main')
       setContactEmail(email)
       setActiveContact((prev) => {
         if (prev) return prev // card already open, just update email state above
@@ -156,6 +158,7 @@ function App(): React.JSX.Element {
   // Subscribe to contact:extracted events (multi-field from text block)
   useEffect(() => {
     window.electronAPI.onContactExtracted((info) => {
+      setView('main')
       if (info.e164) setActiveContact({ e164: info.e164, displayNumber: info.displayNumber || info.e164 })
       else setActiveContact((prev) => prev || { e164: '', displayNumber: '' })
       if (info.email) setContactEmail(info.email)

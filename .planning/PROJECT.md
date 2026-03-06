@@ -33,6 +33,7 @@ Make every agent faster at the tasks they repeat hundreds of times a week — ca
 - [ ] Clean .exe installer, no admin rights, auto-updates
 - [ ] Real estate news feed: curated UAE property news via RSS
 - [ ] Instruction/marketing website with download links
+- [ ] Meeting transcriber: record client meetings via microphone and auto-transcribe to structured notes
 
 ### Out of Scope
 
