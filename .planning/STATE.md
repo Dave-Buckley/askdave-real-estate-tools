@@ -2,13 +2,13 @@
 gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: Agent Productivity
-status: ready_to_plan
+status: executing
 last_updated: "2026-03-06"
 progress:
   total_phases: 5
   completed_phases: 0
-  total_plans: 0
-  completed_plans: 0
+  total_plans: 2
+  completed_plans: 1
 ---
 
 # Project State
@@ -23,11 +23,11 @@ See: .planning/PROJECT.md (updated 2026-03-06)
 ## Current Position
 
 Phase: 8 of 12 (Area Guides) -- first phase of v1.2
-Plan: --
-Status: Ready to plan
-Last activity: 2026-03-06 -- Roadmap created for v1.2 (phases 8-12)
+Plan: 1 of 2 complete
+Status: Executing Phase 8
+Last activity: 2026-03-06 -- Completed 08-01 (Area Guides data model + core UI)
 
-Progress: [####################..........] 70% (phases 1-7 complete, 8-12 remaining)
+Progress: [######################........] 74% (phases 1-7 complete, 8-01 done, 8-02 + phases 9-12 remaining)
 
 ## Performance Metrics
 
@@ -42,6 +42,10 @@ Progress: [####################..........] 70% (phases 1-7 complete, 8-12 remain
 - 06-02: 21min (3 tasks, 3 files)
 - 07-01: 2min (2 tasks, 2 files)
 
+**v1.2 Metrics:**
+- Plans completed: 1
+- 08-01: 4min (2 tasks, 3 files)
+
 ## Accumulated Context
 
 ### Decisions
@@ -55,6 +59,9 @@ Recent decisions affecting current work:
 - v1.2: Area Guides and Calculators are renderer-only (no IPC, no data model changes)
 - v1.2: Client Data Removal before Voice Memo (stabilize contact model first)
 - v1.2: Property Quick-Share last (touches clipboard watcher, isolate regressions)
+- v1.2: Area Guides uses hand-drawn SVG bar charts (no Recharts -- React 19 compatibility + bundle size)
+- v1.2: All area data values use [min, max] ranges, never single averages
+- v1.2: Refresh Data button opens DXBInteract externally (no live API fetch in v1)
 
 ### Pending Todos
 
@@ -70,5 +77,5 @@ Recent decisions affecting current work:
 ## Session Continuity
 
 Last session: 2026-03-06
-Stopped at: v1.2 roadmap created (phases 8-12), ready to plan Phase 8
+Stopped at: Completed 08-01-PLAN.md (Area Guides data model + core UI)
 Resume file: None
