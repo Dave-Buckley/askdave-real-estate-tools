@@ -88,7 +88,7 @@ Plans:
 **Plans**: 3 plans
 Plans:
 - [x] 04-01-PLAN.md -- Foundation: shared types, Whisper Web Worker, preload API extensions (partially obsolete -- AudioRecorder replaced by phone recording)
-- [ ] 04-02-PLAN.md -- WiFi server infrastructure: cleanup obsolete artifacts, local HTTP+WebSocket server, phone recorder page, IPC/preload revision
+- [x] 04-02-PLAN.md -- WiFi server infrastructure: cleanup obsolete artifacts, local HTTP+WebSocket server, phone recorder page, IPC/preload revision
 - [ ] 04-03-PLAN.md -- Desktop UI: TranscriberView with QR code, connection status, recording timer, Whisper transcription, transcript display with Copy All
 
 ## Progress
@@ -101,4 +101,4 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 | 1. Core App + Communication | 5/5 | Complete | 2026-03-02 |
 | 2. Notes and Calendar Integration | 3/3 | Complete   | 2026-03-02 |
 | 3. Secondary Features and Website | 3/3 | Complete   | 2026-03-03 |
-| 4. Meeting Transcriber | 1/3 | In Progress | -- |
+| 4. Meeting Transcriber | 2/3 | In Progress | -- |
