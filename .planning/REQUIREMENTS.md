@@ -45,9 +45,9 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Meeting Transcriber
 
-- [x] **REC-01**: Agent clicks a Record button (mic icon in title bar) and audio is captured from the device microphone
-- [x] **REC-02**: Agent can pause and resume recording within a session
-- [ ] **REC-03**: Recording state is visible in the main window (pulsing mic icon) while a pop-out recorder window shows controls
+- [ ] **REC-01**: Agent clicks a mic icon in the title bar, scans a QR code on their phone, and audio is captured from the phone microphone via local WiFi
+- [ ] **REC-02**: Agent can pause and resume recording from the phone browser interface
+- [ ] **REC-03**: Recording state is visible in the desktop app (connection status, recording timer) while the phone browser shows recording controls
 - [x] **TRANS-01**: After stopping the recording, the audio is transcribed to text automatically using local Whisper (no cloud, no cost)
 - [ ] **TRANS-02**: Transcribed text appears in the main window with a Copy All button for pasting into ChatGPT
 - [ ] **TRANS-03**: Transcript text is selectable for partial copy
@@ -126,10 +126,10 @@ Deferred to future releases. Significant complexity or external dependencies.
 | ORG-03 | Phase 3 | Complete |
 | NEWS-01 | Phase 3 | Complete |
 | WEB-01 | Phase 3 | Complete |
-| REC-01 | Phase 4 | Complete |
-| REC-02 | Phase 4 | Complete |
+| REC-01 | Phase 4 | Pending |
+| REC-02 | Phase 4 | Pending |
 | REC-03 | Phase 4 | Pending |
-| TRANS-01 | Phase 4 | Complete |
+| TRANS-01 | Phase 4 | Pending |
 | TRANS-02 | Phase 4 | Pending |
 | TRANS-03 | Phase 4 | Pending |
 | PRIV-01 | Phase 4 | Pending |

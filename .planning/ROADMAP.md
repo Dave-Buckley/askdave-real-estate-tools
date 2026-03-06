@@ -15,7 +15,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [ ] **Phase 1: Core App + Communication** - Cross-platform Electron app with installer, system tray, hotkeys, click-to-dial, click-to-WhatsApp, message templates, clipboard detection
 - [x] **Phase 2: Notes and Calendar Integration** - OneNote per-contact pages with role templates, Google Calendar reminders and viewings, inbound caller recognition (completed 2026-03-02)
 - [x] **Phase 3: Secondary Features and Website** - Document checklists, UAE real estate news feed, and instruction/download website (completed 2026-03-03)
-- [ ] **Phase 4: Meeting Transcriber** - Record client meetings via microphone, transcribe locally with Whisper, ephemeral transcript with Copy All for ChatGPT workflow
+- [ ] **Phase 4: Meeting Transcriber** - Record client meetings via phone microphone over local WiFi, transcribe locally with Whisper, ephemeral transcript with Copy All for ChatGPT workflow
 
 ## Phase Details
 
@@ -80,16 +80,16 @@ Plans:
 **Depends on**: Phase 1 (core app)
 **Requirements**: REC-01, REC-02, REC-03, TRANS-01, TRANS-02, TRANS-03, PRIV-01
 **Success Criteria** (what must be TRUE):
-  1. Agent clicks a mic icon in the title bar and audio is captured from the device microphone via a pop-out recorder window
+  1. Agent clicks a mic icon in the title bar, scans a QR code on their phone, and audio is captured from the phone microphone via local WiFi
   2. Agent can pause and resume recording within a session
   3. After stopping the recording, the audio is transcribed to text automatically using local Whisper (no cloud, no cost)
   4. Transcribed text appears in the main window with a Copy All button and is fully selectable for partial copy
   5. All audio and transcript data is fully ephemeral -- nothing saved to disk, data discarded on navigation or new recording
 **Plans**: 3 plans
 Plans:
-- [x] 04-01-PLAN.md -- Foundation: shared types, AudioRecorder utility, Whisper Web Worker, preload API extensions
-- [ ] 04-02-PLAN.md -- Main process: pop-out recorder window, IPC state relay between windows, store defaults
-- [ ] 04-03-PLAN.md -- UI: mic icon in TitleBar, RecorderOverlay pop-out, TranscriptView with Copy All, Settings model selector
+- [x] 04-01-PLAN.md -- Foundation: shared types, Whisper Web Worker, preload API extensions (partially obsolete -- AudioRecorder replaced by phone recording)
+- [ ] 04-02-PLAN.md -- (REPLANNING: local WiFi server, QR code, phone recorder page, WebSocket audio transfer)
+- [ ] 04-03-PLAN.md -- (REPLANNING: desktop UI for QR/status/transcript, revised IPC, settings)
 
 ## Progress
 
@@ -101,4 +101,4 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 | 1. Core App + Communication | 5/5 | Complete | 2026-03-02 |
 | 2. Notes and Calendar Integration | 3/3 | Complete   | 2026-03-02 |
 | 3. Secondary Features and Website | 3/3 | Complete   | 2026-03-03 |
-| 4. Meeting Transcriber | 1/3 | In Progress | -- |
+| 4. Meeting Transcriber | 0/3 | Re-planning | -- |

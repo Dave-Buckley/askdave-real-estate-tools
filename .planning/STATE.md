@@ -23,9 +23,9 @@ See: .planning/PROJECT.md (updated 2026-03-02)
 ## Current Position
 
 Phase: 4 of 4 (Meeting Transcriber)
-Plan: 1 of 3 in current phase (COMPLETE)
-Status: Plan 04-01 complete — transcriber foundation artifacts: shared types, AudioRecorder utility, Whisper Web Worker, preload API extensions.
-Last activity: 2026-03-06 — WhisperModelId/TranscriberState types, AudioRecorder class, whisper-worker.ts, preload transcriber IPC.
+Plan: Re-planning (architectural pivot)
+Status: ARCHITECTURAL PIVOT — user requested phone-based recording via local WiFi + QR code instead of desktop mic. 04-01 partially salvageable (Whisper worker, types). Old 04-02/04-03 plans deleted. Awaiting re-plan.
+Last activity: 2026-03-06 — Pivoted architecture from desktop mic to phone recording via local WiFi server + QR code.
 
 Progress: [████████░░] 86% (Phase 4 in progress — 1/3 plans done)
 
@@ -104,5 +104,5 @@ Recent decisions affecting current work:
 ## Session Continuity
 
 Last session: 2026-03-06
-Stopped at: Completed 04-01-PLAN.md. Foundation artifacts for meeting transcriber: shared types (WhisperModelId, TranscriberState, TranscriberStatus), AudioRecorder utility (16kHz mono in-memory capture), Whisper Web Worker (WebGPU/WASM), preload IPC bridge. Phase 4 plan 1 of 3 complete.
+Stopped at: ARCHITECTURAL PIVOT mid-phase-4. User wants phone recording via local WiFi (QR code pairing) instead of desktop mic. 04-01 executed (Whisper worker + types salvageable, AudioRecorder obsolete). Old 04-02/04-03 deleted. Need /gsd:plan-phase 4 to create new plans for WiFi server + phone recorder + revised UI.
 Resume file: None
