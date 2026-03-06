@@ -12,13 +12,16 @@
     "build:all": "electron-vite build && electron-builder --config electron-builder.config.js --win --mac"
   },
   "dependencies": {
-    "@huggingface/transformers": "^3.8.1"
+    "@huggingface/transformers": "^3.8.1",
+    "ws": "^8.19.0"
   },
   "devDependencies": {
     "@electron/notarize": "^2.5.0",
     "@tailwindcss/vite": "^4.0.0",
+    "@types/qrcode": "^1.5.6",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
+    "@types/ws": "^8.18.1",
     "@vitejs/plugin-react": "^5.1.0",
     "electron": "^34.0.0",
     "electron-builder": "^26.0.0",
@@ -28,6 +31,7 @@
     "libphonenumber-js": "^1.12.38",
     "lucide-react": "^0.576.0",
     "png-to-ico": "^3.0.1",
+    "qrcode": "^1.5.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "rss-parser": "^3.13.0",

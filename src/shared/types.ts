@@ -90,6 +90,7 @@ export type WhisperModelId =
 
 export type TranscriberState =
   | 'idle'
+  | 'waiting'              // server running, QR displayed, waiting for phone
   | 'recording'
   | 'paused'
   | 'transcribing'
@@ -103,6 +104,9 @@ export interface TranscriberStatus {
   error?: string            // error message (when state=error)
   modelLoading?: boolean    // true while downloading/loading model
   modelProgress?: number    // 0-100 download progress
+  phoneConnected?: boolean  // true when phone WebSocket is connected
+  serverPort?: number       // local server port
+  serverUrl?: string        // full URL for QR code (http://192.168.x.x:PORT)
 }
 
 export interface ContactInfo {
