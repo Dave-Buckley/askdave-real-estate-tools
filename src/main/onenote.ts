@@ -250,6 +250,46 @@ ${outlineCode}
 }
 
 /**
+ * Build PowerShell script to append timestamped freeform notes to an existing OneNote page.
+ * Notes are split by newline into separate OE elements for reliable rendering.
+ * Includes horizontal rule separator and timestamp header.
+ */
+function buildNotesAppendScript(pageId: string, notes: string, timestamp: string): string {
+  const safeTimestamp = psEscape(timestamp)
+  const safePageId = psEscape(pageId)
+
+  // Split notes by newline, each line becomes its own OE element
+  const noteLines = notes.split('\n').map((line) => {
+    // Escape CDATA injection first, then PowerShell single quotes
+    const safeLine = psEscape(line.replace(/]]>/g, ']]]]><![CDATA[>'))
+    return `  $outlines += '<one:OE><one:T><![CDATA[${safeLine}]]></one:T></one:OE>'`
+  }).join('\n')
+
+  return `
+  $onenote = New-Object -ComObject OneNote.Application
+
+  $xml = ''
+  $onenote.GetHierarchy('', 0, [ref]$xml)
+  $doc = [xml]$xml
+  $ns = $doc.DocumentElement.NamespaceURI
+
+  $outlines = ''
+  $outlines += '<one:Outline><one:OEChildren>'
+  $outlines += '<one:OE><one:T><![CDATA[_______________________________________________]]></one:T></one:OE>'
+  $outlines += '<one:OE><one:T><![CDATA[${safeTimestamp}]]></one:T></one:OE>'
+${noteLines}
+  $outlines += '</one:OEChildren></one:Outline>'
+
+  $contentXml = '<one:Page xmlns:one="' + $ns + '" ID="' + '${safePageId}' + '">'
+  $contentXml += $outlines
+  $contentXml += '</one:Page>'
+  $onenote.UpdatePageContent($contentXml)
+  $onenote.NavigateTo('${safePageId}')
+  Write-Output 'ok'
+`
+}
+
+/**
  * Open the "Real Estate > Contacts" section in OneNote.
  */
 export async function openNotebookSection(): Promise<{ success: boolean; error?: string }> {
@@ -336,6 +376,92 @@ export async function openContactPage(data: {
     if (result.sectionId) store.set('oneNoteSectionId', result.sectionId)
 
     return { success: true, pageId: result.pageId }
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : String(err)
+    if (message.includes('80040154') || message.includes('CLSID') || message.includes('not registered')) {
+      return { success: false, error: 'OneNote desktop app not found. Install the full OneNote app (not the UWP version) for COM integration.' }
+    }
+    // Write debug info for troubleshooting
+    const debugInfo = `Error: ${message}\nData: ${JSON.stringify(data)}\nTimestamp: ${new Date().toISOString()}`
+    writeFile(join(tmpdir(), 'askdave-onenote-error.txt'), debugInfo, 'utf-8').catch(() => {})
+    return { success: false, error: message }
+  }
+}
+
+/**
+ * Push freeform notes to a contact's OneNote page.
+ * If the contact has an existing page, appends notes with timestamp.
+ * If no page exists, creates page with role template then appends notes.
+ * Handles stale pageId by clearing it and falling back to page creation.
+ */
+export async function pushNotesToOneNote(data: {
+  e164: string
+  name: string
+  displayNumber: string
+  notes: string
+  role?: ContactRole
+  unit?: string
+  email?: string
+}): Promise<{ success: boolean; error?: string; pageId?: string; created?: boolean }> {
+  try {
+    // Format timestamp: "06 Mar 2026, 2:35 PM"
+    const now = new Date()
+    const date = now.toLocaleDateString('en-GB', {
+      day: '2-digit', month: 'short', year: 'numeric'
+    })
+    const time = now.toLocaleTimeString('en-US', {
+      hour: 'numeric', minute: '2-digit', hour12: true
+    })
+    const timestamp = `${date}, ${time}`
+
+    // Look up stored contact for existing pageId
+    const storedContact = store.get('contacts')[data.e164]
+    let pageId = storedContact?.oneNotePageId
+
+    if (pageId) {
+      // Page exists — try to append notes directly
+      try {
+        const script = buildNotesAppendScript(pageId, data.notes, timestamp)
+        const output = await runPowerShell(script)
+        if (output.includes('ok')) {
+          return { success: true, pageId }
+        }
+        return { success: false, error: 'Unexpected output from OneNote' }
+      } catch (err: unknown) {
+        const message = err instanceof Error ? err.message : String(err)
+        // Stale pageId — page was deleted in OneNote
+        if (message.includes('0x80042014') || message.includes('does not exist')) {
+          // Clear stored pageId and fall through to create-page flow
+          upsertContact(data.e164, { oneNotePageId: undefined })
+          pageId = undefined
+        } else {
+          throw err // Re-throw other errors to be caught by outer handler
+        }
+      }
+    }
+
+    // No page exists (or stale pageId was cleared) — create page first
+    const role = data.role ?? storedContact?.roles?.[0] ?? 'Tenant' as ContactRole
+    const createResult = await openContactPage({
+      name: data.name,
+      displayNumber: data.displayNumber,
+      roles: [role],
+      e164: data.e164,
+      unit: data.unit,
+      email: data.email
+    })
+
+    if (!createResult.success || !createResult.pageId) {
+      return { success: false, error: createResult.error ?? 'Failed to create OneNote page' }
+    }
+
+    // Now append the notes to the newly created page
+    const appendScript = buildNotesAppendScript(createResult.pageId, data.notes, timestamp)
+    const appendOutput = await runPowerShell(appendScript)
+    if (appendOutput.includes('ok')) {
+      return { success: true, pageId: createResult.pageId, created: true }
+    }
+    return { success: false, error: 'Failed to append notes after page creation' }
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : String(err)
     if (message.includes('80040154') || message.includes('CLSID') || message.includes('not registered')) {
