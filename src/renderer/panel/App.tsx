@@ -74,6 +74,7 @@ function App(): React.JSX.Element {
   const [contactEmail, setContactEmail] = useState('')
   const [contactUnit, setContactUnit] = useState('')
   const [contactRoles, setContactRoles] = useState<ContactRole[]>([])
+  const [oneNotePageId, setOneNotePageId] = useState<string | undefined>(undefined)
   const [templates, setTemplates] = useState<Template[]>([])
   const [selectedTemplate, setSelectedTemplate] = useState<Template | null>(null)
   const [editingTemplate, setEditingTemplate] = useState<Template | null>(null)
@@ -134,6 +135,18 @@ function App(): React.JSX.Element {
       window.electronAPI.removePhoneDetectedListener()
     }
   }, [])
+
+  // Load oneNotePageId from stored contact when active contact changes
+  useEffect(() => {
+    if (activeContact?.e164) {
+      window.electronAPI.getContact(activeContact.e164).then((contact) => {
+        if (contact?.oneNotePageId) setOneNotePageId(contact.oneNotePageId)
+        else setOneNotePageId(undefined)
+      })
+    } else {
+      setOneNotePageId(undefined)
+    }
+  }, [activeContact?.e164])
 
   // Subscribe to email:detected events from clipboard
   // If a contact card is already showing (e.g. phone was detected first), just fill the email
@@ -235,6 +248,7 @@ function App(): React.JSX.Element {
     setContactEmail('')
     setContactUnit('')
     setContactRoles([])
+    setOneNotePageId(undefined)
     setSelectedTemplate(null)
     setView('main')
   }, [])
@@ -766,6 +780,9 @@ function App(): React.JSX.Element {
               onEditRoleTemplate={handleEditRoleTemplate}
               viewingTemplateId={settings.viewingTemplateId}
               consultationTemplateId={settings.consultationTemplateId}
+              contactRoles={contactRoles}
+              oneNotePageId={oneNotePageId}
+              onOneNotePageCreated={(pageId) => setOneNotePageId(pageId)}
               newsEnabled={settings.newsEnabled}
               formOverrides={formOverrides}
               onEditForm={handleEditForm}

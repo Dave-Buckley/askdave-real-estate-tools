@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { X, Phone, ChevronDown, ChevronRight, FileText, Calendar, Copy, Pencil, Plus, Newspaper, Mail, MessageCircle, ClipboardList, Download, ShieldCheck } from 'lucide-react'
 import type { AppSettings, ContactRole, Template, FormTemplateOverride } from '../../../shared/types'
 import { getFormsByCategory, type FormCategory, type FormEntry } from '../../../shared/forms'
+import GeneralNotes from './GeneralNotes'
 import NewsFeed from './NewsFeed'
 
 // News source favicons
@@ -82,6 +83,9 @@ interface ContactCardProps {
   onEditRoleTemplate: (role: ContactRole) => void
   viewingTemplateId?: string
   consultationTemplateId?: string
+  contactRoles: ContactRole[]
+  oneNotePageId?: string
+  onOneNotePageCreated?: (pageId: string) => void
   newsEnabled: boolean
   formOverrides: Record<string, FormTemplateOverride>
   onEditForm: (form: FormEntry) => void
@@ -111,6 +115,9 @@ export default function ContactCard({
   onEditRoleTemplate,
   viewingTemplateId,
   consultationTemplateId,
+  contactRoles,
+  oneNotePageId,
+  onOneNotePageCreated,
   newsEnabled,
   formOverrides,
   onEditForm
@@ -459,6 +466,20 @@ export default function ContactCard({
             <p className={`text-xs ${followUpStatus.type === 'success' ? 'text-[#4ade80]' : 'text-red-400'}`}>{followUpStatus.message}</p>
           )}
         </div>
+      )}
+
+      {/* 5b. General Notes -- scratchpad with OneNote push */}
+      {oneNoteEnabled && (
+        <GeneralNotes
+          e164={e164}
+          displayNumber={displayNumber}
+          contactName={contactName}
+          contactEmail={contactEmail}
+          contactUnit={contactUnit}
+          contactRoles={contactRoles}
+          oneNotePageId={oneNotePageId}
+          onPageCreated={onOneNotePageCreated}
+        />
       )}
 
       {/* 6. WhatsApp Templates */}
