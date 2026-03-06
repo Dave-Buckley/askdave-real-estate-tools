@@ -87,7 +87,7 @@ Plans:
   5. All audio and transcript data is fully ephemeral -- nothing saved to disk, data discarded on navigation or new recording
 **Plans**: 3 plans
 Plans:
-- [ ] 04-01-PLAN.md -- Foundation: shared types, AudioRecorder utility, Whisper Web Worker, preload API extensions
+- [x] 04-01-PLAN.md -- Foundation: shared types, AudioRecorder utility, Whisper Web Worker, preload API extensions
 - [ ] 04-02-PLAN.md -- Main process: pop-out recorder window, IPC state relay between windows, store defaults
 - [ ] 04-03-PLAN.md -- UI: mic icon in TitleBar, RecorderOverlay pop-out, TranscriptView with Copy All, Settings model selector
 
@@ -101,4 +101,4 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 | 1. Core App + Communication | 5/5 | Complete | 2026-03-02 |
 | 2. Notes and Calendar Integration | 3/3 | Complete   | 2026-03-02 |
 | 3. Secondary Features and Website | 3/3 | Complete   | 2026-03-03 |
-| 4. Meeting Transcriber | 0/3 | Not Started | -- |
+| 4. Meeting Transcriber | 1/3 | In Progress | -- |
