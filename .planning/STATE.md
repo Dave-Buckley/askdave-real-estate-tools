@@ -25,7 +25,7 @@ See: .planning/PROJECT.md (updated 2026-03-06)
 Phase: 5 of 7 (Form I Template Rewrites) -- first phase of v1.1
 Plan: --
 Status: Ready to plan
-Last activity: 2026-03-06 -- Roadmap created for v1.1 (3 phases, 10 requirements)
+Last activity: 2026-03-06 - Completed quick task 1: Form I template rewrites
 
 Progress: [##############░░░░░░] 57% (v1.0 complete, v1.1 starting)
 
@@ -62,6 +62,12 @@ Recent decisions affecting current work:
 ### Blockers/Concerns
 
 (None identified)
+
+### Quick Tasks Completed
+
+| # | Description | Date | Commit | Directory |
+|---|-------------|------|--------|-----------|
+| 1 | Rewrite Form I WhatsApp/email templates and descriptions from client-facing to agent-to-agent commission split language | 2026-03-06 | 2fb977f | [1-rewrite-form-i-whatsapp-email-templates-](./quick/1-rewrite-form-i-whatsapp-email-templates-/) |
 
 ## Session Continuity
 
