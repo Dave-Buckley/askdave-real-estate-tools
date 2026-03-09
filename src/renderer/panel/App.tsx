@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
-import { Settings2, X, Keyboard, BookOpen, Phone, Copy, Minus, Square, ChevronLeft, ChevronDown, Mic, MapPin } from 'lucide-react'
+import { Settings2, X, Keyboard, BookOpen, Phone, Copy, Minus, Square, ChevronLeft, ChevronDown, Mic, MapPin, Calculator } from 'lucide-react'
 import type { Template, AppSettings, ContactInfo, ContactRole } from '../../shared/types'
 import PhoneInput from './components/PhoneInput'
 import ContactCard from './components/ContactCard'
@@ -12,10 +12,11 @@ import FlashcardView from './components/FlashcardView'
 import IncomingCallBar from './components/IncomingCallBar'
 import TranscriberView from './components/TranscriberView'
 import AreaGuidesView from './components/AreaGuidesView'
+import CalculatorsView from './components/CalculatorsView'
 import type { RoleTemplate, FormTemplateOverride } from '../../shared/types'
 import type { FormEntry } from '../../shared/forms'
 
-type View = 'main' | 'template-editor' | 'template-preview' | 'hotkeys' | 'role-template-editor' | 'form-editor' | 'education' | 'transcriber' | 'area-guides'
+type View = 'main' | 'template-editor' | 'template-preview' | 'hotkeys' | 'role-template-editor' | 'form-editor' | 'education' | 'transcriber' | 'area-guides' | 'calculators'
 type PanelMode = 'compact' | 'expanded'
 
 /** Custom draggable title bar for the frameless window.
@@ -663,6 +664,18 @@ function App(): React.JSX.Element {
     )
   }
 
+  // ── Calculators view ─────────────────────────────────────────────────
+  if (view === 'calculators') {
+    return (
+      <div className="h-screen bg-[#0d0d0e] flex flex-col overflow-hidden">
+        <TitleBar title="Calculators" onBack={() => setView('main')} />
+        <div className="flex-1 p-3 overflow-y-auto min-h-0">
+          <CalculatorsView onBack={() => setView('main')} />
+        </div>
+      </div>
+    )
+  }
+
   // ── Transcriber view ─────────────────────────────────────────────────
   if (view === 'transcriber') {
     return (
@@ -716,6 +729,13 @@ function App(): React.JSX.Element {
           title="Area Guides"
         >
           <MapPin size={14} strokeWidth={1.5} />
+        </button>
+        <button
+          onClick={() => setView('calculators')}
+          className="w-8 h-8 flex items-center justify-center text-[#a1a1aa] hover:text-[#ededee] hover:bg-white/[0.08] transition-colors"
+          title="Calculators"
+        >
+          <Calculator size={14} strokeWidth={1.5} />
         </button>
         <button
           onClick={() => setView('transcriber')}
