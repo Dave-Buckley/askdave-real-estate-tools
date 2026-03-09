@@ -89,9 +89,9 @@ Requirements for v1.2 Agent Productivity. Each maps to roadmap phases 8-12.
 ### Quick Calculators
 
 - [ ] **CALC-01**: Agent can calculate monthly mortgage payment (principal, rate, term)
-- [ ] **CALC-02**: Agent can calculate commission split between cooperating agents
-- [ ] **CALC-03**: Agent can calculate ROI/yield on a property (purchase price, rental income)
-- [ ] **CALC-04**: Each calculator displays effective date and source reference for rates used (DLD fees, LTV limits, etc.)
+- [x] **CALC-02**: Agent can calculate commission split between cooperating agents
+- [x] **CALC-03**: Agent can calculate ROI/yield on a property (purchase price, rental income)
+- [x] **CALC-04**: Each calculator displays effective date and source reference for rates used (DLD fees, LTV limits, etc.)
 
 ### Client Data Removal
 
@@ -241,9 +241,9 @@ Deferred to future releases. Significant complexity or external dependencies.
 | AREA-02 | Phase 8 | Complete |
 | AREA-03 | Phase 8 | Complete |
 | CALC-01 | Phase 9 | Pending |
-| CALC-02 | Phase 9 | Pending |
-| CALC-03 | Phase 9 | Pending |
-| CALC-04 | Phase 9 | Pending |
+| CALC-02 | Phase 9 | Complete |
+| CALC-03 | Phase 9 | Complete |
+| CALC-04 | Phase 9 | Complete |
 | PRIV-02 | Phase 10 | Pending |
 | PRIV-03 | Phase 10 | Pending |
 | PRIV-04 | Phase 10 | Pending |

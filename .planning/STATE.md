@@ -18,16 +18,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-06)
 
 **Core value:** Make every agent faster at the tasks they repeat hundreds of times a week -- calling, messaging, note-taking, and organizing -- without touching the CRM or creating security concerns.
-**Current focus:** Phase 8 - Area Guides (v1.2)
+**Current focus:** Phase 9 - Quick Calculators (v1.2)
 
 ## Current Position
 
-Phase: 8 of 12 (Area Guides) -- COMPLETE
-Plan: 2 of 2 complete
-Status: Phase 8 Complete -- ready for Phase 9
-Last activity: 2026-03-06 -- Completed 08-02 (Comparison view + WhatsApp share)
+Phase: 9 of 12 (Quick Calculators) -- IN PROGRESS
+Plan: 1 of 2 complete
+Status: Completed 09-01 (Rate data, CalculatorsView shell, Commission + ROI calculators)
+Last activity: 2026-03-09 -- Completed 09-01
 
-Progress: [########################......] 80% (phases 1-8 complete, phases 9-12 remaining)
+Progress: [##########################....] 85% (phases 1-8 complete, phase 9 in progress, phases 10-12 remaining)
 
 ## Performance Metrics
 
@@ -43,9 +43,10 @@ Progress: [########################......] 80% (phases 1-8 complete, phases 9-12
 - 07-01: 2min (2 tasks, 2 files)
 
 **v1.2 Metrics:**
-- Plans completed: 2
+- Plans completed: 3
 - 08-01: 4min (2 tasks, 3 files)
 - 08-02: 1min (2 tasks, 3 files)
+- 09-01: 4min (2 tasks, 5 files)
 
 ## Accumulated Context
 
@@ -65,6 +66,9 @@ Recent decisions affecting current work:
 - v1.2: Refresh Data button opens DXBInteract externally (no live API fetch in v1)
 - v1.2: Comparison and share extracted to AreaCompare.tsx + AreaSharePreview.tsx (keep files under 500 lines)
 - v1.2: WhatsApp share limited to single-area summaries only (no comparison data -- every number must have verifiable source)
+- v1.2: Commission tab as default active calculator tab (most frequently used during calls)
+- v1.2: display:none for inactive calculator tabs preserves state without lifting state to parent
+- v1.2: Rate attribution shows freshness dot + source name, changes to "Custom value" when agent overrides default
 
 ### Pending Todos
 
@@ -79,6 +83,6 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-03-07
-Stopped at: Session resumed, Phase 9 context gathered, ready to plan
+Last session: 2026-03-09
+Stopped at: Completed 09-01-PLAN.md (Commission + ROI calculators)
 Resume file: None
