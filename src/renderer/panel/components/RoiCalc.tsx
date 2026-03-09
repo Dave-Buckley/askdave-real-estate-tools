@@ -3,6 +3,7 @@ import { formatAED, formatAEDDecimal } from '../../../shared/calculator-rates'
 
 interface RoiCalcProps {
   onClear: (clearFn: () => void) => void
+  onShare: (text: string) => void
 }
 
 // ── Helpers ────────────────────────────────────────────────────────────
@@ -22,7 +23,7 @@ function formatInputDisplay(raw: string): string {
 
 // ── ROI/Yield Calculator ───────────────────────────────────────────────
 
-export default function RoiCalc({ onClear }: RoiCalcProps): React.JSX.Element {
+export default function RoiCalc({ onClear, onShare }: RoiCalcProps): React.JSX.Element {
   const [purchasePrice, setPurchasePrice] = useState('')
   const [annualRent, setAnnualRent] = useState('')
   const [serviceCharge, setServiceCharge] = useState('')
@@ -61,6 +62,26 @@ export default function RoiCalc({ onClear }: RoiCalcProps): React.JSX.Element {
       monthlyNetIncome,
     }
   }, [purchasePrice, annualRent, serviceCharge, maintenance])
+
+  // Build WhatsApp summary
+  const buildRoiSummary = useCallback((): string => {
+    if (!results) return ''
+    const price = parseNum(purchasePrice)
+    const rent = parseNum(annualRent)
+    const lines = [
+      '*ROI/Yield Estimate*',
+      '',
+      `Purchase Price: ${formatAED(price)}`,
+      `Annual Rental Income: ${formatAED(rent)}`,
+      '',
+      `Gross Yield: ${results.grossYield.toFixed(1)}%`,
+      `Net Yield: ${results.netYield.toFixed(1)}%`,
+      `Monthly Net Income: ${formatAEDDecimal(results.monthlyNetIncome)}`,
+      '',
+      '_Estimate only. Actual returns may vary._',
+    ]
+    return lines.join('\n')
+  }, [results, purchasePrice, annualRent])
 
   return (
     <div className="space-y-4">
@@ -118,32 +139,42 @@ export default function RoiCalc({ onClear }: RoiCalcProps): React.JSX.Element {
           <p className="text-[12px] text-[#5a5a60]">Enter purchase price and rental income to calculate</p>
         </div>
       ) : (
-        <div className="bg-[#0d0d0e] rounded-lg p-3 space-y-3">
-          {/* Gross Yield */}
-          <div className="flex items-center justify-between">
-            <span className="text-[12px] text-[#a1a1aa]">Gross Yield</span>
-            <span className="text-[14px] text-[#ededee] font-medium">{results.grossYield.toFixed(1)}%</span>
+        <div className="space-y-3">
+          <div className="bg-[#0d0d0e] rounded-lg p-3 space-y-3">
+            {/* Gross Yield */}
+            <div className="flex items-center justify-between">
+              <span className="text-[12px] text-[#a1a1aa]">Gross Yield</span>
+              <span className="text-[14px] text-[#ededee] font-medium">{results.grossYield.toFixed(1)}%</span>
+            </div>
+
+            {/* Net Yield */}
+            <div className="flex items-center justify-between">
+              <span className="text-[12px] text-[#a1a1aa]">Net Yield</span>
+              <span className="text-[14px] text-[#ededee] font-medium">{results.netYield.toFixed(1)}%</span>
+            </div>
+
+            <div className="border-t border-white/[0.07]" />
+
+            {/* Monthly Net Income */}
+            <div className="flex items-center justify-between">
+              <span className="text-[12px] text-[#a1a1aa]">Monthly Net Income</span>
+              <span className="text-[13px] text-[#ededee]">{formatAEDDecimal(results.monthlyNetIncome)}</span>
+            </div>
+
+            {/* Annual Net Income */}
+            <div className="flex items-center justify-between">
+              <span className="text-[12px] text-[#ededee] font-semibold">Annual Net Income</span>
+              <span className="text-[14px] text-[#ededee] font-bold">{formatAED(results.netAnnualIncome)}</span>
+            </div>
           </div>
 
-          {/* Net Yield */}
-          <div className="flex items-center justify-between">
-            <span className="text-[12px] text-[#a1a1aa]">Net Yield</span>
-            <span className="text-[14px] text-[#ededee] font-medium">{results.netYield.toFixed(1)}%</span>
-          </div>
-
-          <div className="border-t border-white/[0.07]" />
-
-          {/* Monthly Net Income */}
-          <div className="flex items-center justify-between">
-            <span className="text-[12px] text-[#a1a1aa]">Monthly Net Income</span>
-            <span className="text-[13px] text-[#ededee]">{formatAEDDecimal(results.monthlyNetIncome)}</span>
-          </div>
-
-          {/* Annual Net Income */}
-          <div className="flex items-center justify-between">
-            <span className="text-[12px] text-[#ededee] font-semibold">Annual Net Income</span>
-            <span className="text-[14px] text-[#ededee] font-bold">{formatAED(results.netAnnualIncome)}</span>
-          </div>
+          {/* Share button */}
+          <button
+            onClick={() => onShare(buildRoiSummary())}
+            className="w-full py-2 text-[12px] font-medium text-[#a1a1aa] hover:text-[#ededee] hover:bg-white/[0.04] border border-white/[0.07] rounded-md transition-colors"
+          >
+            Share via WhatsApp
+          </button>
         </div>
       )}
     </div>

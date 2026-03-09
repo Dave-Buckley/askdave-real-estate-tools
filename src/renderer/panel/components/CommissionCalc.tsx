@@ -11,6 +11,7 @@ import type { RateEntry } from '../../../shared/calculator-rates'
 
 interface CommissionCalcProps {
   onClear: (clearFn: () => void) => void
+  onShare: (text: string) => void
 }
 
 // ── Helpers ────────────────────────────────────────────────────────────
@@ -71,7 +72,7 @@ function RateAttribution({
 
 // ── Commission Calculator ──────────────────────────────────────────────
 
-export default function CommissionCalc({ onClear }: CommissionCalcProps): React.JSX.Element {
+export default function CommissionCalc({ onClear, onShare }: CommissionCalcProps): React.JSX.Element {
   const defaultRate = CALCULATOR_RATES.commission.defaultRate
   const vatRate = CALCULATOR_RATES.vat
 
@@ -140,6 +141,27 @@ export default function CommissionCalc({ onClear }: CommissionCalcProps): React.
 
   const isCommissionCustom = commissionRate !== String(defaultRate.value)
 
+  // Build WhatsApp summary
+  const buildCommissionSummary = useCallback((): string => {
+    if (!results) return ''
+    const price = parseNum(propertyPrice)
+    const rate = parseFloat(commissionRate) || 0
+    const lines = [
+      '*Commission Split*',
+      '',
+      `Property Price: ${formatAED(price)}`,
+      `Commission Rate: ${rate}%`,
+      '',
+      `Total Commission: ${formatAED(results.totalCommission)}`,
+      `Listing Agent (${results.listingPct}%): ${formatAED(results.listingShare)}`,
+      `Buyer's Agent (${results.buyerPct}%): ${formatAED(results.buyerShare)}`,
+      `VAT (${vatRate.value}%): ${formatAEDDecimal(results.totalVat)}`,
+      '',
+      '_Estimate only. Subject to agency agreement._',
+    ]
+    return lines.join('\n')
+  }, [results, propertyPrice, commissionRate, vatRate.value])
+
   return (
     <div className="space-y-4">
       {/* Property Price */}
@@ -197,6 +219,7 @@ export default function CommissionCalc({ onClear }: CommissionCalcProps): React.
           <p className="text-[12px] text-[#5a5a60]">Enter property price to calculate</p>
         </div>
       ) : (
+        <div className="space-y-3">
         <div className="bg-[#0d0d0e] rounded-lg p-3 space-y-3">
           {/* Total Commission */}
           <div className="flex items-center justify-between">
@@ -243,6 +266,15 @@ export default function CommissionCalc({ onClear }: CommissionCalcProps): React.
             <span className="text-[12px] text-[#ededee] font-semibold">Total incl. VAT</span>
             <span className="text-[14px] text-[#ededee] font-bold">{formatAEDDecimal(results.totalInclVat)}</span>
           </div>
+        </div>
+
+          {/* Share button */}
+          <button
+            onClick={() => onShare(buildCommissionSummary())}
+            className="w-full py-2 text-[12px] font-medium text-[#a1a1aa] hover:text-[#ededee] hover:bg-white/[0.04] border border-white/[0.07] rounded-md transition-colors"
+          >
+            Share via WhatsApp
+          </button>
         </div>
       )}
     </div>
