@@ -331,6 +331,11 @@ function App(): React.JSX.Element {
     setSelectedTemplate({ ...selectedTemplate, body: updatedBody })
   }, [selectedTemplate])
 
+  const handleReorderTemplates = useCallback(async (reordered: Template[]) => {
+    const updated = await window.electronAPI.saveTemplates(reordered)
+    setTemplates(updated)
+  }, [])
+
   const handleSaveAsNewTemplate = useCallback(async (name: string, body: string, category: string) => {
     const newTemplate: Template = {
       id: `tpl-${Date.now()}`,
@@ -816,6 +821,7 @@ function App(): React.JSX.Element {
               onEditTemplate={handleEditTemplate}
               onDeleteTemplate={handleDeleteTemplate}
               onCreateTemplate={handleCreateTemplate}
+              onReorderTemplates={handleReorderTemplates}
               onEnsureTemplate={handleEnsureTemplate}
               onEditRoleTemplate={handleEditRoleTemplate}
               viewingTemplateId={settings.viewingTemplateId}

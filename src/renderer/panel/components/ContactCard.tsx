@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { X, Phone, ChevronDown, ChevronRight, FileText, Calendar, Copy, Pencil, Plus, Newspaper, Mail, MessageCircle, ClipboardList, Download, ShieldCheck } from 'lucide-react'
 import type { AppSettings, ContactRole, Template, FormTemplateOverride } from '../../../shared/types'
 import { getFormsByCategory, type FormCategory, type FormEntry } from '../../../shared/forms'
@@ -89,6 +89,7 @@ interface ContactCardProps {
   oneNotePageId?: string
   onOneNotePageCreated?: (pageId: string) => void
   newsEnabled: boolean
+  onReorderTemplates: (templates: Template[]) => void
   formOverrides: Record<string, FormTemplateOverride>
   onEditForm: (form: FormEntry) => void
 }
@@ -120,6 +121,7 @@ export default function ContactCard({
   contactRoles,
   oneNotePageId,
   onOneNotePageCreated,
+  onReorderTemplates,
   newsEnabled,
   formOverrides,
   onEditForm
@@ -159,6 +161,36 @@ export default function ContactCard({
   const [formsTab, setFormsTab] = useState<FormCategory>('sales')
   const [newsExpanded, setNewsExpanded] = useState(false)
   const [kycExpanded, setKycExpanded] = useState(false)
+  const [dragIdx, setDragIdx] = useState<number | null>(null)
+  const [dragOverIdx, setDragOverIdx] = useState<number | null>(null)
+
+  const handleDragStart = useCallback((idx: number) => {
+    setDragIdx(idx)
+  }, [])
+
+  const handleDragOver = useCallback((e: React.DragEvent, idx: number) => {
+    e.preventDefault()
+    setDragOverIdx(idx)
+  }, [])
+
+  const handleDrop = useCallback((idx: number) => {
+    if (dragIdx === null || dragIdx === idx) {
+      setDragIdx(null)
+      setDragOverIdx(null)
+      return
+    }
+    const reordered = [...templates]
+    const [moved] = reordered.splice(dragIdx, 1)
+    reordered.splice(idx, 0, moved)
+    onReorderTemplates(reordered)
+    setDragIdx(null)
+    setDragOverIdx(null)
+  }, [dragIdx, templates, onReorderTemplates])
+
+  const handleDragEnd = useCallback(() => {
+    setDragIdx(null)
+    setDragOverIdx(null)
+  }, [])
 
   useEffect(() => {
     window.electronAPI.getFormsDir().then(setFormsDir)
@@ -489,8 +521,18 @@ export default function ContactCard({
             <p className="text-xs text-[#5a5a60] text-center py-2 mt-2">No templates yet. Create one to get started.</p>
           ) : (
             <div className="space-y-0.5 max-h-44 overflow-y-auto mt-2">
-              {templates.map((template) => (
-                <div key={template.id} className="group flex items-center gap-1.5 px-2 py-1.5 rounded-md hover:bg-white/[0.04] cursor-pointer transition-colors" onClick={() => onSelectTemplate(template)}>
+              {templates.map((template, idx) => (
+                <div
+                  key={template.id}
+                  draggable
+                  onDragStart={() => handleDragStart(idx)}
+                  onDragOver={(e) => handleDragOver(e, idx)}
+                  onDrop={() => handleDrop(idx)}
+                  onDragEnd={handleDragEnd}
+                  className={`group flex items-center gap-1.5 px-2 py-1.5 rounded-md hover:bg-white/[0.04] cursor-grab active:cursor-grabbing transition-colors ${dragIdx === idx ? 'opacity-40' : ''} ${dragOverIdx === idx && dragIdx !== idx ? 'border-t border-indigo-400/50' : ''}`}
+                  onClick={() => onSelectTemplate(template)}
+                >
+                  <span className="text-[#5a5a60] text-[10px] select-none mr-0.5">::</span>
                   <span className="text-xs text-[#ededee] truncate flex-1">{template.name}</span>
                   <span className={`text-[10px] px-1.5 py-0.5 rounded-full flex-shrink-0 ${categoryColors[template.category] || categoryColors.other}`}>{template.category}</span>
                   <div className="flex items-center gap-0.5 flex-shrink-0">
