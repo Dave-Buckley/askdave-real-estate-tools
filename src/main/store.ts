@@ -85,6 +85,12 @@ export const DEFAULT_TEMPLATES: Template[] = [
     name: 'Consultation Invitation',
     body: 'Hi {name}, I\'d like to schedule a consultation to discuss your property requirements. When would be a convenient time for you?',
     category: 'other'
+  },
+  {
+    id: 'tpl-013',
+    name: 'Market Check-in',
+    body: 'Hi {name}, it\'s Dave from Paragon Properties. Hope you\'re well. With everything going on in the market, just checking in to see if you need any support with your property needs. Happy to answer any questions or have a quick chat, feel free to drop me a message anytime.',
+    category: 'follow-up'
   }
 ]
 
