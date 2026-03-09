@@ -274,6 +274,44 @@ export function registerIPCHandlers(): void {
     return updated
   })
 
+  // --- Client Folders ---
+
+  ipcMain.handle('client-folder:get-root', () => {
+    const stored = store.get('completedFormsDir')
+    if (stored) return stored
+    // Default: Documents/Real Estate/Completed Forms
+    return path.join(app.getPath('documents'), 'Real Estate', 'Completed Forms')
+  })
+
+  ipcMain.handle('client-folder:pick-root', async () => {
+    const panel = getPanelWindow()
+    const { canceled, filePaths } = await dialog.showOpenDialog(panel!, {
+      title: 'Select Completed Forms Root Folder',
+      properties: ['openDirectory', 'createDirectory'],
+      defaultPath: store.get('completedFormsDir') || path.join(app.getPath('documents'), 'Real Estate', 'Completed Forms')
+    })
+    if (canceled || !filePaths[0]) return { success: false }
+    store.set('completedFormsDir', filePaths[0])
+    return { success: true, path: filePaths[0] }
+  })
+
+  ipcMain.handle('client-folder:create', (_event, category: string, clientName: string) => {
+    const root = store.get('completedFormsDir') || path.join(app.getPath('documents'), 'Real Estate', 'Completed Forms')
+    const folderPath = path.join(root, category, clientName)
+    const exists = fs.existsSync(folderPath)
+    if (!exists) {
+      fs.mkdirSync(folderPath, { recursive: true })
+    }
+    shell.openPath(folderPath)
+    return { success: true, path: folderPath, created: !exists }
+  })
+
+  ipcMain.handle('client-folder:check', (_event, category: string, clientName: string) => {
+    const root = store.get('completedFormsDir') || path.join(app.getPath('documents'), 'Real Estate', 'Completed Forms')
+    const folderPath = path.join(root, category, clientName)
+    return { exists: fs.existsSync(folderPath), path: folderPath }
+  })
+
   // --- Shell ---
 
   ipcMain.handle('shell:open-external', (_event, url: string) => {

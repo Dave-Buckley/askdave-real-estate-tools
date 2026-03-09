@@ -114,6 +114,14 @@ contextBridge.exposeInMainWorld('electronAPI', {
   saveFlashcardProgress: (cardId: string, progress: { confidence: 1 | 2 | 3; timesSeen: number; lastSeen: string }) =>
     ipcRenderer.invoke('flashcard:saveProgress', cardId, progress),
 
+  // Client folders
+  getClientFolderRoot: () => ipcRenderer.invoke('client-folder:get-root') as Promise<string>,
+  pickClientFolderRoot: () => ipcRenderer.invoke('client-folder:pick-root') as Promise<{ success: boolean; path?: string }>,
+  createClientFolder: (category: string, clientName: string) =>
+    ipcRenderer.invoke('client-folder:create', category, clientName) as Promise<{ success: boolean; path?: string; created?: boolean }>,
+  checkClientFolder: (category: string, clientName: string) =>
+    ipcRenderer.invoke('client-folder:check', category, clientName) as Promise<{ exists: boolean; path: string }>,
+
   // Shell
   openExternal: (url: string) => ipcRenderer.invoke('shell:open-external', url),
   showItemInFolder: (filePath: string) => ipcRenderer.invoke('shell:show-item', filePath),

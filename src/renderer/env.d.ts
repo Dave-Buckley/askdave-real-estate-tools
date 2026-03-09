@@ -72,6 +72,12 @@ export interface ElectronAPI {
   getFormsDir: () => Promise<string>
   saveFormAs: (subFolder: string, fileName: string) => Promise<{ success: boolean; path?: string }>
 
+  // Client folders
+  getClientFolderRoot: () => Promise<string>
+  pickClientFolderRoot: () => Promise<{ success: boolean; path?: string }>
+  createClientFolder: (category: string, clientName: string) => Promise<{ success: boolean; path?: string; created?: boolean }>
+  checkClientFolder: (category: string, clientName: string) => Promise<{ exists: boolean; path: string }>
+
   // Shell
   openExternal: (url: string) => Promise<void>
   showItemInFolder: (filePath: string) => Promise<void>
@@ -92,6 +98,8 @@ export interface ElectronAPI {
 export interface SettingsAPI {
   getSettings: () => Promise<AppSettings>
   saveSettings: (settings: Partial<AppSettings>) => Promise<void>
+  pickCompletedFormsDir: () => Promise<{ success: boolean; path?: string }>
+  getCompletedFormsDir: () => Promise<string>
 }
 
 declare global {

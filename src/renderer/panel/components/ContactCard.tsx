@@ -3,6 +3,8 @@ import { X, Phone, ChevronDown, ChevronRight, FileText, Calendar, Copy, Pencil, 
 import type { AppSettings, ContactRole, Template, FormTemplateOverride } from '../../../shared/types'
 import { getFormsByCategory, type FormCategory, type FormEntry } from '../../../shared/forms'
 import GeneralNotes from './GeneralNotes'
+import LeasingChecklist from './LeasingChecklist'
+import SalesChecklist from './SalesChecklist'
 import NewsFeed from './NewsFeed'
 
 // News source favicons
@@ -468,21 +470,7 @@ export default function ContactCard({
         </div>
       )}
 
-      {/* 5b. General Notes -- scratchpad with OneNote push */}
-      {oneNoteEnabled && (
-        <GeneralNotes
-          e164={e164}
-          displayNumber={displayNumber}
-          contactName={contactName}
-          contactEmail={contactEmail}
-          contactUnit={contactUnit}
-          contactRoles={contactRoles}
-          oneNotePageId={oneNotePageId}
-          onPageCreated={onOneNotePageCreated}
-        />
-      )}
-
-      {/* 6. WhatsApp Templates */}
+      {/* 5b. WhatsApp Templates */}
       <div className="bg-[#1f1f21] border border-white/[0.07] rounded-lg p-3">
         <div className="flex items-center justify-between">
           <button onClick={() => setTemplatesExpanded(!templatesExpanded)} className="flex items-center gap-1.5">
@@ -516,38 +504,7 @@ export default function ContactCard({
         )}
       </div>
 
-      {/* 7. Gmail Templates */}
-      <div className="bg-[#1f1f21] border border-white/[0.07] rounded-lg p-3">
-        <div className="flex items-center justify-between">
-          <button onClick={() => setGmailTemplatesExpanded(!gmailTemplatesExpanded)} className="flex items-center gap-1.5">
-            {gmailTemplatesExpanded ? <ChevronDown size={14} strokeWidth={1.5} className="text-[#a1a1aa]" /> : <ChevronRight size={14} strokeWidth={1.5} className="text-[#a1a1aa]" />}
-            <Mail size={14} strokeWidth={1.5} className="text-[#a1a1aa]" />
-            <h3 className="text-sm font-semibold text-[#ededee]">Gmail Templates</h3>
-          </button>
-          {gmailTemplatesExpanded && (
-            <button onClick={onCreateTemplate} className="flex items-center gap-0.5 text-xs text-indigo-400 hover:text-indigo-300">
-              <Plus size={14} strokeWidth={1.5} />New
-            </button>
-          )}
-        </div>
-        {gmailTemplatesExpanded && (
-          templates.length === 0 ? (
-            <p className="text-xs text-[#5a5a60] text-center py-2 mt-2">No templates yet. Create one to get started.</p>
-          ) : (
-            <div className="space-y-0.5 max-h-44 overflow-y-auto mt-2">
-              {templates.map((template) => (
-                <div key={template.id} className="group flex items-center gap-1.5 px-2 py-1.5 rounded-md hover:bg-white/[0.04] cursor-pointer transition-colors" onClick={() => handleGmailCompose(template.name, template.body)}>
-                  <span className="text-xs text-[#ededee] truncate flex-1">{template.name}</span>
-                  <span className={`text-[10px] px-1.5 py-0.5 rounded-full flex-shrink-0 ${categoryColors[template.category] || categoryColors.other}`}>{template.category}</span>
-                  <button onClick={(e) => { e.stopPropagation(); onEditTemplate(template) }} className="p-0.5 text-[#d4d4d8] hover:text-indigo-400 transition-colors" title="Edit"><Pencil size={12} strokeWidth={1.5} /></button>
-                </div>
-              ))}
-            </div>
-          )
-        )}
-      </div>
-
-      {/* 8. OneNote Templates */}
+      {/* 5c. OneNote Templates */}
       {oneNoteEnabled && (
         <div className="bg-[#1f1f21] border border-white/[0.07] rounded-lg p-3">
           <button onClick={() => setOneNoteTemplatesExpanded(!oneNoteTemplatesExpanded)} className="flex items-center gap-1.5">
@@ -568,7 +525,25 @@ export default function ContactCard({
         </div>
       )}
 
-      {/* 9. Forms — Sales / Rentals / Off-plan tabs */}
+      {/* 5c. General Notes -- scratchpad with OneNote push */}
+      {oneNoteEnabled && (
+        <GeneralNotes
+          e164={e164}
+          displayNumber={displayNumber}
+          contactName={contactName}
+          contactEmail={contactEmail}
+          contactUnit={contactUnit}
+          contactRoles={contactRoles}
+          oneNotePageId={oneNotePageId}
+          onPageCreated={onOneNotePageCreated}
+        />
+      )}
+
+      {/* 6. Checklists + Client Folders */}
+      <LeasingChecklist contactName={contactName} />
+      <SalesChecklist contactName={contactName} />
+
+      {/* 7. Forms — Sales / Rentals / Off-plan tabs */}
       <div className="bg-[#1f1f21] border border-white/[0.07] rounded-lg p-3">
         <button onClick={() => setFormsExpanded(!formsExpanded)} className="flex items-center gap-1.5">
           {formsExpanded ? <ChevronDown size={14} strokeWidth={1.5} className="text-[#a1a1aa]" /> : <ChevronRight size={14} strokeWidth={1.5} className="text-[#a1a1aa]" />}
@@ -638,7 +613,7 @@ export default function ContactCard({
         )}
       </div>
 
-      {/* 9b. KYC Forms — internal, open-only (no send) */}
+      {/* 7b. KYC Forms — internal, open-only (no send) */}
       <div className="bg-[#1f1f21] border border-white/[0.07] rounded-lg p-3">
         <button onClick={() => setKycExpanded(!kycExpanded)} className="flex items-center gap-1.5">
           {kycExpanded ? <ChevronDown size={14} strokeWidth={1.5} className="text-[#a1a1aa]" /> : <ChevronRight size={14} strokeWidth={1.5} className="text-[#a1a1aa]" />}
@@ -672,7 +647,38 @@ export default function ContactCard({
         )}
       </div>
 
-      {/* 10. News feed */}
+      {/* 9. Gmail Templates */}
+      <div className="bg-[#1f1f21] border border-white/[0.07] rounded-lg p-3">
+        <div className="flex items-center justify-between">
+          <button onClick={() => setGmailTemplatesExpanded(!gmailTemplatesExpanded)} className="flex items-center gap-1.5">
+            {gmailTemplatesExpanded ? <ChevronDown size={14} strokeWidth={1.5} className="text-[#a1a1aa]" /> : <ChevronRight size={14} strokeWidth={1.5} className="text-[#a1a1aa]" />}
+            <Mail size={14} strokeWidth={1.5} className="text-[#a1a1aa]" />
+            <h3 className="text-sm font-semibold text-[#ededee]">Gmail Templates</h3>
+          </button>
+          {gmailTemplatesExpanded && (
+            <button onClick={onCreateTemplate} className="flex items-center gap-0.5 text-xs text-indigo-400 hover:text-indigo-300">
+              <Plus size={14} strokeWidth={1.5} />New
+            </button>
+          )}
+        </div>
+        {gmailTemplatesExpanded && (
+          templates.length === 0 ? (
+            <p className="text-xs text-[#5a5a60] text-center py-2 mt-2">No templates yet. Create one to get started.</p>
+          ) : (
+            <div className="space-y-0.5 max-h-44 overflow-y-auto mt-2">
+              {templates.map((template) => (
+                <div key={template.id} className="group flex items-center gap-1.5 px-2 py-1.5 rounded-md hover:bg-white/[0.04] cursor-pointer transition-colors" onClick={() => handleGmailCompose(template.name, template.body)}>
+                  <span className="text-xs text-[#ededee] truncate flex-1">{template.name}</span>
+                  <span className={`text-[10px] px-1.5 py-0.5 rounded-full flex-shrink-0 ${categoryColors[template.category] || categoryColors.other}`}>{template.category}</span>
+                  <button onClick={(e) => { e.stopPropagation(); onEditTemplate(template) }} className="p-0.5 text-[#d4d4d8] hover:text-indigo-400 transition-colors" title="Edit"><Pencil size={12} strokeWidth={1.5} /></button>
+                </div>
+              ))}
+            </div>
+          )
+        )}
+      </div>
+
+      {/* 11. News feed */}
       {newsEnabled && (
         <div className="bg-[#1f1f21] border border-white/[0.07] rounded-lg p-3">
           <button onClick={() => setNewsExpanded(!newsExpanded)} className="flex items-center gap-1.5">

@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
-import { Shield } from 'lucide-react'
+import { Shield, FolderOpen } from 'lucide-react'
 import type { AppSettings } from '../../shared/types'
 import FeatureToggles from './components/FeatureToggles'
 import HotkeyRecorder from './components/HotkeyRecorder'
@@ -9,12 +9,14 @@ function App(): React.JSX.Element {
   const [settings, setSettings] = useState<AppSettings | null>(null)
   const [loading, setLoading] = useState(true)
   const [saved, setSaved] = useState(false)
+  const [formsDir, setFormsDir] = useState('')
 
   useEffect(() => {
     window.settingsAPI.getSettings().then((s) => {
       setSettings(s)
       setLoading(false)
     })
+    window.settingsAPI.getCompletedFormsDir().then(setFormsDir)
   }, [])
 
   const saveAndUpdate = useCallback(async (partial: Partial<AppSettings>) => {
@@ -128,6 +130,36 @@ function App(): React.JSX.Element {
             mode={settings.whatsappMode}
             onChange={handleWhatsAppModeChange}
           />
+        </div>
+      </section>
+
+      {/* Folders section */}
+      <section>
+        <h2 className="text-xs font-medium text-[#a1a1aa] uppercase tracking-wider mb-3">Folders</h2>
+        <div className="bg-[#161617] rounded-lg border border-white/[0.07] p-4 space-y-2">
+          <div>
+            <label className="text-xs text-[#a1a1aa] block mb-1">Completed Forms Folder</label>
+            <div className="flex gap-2">
+              <span className="flex-1 bg-[#0d0d0e] border border-white/[0.07] rounded-md px-2 py-1.5 text-[11px] text-[#ededee] truncate" title={formsDir}>
+                {formsDir || 'Not set (using default)'}
+              </span>
+              <button
+                onClick={async () => {
+                  const result = await window.settingsAPI.pickCompletedFormsDir()
+                  if (result.success && result.path) {
+                    setFormsDir(result.path)
+                    setSaved(true)
+                    setTimeout(() => setSaved(false), 1500)
+                  }
+                }}
+                className="flex items-center gap-1 px-2 py-1.5 text-xs text-indigo-400 bg-[rgba(99,102,241,0.14)] border border-[rgba(99,102,241,0.3)] rounded-md hover:bg-[rgba(99,102,241,0.22)] transition-colors"
+              >
+                <FolderOpen size={13} />
+                Browse
+              </button>
+            </div>
+            <p className="text-[10px] text-[#5a5a60] mt-1">Where client document folders are created (Tenants, Buyers, Off-Plan, Secondary Sales)</p>
+          </div>
         </div>
       </section>
 

@@ -27,17 +27,17 @@ function TitleBar({ title, onBack, children }: { title: string; onBack?: () => v
       <div className="absolute inset-0" style={{ WebkitAppRegion: 'drag' } as React.CSSProperties} />
 
       {/* Left: back button + title (title is non-interactive, passes clicks to drag layer) */}
-      <div className="flex items-center pointer-events-none relative">
+      <div className="flex items-center pointer-events-none relative min-w-0 overflow-hidden">
         {onBack && (
           <button
             onClick={onBack}
-            className="pointer-events-auto w-8 h-8 flex items-center justify-center text-[#a1a1aa] hover:text-[#ededee] hover:bg-white/[0.08] transition-colors"
+            className="pointer-events-auto w-8 h-8 flex items-center justify-center text-[#a1a1aa] hover:text-[#ededee] hover:bg-white/[0.08] transition-colors shrink-0"
             style={{ WebkitAppRegion: 'no-drag' } as React.CSSProperties}
           >
             <ChevronLeft size={14} strokeWidth={1.5} />
           </button>
         )}
-        <span className={`text-xs font-semibold text-[#ededee] ${onBack ? '' : 'pl-3'}`}>{title}</span>
+        <span className={`text-xs font-semibold text-[#ededee] whitespace-nowrap truncate ${onBack ? '' : 'pl-3'}`}>{title}</span>
       </div>
 
       {/* Right: nav buttons + window controls (all interactive, block drag) */}
@@ -468,7 +468,7 @@ function App(): React.JSX.Element {
   if (mode === 'compact' && view === 'main') {
     return (
       <div className="h-screen bg-[#0d0d0e] flex flex-col">
-        <TitleBar title="Ask Dave Real Estate" />
+        <TitleBar title="AskDave" />
 
         <div className="flex-1 flex flex-col p-2.5 gap-2">
           {activeContact ? (
@@ -695,7 +695,7 @@ function App(): React.JSX.Element {
   // ── Main expanded view ────────────────────────────────────────────────
   return (
     <div className="h-screen bg-[#0d0d0e] flex flex-col overflow-hidden">
-      <TitleBar title="Ask Dave Real Estate">
+      <TitleBar title="AskDave">
         <button
           onClick={() => setView('hotkeys')}
           className="w-8 h-8 flex items-center justify-center text-[#a1a1aa] hover:text-[#ededee] hover:bg-white/[0.08] transition-colors"

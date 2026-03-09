@@ -63,6 +63,7 @@ export interface AppSettings {
   formOverrides?: Record<string, FormTemplateOverride>
   flashcardProgress: Record<string, CardProgress>
   whisperModel: WhisperModelId
+  completedFormsDir: string      // Root directory for client completed-form folders
 }
 
 export type ContactRole = 'Tenant' | 'Landlord' | 'Buyer' | 'Seller' | 'Investor'

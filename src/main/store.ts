@@ -69,6 +69,12 @@ export const DEFAULT_TEMPLATES: Template[] = [
     category: 'documents'
   },
   {
+    id: 'tpl-012',
+    name: 'Cold Outreach — Check-in',
+    body: 'Hi {name}, it\'s Dave from Paragon Properties. I\'m just reaching out to make sure you\'re well supported with your property needs here in Dubai. If there\'s anything I can help with, even if it\'s just a quick question about the market or a valuation, I\'d be happy to have a chat or offer a free consultation. No pressure at all, just here if you need anything.',
+    category: 'introduction'
+  },
+  {
     id: 'tpl-viewing',
     name: 'Viewing Invitation',
     body: 'Hi {name}, I\'d like to arrange a property viewing for {unit}. Could you let me know your preferred date and time? I\'ll confirm the details shortly.',
@@ -265,6 +271,7 @@ export const store = new Store<AppSettings>({
     oneNoteRoleTemplates: DEFAULT_ROLE_TEMPLATES,
     formOverrides: {},
     flashcardProgress: {},
-    whisperModel: 'onnx-community/whisper-base.en'
+    whisperModel: 'onnx-community/whisper-base.en',
+    completedFormsDir: ''
   }
 })
